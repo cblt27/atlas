@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Atlas">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Atlas</title>
+<style>
+:root { --bg:#f4f5f7; --card:#fff; --ink:#1c2430; --muted:#7a828e; --line:#e3e6ea; --primary:#1f3a5f; --in:#1f7a4d; --in-t:#e6f3ec; --out:#b3261e; --out-t:#fbeaea; --amber:#a86400; --amber-t:#fdf1dc; }
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+header { position:sticky; top:0; z-index:5; background:var(--primary); color:#fff; padding:calc(env(safe-area-inset-top) + 10px) 16px 10px; display:flex; align-items:center; gap:10px; }
+header h1 { font-size:19px; margin:0; flex:1; font-weight:650; }
+header .sub { font-size:12px; opacity:.8; }
+header button { background:rgba(255,255,255,.15); border:0; color:#fff; border-radius:10px; padding:7px 10px; font-size:14px; }
+main { padding:12px 12px calc(env(safe-area-inset-bottom) + 84px); max-width:720px; margin:0 auto; }
+nav { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line); display:flex; padding-bottom:env(safe-area-inset-bottom); z-index:6; }
+nav button { flex:1; border:0; background:none; padding:9px 0 8px; font-size:11px; color:var(--muted); display:flex; flex-direction:column; align-items:center; gap:3px; }
+nav button svg { width:23px; height:23px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+nav button.on { color:var(--primary); font-weight:650; }
+.card { background:var(--card); border-radius:14px; padding:12px 14px; margin-bottom:10px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+.row { display:flex; align-items:center; gap:10px; }
+.grow { flex:1; min-width:0; }
+.muted { color:var(--muted); font-size:13px; }
+.big { font-size:26px; font-weight:700; }
+.chip { display:inline-block; font-size:12px; padding:3px 8px; border-radius:999px; background:#eef0f3; color:var(--ink); white-space:nowrap; }
+.chip.in { background:var(--in-t); color:var(--in); } .chip.out { background:var(--out-t); color:var(--out); } .chip.late { background:var(--amber-t); color:var(--amber); }
+.chips { display:flex; gap:8px; overflow-x:auto; padding:2px 0 10px; }
+.chips button { border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 12px; font-size:14px; white-space:nowrap; color:var(--ink); }
+.chips button.on { background:var(--primary); border-color:var(--primary); color:#fff; }
+.cal { background:#fff; border-radius:14px; padding:10px 8px 6px; margin-bottom:10px; }
+.calhead { display:flex; align-items:center; justify-content:space-between; padding:0 6px 8px; }
+.calhead b { font-size:17px; text-transform:capitalize; }
+.calhead button { border:0; background:#eef0f3; border-radius:10px; width:38px; height:34px; font-size:18px; color:var(--ink); }
+.grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+.dow { text-align:center; font-size:11px; color:var(--muted); padding-bottom:4px; }
+.day { min-height:52px; border-radius:10px; padding:4px 3px; text-align:center; font-size:14px; position:relative; background:#fafbfc; border:0; color:var(--ink); }
+.day.other { opacity:.35; }
+.day.today .n { background:var(--primary); color:#fff; border-radius:999px; padding:1px 6px; }
+.day.sel { outline:2px solid var(--primary); }
+.day .marks { display:flex; flex-direction:column; gap:2px; margin-top:3px; align-items:center; }
+.day .m { font-size:10.5px; font-weight:650; border-radius:6px; padding:0 4px; line-height:15px; }
+.day .m.in { background:var(--in-t); color:var(--in); } .day .m.out { background:var(--out-t); color:var(--out); }
+.op { display:flex; gap:10px; align-items:stretch; }
+.op .bar { width:4px; border-radius:4px; background:var(--muted); }
+.op.in .bar { background:var(--in); } .op.out .bar { background:var(--out); }
+.op .q { font-weight:700; font-size:17px; }
+h2 { font-size:15px; margin:16px 4px 8px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.02em; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+td,th { padding:7px 6px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; }
+td:first-child,th:first-child { text-align:left; }
+th { font-size:12px; color:var(--muted); font-weight:600; }
+.scroll { overflow-x:auto; }
+.neg { color:var(--out); } .pos { color:var(--in); }
+.sheet-bg { position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:20; display:flex; align-items:flex-end; }
+.sheet { background:#fff; width:100%; max-width:720px; margin:0 auto; border-radius:18px 18px 0 0; padding:16px 16px calc(env(safe-area-inset-bottom) + 16px); max-height:92vh; overflow:auto; }
+.sheet h3 { margin:0 0 4px; font-size:19px; }
+label { display:block; font-size:13px; color:var(--muted); margin:14px 0 6px; }
+input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid var(--line); border-radius:12px; background:#fafbfc; color:var(--ink); font-family:inherit; }
+.seg { display:flex; background:#eef0f3; border-radius:12px; padding:3px; }
+.seg button { flex:1; border:0; background:none; padding:10px 0; border-radius:10px; font-size:15px; color:var(--ink); }
+.seg button.on { background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.12); font-weight:650; }
+.btn { width:100%; border:0; border-radius:14px; padding:15px; font-size:17px; font-weight:650; background:var(--primary); color:#fff; margin-top:18px; }
+.btn:disabled { opacity:.5; }
+.btn.light { background:#eef0f3; color:var(--ink); margin-top:8px; }
+.center { text-align:center; padding:40px 20px; }
+.pending { font-size:12px; color:var(--amber); }
+.refused { font-size:12px; color:var(--out); }
+.note { font-size:12px; color:var(--amber); margin-top:2px; }
+.toast { position:fixed; left:50%; transform:translateX(-50%); bottom:calc(env(safe-area-inset-bottom) + 90px); background:#1c2430; color:#fff; padding:10px 16px; border-radius:12px; font-size:14px; z-index:30; max-width:90vw; }
+.bars .b { height:10px; border-radius:6px; background:var(--primary); }
+</style>
+</head>
+<body>
+<header>
+  <div class="grow"><h1 id="title">Atlas</h1><div class="sub" id="sub"></div></div>
+  <button id="btnLang" aria-label="Langue">EN</button>
+  <button id="btnRefresh" aria-label="Actualiser">↻</button>
+</header>
+<main id="main"><div class="center muted">…</div></main>
+<nav id="nav"></nav>
+<!-- bibliothèque Microsoft (MSAL) 4.30.0, version LTS : adresse vérifiée le 04/10/2026 (HTTP 200, nom global « msal »), empreinte contrôlée par le navigateur -->
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@4.30.0/lib/msal-browser.min.js" integrity="sha384-RGxxfG5yRS8DLU7ZJ8OoLhbV/BsJFHyPuMVHrTLbpj3t5Z15LnviJmaznKY/a7LZ" crossorigin="anonymous"></script>
+<script>
+"use strict";
+// ================= Atlas mobile =================
+// Lit la fiche exportée par Atlas dans le dossier OneDrive partagé (Telephone\Head ou Telephone\Logistique), et écrit chaque modification
+// dans un petit fichier (sous-dossier « modifs ») qu'Atlas reprend sur le PC, au nom de la personne. Aucune donnée n'est stockée ailleurs.
+const CONFIG = { clientId: "" };   // identifiant de l'application enregistrée chez Microsoft (rempli au déploiement ; modifiable dans Réglages)
+const SCOPES = ["Files.ReadWrite.All", "User.Read"];
+const G = "https://graph.microsoft.com/v1.0";
+const T = {
+  fr: { cal:"Calendrier", deliv:"Livraisons", stock:"Stock", pnl:"P&L", expo:"Exposition", settings:"Réglages", login:"Se connecter avec Microsoft",
+        loginTxt:"Connectez-vous avec le compte Microsoft avec lequel le dossier Atlas vous a été partagé.", data:"Données du", none:"Rien ce jour-là",
+        planned:"Prévu", delivered:"Livré", cancelled:"Annulé", late:"en retard", receipt:"Réception", delivery:"Livraison", qty:"Quantité (lb)",
+        date:"Date", carrier:"Transporteur", comment:"Commentaire", save:"Enregistrer", cancel:"Fermer", sent:"Envoyé : Atlas le reprendra sur le PC",
+        pending:"en attente de reprise par Atlas", upcoming:"À venir", lateF:"En retard", done:"Livrées", all:"Tout", count:"Compter", counted:"Quantité comptée (lb)",
+        countDate:"Date du comptage", realised:"Réalisé", forecast:"Prévu", swaps:"Swaps", total:"Total", byProduct:"Par produit", byMonth:"Par mois",
+        floating:"hors totaux : {0} à prix flottant", searching:"Recherche du dossier Atlas…",
+        notFound:"Aucune fiche Atlas trouvée. Collez le lien du dossier reçu par e-mail, puis Enregistrer.", folderLink:"Lien de partage du dossier (reçu par e-mail)",
+        badLink:"Lien non reconnu", clientId:"Identifiant de l'application (client ID)", logout:"Se déconnecter", folder:"Dossier", reset:"Changer de dossier",
+        noData:"Aucune donnée", lot:"Lot", location:"Lieu", refused:"refusé par Atlas", noMargin:"{0} sans marge", toConfirm:"{0} à confirmer",
+        kept:"Pas envoyé (réseau ou connexion) : gardé sur le téléphone, envoi automatique", offline:"Pas de réseau", authErr:"Connexion Microsoft refusée : {0}", retry:"↻ pour réessayer",
+        noLib:"Bibliothèque Microsoft non chargée", locked:"Livraison confirmée ou facturée : statut, date et quantité se modifient dans Atlas", status:"Statut",
+        futureDone:"Une livraison réalisée ne peut pas être datée dans le futur",
+        choose:"Plusieurs comptes Microsoft sont connectés sur ce téléphone : choisissez le vôtre.", denied:"Accès refusé à ce dossier pour {0}",
+        noFile:"fiche absente du dossier pour l'instant (Atlas la réécrit) : {0}", lastKept:"dernière fiche gardée", blocked:"Bloquée : OneDrive refuse l'envoi (voir Réglages)",
+        blockedList:"Modifications bloquées (jamais retirées d'office)", retryBtn:"Réessayer", copy:"Copier", copied:"Copié", drop:"Abandonner", dropConfirm:"Confirmer l'abandon",
+        dropBusy:"Envoi en cours : abandon impossible",
+        dropDeps:"{0} modification(s) saisie(s) ensuite sur la même livraison partent de l'état que celle-ci donne : abandonnée seule, Atlas refusera leur reprise",
+        dropAll:"Abandonner aussi ces {0}", dropOne:"Abandonner celle-ci seule", dropOneDone:"Abandonnée seule : Atlas refusera la reprise des {0} modification(s) suivante(s)",
+        boxKept:"{0} modification(s) pas encore envoyée(s) : gardée(s) sur ce téléphone pour {1}, renvoyée(s) à sa prochaine connexion",
+        boxBlocked:"{0} bloquée(s) : Réglages › Réessayer", boxBlockedIci:"{0} bloquée(s) : Réessayer ci-dessus", lineBlocked:"Modification bloquée sur cette ligne : Réglages › Réessayer ou Abandonner d'abord",
+        other:"Utiliser un autre compte", sheetClosed:"saisie en cours fermée, rien n'a été envoyé", noSheet:"fiche, dossier ou compte absent : rien n'est gardé",
+        orphans:"{0} modification(s) d'une ancienne version de l'app mise(s) de côté : jamais envoyée(s)", demoSent:"Démo : rien n'est envoyé",
+        week:["L","M","M","J","V","S","D"], months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"], demo:"Démo (données d'exemple)" },
+  en: { cal:"Calendar", deliv:"Deliveries", stock:"Inventory", pnl:"P&L", expo:"Exposure", settings:"Settings", login:"Sign in with Microsoft",
+        loginTxt:"Sign in with the Microsoft account the Atlas folder was shared with.", data:"Data of", none:"Nothing that day",
+        planned:"Planned", delivered:"Delivered", cancelled:"Cancelled", late:"late", receipt:"Receipt", delivery:"Delivery", qty:"Quantity (lb)",
+        date:"Date", carrier:"Carrier", comment:"Comment", save:"Save", cancel:"Close", sent:"Sent: Atlas will apply it on the PC",
+        pending:"waiting for Atlas", upcoming:"Upcoming", lateF:"Late", done:"Delivered", all:"All", count:"Count", counted:"Counted quantity (lb)",
+        countDate:"Count date", realised:"Realised", forecast:"Forecast", swaps:"Swaps", total:"Total", byProduct:"By product", byMonth:"By month",
+        floating:"not in totals: {0} floating-price", searching:"Looking for the Atlas folder…",
+        notFound:"No Atlas sheet found. Paste the folder link you received by e-mail, then Save.", folderLink:"Folder sharing link (from the e-mail)",
+        badLink:"Link not recognised", clientId:"Application (client) ID", logout:"Sign out", folder:"Folder", reset:"Change folder",
+        noData:"No data", lot:"Lot", location:"Location", refused:"rejected by Atlas", noMargin:"{0} without margin", toConfirm:"{0} to confirm",
+        kept:"Not sent (network or sign-in): kept on the phone, will be sent automatically", offline:"No network", authErr:"Microsoft sign-in failed: {0}", retry:"tap ↻ to retry",
+        noLib:"Microsoft library not loaded", locked:"Delivery confirmed or invoiced: status, date and quantity are changed in Atlas", status:"Status",
+        futureDone:"A delivered line cannot be dated in the future",
+        choose:"Several Microsoft accounts are signed in on this phone: choose yours.", denied:"Access to this folder denied for {0}",
+        noFile:"sheet missing from the folder for now (Atlas rewrites it): {0}", lastKept:"last sheet kept", blocked:"Blocked: OneDrive refuses the upload (see Settings)",
+        blockedList:"Blocked changes (never removed automatically)", retryBtn:"Retry", copy:"Copy", copied:"Copied", drop:"Abandon", dropConfirm:"Confirm abandon",
+        dropBusy:"Upload in progress: cannot abandon",
+        dropDeps:"{0} later change(s) on the same delivery start from the state this one gives: if it is abandoned alone, Atlas will reject them",
+        dropAll:"Also abandon these {0}", dropOne:"Abandon this one only", dropOneDone:"Abandoned alone: Atlas will reject the {0} later change(s)",
+        boxKept:"{0} change(s) not sent yet: kept on this phone for {1}, sent at their next sign-in",
+        boxBlocked:"{0} blocked: Settings › Retry", boxBlockedIci:"{0} blocked: Retry above", lineBlocked:"A blocked change is waiting on this line: Settings › Retry or Abandon first",
+        other:"Use another account", sheetClosed:"open entry closed, nothing was sent", noSheet:"no sheet, folder or account: nothing kept",
+        orphans:"{0} change(s) from an earlier version of the app set aside: never sent", demoSent:"Demo: nothing is sent",
+        week:["M","T","W","T","F","S","S"], months:["January","February","March","April","May","June","July","August","September","October","November","December"], demo:"Demo (sample data)" } };
+const ls = { get(k, d) { try { const v = localStorage.getItem("atlas." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+             set(k, v) { try { localStorage.setItem("atlas." + k, JSON.stringify(v)); return true; } catch (e) { return false; } },
+             del(k) { try { localStorage.removeItem("atlas." + k); } catch (e) {} } };
+// mémoire du téléphone (round 19, point 1) : seules la langue (lang) et l'identifiant de l'application (clientId) sont communes ; tout le reste est
+// rangé par compte Microsoft (homeAccountId : identifiant stable, qui contient l'annuaire), et la fiche, les attentes et les refus aussi par
+// dossier : « u.<compte>.<clé> » et « u.<compte>.d.<driveId>!<folderId>.<clé> » ; un compte ne lit jamais l'espace d'un autre
+const dosId = p => p.driveId + "!" + p.folderId;
+const kU = (h, k) => "u." + h + "." + k;
+const kD = (h, p, k) => "u." + h + ".d." + dosId(p) + "." + k;
+const moi = () => DEMO ? "demo" : (account && account.homeAccountId) || null;   // propriétaire de ce qui est affiché, gardé et envoyé
+const us = { get: (k, d) => moi() ? ls.get(kU(moi(), k), d) : d, set: (k, v) => !!moi() && ls.set(kU(moi(), k), v) };
+const ds = { get: (k, d) => moi() && place ? ls.get(kD(moi(), place, k), d) : d, set: (k, v) => !!(moi() && place) && ls.set(kD(moi(), place, k), v),
+             del: k => { if (moi() && place) ls.del(kD(moi(), place, k)); } };
+// clés de la version certifiée (round 18), sans propriétaire : effacées ; seule la boîte d'envoi est mise de côté (« orphelin.outbox »), jamais
+// envoyée, jamais affichée, jamais attribuée au compte qui se connecte (amendement d)
+function migrer() {
+  const v = ls.get("outbox", null), ok = !(Array.isArray(v) && v.length) || ls.set("orphelin.outbox", [].concat(ls.get("orphelin.outbox", []) || [], v));
+  ["cache", "place", "pending", "refus", "outbox", "folderLink", "tab"].forEach(k => { if (k !== "outbox" || ok) ls.del(k); });
+}
+let lang = ls.get("lang", (navigator.language || "fr").startsWith("fr") ? "fr" : "en");
+const t = k => (T[lang][k] != null ? T[lang][k] : k);
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const nf = (v, d) => v == null || isNaN(v) ? "—" : Number(v).toLocaleString(lang === "fr" ? "fr-FR" : "en-US", { maximumFractionDigits: d || 0 });
+const money = v => v == null ? "—" : (Math.abs(v) >= 1e6 ? nf(v / 1e6, 2) + " M$" : nf(v) + " $");
+const cm = v => v == null ? "—" : Math.abs(v) >= 1e6 ? nf(v / 1e6, 1) + " M" : Math.abs(v) >= 1e3 ? nf(v / 1e3) + " k" : nf(v);   // montants compacts des tableaux
+const short = v => Math.abs(v) >= 1000 ? nf(v / 1000, v >= 10000 ? 0 : 1) + "k" : nf(v);
+const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const parseD = s => { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d || 1); };
+const fmtD = s => { const d = parseD(s); return d ? d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { day:"2-digit", month:"short" }) : ""; };
+// livraison connue au mois : mois mis en forme dans la langue de l'app (la fiche donne « aaaa-mm »)
+const fmtM = s => { const d = parseD(s); return d ? d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { month:"short", year:"numeric" }) : ""; };
+const DEMO = location.search.includes("demo");
+// libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
+const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
+const prod = c => (PROD[lang][c] || c);
+const EXPO = { fr: { ouverture: "Stock d'ouverture", achats: "Achats", ventes: "Ventes", net: "Flux net", cloture: "Stock de clôture", manque: "Manque" },
+               en: { ouverture: "Opening stock", achats: "Purchases", ventes: "Sales", net: "Net flow", cloture: "Closing stock", manque: "Shortfall" } };
+// « aujourd'hui » recalculé à chaque rendu et au retour au premier plan (l'app peut rester ouverte d'un jour à l'autre)
+const todayIso = () => iso(new Date());
+let today = todayIso();
+
+// place, tab, pending, refus et la fiche sont lus dans l'espace du compte actif au démarrage (ouvrir), jamais avant de connaître ce compte
+let pca = null, account = null, comptes = [], authFailed = null, data = null, place = null, tab = "cal", calMonth = null, selDay = null, delivFilter = "upcoming";
+// modifications envoyées du dossier affiché (« réf|champ » → valeur, fichier, heure UTC) : levées quand la fiche d'Atlas cite LEUR fichier parmi les fichiers repris
+let pending = {};
+// refus d'Atlas du dossier affiché, par livraison ou lot (« réf » → texte, heure), montrés sur la carte jusqu'à un nouvel envoi (14 jours au plus)
+let refus = {};
+// écran sans fiche affiché (Accès refusé, lien du dossier, erreur au démarrage) : render() le redessine (abandon, Réessayer, langue) ; nul ailleurs
+let sansFiche = null;
+// saisies retirées de la boîte par un envoi réussi : seules celles-là sont annoncées « Envoyé »
+const envoyees = new Set();
+// espace du compte actif : son dossier, son onglet, et la fiche, les attentes et les refus de CE dossier ; la fiche n'est montrée que si elle
+// appartient à ce compte et à ce dossier (point 3)
+function ouvrir() {
+  place = us.get("place", null); tab = us.get("tab", "cal");
+  const c = ds.get("cache", null);
+  data = c && place && c.owner === moi() && c.dossier === dosId(place) ? c.fiche : null;
+  pending = ds.get("pending", {}); refus = ds.get("refus", {});
+}
+
+// un message n'en masque jamais un autre : le précédent est retiré (revue 3, défaut 12)
+function toast(s) { document.querySelectorAll(".toast").forEach(x => x.remove()); const d = document.createElement("div"); d.className = "toast"; d.textContent = s; document.body.appendChild(d); setTimeout(() => d.remove(), 3200); }
+
+// ---------- Microsoft (MSAL) et OneDrive (Graph) ----------
+async function initAuth() {
+  const id = ls.get("clientId", CONFIG.clientId);
+  if (!id) return false;
+  // clé du texte gardée avec l'erreur (e.cle) : l'écran d'erreur le recompose dans la langue du moment
+  if (!window.msal || !window.msal.PublicClientApplication) throw Object.assign(new Error(t("noLib")), { cle: "noLib" });
+  pca = new window.msal.PublicClientApplication({ auth: { clientId: id, authority: "https://login.microsoftonline.com/common", redirectUri: location.origin + location.pathname },
+                                                   cache: { cacheLocation: "localStorage" } });
+  await pca.initialize();
+  // erreur au retour de Microsoft (consentement refusé, annulation) : affichée, jamais avalée ; pas de nouvelle redirection en boucle
+  const r = await pca.handleRedirectPromise().catch(e => { authFailed = e; return null; });
+  // compte actif explicite (point 1) : celui qui revient de Microsoft, sinon celui que MSAL garde comme actif ; un seul compte connu : celui-là ;
+  // plusieurs comptes sans compte actif : écran de choix, rien n'est affiché (jamais le premier de la liste)
+  if (r && r.account) pca.setActiveAccount(r.account);
+  let a = pca.getActiveAccount(); comptes = [];
+  if (!a) { const tous = pca.getAllAccounts(); if (tous.length === 1) { a = tous[0]; pca.setActiveAccount(a); } else comptes = tous; }
+  account = a && a.homeAccountId ? a : null;
+  return true;
+}
+// plusieurs comptes Microsoft sans compte actif : aucune donnée, le choix du compte ; ou un autre compte que ceux de la liste ; le motif d'un
+// retour en erreur de Microsoft (« Utiliser un autre compte » annulé) y est affiché ; écran redessiné par render() (langue)
+function choixCompte() {
+  data = null; place = null; pending = {}; refus = {}; sansFiche = choixCompte; header(); $("#nav").innerHTML = "";
+  $("#main").innerHTML = '<div class="center">' + (authFailed ? '<p class="refused">' + esc(authText()) + '</p>' : "") + '<p class="muted">' + t("choose") + '</p>' +
+    comptes.map((a, i) => '<button class="btn light" data-i="' + i + '">' + esc(a.username || a.name || "?") + '</button>').join("") +
+    '<button class="btn light" id="autreCompte">' + t("other") + '</button></div>';
+  // choisir un compte est une action volontaire, comme ↻ : le garde-fou anti-boucle (authFailed) est levé ; un nouveau refus au retour de
+  // Microsoft est reposé par initAuth
+  $("#main").querySelectorAll("[data-i]").forEach(b => b.onclick = () => { authFailed = null; pca.setActiveAccount(comptes[+b.dataset.i]); boot(); });
+  $("#autreCompte").onclick = autreCompte;
+}
+// « Utiliser un autre compte » (écran de choix, écran du lien) : Microsoft demande le compte ; au retour, il devient le compte actif (initAuth)
+function autreCompte() { if (pca) pca.loginRedirect({ scopes: SCOPES, prompt: "select_account" }); }
+const NET = ["no_network_connectivity", "post_request_failed", "get_request_failed", "endpoints_resolution_error", "network_error", "timed_out"];
+// jeton : une coupure réseau ne redirige jamais (la page serait remplacée par une page d'erreur) ; une reconnexion n'a lieu que si rien n'est
+// en cours de saisie (quiet : envoi en arrière-plan) ; ce qui est à envoyer est déjà gardé dans la boîte d'envoi
+async function token(quiet) {
+  try { return (await pca.acquireTokenSilent({ scopes: SCOPES, account })).accessToken; }
+  catch (e) {
+    if (!navigator.onLine || NET.includes(e && e.errorCode)) throw Object.assign(new Error(t("offline")), { cle: "offline" });
+    if (authFailed || quiet || document.querySelector(".sheet-bg")) throw e;
+    await pca.acquireTokenRedirect({ scopes: SCOPES, account }); throw e;
+  }
+}
+async function gfetch(path, opt, quiet) {
+  const r = await fetch(path.startsWith("http") ? path : G + path, Object.assign({}, opt || {}, { headers: Object.assign({ Authorization: "Bearer " + await token(quiet) }, (opt && opt.headers) || {}) }));
+  if (!r.ok) { const er = new Error("Graph " + r.status); er.status = r.status; throw er; }
+  return r;
+}
+// lien de partage → élément partagé (GET /shares/u!{base64url du lien}/driveItem : driveId et id du dossier), puis la fiche Atlas qu'il contient
+const shareToken = u => "u!" + btoa(unescape(encodeURIComponent(u.trim()))).replace(/=+$/, "").replace(/\//g, "_").replace(/\+/g, "-");
+async function placeFromLink(link, names) {
+  const r = await (await gfetch("/shares/" + shareToken(link) + "/driveItem")).json();
+  const did = r.parentReference && r.parentReference.driveId; if (!did || !r.folder) return null;
+  const ch = await (await gfetch("/drives/" + did + "/items/" + r.id + "/children")).json();
+  const f = (ch.value || []).find(x => names.includes(x.name));
+  return f ? { driveId: did, folderId: r.id, fileId: f.id, name: f.name } : null;
+}
+// lien collé non reconnu : seul le détail (« (Graph 404) ») est gardé, le texte est composé à chaque dessin de l'écran du lien (langue)
+let linkError = null;
+// cherche la fiche Atlas : d'abord par le lien de partage collé dans l'app (voie principale), puis en secours dans son propre OneDrive et
+// dans les éléments partagés avec soi (sharedWithMe, en fin de vie chez Microsoft)
+async function findPlace() {
+  const names = ["atlas_head.json", "atlas_logistique.json"]; linkError = null;
+  const link = us.get("folderLink", "");   // lien collé par CE compte (jamais celui d'un autre)
+  if (link) {
+    try { const p = await placeFromLink(link, names); if (p) return p; linkError = { detail: "" }; }
+    catch (e) { if (e && e.status >= 400 && e.status < 500) linkError = { detail: " (" + e.message + ")" }; else throw e; }   // réseau : erreur montrée, pas l'écran « introuvable »
+  }
+  try {
+    for (const n of names) {
+      const s = await (await gfetch("/me/drive/root/search(q='" + n + "')")).json();
+      const it = (s.value || []).find(x => x.name === n);
+      const ri = it && (it.remoteItem || it);
+      if (ri && ri.parentReference && ri.parentReference.driveId) return { driveId: ri.parentReference.driveId, folderId: ri.parentReference.id, fileId: ri.id, name: n };
+    }
+  } catch (e) { if (e && e.errorCode) throw e; console.warn(e); }   // connexion refusée (erreur MSAL) : motif montré, jamais « aucune fiche trouvée »
+  let sh = { value: [] };
+  try { sh = await (await gfetch("/me/drive/sharedWithMe")).json(); } catch (e) { if (e && e.errorCode) throw e; console.warn(e); }
+  for (const s of sh.value || []) {
+    const ri = s.remoteItem || s; const did = ri.parentReference && ri.parentReference.driveId; if (!did || !(ri.folder || s.folder)) continue;
+    try {
+      const ch = await (await gfetch("/drives/" + did + "/items/" + ri.id + "/children")).json();
+      const f = (ch.value || []).find(x => names.includes(x.name));
+      if (f) return { driveId: did, folderId: ri.id, fileId: f.id, name: f.name };
+    } catch (e) { if (e && e.errorCode) throw e; console.warn(e); }
+  }
+  return null;
+}
+// écran du lien : aussi les sorties du compte (entrées bloquées, Se déconnecter, Utiliser un autre compte) ; redessiné par render()
+function linkScreen() {
+  data = null; sansFiche = linkScreen; $("#nav").innerHTML = "";
+  const box = us.get("outbox", []);
+  $("#main").innerHTML = '<div class="center"><p class="muted">' + t("notFound") + '</p>' + (linkError ? '<p class="refused">' + esc(t("badLink") + linkError.detail) + '</p>' : "") +
+    '<label>' + t("folderLink") + '</label><input id="lnk" autocapitalize="off" autocorrect="off" value="' + esc(us.get("folderLink", "")) + '"><button class="btn" id="saveLnk">' + t("save") + '</button>' +
+    htmlBloquees(box) + htmlCompte(box, true, true) + '</div>';
+  $("#saveLnk").onclick = () => { us.set("folderLink", $("#lnk").value.trim()); place = null; us.set("place", null); authFailed = null; boot(); };
+  lierSorties();
+}
+// autre dossier, même compte : la fiche de l'ancien dossier est effacée ; ses attentes et ses refus restent rangés sous lui (retrouvés au retour)
+function changerDossier() { if (!DEMO) { ds.del("cache"); data = null; } us.set("place", null); place = null; pending = {}; refus = {}; authFailed = null; boot(); }
+// entrées de la boîte bloquées : refusées par OneDrive (403 ou 404) à l'envoi, et celles qui attendent derrière elles dans le même dossier
+// (ordre gardé par dossier) ; jamais retirées d'office
+function bloquees(box) { const s = new Set(), d = new Set(); box.forEach(e => { const f = dosId(e); if (e.bloque || d.has(f)) { s.add(e.name); d.add(f); } }); return s; }
+// pour le dossier affiché : fichiers bloqués (leurs attentes ne recouvrent pas la fiche) et références à marquer « bloquée » (amendement a)
+function blocage() {
+  const box = us.get("outbox", []), fichiers = bloquees(box), refs = new Set();
+  box.forEach(e => { if (fichiers.has(e.name) && place && dosId(e) === dosId(place)) ((e.body && e.body.changements) || []).forEach(c => refs.add(c.ref)); });
+  return { fichiers, refs };
+}
+// fiche reçue : une modification envoyée n'est levée que quand la fiche cite SON fichier parmi les fichiers repris par Atlas (jamais sur une simple
+// comparaison d'heures) ; un refus est gardé pour être montré sur la carte
+function settle() {
+  // un rangement « doublon » (renvoi identique, fichier rangé à un passage suivant) ne remplace jamais le résultat de la reprise réelle
+  const done = {}; (data.traitees || []).forEach(x => { if (x && x.fichier && (!done[x.fichier] || done[x.fichier].code === "doublon")) done[x.fichier] = x; });
+  const box = us.get("outbox", []), bq = bloquees(box), out = new Set(box.map(e => e.name)), now = Date.now(), old = q => !q || isNaN(Date.parse(q)) || now - Date.parse(q) > 14 * 864e5;
+  for (const k of Object.keys(pending)) {
+    const p = pending[k], r = p && p.fichier && done[p.fichier], ref = k.split("|")[0];
+    if (r) { if (r.code === "refuse" || r.code === "partiel") refus[ref] = { texte: r.texte || "", quand: r.quand || new Date().toISOString() }; delete pending[k]; }
+    // pas encore envoyée : jamais levée, SAUF si son entrée est bloquée (403 ou 404) : 14 jours au plus, comme le reste (amendement a)
+    else if (p && p.fichier && out.has(p.fichier) && !bq.has(p.fichier)) continue;
+    else if (!p || !p.fichier || old(p.quand)) delete pending[k];
+  }
+  for (const k of Object.keys(refus)) if (old(refus[k].quand)) delete refus[k];
+  ds.set("pending", pending); ds.set("refus", refus);
+}
+// règle du cache (amendement b) : 403, ou 404 du dossier lui-même → la fiche de CE compte et de CE dossier est retirée de l'écran et du
+// téléphone ; 404 du seul fichier (le dossier répond : Atlas remplace la fiche par File.Replace) → dernière fiche gardée (s'il y en a une), avec un message ;
+// coupure réseau ou autre erreur → gardée
+async function refusLecture(e) {
+  if (!e || (e.status !== 403 && e.status !== 404)) return;
+  if (e.status === 404) {
+    // « dernière fiche gardée » seulement s'il y en a une à l'écran ; sinon, rien de gardé : ↻ pour réessayer ; e.texte est une fonction : seul
+    // l'état « fiche gardée » au moment de l'erreur est retenu, le texte est composé à chaque dessin (langue)
+    try { await gfetch("/drives/" + place.driveId + "/items/" + place.folderId); const garde = !!data; e.texte = () => "⚠ " + e.message + " · " + t("noFile").replace("{0}", garde ? t("lastKept") : t("retry")); return; }
+    catch (e2) { if (!e2 || (e2.status !== 403 && e2.status !== 404)) return; }
+  }
+  ds.del("cache"); data = null; e.acces = true;
+}
+async function load() {
+  if (DEMO) { data = await (await fetch(ls.get("demoFile", "demo_head.json") + "?t=" + Date.now())).json(); settle(); return; }
+  const h = moi();
+  if (!place) {
+    $("#main").innerHTML = '<div class="center muted">' + t("searching") + '</div>';
+    const p = await findPlace(); if (moi() !== h) return;
+    place = p; us.set("place", place); pending = ds.get("pending", {}); refus = ds.get("refus", {});   // attentes et refus de CE dossier
+  }
+  if (!place) { linkScreen(); return; }
+  // lecture par le NOM de la fiche dans le dossier : une fiche recréée par Atlas (nouvel identifiant OneDrive) reste trouvée
+  const p = place; let r;
+  try { r = await gfetch("/drives/" + p.driveId + "/items/" + p.folderId + ":/" + encodeURIComponent(p.name) + ":/content", { cache: "no-store" }); }
+  catch (e) { if (moi() === h && place === p) await refusLecture(e); throw e; }
+  const fiche = await r.json(); if (moi() !== h || place !== p) return;   // compte ou dossier changé pendant la lecture : rien n'est rangé
+  data = fiche; ds.set("cache", { owner: h, dossier: dosId(p), fiche });
+  settle();
+}
+// nom du fichier d'une modification : fixé à l'ouverture de la feuille (un nouvel essai réécrit le même fichier, jamais un second)
+const newName = () => new Date().toISOString().replace(/[:.]/g, "-") + "_" + Math.random().toString(36).slice(2, 8) + ".json";
+// envoi : la modification est d'abord gardée dans la boîte d'envoi du téléphone, puis écrite dans « modifs » ; un échec (réseau, jeton) la laisse
+// dans la boîte, renvoyée automatiquement (démarrage, ↻, retour du réseau) sous le même nom ; etat.gardee : posé dès qu'elle est gardée
+async function send(changes, name, etat) {
+  // fiche, dossier et compte vérifiés AVANT tout (feuille restée ouverte sur une fiche retirée) : erreur explicite, rien n'est gardé, la feuille
+  // reste ouverte, jamais un faux « Envoyé »
+  if (!data || (!DEMO && (!place || !account || !moi()))) throw new Error(t("noSheet"));
+  const who = DEMO ? "démo" : (account && (account.name || account.username)) || "téléphone";
+  const body = { v: 1, auteur: who, quand: new Date().toISOString(), profil: data.profil, changements: changes };
+  if (!DEMO) {
+    // compte qui dépose, en plus de l'auteur (Atlas lit seulement « auteur » et « changements » aujourd'hui) ; entrée rangée dans la boîte de CE compte
+    body.compte = account.username || ""; body.compteId = account.homeAccountId;
+    const box = us.get("outbox", []).filter(e => e.name !== name); box.push({ name, owner: moi(), driveId: place.driveId, folderId: place.folderId, body });
+    if (!us.set("outbox", box) || !us.get("outbox", []).some(e => e.name === name)) throw new Error("localStorage");
+  }
+  if (etat) etat.gardee = true;
+  for (const c of changes) { pending[c.ref + "|" + c.champ] = { valeur: c.valeur, fichier: DEMO ? null : name, quand: body.quand }; delete refus[c.ref]; }
+  ds.set("pending", pending); ds.set("refus", refus);
+  if (!DEMO) await flush();
+}
+let flushing = null;
+function flush(quiet) {
+  if (DEMO) return Promise.resolve();
+  // un envoi déjà en cours : on passe après lui (une modification ajoutée entre-temps part dans ce second passage, jamais « envoyée » à tort)
+  if (flushing) return flushing.then(() => flush(quiet), () => flush(quiet));
+  // « await null » d'abord : la fonction rend la main avant tout, l'affectation de « flushing » a donc lieu AVANT le finally, même avec une boîte
+  // vide (sinon une promesse déjà résolue restait dans « flushing » pour toujours et l'appel suivant bouclait sans fin) ; le finally ne remet à nul
+  // que SON passage
+  const run = (async () => {
+    await null;
+    try {
+      // seules les entrées du compte actif partent, avec SON jeton (point 3) ; dossier par dossier, dans l'ordre de la boîte (Atlas reprend par nom
+      // de fichier) ; un échec n'arrête que SON dossier : 403 ou 404 → entrée marquée « bloquée » (le reste de ce dossier attend derrière elle),
+      // réseau ou jeton → ce dossier attend le prochain envoi ; les autres dossiers continuent (point 6) ; la première erreur est rendue à la fin
+      const h = moi(), arret = new Set(); let err = null;
+      for (;;) {
+        if (!h || moi() !== h) break;
+        const box = us.get("outbox", []), bq = bloquees(box);
+        const e = box.find(x => x.owner === h && !bq.has(x.name) && !arret.has(dosId(x))); if (!e) break;
+        try { await gfetch("/drives/" + e.driveId + "/items/" + e.folderId + ":/modifs/" + encodeURIComponent(e.name) + ":/content", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(e.body) }, quiet); }
+        catch (er) {
+          arret.add(dosId(e)); err = err || er;
+          if (er && (er.status === 403 || er.status === 404)) { const b = us.get("outbox", []), x = b.find(y => y.name === e.name); if (x) { x.bloque = { code: er.status, quand: new Date().toISOString() }; us.set("outbox", b); } }
+          continue;
+        }
+        if (!us.set("outbox", us.get("outbox", []).filter(x => x.name !== e.name))) break;   // mémoire du téléphone illisible : jamais de boucle
+        envoyees.add(e.name);
+      }
+      if (err) throw err;
+    } finally { if (flushing === run) flushing = null; }
+  })();
+  flushing = run;
+  return run;
+}
+
+// ---------- écrans ----------
+function tabs() {
+  const h = data && data.profil === "head";
+  const I = { cal: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+             truck: '<svg viewBox="0 0 24 24"><path d="M2 6h12v10H2zM14 9h4.5L22 12.5V16h-8z"/><circle cx="6.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>',
+             chart: '<svg viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 15l3.5-4.5 3 2.5L20 6"/></svg>',
+             box: '<svg viewBox="0 0 24 24"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></svg>',
+             gear: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>' };
+  const list = h ? [["cal", I.cal, t("cal")], ["deliv", I.truck, t("deliv")], ["pnl", I.chart, t("pnl")], ["expo", I.box, t("expo")], ["settings", I.gear, t("settings")]]
+                 : [["cal", I.cal, t("cal")], ["deliv", I.truck, t("deliv")], ["stock", I.box, t("stock")], ["settings", I.gear, t("settings")]];
+  if (!list.some(x => x[0] === tab)) tab = "cal";
+  $("#nav").innerHTML = list.map(x => '<button data-tab="' + x[0] + '" class="' + (x[0] === tab ? "on" : "") + '">' + x[1] + esc(x[2]) + '</button>').join("");
+  $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => { tab = b.dataset.tab; us.set("tab", tab); render(); });
+}
+function header() {
+  $("#title").textContent = "Atlas" + (data ? " · " + (data.profil === "head" ? "Head" : (lang === "fr" ? "Logistique" : "Logistics")) : "");
+  const g = data && data.genere ? new Date(data.genere) : null;   // heure UTC (suffixe Z) : affichée à l'heure du téléphone
+  $("#sub").textContent = g && !isNaN(g) ? t("data") + " " + g.toLocaleString(lang === "fr" ? "fr-FR" : "en-US", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" }) + (DEMO ? " · " + t("demo") : "") : (DEMO && data ? t("demo") : "");
+  $("#btnLang").textContent = lang === "fr" ? "EN" : "FR";
+}
+// livraison telle que le téléphone la voit : valeurs de la fiche, recouvertes par les modifications envoyées pas encore reprises, sauf celles
+// d'une entrée bloquée : la carte dit alors « bloquée », jamais « en attente » (amendement a)
+const DK = ["statut", "date", "qte", "transporteur", "commentaire"];
+function opView(l, b) {
+  b = b || blocage();
+  const pv = c => { const p = pending[l.ref + "|" + c]; return p && !(p.fichier && b.fichiers.has(p.fichier)) ? p : null; };
+  const st = pv("statut") ? pv("statut").valeur : l.statut, d = pv("date") ? pv("date").valeur : l.date;
+  const q = pv("qte") ? pv("qte").valeur : l.qte, c = pv("transporteur") ? pv("transporteur").valeur : l.transporteur;
+  return Object.assign({}, l, { statut: st, date: d, qte: q, transporteur: c, attente: DK.some(k => pv(k)), bloquee: b.refs.has(l.ref), refus: refus[l.ref] || null, retard: st === "Prévu" && d && d < today });
+}
+function ops() { const b = blocage(); return (data.livraisons || []).map(l => opView(l, b)); }
+function opCard(l) {
+  const cls = l.sens === "achat" ? "in" : "out";
+  const stChip = l.statut === "Réalisé" ? '<span class="chip in">' + t("delivered") + '</span>' : l.statut === "Annulé" ? '<span class="chip">' + t("cancelled") + '</span>'
+               : l.retard ? '<span class="chip late">' + t("late") + '</span>' : '<span class="chip">' + t("planned") + '</span>';
+  return '<div class="card op ' + cls + '" data-ref="' + esc(l.ref) + '"><div class="bar"></div><div class="grow">' +
+    '<div class="row"><div class="grow"><b>' + esc(l.cpty) + '</b> · ' + esc(prod(l.produit)) + '</div>' + stChip + '</div>' +
+    '<div class="row"><div class="grow muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : "") + (l.contrat ? " · " + esc(l.contrat) : "") + (l.transporteur ? " · " + esc(l.transporteur) : "") + '</div>' +
+    '<div class="q">' + nf(l.qte) + ' lb</div></div>' + (l.attente ? '<div class="pending">' + t("pending") + '</div>' : "") + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : "") +
+    (l.refus ? '<div class="refused">' + t("refused") + " : " + esc(l.refus.texte) + '</div>' : "") + '</div></div>';
+}
+function bindOps(root) { root.querySelectorAll(".op").forEach(c => c.onclick = () => editOp(c.dataset.ref)); }
+function renderCal() {
+  const now = new Date(); if (!calMonth) calMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const y = calMonth.getFullYear(), m = calMonth.getMonth(), first = new Date(y, m, 1), back = (first.getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate(), rows = Math.ceil((back + days) / 7);
+  const byDay = {}; ops().filter(l => l.date && l.statut !== "Annulé").forEach(l => (byDay[l.date] = byDay[l.date] || []).push(l));
+  let h = '<div class="cal"><div class="calhead"><button id="pm">‹</button><b>' + t("months")[m] + " " + y + '</b><button id="nm">›</button></div><div class="grid">' + t("week").map(w => '<div class="dow">' + w + '</div>').join("");
+  for (let i = 0; i < rows * 7; i++) {
+    const d = new Date(y, m, 1 - back + i), k = iso(d), ev = byDay[k] || [];
+    // une quantité n'a de sens que pour un seul produit : sinon, le nombre d'opérations
+    const mark = list => { if (!list.length) return ""; const prods = new Set(list.map(e => e.produit)); return prods.size === 1 ? short(list.reduce((a, e) => a + e.qte, 0)) : list.length + "×"; };
+    const inq = mark(ev.filter(e => e.sens === "achat")), outq = mark(ev.filter(e => e.sens !== "achat"));
+    h += '<button class="day' + (d.getMonth() !== m ? " other" : "") + (k === today ? " today" : "") + (k === selDay ? " sel" : "") + '" data-d="' + k + '"><span class="n">' + d.getDate() + '</span><div class="marks">' +
+         (inq ? '<span class="m in">▲' + inq + '</span>' : "") + (outq ? '<span class="m out">▼' + outq + '</span>' : "") + '</div></button>';
+  }
+  h += '</div></div>';
+  const sel = selDay ? (byDay[selDay] || []) : null;
+  h += sel ? '<h2>' + fmtD(selDay) + '</h2>' + (sel.length ? sel.map(opCard).join("") : '<div class="card muted">' + t("none") + '</div>')
+           : '<h2>' + t("upcoming") + '</h2>' + ops().filter(l => l.statut === "Prévu" && l.date && l.date >= today).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 8).map(opCard).join("");
+  $("#main").innerHTML = h;
+  $("#pm").onclick = () => { calMonth = new Date(y, m - 1, 1); selDay = null; render(); };
+  $("#nm").onclick = () => { calMonth = new Date(y, m + 1, 1); selDay = null; render(); };
+  $("#main").querySelectorAll(".day").forEach(b => b.onclick = () => { selDay = b.dataset.d === selDay ? null : b.dataset.d; render(); });
+  bindOps($("#main"));
+}
+function renderDeliv() {
+  const f = { upcoming: l => l.statut === "Prévu" && !l.retard, lateF: l => l.retard, done: l => l.statut === "Réalisé", all: l => l.statut !== "Annulé" };
+  const list = ops().filter(f[delivFilter]).sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999") * (delivFilter === "done" ? -1 : 1));
+  let h = '<div class="chips">' + ["upcoming", "lateF", "done", "all"].map(k => '<button data-f="' + k + '" class="' + (k === delivFilter ? "on" : "") + '">' + t(k) +
+          (k === "lateF" ? " (" + ops().filter(f.lateF).length + ")" : "") + '</button>').join("") + '</div>';
+  h += list.length ? list.map(opCard).join("") : '<div class="card muted">' + t("noData") + '</div>';
+  $("#main").innerHTML = h;
+  $("#main").querySelectorAll(".chips button").forEach(b => b.onclick = () => { delivFilter = b.dataset.f; render(); });
+  bindOps($("#main"));
+}
+function renderStock() {
+  const inv = data.inventaire || [], b = blocage(), pv = k => { const p = pending[k]; return p && !(p.fichier && b.fichiers.has(p.fichier)) ? p : null; };
+  $("#main").innerHTML = inv.length ? inv.map(l => {
+    const p = pv(l.lot + "|compte"), pc = pv(l.lot + "|commentaire"), r = refus[l.lot];
+    return '<div class="card"><div class="row"><div class="grow"><b>' + esc(prod(l.produit)) + '</b><div class="muted">' + esc(l.lot) + (l.lieu ? " · " + esc(l.lieu) : "") + '</div>' +
+      (p ? '<div class="pending">' + t("counted") + " : " + nf(p.valeur) + " lb · " + t("pending") + '</div>' : pc ? '<div class="pending">' + t("pending") + '</div>' : "") +
+      (b.refs.has(l.lot) ? '<div class="refused">' + t("blocked") + '</div>' : "") +
+      (r ? '<div class="refused">' + t("refused") + " : " + esc(r.texte) + '</div>' : "") +
+      '</div><div style="text-align:right"><div class="q" style="font-weight:700;font-size:18px">' + nf(l.stock) + ' lb</div>' +
+      '<button class="chip" data-lot="' + esc(l.lot) + '" style="margin-top:6px;border:0">' + t("count") + '</button></div></div></div>';
+  }).join("") : '<div class="card muted">' + t("noData") + '</div>';
+  $("#main").querySelectorAll("[data-lot]").forEach(b => b.onclick = () => countLot(b.dataset.lot));
+}
+function renderPnl() {
+  const p = data.pnl || { produits: [], mois: [] };
+  const tot = p.produits.reduce((a, r) => ({ realise: a.realise + r.realise, prevu: a.prevu + r.prevu, swaps: a.swaps + r.swaps, total: a.total + r.total }), { realise: 0, prevu: 0, swaps: 0, total: 0 });
+  // une marge inconnue n'est pas nulle : même signal que les cartes RÉALISÉ et PRÉVISIONNEL du PC
+  const amb = s => '<div class="note">' + s + '</div>';
+  const fcN = [p.sansMargePrevu ? t("noMargin").replace("{0}", p.sansMargePrevu) : "", p.aConfirmer ? t("toConfirm").replace("{0}", p.aConfirmer) : ""].filter(Boolean).join(" · ");
+  let h = '<div class="card"><div class="muted">' + t("total") + '</div><div class="big ' + (tot.total < 0 ? "neg" : "") + '">' + money(tot.total) + '</div>' +
+          '<div class="row" style="margin-top:8px;align-items:flex-start"><div class="grow"><div class="muted">' + t("realised") + '</div><b' + (p.sansMargeRealise ? ' style="color:var(--amber)"' : "") + '>' + money(tot.realise) + '</b>' + (p.sansMargeRealise ? amb(t("noMargin").replace("{0}", p.sansMargeRealise)) : "") + '</div>' +
+          '<div class="grow"><div class="muted">' + t("forecast") + '</div><b' + (p.sansMargePrevu ? ' style="color:var(--amber)"' : "") + '>' + money(tot.prevu) + '</b>' + (fcN ? amb(fcN) : "") + '</div>' +
+          '<div class="grow"><div class="muted">' + t("swaps") + '</div><b class="' + (tot.swaps < 0 ? "neg" : "") + '">' + money(tot.swaps) + '</b></div></div>' +
+          (p.flottants ? '<div class="muted" style="margin-top:8px">' + t("floating").replace("{0}", p.flottants) + (p.flottantsSwaps ? (lang === "fr" ? ", dont " : ", incl. ") + p.flottantsSwaps + " swaps" : "") + '</div>' : "") + '</div>';
+  h += '<h2>' + t("byProduct") + '</h2><div class="card scroll"><table><tr><th></th><th>' + t("realised") + '</th><th>' + t("forecast") + '</th><th>' + t("swaps") + '</th><th>' + t("total") + '</th></tr>' +
+       p.produits.map(r => '<tr><td>' + esc(prod(r.produit)) + '</td><td>' + cm(r.realise) + '</td><td>' + cm(r.prevu) + '</td><td>' + cm(r.swaps) + '</td><td><b>' + cm(r.total) + '</b></td></tr>').join("") + '</table></div>';
+  const mx = Math.max(1, ...p.mois.map(r => Math.abs(r.total)));
+  h += '<h2>' + t("byMonth") + '</h2><div class="card">' + p.mois.map(r => { const d = parseD(r.mois);
+       return '<div class="row" style="margin:6px 0"><div style="width:74px" class="muted">' + t("months")[d.getMonth()].slice(0, 4) + " " + String(d.getFullYear()).slice(2) + '</div><div class="grow bars"><div class="b" style="width:' + Math.max(2, Math.abs(r.total) / mx * 100) + '%;background:' + (r.total < 0 ? "var(--out)" : "var(--primary)") + '"></div></div><div style="width:86px;text-align:right">' + money(r.total) + '</div></div>'; }).join("") + '</div>';
+  $("#main").innerHTML = h;
+}
+let expoProd = null;
+function renderExpo() {
+  const e = data.exposition || { mois: [], produits: [] };
+  if (!expoProd || !e.produits.some(p => p.produit === expoProd)) expoProd = e.produits[0] && e.produits[0].produit;
+  let h = '<div class="chips">' + e.produits.map(p => '<button data-p="' + esc(p.produit) + '" class="' + (p.produit === expoProd ? "on" : "") + '">' + esc(prod(p.produit)) + '</button>').join("") + '</div>';
+  const pr = e.produits.find(p => p.produit === expoProd);
+  if (pr) h += '<div class="card scroll"><table><tr><th>lb</th>' + e.mois.map(m => { const d = parseD(m); return '<th>' + t("months")[d.getMonth()].slice(0, 3) + (d.getMonth() === 0 || m === e.mois[0] ? " " + String(d.getFullYear()).slice(2) : "") + '</th>'; }).join("") + '</tr>' +
+    pr.lignes.map(l => '<tr><td' + (l.style === "total" ? ' style="font-weight:700"' : "") + '>' + esc((EXPO[lang][l.code]) || l.libelle) + '</td>' + l.v.map(v => '<td class="' + (l.style === "short" && v > 0 ? "neg" : "") + '"' + (l.style === "total" ? ' style="font-weight:700"' : "") + '>' + (v == null ? "" : short(v)) + '</td>').join("") + '</tr>').join("") + '</table></div>';
+  $("#main").innerHTML = h;
+  $("#main").querySelectorAll("[data-p]").forEach(b => b.onclick = () => { expoProd = b.dataset.p; render(); });
+}
+function renderSettings() {
+  const box = us.get("outbox", []), orph = ls.get("orphelin.outbox", []);
+  $("#main").innerHTML = '<div class="card"><label>' + t("clientId") + '</label><input id="cid" value="' + esc(ls.get("clientId", CONFIG.clientId)) + '" autocapitalize="off" autocorrect="off">' +
+    '<button class="btn" id="saveCid">' + t("save") + '</button>' +
+    '<label>' + t("folderLink") + '</label><input id="lnk" autocapitalize="off" autocorrect="off" value="' + esc(us.get("folderLink", "")) + '"><button class="btn light" id="saveLnk">' + t("save") + '</button>' +
+    (place ? '<label>' + t("folder") + '</label><div class="muted">' + esc(place.name) + '</div><button class="btn light" id="resetPlace">' + t("reset") + '</button>' : "") +
+    htmlBloquees(box) +
+    (orph.length ? '<p class="muted">' + esc(t("orphans").replace("{0}", orph.length)) + '</p>' : "") +
+    (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t("login") + '</button>' : "") +
+    htmlCompte(box, false) + '</div>';
+  $("#saveCid").onclick = () => { ls.set("clientId", $("#cid").value.trim()); location.reload(); };
+  // action volontaire après un échec de connexion : le garde-fou anti-boucle (authFailed) ne bloque que la redirection AUTOMATIQUE
+  $("#saveLnk").onclick = () => { us.set("folderLink", $("#lnk").value.trim()); changerDossier(); };
+  if ($("#resetPlace")) $("#resetPlace").onclick = changerDossier;
+  if ($("#relogin")) $("#relogin").onclick = () => { authFailed = null; pca.acquireTokenRedirect({ scopes: SCOPES, account }); };
+  lierSorties();
+}
+// entrées bloquées du compte (point 6) : Réessayer, Copier le texte, Abandonner en deux touches ; jamais retirées d'office ; dans Réglages ET sur
+// les écrans sans fiche (Accès refusé, lien du dossier, erreur au démarrage), où elles restent joignables
+function htmlBloquees(box) {
+  const bq = bloquees(box), lb = box.filter(e => bq.has(e.name));
+  return lb.length ? '<label>' + t("blockedList") + '</label>' + lb.map(e => '<div class="row" style="margin:6px 0"><div class="grow muted">' + esc(fmtD(String(e.body.quand || "").slice(0, 10))) + " · " +
+    esc(((e.body && e.body.changements) || []).map(c => c.ref + " " + c.champ).join(", ")) + '</div><button class="chip" style="border:0" data-copy="' + esc(e.name) + '">' + t("copy") + '</button>' +
+    '<button class="chip out" style="border:0" data-drop="' + esc(e.name) + '">' + t("drop") + '</button></div>').join("") + '<button class="btn light" id="retryBlocked">' + t("retryBtn") + '</button>' : "";
+}
+// compte actif : avertissement AVANT de se déconnecter, la boîte restant gardée pour ce compte (les entrées bloquées, y compris celles qui
+// attendent derrière elles, comptées à part : elles attendent Réessayer ; les autres partent à sa prochaine connexion), puis Se déconnecter ;
+// autre : Utiliser un autre compte (écran du lien) ; ici : écran sans fiche, sans onglet Réglages (la note renvoie au bouton Réessayer au-dessus)
+function htmlCompte(box, autre, ici) {
+  const bq = bloquees(box), nb = box.filter(e => bq.has(e.name)).length, na = box.length - nb;
+  return (account ? '<label>' + esc(account.username || "") + '</label>' +
+      (na ? '<div class="note">' + esc(t("boxKept").replace("{0}", na).replace("{1}", account.username || "")) + '</div>' : "") +
+      (nb ? '<div class="note">' + esc(t(ici ? "boxBlockedIci" : "boxBlocked").replace("{0}", nb)) + '</div>' : "") +
+      '<button class="btn light" id="logout">' + t("logout") + '</button>' : "") +
+    (autre && pca ? '<button class="btn light" id="autreCompte">' + t("other") + '</button>' : "");
+}
+function lierSorties() {
+  $("#main").querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copier(b.dataset.copy));
+  $("#main").querySelectorAll("[data-drop]").forEach(b => b.onclick = () => { if (b.dataset.arme) abandonner(b.dataset.drop); else { b.dataset.arme = "1"; b.textContent = t("dropConfirm"); } });
+  // Réessayer : l'écran n'est redessiné qu'à la fin de l'envoi ; un Abandonner touché entre-temps est refusé par abandonner (entrée plus bloquée)
+  if ($("#retryBlocked")) $("#retryBlocked").onclick = () => { const b = us.get("outbox", []); b.forEach(e => { delete e.bloque; }); us.set("outbox", b); flush().catch(e => console.warn(e)).then(render); };
+  if ($("#logout")) $("#logout").onclick = deconnecter;
+  if ($("#autreCompte")) $("#autreCompte").onclick = autreCompte;
+}
+// texte d'une entrée bloquée, à recopier ailleurs (presse-papiers, sinon affiché pour être sélectionné)
+function copier(name) {
+  const e = us.get("outbox", []).find(x => x.name === name); if (!e) return;
+  const txt = JSON.stringify(e.body, null, 1);
+  const voir = () => sheet('<textarea rows="10" readonly>' + esc(txt) + '</textarea><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; });
+  try { navigator.clipboard.writeText(txt).then(() => toast(t("copied")), voir); } catch (er) { voir(); }
+}
+// abandon confirmé (deux touches) : l'entrée sort de la boîte et son attente est retirée, dans SON dossier (amendement a) ; refusé si elle n'est
+// plus bloquée (envoi lancé par Réessayer en cours : son PUT est peut-être parti) ; les entrées SUIVANTES du même dossier portant une livraison
+// sur une réf dont elle change le statut, la date, la quantité ou le transporteur ont vu l'état qu'elle donne (Atlas refuserait leur reprise) :
+// elles sont listées et leur abandon proposé (deux touches) ; jamais abandonnées d'office, leur état vu jamais réécrit
+function abandonner(name) {
+  const box = us.get("outbox", []), e = box.find(x => x.name === name); if (!e) return;
+  if (!bloquees(box).has(name)) { toast(t("dropBusy")); render(); return; }
+  const deps = suivantes(box, e);
+  if (deps.length) proposerSuivantes(e, deps); else retirer([name]);
+}
+const VU = ["statut", "date", "qte", "transporteur"];
+// suivantes concernées : celles qui changent sur cette réf autre chose qu'un commentaire (Atlas reprend un simple commentaire même si la ligne
+// a changé depuis l'état vu : Mobile.cs, SeenDiff ; seuls les autres champs sont refusés)
+function suivantes(box, e) {
+  const refs = new Set(((e.body && e.body.changements) || []).filter(c => c.t === "livraison" && VU.includes(c.champ)).map(c => c.ref));
+  if (!refs.size) return [];
+  return box.slice(box.indexOf(e) + 1).filter(x => dosId(x) === dosId(e) && ((x.body && x.body.changements) || []).some(c => c.t === "livraison" && refs.has(c.ref) && c.champ !== "commentaire"));
+}
+// entrées toujours bloquées au moment de la décision (un envoi a pu partir entre-temps) : sinon rien n'est retiré
+const toujoursBloquees = noms => { const bq = bloquees(us.get("outbox", [])); return noms.every(n => bq.has(n)); };
+function retirer(noms) {
+  const box = us.get("outbox", []), out = box.filter(x => noms.includes(x.name));
+  if (!out.length || !us.set("outbox", box.filter(x => !noms.includes(x.name)))) return false;
+  out.forEach(e => {
+    const k = kD(moi(), e, "pending"), pd = place && dosId(place) === dosId(e) ? pending : ls.get(k, {});
+    Object.keys(pd).forEach(r => { if (pd[r] && pd[r].fichier === e.name) delete pd[r]; });
+    ls.set(k, pd);
+  });
+  render(); return true;
+}
+function proposerSuivantes(e, deps) {
+  const li = x => esc(fmtD(String(x.body.quand || "").slice(0, 10))) + " · " + esc(((x.body && x.body.changements) || []).map(c => c.ref + " " + c.champ).join(", "));
+  const noms = [e.name].concat(deps.map(x => x.name));
+  sheet('<h3>' + t("drop") + '</h3><div class="muted">' + li(e) + '</div><p class="note">' + esc(t("dropDeps").replace("{0}", deps.length)) + '</p>' +
+    deps.map(x => '<div class="muted" data-dep="' + esc(x.name) + '">' + li(x) + '</div>').join("") +
+    '<button class="btn" id="dropAll">' + esc(t("dropAll").replace("{0}", deps.length)) + '</button><button class="btn light" id="dropOne">' + t("dropOne") + '</button>' +
+    '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {
+      bg.querySelector("#ko").onclick = close;
+      bg.querySelector("#dropAll").onclick = () => {
+        const b = bg.querySelector("#dropAll"); if (!b.dataset.arme) { b.dataset.arme = "1"; b.textContent = t("dropConfirm"); return; }
+        close(); if (!toujoursBloquees(noms)) { toast(t("dropBusy")); render(); return; }
+        retirer(noms);
+      };
+      bg.querySelector("#dropOne").onclick = () => {
+        close(); if (!toujoursBloquees([e.name])) { toast(t("dropBusy")); render(); return; }
+        if (retirer([e.name])) toast(t("dropOneDone").replace("{0}", deps.length));
+      };
+    });
+}
+// Se déconnecter (point 4) : tout est masqué AVANT la redirection (un retour arrière ne montre rien) ; la fiche de ce compte est effacée du
+// téléphone (elle se recharge) ; sa boîte d'envoi reste dans SON espace : renvoyée à sa prochaine connexion, sauf les entrées bloquées (et
+// celles qui attendent derrière elles), qui attendent Réglages › Réessayer ; joignable aussi sans fiche (Accès refusé, lien du dossier)
+function deconnecter() {
+  const a = account, h = moi(); if (!a || !h) return;
+  data = null; place = null; pending = {}; refus = {}; account = null; sansFiche = null;
+  document.querySelectorAll(".sheet-bg, .toast").forEach(x => x.remove());
+  $("#nav").innerHTML = ""; $("#main").innerHTML = ""; header();
+  const pre = "atlas." + kU(h, "d."), ks = [];
+  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith(pre) && k.endsWith(".cache")) ks.push(k); } } catch (er) {}
+  ks.forEach(k => { try { localStorage.removeItem(k); } catch (er) {} });
+  pca.logoutRedirect({ account: a }).catch(() => boot());
+}
+function sheet(html, onReady) {
+  const bg = document.createElement("div"); bg.className = "sheet-bg"; bg.innerHTML = '<div class="sheet">' + html + '</div>';
+  bg.onclick = e => { if (e.target === bg) bg.remove(); }; document.body.appendChild(bg); onReady(bg, () => bg.remove());
+}
+// envoi depuis une feuille : bouton bloqué pendant l'envoi ; une fois la modification gardée dans la boîte d'envoi (renvoyée sous le même nom :
+// jamais un second fichier pour la même saisie), la feuille se ferme, partie ou non ; pas gardée (mémoire du téléphone, fiche retirée…) : la
+// feuille reste ouverte avec le motif
+async function submit(bg, close, ch, name) {
+  const ok = bg.querySelector("#ok"); if (ok.disabled) return; ok.disabled = true;
+  const etat = { gardee: false };
+  try { await send(ch, name, etat); }
+  catch (e) { if (!etat.gardee) { ok.disabled = false; toast("⚠ " + (e && e.message)); return; } }   // rien de gardé : la feuille reste ouverte
+  // message selon l'état de CETTE saisie : « Envoyé » seulement si elle a été retirée de la boîte par un envoi réussi (jamais d'après sa seule
+  // absence de la boîte) ; sinon bloquée (403 ou 404 : voir Réglages) ou gardée pour l'envoi automatique ; démo : rien n'est envoyé, et c'est dit
+  const box = DEMO ? [] : us.get("outbox", []);
+  toast(DEMO ? t("demoSent") : envoyees.has(name) ? t("sent") : bloquees(box).has(name) ? t("blocked") : t("kept")); close(); render();
+}
+// ligne (ou lot) qui a une entrée bloquée, ou une entrée en attente derrière une bloquée du même dossier : pas de nouvelle saisie (son état « vu »
+// ignorerait l'entrée bloquée, Atlas la refuserait après Réessayer) ; Réglages › Réessayer ou Abandonner d'abord
+const ligneBloquee = ref => { if (!blocage().refs.has(ref)) return false; toast(t("lineBlocked")); return true; };
+function editOp(ref) {
+  if (ligneBloquee(ref)) return;
+  const l = ops().find(x => x.ref === ref); if (!l) return;
+  const name = newName(), lk = !!l.verrou;
+  // état de la ligne tel que le téléphone l'affiche : Atlas refuse la modification si la ligne a changé depuis (ou si elle a été remplacée)
+  const vu = { trade: l.trade || "", jour: l.date || l.mois || "", qte: l.qte, statut: l.statut, transporteur: l.transporteur || "" };
+  let st = l.statut;
+  sheet('<h3>' + esc(l.cpty) + " · " + esc(prod(l.produit)) + '</h3><div class="muted">' + (l.sens === "achat" ? t("receipt") : t("delivery")) + (l.contrat ? " · " + esc(l.contrat) : "") + " · " + esc(l.ref) + '</div>' +
+    (lk ? '<div class="note">' + t("locked") + '</div>'
+        : '<label>' + t("status") + '</label><div class="seg" id="seg">' + [["Prévu", "planned"], ["Réalisé", "delivered"], ["Annulé", "cancelled"]].map(x => '<button data-s="' + x[0] + '" class="' + (x[0] === st ? "on" : "") + '">' + t(x[1]) + '</button>').join("") + '</div>' +
+          '<label>' + t("date") + '</label><input id="d" type="date" value="' + esc(l.date || "") + '"><label>' + t("qty") + '</label><input id="q" type="number" inputmode="decimal" value="' + esc(l.qte) + '">') +
+    '<label>' + t("carrier") + '</label><input id="c" value="' + esc(l.transporteur || "") + '"><label>' + t("comment") + '</label><textarea id="m" rows="2"></textarea>' +
+    '<button class="btn" id="ok">' + t("save") + '</button><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {
+      bg.querySelectorAll("#seg button").forEach(b => b.onclick = () => { st = b.dataset.s; bg.querySelectorAll("#seg button").forEach(x => x.classList.toggle("on", x === b)); });
+      bg.querySelector("#ko").onclick = close;
+      bg.querySelector("#ok").onclick = async () => {
+        const ch = [], d = lk ? "" : bg.querySelector("#d").value, q = lk ? NaN : parseFloat(bg.querySelector("#q").value), c = bg.querySelector("#c").value.trim(), m = bg.querySelector("#m").value.trim();
+        if (!lk && st !== l.statut) ch.push({ t: "livraison", ref, champ: "statut", valeur: st, vu });
+        // « Livré » sans date choisie sur une livraison connue au mois ou datée du futur : la date du jour est ENVOYÉE (Atlas la poserait lui-même,
+        // Mobile.cs, au jour de la reprise) ; envoyée, elle figure dans les valeurs en attente, donc dans l'état vu de l'envoi suivant
+        let dv = d;
+        if (!lk && st === "Réalisé" && st !== l.statut && (!dv || dv === (l.date || "")) && (!l.date || l.date > todayIso())) dv = todayIso();
+        // date future choisie pour « Livré » : refusée ici, la feuille reste ouverte (Atlas tolère un jour d'avance pour un téléphone dans un autre
+        // fuseau : sans ce refus, une réalisation datée de demain passerait) (revue 3, défaut 11)
+        if (!lk && st === "Réalisé" && dv && dv > todayIso()) { toast(t("futureDone")); return; }
+        if (dv && dv !== (l.date || "")) ch.push({ t: "livraison", ref, champ: "date", valeur: dv, vu });
+        if (!isNaN(q) && q > 0 && q !== l.qte) ch.push({ t: "livraison", ref, champ: "qte", valeur: q, vu });
+        if (c !== (l.transporteur || "")) ch.push({ t: "livraison", ref, champ: "transporteur", valeur: c, vu });
+        if (m) ch.push({ t: "livraison", ref, champ: "commentaire", valeur: m, vu });
+        if (!ch.length) { close(); return; }
+        await submit(bg, close, ch, name);
+      };
+    });
+}
+function countLot(lot) {
+  if (ligneBloquee(lot)) return;
+  const l = (data.inventaire || []).find(x => x.lot === lot); if (!l) return;
+  const name = newName();
+  // date du comptage proposée : le jour où la feuille s'ouvre (jamais le jour du chargement de l'app)
+  sheet('<h3>' + esc(prod(l.produit)) + '</h3><div class="muted">' + esc(l.lot) + " · " + nf(l.stock) + ' lb</div><label>' + t("counted") + '</label><input id="q" type="number" inputmode="decimal">' +
+    '<label>' + t("countDate") + '</label><input id="d" type="date" value="' + todayIso() + '"><label>' + t("comment") + '</label><textarea id="m" rows="2"></textarea><button class="btn" id="ok">' + t("save") + '</button><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {
+      bg.querySelector("#ko").onclick = close;
+      bg.querySelector("#ok").onclick = async () => {
+        const q = parseFloat(bg.querySelector("#q").value), d = bg.querySelector("#d").value, m = bg.querySelector("#m").value.trim(), ch = [];
+        // stock affiché au moment du comptage : Atlas refuse le comptage si le stock a bougé depuis (mouvement saisi entre-temps)
+        if (!isNaN(q) && q >= 0) ch.push({ t: "inventaire", ref: lot, champ: "compte", valeur: q, date: d, stockVu: l.stock });
+        if (m) ch.push({ t: "inventaire", ref: lot, champ: "commentaire", valeur: m });
+        if (!ch.length) { close(); return; }
+        await submit(bg, close, ch, name);
+      };
+    });
+}
+function render() {
+  today = todayIso();
+  header(); if (!data) { if (sansFiche) sansFiche(); return; } tabs();
+  ({ cal: renderCal, deliv: renderDeliv, stock: renderStock, pnl: renderPnl, expo: renderExpo, settings: renderSettings })[tab]();
+}
+const authMsg = a => a ? t("authErr").replace("{0}", (a.errorMessage || a.message || String(a)).split("\n")[0]) : "";
+const authText = () => authMsg(authFailed);
+async function boot() {
+  sansFiche = null; header();
+  try {
+    migrer();
+    if (!DEMO) {
+      const ok = await initAuth();
+      if (ok && !account && comptes.length > 1) { choixCompte(); return; }
+      if (!ok || !account) {
+        data = null; place = null; pending = {}; refus = {}; header();
+        $("#nav").innerHTML = "";
+        $("#main").innerHTML = '<div class="center"><div class="big" style="margin-bottom:10px">Atlas</div><p class="muted">' + t("loginTxt") + '</p>' + (authFailed ? '<p class="refused">' + esc(authText()) + '</p>' : "") +
+          (ok ? '<button class="btn" id="login">' + t("login") + '</button>' : "") + '<label>' + t("clientId") + '</label><input id="cid" autocapitalize="off" autocorrect="off" value="' + esc(ls.get("clientId", CONFIG.clientId)) + '"><button class="btn light" id="saveCid">' + t("save") + '</button></div>';
+        if ($("#login")) $("#login").onclick = () => pca.loginRedirect({ scopes: SCOPES });
+        $("#saveCid").onclick = () => { ls.set("clientId", $("#cid").value.trim()); location.reload(); };
+        return;
+      }
+      ouvrir(); if (data) render();   // affichage immédiat de la dernière fiche connue de CE compte et de CE dossier
+      if (authFailed) toast(authText() + " · " + t("retry"));
+      await flush(true).catch(e => console.warn(e));      // modifications gardées sur le téléphone pour CE compte : renvoyées d'abord
+    } else ouvrir();
+    await load(); render();
+  } catch (e) { echec(e, true); }
+}
+// erreur au démarrage (boot) ou sur ↻
+function echec(e, auBoot) {
+  console.error(e);
+  // jeton refusé après un retour en erreur de Microsoft (garde-fou anti-boucle) : le motif et la façon de réessayer, jamais le message MSAL brut ;
+  // une coupure réseau ou une erreur Graph garde son propre message (elles n'ont pas d'errorCode MSAL) (revue 3, défaut 12)
+  const auth = !!(authFailed && pca && e && e.errorCode), af = auth ? authFailed : null;
+  // motif composé à chaque dessin (langue) : seuls l'erreur et le refus de connexion sont gardés (e.texte : fonction ; e.cle : clé du texte)
+  const motif = () => e && e.texte ? e.texte() : auth ? authMsg(af) + " · " + t("retry") : "⚠ " + (e && e.cle ? t(e.cle) : e && e.message), msg = motif();
+  // accès refusé (403, ou 404 du dossier) : la fiche est déjà retirée ; une feuille restée ouverte sur elle est fermée ; si son envoi n'avait
+  // pas commencé (bouton Enregistrer actif), rien n'est envoyé et c'est dit ; un envoi en cours (bouton désactivé) donnera son propre message
+  // (gardée, bloquée ou envoyée) ; écran Accès refusé
+  if (e && e.acces) {
+    const f = Array.from(document.querySelectorAll(".sheet-bg")), saisie = f.some(x => { const o = x.querySelector("#ok"); return !!o && !o.disabled; }); f.forEach(x => x.remove());
+    accesRefuse(msg); toast(saisie ? msg + " · " + t("sheetClosed") : msg); return;
+  }
+  if (data || !auBoot) { toast(msg); return; }
+  ecranErreur(motif, auth);
+}
+// écrans sans fiche, redessinés par render() (abandon, Réessayer, langue) ; ils gardent les sorties du compte : entrées bloquées (Réessayer,
+// Copier, Abandonner) et Se déconnecter
+// accès refusé : le motif, le compte, « Changer de dossier »
+function accesRefuse(msg) {
+  sansFiche = () => accesRefuse(msg); $("#nav").innerHTML = ""; header();
+  const box = us.get("outbox", []);
+  $("#main").innerHTML = '<div class="center"><p class="refused">' + esc(msg) + '</p><p class="muted">' + esc(t("denied").replace("{0}", (account && account.username) || "")) + '</p>' +
+    '<button class="btn light" id="resetPlace">' + t("reset") + '</button>' + htmlBloquees(box) + htmlCompte(box, false, true) + '</div>';
+  $("#resetPlace").onclick = changerDossier; lierSorties();
+}
+// erreur au démarrage sans fiche : le motif (connexion refusée : le bouton de connexion) ; motif : fonction, recomposée à chaque dessin (langue)
+function ecranErreur(motif, auth) {
+  sansFiche = () => ecranErreur(motif, auth); $("#nav").innerHTML = "";
+  const box = us.get("outbox", []), msg = motif();
+  $("#main").innerHTML = (auth ? '<div class="center"><p class="refused">' + esc(msg) + '</p><button class="btn" id="relogin2">' + t("login") + '</button>'
+                               : '<div class="center"><p class="muted">' + esc(msg) + '</p>') + htmlBloquees(box) + htmlCompte(box, false, true) + '</div>';
+  if (auth) $("#relogin2").onclick = () => { authFailed = null; pca.acquireTokenRedirect({ scopes: SCOPES, account }).catch(er => { authFailed = er; toast(authText()); }); };
+  lierSorties();
+}
+$("#btnLang").onclick = () => { lang = lang === "fr" ? "en" : "fr"; ls.set("lang", lang); render(); header(); };
+// ↻ : action volontaire, elle peut relancer la connexion Microsoft (authFailed remis à nul) ; si la personne annule de nouveau, initAuth le repose ;
+// sans compte actif (connexion, choix du compte, retour arrière après déconnexion) : le démarrage
+$("#btnRefresh").onclick = async () => {
+  if (!DEMO && !account) return boot();
+  authFailed = null; try { await flush().catch(e => console.warn(e)); await load(); render(); } catch (e) { echec(e, false); } };
+window.addEventListener("online", () => { flush(true).catch(() => {}); });
+// retour au premier plan un autre jour : date du jour, retards et calendrier recalculés (seulement si le jour a changé : une saisie en cours
+// dans Réglages n'est pas effacée)
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden || !data) return;
+  const old = today, now = todayIso(); if (now === old) return;
+  if (calMonth && iso(calMonth).slice(0, 7) === old.slice(0, 7)) calMonth = null;   // suit le mois courant si l'utilisateur n'avait pas navigué
+  const d = document.querySelector(".sheet input#d[type=date]"); if (d && d.value === old && !document.querySelector(".sheet #seg")) d.value = now;   // feuille de comptage restée ouverte
+  if (tab !== "settings" && !document.querySelector(".sheet-bg")) render(); else today = now;
+});
+window.addEventListener("pageshow", e => { if (!e.persisted) return; if (!DEMO && !account) boot(); else document.dispatchEvent(new Event("visibilitychange")); });
+// page d'essai : l'app est chargée sans démarrer, les essais appellent ses fonctions
+if ("serviceWorker" in navigator && !DEMO && !window.ATLAS_ESSAI) navigator.serviceWorker.register("sw.js").catch(() => {});
+if (!window.ATLAS_ESSAI) boot();
+</script>
+</body>
+</html>
