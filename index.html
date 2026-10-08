@@ -12,8 +12,9 @@
 <title>Atlas</title>
 <style>
 /* round 23 (piste mobile) : couleurs en variables ; thème clair, sombre, ou celui du système (Réglages › Apparence, gardé sur le téléphone) */
-:root { --bg:#f4f5f7; --card:#fff; --ink:#1c2430; --muted:#6f7783; --line:#e3e6ea; --primary:#1f3a5f; --on-primary:#fff; --head:#1f3a5f; --soft:#eef0f3; --cell:#fafbfc; --nav:#fff; --shadow:rgba(0,0,0,.05);
-        --in:#1f7a4d; --in-t:#e6f3ec; --out:#b3261e; --out-t:#fbeaea; --amber:#a86400; --amber-t:#fdf1dc; --teal:#0f766e; --teal-t:#e0f2f1; --back:rgba(0,0,0,.35); color-scheme:light;
+/* correctifs mobqa (08/10) : gris secondaire et orange du thème clair foncés : petits textes à 4,5:1 au moins sur --soft, --bg et --amber-t (WCAG AA) */
+:root { --bg:#f4f5f7; --card:#fff; --ink:#1c2430; --muted:#5f6773; --line:#e3e6ea; --primary:#1f3a5f; --on-primary:#fff; --head:#1f3a5f; --soft:#eef0f3; --cell:#fafbfc; --nav:#fff; --shadow:rgba(0,0,0,.05);
+        --in:#1f7a4d; --in-t:#e6f3ec; --out:#b3261e; --out-t:#fbeaea; --amber:#965900; --amber-t:#fdf1dc; --teal:#0f766e; --teal-t:#e0f2f1; --back:rgba(0,0,0,.35); color-scheme:light;
         --fix:#1d5fbf; --fix-t:#e3edfb; --idx:#8a5200; --idx-t:#fdf1dc; --sw:#6b3fc4; --sw-t:#efe9fb; --stk0:#8a94a3; --gl:#e6f3ec; --gc:#fbeaea; }
 :root[data-theme="dark"] { --bg:#0e1217; --card:#1a2029; --ink:#e6eaf0; --muted:#9aa3af; --line:#2c3440; --primary:#86b4ec; --on-primary:#0e1217; --head:#142338; --soft:#262d37; --cell:#141a21; --nav:#141a21; --shadow:rgba(0,0,0,.35);
         --in:#5fc28f; --in-t:#16301f; --out:#f28b82; --out-t:#3b1d1b; --amber:#f0b45a; --amber-t:#382a12; --teal:#4fc3b6; --teal-t:#12302c; --back:rgba(0,0,0,.6); color-scheme:dark;
@@ -53,7 +54,8 @@ nav button.on { color:var(--primary); font-weight:650; }
 .grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:3px; }
 .dow { text-align:center; font-size:11px; color:var(--muted); padding-bottom:4px; }
 .day { min-height:54px; border-radius:10px; padding:4px 1px 3px; text-align:center; font-size:14px; position:relative; background:var(--cell); border:0; color:var(--ink); min-width:0; overflow:hidden; font-family:inherit; }
-.day.other { opacity:.35; }
+/* jour d'un mois voisin : seul son numéro est grisé (l'opacité effaçait aussi ses vraies quantités) */
+.day.other { background:transparent; } .day.other .n { color:var(--muted); }
 .day.today .n { background:var(--primary); color:var(--on-primary); border-radius:999px; padding:1px 6px; }
 .day.sel { outline:2px solid var(--primary); outline-offset:-2px; }
 .day .marks { display:flex; flex-direction:column; gap:2px; margin-top:3px; align-items:center; }
@@ -110,6 +112,10 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .refused { font-size:12px; color:var(--out); }
 .note { font-size:12px; color:var(--amber); margin-top:2px; }
 .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:calc(env(safe-area-inset-bottom) + 90px); background:#1c2430; color:#fff; padding:10px 16px; border-radius:12px; font-size:14px; z-index:30; max-width:90vw; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.sheet-bg ~ .toast { bottom:auto; top:calc(env(safe-area-inset-top) + 12px); }   /* feuille ouverte : le message en haut, jamais sur « Enregistrer » */
+.majapp { display:block; width:100%; border:0; background:var(--primary); color:var(--on-primary); font:inherit; font-size:14px; font-weight:650; padding:9px 12px; border-radius:12px; margin:0 0 10px; }
+.vsc.calp { margin:0 4px; }
+.calu { flex:none; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; padding:6px 11px; font:inherit; font-size:13.5px; white-space:nowrap; }
 .bars .b { height:10px; border-radius:6px; background:var(--primary); }
 .ph { font-size:12px; color:var(--teal); }
 /* round 26 b (piste expomob, 07/10, juge à l'œil neuf : décisions A à G, identiques au PC) : onglet Exposition = un outil par question
@@ -203,6 +209,7 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .vc { border:0; border-radius:7px; height:42px; padding:5px 5px 6px; font-family:inherit; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:5px; background:var(--cell); color:var(--muted); overflow:hidden; cursor:pointer; }
 .vc b { display:block; font-size:13px; font-weight:800; font-variant-numeric:tabular-nums; text-align:center; white-space:nowrap; line-height:1.25; }
 .vc .vst { height:5px; border-radius:3px; background:var(--card); flex:none; box-shadow:0 0 0 1.5px var(--card); margin:0 1px; }
+.vc.vk .vst .mv { background:currentColor; }   /* barre « bouge » d'une case : couleur du chiffre (noir ou blanc, contraste choisi par palier) : jamais vert sur vert */
 .vc.eq b, .vc.nul b { font-weight:650; }
 .vc.nul { background:repeating-linear-gradient(135deg, var(--soft) 0 4px, transparent 4px 8px); }
 .vc.sel { box-shadow:inset 0 0 0 2px var(--ink); }
@@ -265,11 +272,14 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 /* tableaux (un toucher sur un chiffre) */
 .vbig { font-size:24px; font-weight:800; font-variant-numeric:tabular-nums; margin:2px 0 10px; }
 .vtabw { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:0 -4px; }
-.vtab { width:100%; border-collapse:collapse; font-size:13px; table-layout:fixed; }
-.vtab th, .vtab td { padding:7px 4px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-variant-numeric:tabular-nums; }
+/* correctifs mobqa (08/10) : largeurs AUTOMATIQUES (plus de table-layout fixe) : un nombre garde toujours sa largeur entière (jamais « … » ni coupé net),
+   les textes (contrat, contrepartie, référence) passent à la ligne au lieu d'être coupés par « … » ; de 320 à 430 px */
+.vtab { width:100%; border-collapse:collapse; font-size:13px; table-layout:auto; }
+.vtab th, .vtab td { padding:7px 4px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .vtab th { font-size:11.5px; color:var(--muted); font-weight:650; }
-.vtab .l { text-align:left; } .vtab .c { text-align:center; } .vtab .w0 { width:60px; } .vtab .w1 { width:27%; } .vtab .w2 { width:16%; } .vtab .w3 { width:66px; }
-.vtab tr.tot td { font-weight:800; border-top:2px solid var(--line); border-bottom:0; text-overflow:clip; }
+.vtab td.l { white-space:normal; overflow-wrap:anywhere; line-height:1.3; }
+.vtab .l { text-align:left; } .vtab .c { text-align:center; } .vtab .w0 { width:52px; } .vtab .w3 { width:46px; }
+.vtab tr.tot td { font-weight:800; border-top:2px solid var(--line); border-bottom:0; }
 .vdot { display:inline-block; width:9px; height:9px; border-radius:50%; vertical-align:0; } .vdot.idx { background:var(--v-idx); } .vdot.nv { background:var(--v-nv); } .vdot.swap { background:var(--v-swap); }
 .vdot.ok { background:var(--v-long); } .vdot.prev { background:none; box-shadow:inset 0 0 0 1.5px var(--muted); }
 .xold td:first-child, .xold th:first-child { position:sticky; left:0; background:var(--card); z-index:1; }
@@ -278,8 +288,8 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
    camion en pointillés rouges), couverture par contrat (bleu à venir, orange non couvert, contour bleu en trop, 🔒 hachuré fixé). Deux thèmes. */
 .vplage { background:var(--card); border-radius:14px; padding:8px 10px 9px; box-shadow:0 1px 2px var(--shadow); margin:0 0 10px; }
 .vrs button { font-size:13.5px; padding:7px 0; white-space:nowrap; }
-.vprow { display:flex; align-items:center; gap:8px; margin-top:8px; }
-.vpsel { display:flex; align-items:center; gap:5px; font-size:12.5px; color:var(--muted); font-weight:650; min-width:0; flex:1; }
+.vprow { display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }   /* écran étroit : lb | MT passe à la ligne, l'année des listes reste entière */
+.vpsel { display:flex; align-items:center; gap:5px; font-size:12.5px; color:var(--muted); font-weight:650; min-width:0; flex:1 1 104px; }
 .vpsel select { flex:1; min-width:0; width:100%; font:inherit; font-size:14px; font-weight:750; color:var(--ink); background:var(--soft); border:0; border-radius:9px; padding:6px 4px; }
 .vprow .xu { width:88px; }
 .vtile .vtmini { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.35fr); gap:6px; margin-top:10px; }
@@ -331,10 +341,10 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 /* round 29 : UNE boîte de destination par camion (« vkd », jamais un nœud commun) : sarcelle direct, entrepôt puis client (« sk »), « sans client » en pointillés */
 .vkd .nb { fill:var(--teal-t); stroke:var(--teal); stroke-width:1.4; } .vkd .na { fill:var(--teal); } .vksvg .vkd .nt { fill:var(--teal); font-weight:800; font-size:11.5px; }
 .vkd.sk .nb { fill:var(--soft); stroke:var(--muted); stroke-width:1.2; } .vkd.sk .ns { fill:var(--ink); } .vkd.sk .nd { fill:var(--soft); } .vksvg .vkd.sk .nt { fill:var(--ink); }
-.vkd.vd .nb { fill:none; stroke:var(--v-nv); stroke-width:1.6; stroke-dasharray:5 3.5; } .vksvg .vkd .nf { fill:var(--muted); font-size:10.5px; font-weight:700; }
+.vkd.vd .nb { fill:none; pointer-events:all; stroke:var(--v-nv); stroke-width:1.6; stroke-dasharray:5 3.5; } .vksvg .vkd .nf { fill:var(--muted); font-size:10.5px; font-weight:700; }   /* cadre vide touchable en entier (pas seulement son trait) */
 .vksvg .vkd { cursor:pointer; }
 .vksvg .vkn .nf { fill:var(--muted); font-size:10.5px; font-weight:700; font-variant-numeric:tabular-nums; }
-.vkn.vd .nb { fill:none; stroke:var(--v-nv); stroke-width:1.6; stroke-dasharray:5 3.5; }
+.vkn.vd .nb { fill:none; pointer-events:all; stroke:var(--v-nv); stroke-width:1.6; stroke-dasharray:5 3.5; }
 .vkn.pale { opacity:.38; }
 .vksvg .vko { fill:var(--v-short-t); font-size:10.5px; font-weight:700; }
 /* round 28 (piste camions) : badge de prix sous un camion (pilule teintée de la couleur du sens : ardoise fixe, violet indexé, bleu swap, gris sans prix) */
@@ -392,7 +402,7 @@ const T = {
         dropBusy:"Envoi en cours : abandon impossible",
         dropDeps:"{0} modification(s) saisie(s) ensuite sur la même livraison partent de l'état que celle-ci donne : abandonnée seule, Atlas refusera leur reprise",
         dropAll:"Abandonner aussi ces {0}", dropOne:"Abandonner celle-ci seule", dropOneDone:"Abandonnée seule : Atlas refusera la reprise des {0} modification(s) suivante(s)",
-        boxKept:"{0} modification(s) pas encore envoyée(s) : gardée(s) sur ce téléphone pour {1}, renvoyée(s) à sa prochaine connexion",
+        boxKept:"{0} modification(s) pas encore envoyée(s) (photos comprises) : gardée(s) sur ce téléphone pour {1}, envoi automatique au retour du réseau ; après « Se déconnecter », à sa prochaine connexion",
         boxBlocked:"{0} bloquée(s) : Réglages › Réessayer", boxBlockedIci:"{0} bloquée(s) : Réessayer ci-dessus", lineBlocked:"Modification bloquée sur cette ligne : Réglages › Réessayer ou Abandonner d'abord",
         other:"Utiliser un autre compte", sheetClosed:"saisie en cours fermée, rien n'a été envoyé", noSheet:"fiche, dossier ou compte absent : rien n'est gardé",
         orphans:"{0} modification(s) d'une ancienne version de l'app mise(s) de côté : jamais envoyée(s)", demoSent:"Démo : rien n'est envoyé",
@@ -410,13 +420,20 @@ const T = {
         overdue:"{0} échu(s)", noAmt:"{0} sans montant", dayByDay:"Jour par jour", noTreso:"Fiche d'Atlas sans trésorerie (Atlas à mettre à jour sur le PC)", weeks:"Semaines",
         src:{ Invoices:"Facture", Costs:"Coût", Swaps:"Swap", Schedule:"Livraison", bank:"Banque" }, cushion:"avec coussin {0}", estAmt:"date estimée",
         addPhoto:"Ajouter une photo", takePhoto:"Prendre une photo", camShort:"Photo", library:"Galerie", photoN:"{0} photo(s)", photoWait:"{0} photo(s) en attente",
-        notImage:"Ce fichier n'est pas une image", tooBig:"Photo trop grosse ({0} Mo ; 40 Mo au plus)", photoErr:"Photo illisible", photoNotKept:"Photo non gardée : mémoire du téléphone pleine (laissez d'abord partir les photos en attente)",
+        notImage:"Ce fichier n'est pas une image", tooBig:"Photo trop grosse ({0} Mo ; 40 Mo au plus)", photoErr:"Photo illisible", photoNotKept:"Photo non gardée : mémoire du téléphone pleine",
         photoKept:"Photo gardée sur le téléphone : envoi automatique au retour du réseau", photoSent:"Photo envoyée : Atlas la range dans les pièces de la livraison",
         photoLost:"Photo introuvable sur ce téléphone", noDeliv:"Livraison introuvable", photosHelp:"Photo d'une livraison : réduite sur le téléphone, envoyée dans votre dossier, rangée par Atlas dans les pièces de la livraison.",
         noPhotoAtlas:"Photos : Atlas doit d'abord être mis à jour sur le PC (sa fiche ne les reprend pas encore)",
         photoNotFiled:"photo non rangée : Atlas sur le PC n'a pas encore la mise à jour (photo restée dans le dossier « photos ») ; renvoyez-la après la mise à jour",
-        search:"Rechercher (contrepartie, contrat, réf.)", recent:"Récentes et à venir", appearance:"Apparence", light:"Clair", dark:"Sombre", auto:"Auto (système)",
-        week:["L","M","M","J","V","S","D"], months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"], demo:"Démo (données d'exemple)" },
+        search:"Contrepartie, contrat, réf.", recent:"Récentes et à venir", appearance:"Apparence", light:"Clair", dark:"Sombre", auto:"Auto (système)",
+        week:["L","M","M","J","V","S","D"], months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"], demo:"Démo (données d'exemple)",
+        // correctifs mobqa (08/10)
+        noLots:"Aucun lot en stock à compter", invOf:"inventaire du {0}", noDate:"sans date",
+        memFull:"Pas gardé : mémoire du téléphone pleine. Laissez partir les photos en attente (réseau) ou abandonnez une modification bloquée (Réglages), puis réessayez",
+        badQty:"Quantité à saisir en lb, plus grande que 0 (livraison qui n'a pas lieu : « Annulé »)", needDate:"Date à choisir : une livraison datée garde une date",
+        badCount:"Quantité comptée : 0 ou plus, en lb", readErr:"Lecture impossible · ↻ pour réessayer", badSheet:"Fiche Atlas illisible (en cours d'écriture ?) · ↻ pour réessayer",
+        noDemo:"Mode démo indisponible à cette adresse : aucune fiche d'exemple publiée. Ouvrez l'adresse sans ?demo", newVersion:"Nouvelle version d'Atlas · toucher pour mettre à jour",
+        version:"Version {0}", floatingSw:"hors totaux : {0} à prix flottant, dont {1} swaps", lateOf:"dont échu {0}", lateOfN:"dont {0} échu(s)", photoNotKeptW:"Photo non gardée : mémoire du téléphone pleine ({0} photo(s) en attente partiront au retour du réseau) ; reprenez-la ensuite" },
   en: { cal:"Calendar", deliv:"Deliveries", stock:"Inventory", pnl:"P&L", expo:"Exposure", settings:"Settings", login:"Sign in with Microsoft",
         loginTxt:"Sign in with the Microsoft account the Atlas folder was shared with.", data:"Data of", none:"Nothing that day",
         planned:"Planned", delivered:"Delivered", cancelled:"Cancelled", late:"late", receipt:"Receipt", delivery:"Delivery", qty:"Quantity (lb)",
@@ -436,7 +453,7 @@ const T = {
         dropBusy:"Upload in progress: cannot abandon",
         dropDeps:"{0} later change(s) on the same delivery start from the state this one gives: if it is abandoned alone, Atlas will reject them",
         dropAll:"Also abandon these {0}", dropOne:"Abandon this one only", dropOneDone:"Abandoned alone: Atlas will reject the {0} later change(s)",
-        boxKept:"{0} change(s) not sent yet: kept on this phone for {1}, sent at their next sign-in",
+        boxKept:"{0} change(s) not sent yet (photos included): kept on this phone for {1}, sent automatically when the network is back; after Sign out, at their next sign-in",
         boxBlocked:"{0} blocked: Settings › Retry", boxBlockedIci:"{0} blocked: Retry above", lineBlocked:"A blocked change is waiting on this line: Settings › Retry or Abandon first",
         other:"Use another account", sheetClosed:"open entry closed, nothing was sent", noSheet:"no sheet, folder or account: nothing kept",
         orphans:"{0} change(s) from an earlier version of the app set aside: never sent", demoSent:"Demo: nothing is sent",
@@ -454,13 +471,19 @@ const T = {
         overdue:"{0} overdue", noAmt:"{0} without amount", dayByDay:"Day by day", noTreso:"Atlas sheet without cash (update Atlas on the PC)", weeks:"Weeks",
         src:{ Invoices:"Invoice", Costs:"Cost", Swaps:"Swap", Schedule:"Delivery", bank:"Bank" }, cushion:"with cushion {0}", estAmt:"estimated date",
         addPhoto:"Add a photo", takePhoto:"Take a photo", camShort:"Camera", library:"Library", photoN:"{0} photo(s)", photoWait:"{0} photo(s) waiting",
-        notImage:"This file is not an image", tooBig:"Photo too large ({0} MB; 40 MB at most)", photoErr:"Unreadable photo", photoNotKept:"Photo not kept: phone storage full (let the waiting photos go first)",
+        notImage:"This file is not an image", tooBig:"Photo too large ({0} MB; 40 MB at most)", photoErr:"Unreadable photo", photoNotKept:"Photo not kept: phone storage full",
         photoKept:"Photo kept on the phone: sent automatically when the network is back", photoSent:"Photo sent: Atlas files it with the delivery's documents",
         photoLost:"Photo not found on this phone", noDeliv:"Delivery not found", photosHelp:"Delivery photo: reduced on the phone, sent to your folder, filed by Atlas with the delivery's documents.",
         noPhotoAtlas:"Photos: Atlas must first be updated on the PC (its sheet does not take them yet)",
         photoNotFiled:"photo not filed: Atlas on the PC is not updated yet (photo left in the « photos » folder); send it again after the update",
-        search:"Search (counterparty, contract, ref.)", recent:"Recent and upcoming", appearance:"Appearance", light:"Light", dark:"Dark", auto:"Auto (system)",
-        week:["M","T","W","T","F","S","S"], months:["January","February","March","April","May","June","July","August","September","October","November","December"], demo:"Demo (sample data)" } };
+        search:"Counterparty, contract, ref.", recent:"Recent and upcoming", appearance:"Appearance", light:"Light", dark:"Dark", auto:"Auto (system)",
+        week:["M","T","W","T","F","S","S"], months:["January","February","March","April","May","June","July","August","September","October","November","December"], demo:"Demo (sample data)",
+        noLots:"No lot in stock to count", invOf:"inventory of {0}", noDate:"undated",
+        memFull:"Not kept: phone storage full. Let the waiting photos go (network) or abandon a blocked change (Settings), then try again",
+        badQty:"Enter a quantity in lb, greater than 0 (delivery not happening: “Cancelled”)", needDate:"Choose a date: a dated delivery keeps a date",
+        badCount:"Counted quantity: 0 or more, in lb", readErr:"Cannot read · tap ↻ to retry", badSheet:"Atlas sheet unreadable (being written?) · tap ↻ to retry",
+        noDemo:"Demo mode not available at this address: no sample sheet published. Open the address without ?demo", newVersion:"New version of Atlas · tap to update",
+        version:"Version {0}", floatingSw:"not in totals: {0} floating-price, of which {1} swaps", lateOf:"of which overdue {0}", lateOfN:"of which {0} overdue", photoNotKeptW:"Photo not kept: phone storage full ({0} photo(s) waiting will go when the network is back); take it again then" } };
 const ls = { get(k, d) { try { const v = localStorage.getItem("atlas." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
              set(k, v) { try { localStorage.setItem("atlas." + k, JSON.stringify(v)); return true; } catch (e) { return false; } },
              del(k) { try { localStorage.removeItem("atlas." + k); } catch (e) {} } };
@@ -501,10 +524,16 @@ const nf = (v, d) => v == null || isNaN(v) ? "—" : Number(v).toLocaleString(la
 // round 25 (corrections) : formes abrégées « k », « M », « M$ » retirées (money, cm, short n'étaient plus appelées) : plus aucun nombre abrégé
 const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
 const parseD = s => { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d || 1); };
-const fmtD = s => { const d = parseD(s); return d ? d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { day:"2-digit", month:"short" }) : ""; };
+// correctifs mobqa (08/10) : l'année est écrite dès qu'elle n'est pas l'année en cours (« 20 oct. 2027 », jamais « 20 oct. » pour une date dans un an)
+const fmtD = s => { const d = parseD(s); if (!d) return ""; const o = { day:"2-digit", month:"short" }; if (d.getFullYear() !== new Date().getFullYear()) o.year = "numeric"; return d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", o); };
 // livraison connue au mois : mois mis en forme dans la langue de l'app (la fiche donne « aaaa-mm »)
 const fmtM = s => { const d = parseD(s); return d ? d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { month:"short", year:"numeric" }) : ""; };
-const DEMO = location.search.includes("demo");
+// correctifs mobqa (08/10) : démo seulement avec le paramètre exact « ?demo » (« ?source=demonstration » n'est pas la démo)
+const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } catch (e) { return false; } };
+const DEMO = estDemo(location.search);
+// version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
+// publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
+const VERSION_APP = "31";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -539,12 +568,15 @@ function ouvrir() {
 function toast(s) { document.querySelectorAll(".toast").forEach(x => x.remove()); const d = document.createElement("div"); d.className = "toast"; d.textContent = s; document.body.appendChild(d); setTimeout(() => d.remove(), 3200); }
 
 // ---------- Microsoft (MSAL) et OneDrive (Graph) ----------
+// correctifs mobqa (08/10) : adresse de retour de Microsoft = le DOSSIER de l'app (« …/atlas/ », celle qui est inscrite), même ouverte par « index.html »
+// ou avec « ?… » ; MSAL ramène ensuite sur la page de départ
+const adresseRetour = () => new URL("./", location.href).href;
 async function initAuth() {
   const id = ls.get("clientId", CONFIG.clientId);
   if (!id) return false;
   // clé du texte gardée avec l'erreur (e.cle) : l'écran d'erreur le recompose dans la langue du moment
   if (!window.msal || !window.msal.PublicClientApplication) throw Object.assign(new Error(t("noLib")), { cle: "noLib" });
-  pca = new window.msal.PublicClientApplication({ auth: { clientId: id, authority: "https://login.microsoftonline.com/common", redirectUri: location.origin + location.pathname },
+  pca = new window.msal.PublicClientApplication({ auth: { clientId: id, authority: "https://login.microsoftonline.com/common", redirectUri: adresseRetour() },
                                                    cache: { cacheLocation: "localStorage" } });
   await pca.initialize();
   // erreur au retour de Microsoft (consentement refusé, annulation) : affichée, jamais avalée ; pas de nouvelle redirection en boucle
@@ -582,8 +614,12 @@ async function token(quiet) {
     await pca.acquireTokenRedirect({ scopes: SCOPES, account }); throw e;
   }
 }
+// correctifs mobqa (08/10) : jeton d'abord (encore valable hors réseau), puis la requête ; une requête qui n'aboutit pas (réseau coupé : « Failed to fetch »,
+// « Load failed » sur iPhone) devient « Pas de réseau » (e.cle), jamais le texte anglais du navigateur
 async function gfetch(path, opt, quiet) {
-  const r = await fetch(path.startsWith("http") ? path : G + path, Object.assign({}, opt || {}, { headers: Object.assign({ Authorization: "Bearer " + await token(quiet) }, (opt && opt.headers) || {}) }));
+  const jeton = await token(quiet); let r;
+  try { r = await fetch(path.startsWith("http") ? path : G + path, Object.assign({}, opt || {}, { headers: Object.assign({ Authorization: "Bearer " + jeton }, (opt && opt.headers) || {}) })); }
+  catch (e) { throw Object.assign(new Error(t("offline")), { cle: "offline", cause: e }); }
   if (!r.ok) { const er = new Error("Graph " + r.status); er.status = r.status; throw er; }
   return r;
 }
@@ -681,8 +717,14 @@ async function refusLecture(e) {
   }
   ds.del("cache"); data = null; e.acces = true;
 }
+// correctifs mobqa (08/10) : fiche d'exemple du mode démo : absente (jamais publiée en ligne) → message clair, jamais « Unexpected token '<' »
+async function lireDemo(url) {
+  let r = null; try { r = await fetch(url); } catch (e) { r = null; }
+  if (!r || !r.ok) throw Object.assign(new Error(t("noDemo")), { cle: "noDemo" });
+  try { return await r.json(); } catch (e) { throw Object.assign(new Error(t("noDemo")), { cle: "noDemo" }); }
+}
 async function load() {
-  if (DEMO) { data = await (await fetch(ls.get("demoFile", "demo_head.json") + "?t=" + Date.now())).json(); derniereLecture = Date.now(); settle(); return; }
+  if (DEMO) { data = await lireDemo(ls.get("demoFile", "demo_head.json") + "?t=" + Date.now()); derniereLecture = Date.now(); settle(); return; }
   const h = moi();
   if (!place) {
     $("#main").innerHTML = '<div class="center muted">' + t("searching") + '</div>';
@@ -694,7 +736,9 @@ async function load() {
   const p = place; let r;
   try { r = await gfetch("/drives/" + p.driveId + "/items/" + p.folderId + ":/" + encodeURIComponent(p.name) + ":/content", { cache: "no-store" }); }
   catch (e) { if (moi() === h && place === p) await refusLecture(e); throw e; }
-  const fiche = await r.json(); if (moi() !== h || place !== p) return;   // compte ou dossier changé pendant la lecture : rien n'est rangé
+  // correctifs mobqa (08/10) : fiche coupée ou vide (Atlas en train de l'écrire) : « Fiche Atlas illisible », jamais le message technique du JSON
+  let fiche; try { fiche = await r.json(); } catch (e) { throw Object.assign(new Error(t("badSheet")), { cle: "badSheet", cause: e }); }
+  if (moi() !== h || place !== p) return;   // compte ou dossier changé pendant la lecture : rien n'est rangé
   data = fiche; ds.set("cache", { owner: h, dossier: dosId(p), fiche }); derniereLecture = Date.now();
   settle();
 }
@@ -715,7 +759,8 @@ async function send(changes, name, etat, photo) {
     const box = us.get("outbox", []).filter(e => e.name !== name), en = { name, owner: moi(), driveId: place.driveId, folderId: place.folderId, body };
     if (photo) en.photo = { fichier: photo.fichier, cle: photo.cle, ok: false };
     box.push(en);
-    if (!us.set("outbox", box) || !us.get("outbox", []).some(e => e.name === name)) throw new Error("localStorage");
+    // correctifs mobqa (08/10) : boîte d'envoi pas réécrite (mémoire du téléphone pleine) : motif en clair (memFull), jamais « localStorage »
+    if (!us.set("outbox", box) || !us.get("outbox", []).some(e => e.name === name)) throw Object.assign(new Error(t("memFull")), { cle: "memFull" });
   }
   if (etat) etat.gardee = true;
   // round 23 : une attente par photo (« réf|photo:<fichier> ») : plusieurs photos d'une même livraison restent chacune en attente
@@ -746,7 +791,7 @@ function flush(quiet) {
           // round 23 : photo d'abord (dossier « photos »), marquée déposée dans la boîte ; puis la modification qui la cite (dossier « modifs ») :
           // Atlas ne lit jamais une modification dont la photo n'a pas été déposée ; photo absente du téléphone : entrée bloquée (Réessayer, Abandonner)
           if (e.photo && !e.photo.ok) {
-            const b64 = photoMem.get(e.photo.cle); let buf = null; try { buf = b64 ? deB64(b64) : null; } catch (x) { buf = null; }
+            const buf = await photoMem.get(e.photo.cle);   // mémoire des photos sans réponse : erreur passagère, l'entrée attend le prochain envoi
             if (!buf || !buf.length) throw Object.assign(new Error(t("photoLost")), { status: "photo" });
             await gfetch("/drives/" + e.driveId + "/items/" + e.folderId + ":/photos/" + encodeURIComponent(e.photo.fichier) + ":/content", { method: "PUT", headers: { "Content-Type": "image/jpeg" }, body: new Blob([buf], { type: "image/jpeg" }) }, quiet);
             const b = us.get("outbox", []), x = b.find(y => y.name === e.name); if (x && x.photo) { x.photo.ok = true; us.set("outbox", b); }
@@ -760,7 +805,7 @@ function flush(quiet) {
         }
         if (!us.set("outbox", us.get("outbox", []).filter(x => x.name !== e.name))) break;   // mémoire du téléphone illisible : jamais de boucle
         envoyees.add(e.name);
-        if (e.photo) photoMem.del(e.photo.cle);   // photo déposée : retirée de la mémoire du téléphone
+        if (e.photo) await photoMem.del(e.photo.cle);   // photo déposée : retirée de la mémoire du téléphone
       }
       if (err) throw err;
     } finally { if (flushing === run) flushing = null; }
@@ -807,13 +852,14 @@ function opView(l, b) {
 }
 function ops() { const b = blocage(); return (data.livraisons || []).map(l => opView(l, b)); }
 const photoTxt = l => (l.photos || l.photosAttente) ? '<div class="ph">📷 ' + (l.photos ? esc(tf("photoN", l.photos)) : "") + (l.photos && l.photosAttente ? " · " : "") + (l.photosAttente ? esc(tf("photoWait", l.photosAttente)) : "") + '</div>' : "";
+// correctifs mobqa (08/10) : livraison sans date ni mois : « sans date » et sa référence (des cartes d’un même contrat ne se distinguaient que par la quantité)
 function opCard(l) {
   const cls = l.sens === "achat" ? "in" : "out";
   const stChip = l.statut === "Réalisé" ? '<span class="chip in">' + t("delivered") + '</span>' : l.statut === "Annulé" ? '<span class="chip">' + t("cancelled") + '</span>'
                : l.retard ? '<span class="chip late">' + t("late") + '</span>' : '<span class="chip">' + t("planned") + '</span>';
   return '<div class="card op ' + cls + '" data-ref="' + esc(l.ref) + '"><div class="bar"></div><div class="grow">' +
     '<div class="row"><div class="grow"><b>' + esc(l.cpty) + '</b> · ' + esc(prod(l.produit)) + '</div>' + stChip + '</div>' +
-    '<div class="row"><div class="grow muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + (l.partie ? " " + esc(l.partie) : "") + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : "") + (l.contrat ? " · " + esc(l.contrat) : "") + (l.transporteur ? " · " + esc(l.transporteur) : "") + '</div>' +
+    '<div class="row"><div class="grow muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + (l.partie ? " " + esc(l.partie) : "") + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t("noDate")) + (l.contrat ? " · " + esc(l.contrat) : "") + (!l.date && !l.mois ? " · " + esc(l.ref) : "") + (l.transporteur ? " · " + esc(l.transporteur) : "") + '</div>' +
     '<div class="q">' + nf(l.qte) + ' lb</div></div>' + photoTxt(l) + (l.attente ? '<div class="pending">' + t("pending") + '</div>' : "") + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : "") +
     (l.refus ? '<div class="refused">' + t("refused") + " : " + esc(l.refus.texte) + '</div>' : "") + '</div></div>';
 }
@@ -844,6 +890,10 @@ const le = s => s ? (lang === "fr" ? "le " : "on ") + fmtDM(s) : "";
 const fmtJ = s => { const d = parseD(s); return d ? d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { weekday:"long", day:"numeric", month:"long" }) : ""; };
 const semTitre = du => { const d0 = parseD(du); return t("wk") + semNo(d0) + " · " + fmtDM(du) + " → " + fmtDM(iso(addJ(d0, 6))); };
 const nomCourt = p => { const n = prod(p); return n.slice(0, 2); };
+// correctifs mobqa (08/10) : un besoin qui ne dépasse pas la tolérance de pesée d'Atlas (1 lb, comme VK_TOL des camions) n'est pas un manque : ni alerte
+// rouge, ni « besoin 0 lb », ni « déficit en cours de semaine » (fiche d'un Atlas qui l'écrit encore)
+const BESOIN_MIN = 1;
+const besoinVu = w => !!w && +w.besoin > BESOIN_MIN;
 function calChoix() {
   const s = STK(); if (calMode == null) calMode = us.get("calMode", "jours"); if (calMode !== "cpty") calMode = "jours";
   if (calProd == null) calProd = us.get("calProd", "*");
@@ -895,10 +945,10 @@ function bandHtml(du) {
     const p = ps[0], w = semDe(p, du); if (!w) return "";
     const fin = w.clo == null ? (p.inventorie ? "" : (w.ent || w.sor ? t("change") + " " + sgn(w.ent - w.sor) : t("notInv"))) : (w.approx ? "≈" : "") + qs(w.clo) + " " + U();
     txt = '<span class="grow">' + t("endW") + ' <b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + fin + '</b>' + (w.ent ? " · ▲" + qk(w.ent) : "") + (w.sor ? " · ▼" + qk(w.sor) : "") + '</span>' +
-          (w.besoin > 0 ? '<span class="neg">' + tf("needOn", qk(w.besoin), fmtDM(w.besoinLe)) + '</span>' : "") + (w.retard ? '<span class="warn">' + tf("lateN", w.retard) + '</span>' : "");
+          (besoinVu(w) ? '<span class="neg">' + tf("needOn", qk(w.besoin), fmtDM(w.besoinLe)) + '</span>' : "") + (w.retard ? '<span class="warn">' + tf("lateN", w.retard) + '</span>' : "");
   } else {
     const parts = ps.map(p => { const w = semDe(p, du); if (!w) return ""; if (w.clo == null) return w.ent || w.sor ? esc(nomCourt(p.produit)) + " —" : "";
-      return '<span class="' + (w.clo <= -0.5 || w.besoin > 0 ? "neg" : "") + '">' + esc(nomCourt(p.produit)) + " " + (w.approx ? "≈" : "") + qk(w.clo) + '</span>'; }).filter(Boolean);
+      return '<span class="' + (w.clo <= -0.5 || besoinVu(w) ? "neg" : "") + '">' + esc(nomCourt(p.produit)) + " " + (w.approx ? "≈" : "") + qk(w.clo) + '</span>'; }).filter(Boolean);
     if (!parts.length) return "";
     txt = '<span class="grow">' + t("endW") + " : " + parts.join(" · ") + " " + U() + '</span>';
   }
@@ -909,7 +959,7 @@ function moisHtml(mk) {
   const rows = prodsSel().map(p => {
     const m = (p.mois || []).find(x => x.mois === mk); if (!m) return "";
     if (!p.inventorie) return m.ent || m.sor ? '<div class="kv"><span>' + esc(prod(p.produit)) + '</span><span class="muted">' + t("notInv") + " · " + t("change") + " " + sgn(m.ent - m.sor) + " " + U() + '</span></div>' : "";
-    const wn = (p.semaines || []).filter(w => w.besoin > 0 && w.besoinLe && w.besoinLe.slice(0, 7) === mk).sort((a, b) => b.besoin - a.besoin)[0];
+    const wn = (p.semaines || []).filter(w => besoinVu(w) && w.besoinLe && w.besoinLe.slice(0, 7) === mk).sort((a, b) => b.besoin - a.besoin)[0];
     return '<div class="kv"><span>' + esc(prod(p.produit)) + '</span><span>' + (m.ouv == null ? t("unknown") : qs(m.ouv)) + " → <b" + (m.clo != null && m.clo <= -0.5 ? ' class="neg"' : "") + ">" + (m.clo == null ? t("unknown") : qs(m.clo)) + "</b> " + U() +
       (m.ent || m.sor ? '<br><span class="muted">' + (m.ent ? "▲ +" + qn(m.ent) : "") + (m.ent && m.sor ? " · " : "") + (m.sor ? "▼ −" + qn(m.sor) : "") + '</span>' : "") +
       (wn ? '<br><span class="neg">⚠ ' + tf("needMax", qn(wn.besoin) + " " + U(), fmtDM(wn.besoinLe)) + '</span>' : "") + '</span></div>';
@@ -926,9 +976,11 @@ function renderCal() {
   const minM = s ? moisPlein(s.du, false) : null, maxM = s ? moisPlein(s.au, true) : null;
   let h = '<div class="cal"><div class="calhead"><button id="pm" aria-label="‹">‹</button><b>' + t("months")[m] + " " + y + '</b><button class="txt" id="tm">' + t("today") + '</button><button id="nm" aria-label="›">›</button></div>';
   if (s) {
-    h += '<div class="seg small" id="mode" style="margin:0 4px 6px">' + [["jours", t("days")], ["cpty", t("cpties")]].map(x => '<button data-m="' + x[0] + '" class="' + (x[0] === calMode ? "on" : "") + '">' + x[1] + '</button>').join("") + '</div>' +
-         '<div class="chips" style="padding:2px 4px 6px">' + [["*", t("allProd")]].concat(s.produits.map(p => [p.produit, prod(p.produit)])).map(x => '<button data-p="' + esc(x[0]) + '" class="' + (x[0] === calProd ? "on" : "") + '">' + esc(x[1]) + '</button>').join("") +
-         '<button data-u="1">' + (unite === "MT" ? "MT → lb" : "lb → MT") + '</button></div>';
+    // correctifs mobqa (08/10) : bascule lb / MT toujours visible (au bout de la ligne Jours | Contreparties : seul moyen de passer en MT pour la
+    // Logistique), rangée des produits avec fondu et flèche « › » quand elle défile (jamais une puce coupée net)
+    h += '<div class="row" style="margin:0 4px 6px;gap:8px"><div class="seg small grow" id="mode">' + [["jours", t("days")], ["cpty", t("cpties")]].map(x => '<button data-m="' + x[0] + '" class="' + (x[0] === calMode ? "on" : "") + '">' + x[1] + '</button>').join("") + '</div>' +
+         '<button class="calu" data-u="1">' + (unite === "MT" ? "MT → lb" : "lb → MT") + '</button></div>' +
+         vScroll("chipsw calp", '<div class="vsc-in chips" style="padding:2px 0 6px">' + [["*", t("allProd")]].concat(s.produits.map(p => [p.produit, prod(p.produit)])).map(x => '<button data-p="' + esc(x[0]) + '" class="' + (x[0] === calProd ? "on" : "") + '">' + esc(x[1]) + '</button>').join("") + '</div>');
     h += (mk < minM || mk > maxM ? '<div class="note" style="padding:0 6px">' + tf("outWin", fmtM(minM), fmtM(maxM)) + '</div>' : moisHtml(mk));
   } else h += '<div class="note" style="padding:0 6px 6px">' + t("noStock") + '</div>';
   // jours : mouvements du moteur ; fiche sans stock : livraisons datées (comme avant)
@@ -960,9 +1012,9 @@ function renderCal() {
       if (ps.length === 1) { const w = semDe(ps[0], du);
         if (w) top = '<div class="metrics"><div><small>' + t("opening") + '</small><b>' + (w.ouv == null ? "—" : qs(w.ouv)) + '</b></div><div><small>' + t("closing") + '</small><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + (w.clo == null ? "—" : (w.approx ? "≈" : "") + qs(w.clo)) + '</b> <span class="muted">' + U() + '</span></div>' +
           '<div><small>' + t("inW") + '</small><b class="' + (w.ent ? "pos" : "") + '">' + (w.ent ? "+" + qn(w.ent) : "—") + '</b></div><div><small>' + t("outW") + '</small><b class="' + (w.sor ? "neg" : "") + '">' + (w.sor ? "−" + qn(w.sor) : "—") + '</b></div></div>' +
-          (w.besoin > 0 ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : ""); }
+          (besoinVu(w) ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : ""); }
       else top = ps.map(p => { const w = semDe(p, du); if (!w || (w.clo == null && !w.ent && !w.sor)) return ""; return '<div class="kv"><span>' + esc(prod(p.produit)) + '</span><span>' + (w.ent ? "▲" + qk(w.ent) + " " : "") + (w.sor ? "▼" + qk(w.sor) + " " : "") +
-          (w.clo == null ? '<span class="muted">' + t("notInv") + '</span>' : t("endW") + ' <b class="' + (w.clo <= -0.5 ? "neg" : "") + '">' + (w.approx ? "≈" : "") + qs(w.clo) + '</b>') + " " + U() + (w.besoin > 0 ? ' <span class="neg">' + tf("needOn", qk(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</span>' : "") + '</span></div>'; }).join("");
+          (w.clo == null ? '<span class="muted">' + t("notInv") + '</span>' : t("endW") + ' <b class="' + (w.clo <= -0.5 ? "neg" : "") + '">' + (w.approx ? "≈" : "") + qs(w.clo) + '</b>') + " " + U() + (besoinVu(w) ? ' <span class="neg">' + tf("needOn", qk(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</span>' : "") + '</span></div>'; }).join("");
       h += '<div class="card"><div class="row wk" data-w="' + du + '"><span class="grow t">' + semTitre(du) + '</span><span class="muted">›</span></div>' + top +
            (g.length ? '<div style="margin-top:6px">' + g.map(x => { gs.push(x); return whoHtml(x, gs.length - 1); }).join("") + '</div>' : '<div class="muted" style="margin-top:6px">' + t("noMoveW") + '</div>') + '</div>';
     }
@@ -978,12 +1030,13 @@ function renderCal() {
   if (s) { if (iso(new Date(y, m - 1, 1)).slice(0, 7) < minM) $("#pm").disabled = true; if (iso(new Date(y, m + 1, 1)).slice(0, 7) > maxM) $("#nm").disabled = true; }
   $("#main").querySelectorAll("#mode button").forEach(b => b.onclick = () => { calMode = b.dataset.m; us.set("calMode", calMode); selDay = null; render(); });
   $("#main").querySelectorAll(".cal .chips [data-p]").forEach(b => b.onclick = () => { calProd = b.dataset.p; us.set("calProd", calProd); render(); });
-  const bu = $("#main").querySelector(".cal .chips [data-u]"); if (bu) bu.onclick = () => { unite = unite === "MT" ? "lb" : "MT"; ls.set("unite", unite); render(); };
+  const bu = $("#main").querySelector(".cal [data-u]"); if (bu) bu.onclick = () => { unite = unite === "MT" ? "lb" : "MT"; ls.set("unite", unite); render(); };
   $("#main").querySelectorAll(".day").forEach(b => b.onclick = () => { selDay = b.dataset.d === selDay ? null : b.dataset.d; render(); if (selDay) { const j = $("#jour"); if (j && j.scrollIntoView) j.scrollIntoView({ block: "start", behavior: "smooth" }); } });
   $("#main").querySelectorAll("[data-w]").forEach(b => b.onclick = () => semaineSheet(b.dataset.w));
   $("#main").querySelectorAll(".who[data-g]").forEach(b => b.onclick = () => { const g = (renderCal.gs || [])[+b.dataset.g]; if (g) mvSheet((g.d > 0 ? "▲ " : g.d < 0 ? "▼ " : "◇ ") + g.who + " · " + prod(g.produit), g.ms); });
   $("#main").querySelectorAll(".chips [data-f]").forEach(b => b.onclick = () => { delivFilter = b.dataset.f; render(); });
   bindOps($("#main"));
+  vScrollInit($("#main"));
 }
 function jourHtml(k, ms) {
   const s = STK(); let h = '<h2 id="jour">' + esc(fmtJ(k)) + '</h2>';
@@ -1015,8 +1068,8 @@ function listesHtml() {
   const f = { upcoming: l => l.statut === "Prévu" && !l.retard, lateF: l => l.retard, done: l => l.statut === "Réalisé", all: l => l.statut !== "Annulé" };
   if (!f[delivFilter]) delivFilter = "upcoming";
   const all = ops(), list = all.filter(f[delivFilter]).sort((a, b) => ((a.date || (a.mois ? a.mois + "-15" : "9999")).localeCompare(b.date || (b.mois ? b.mois + "-15" : "9999"))) * (delivFilter === "done" ? -1 : 1));
-  return '<h2>' + t("deliveries") + '</h2><div class="chips">' + ["upcoming", "lateF", "done", "all"].map(k => '<button data-f="' + k + '" class="' + (k === delivFilter ? "on" : "") + '">' + t(k) +
-    (k === "lateF" ? " (" + all.filter(f.lateF).length + ")" : "") + '</button>').join("") + '</div>' + (list.length ? list.map(opCard).join("") : '<div class="card muted">' + t("noData") + '</div>');
+  return '<h2>' + t("deliveries") + '</h2>' + vScroll("chipsw", '<div class="vsc-in chips">' + ["upcoming", "lateF", "done", "all"].map(k => '<button data-f="' + k + '" class="' + (k === delivFilter ? "on" : "") + '">' + t(k) +
+    (k === "lateF" ? " (" + all.filter(f.lateF).length + ")" : "") + '</button>').join("") + '</div>') + (list.length ? list.map(opCard).join("") : '<div class="card muted">' + t("noData") + '</div>');
 }
 // feuille d'une semaine : par produit ouverture, entrées, sorties, clôture, besoin (moteur), puis par contrepartie et les mouvements
 function semaineSheet(du) {
@@ -1028,7 +1081,7 @@ function semaineSheet(du) {
     h += '<div class="card" style="margin-top:10px;background:var(--cell)"><b>' + esc(prod(p.produit)) + '</b><div class="metrics"><div><small>' + t("opening") + '</small><b>' + (w.ouv == null ? "—" : qs(w.ouv)) + '</b></div><div><small>' + t("closing") + '</small><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + (w.clo == null ? "—" : (w.approx ? "≈" : "") + qs(w.clo)) + '</b></div>' +
       '<div><small>' + t("inW") + '</small><b class="' + (w.ent ? "pos" : "") + '">' + (w.ent ? "+" + qn(w.ent) : "—") + '</b></div><div><small>' + t("outW") + '</small><b class="' + (w.sor ? "neg" : "") + '">' + (w.sor ? "−" + qn(w.sor) : "—") + '</b></div></div>' +
       (w.clo == null && !p.inventorie ? '<div class="muted">' + t("notInv") + (w.ent || w.sor ? " · " + t("change") + " " + sgn(w.ent - w.sor) : "") + '</div>' : "") +
-      (w.besoin > 0 ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.deficit ? '<div class="note">' + t("deficit") + '</div>' : "") +
+      (besoinVu(w) ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.deficit && besoinVu(w) ? '<div class="note">' + t("deficit") + '</div>' : "") +
       (w.ordre || []).map(o => '<div class="note">' + tf("order", fmtDM(o)) + '</div>').join("") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : "") + (w.approx ? '<div class="muted">' + t("approx") + '</div>' : "") + '</div>';
   });
   if (g.length) h += '<h2>' + t("byCpty") + '</h2><div class="card">' + g.map(whoHtml).join("") + '</div>';
@@ -1041,6 +1094,14 @@ function semaineSheet(du) {
 function mvSheet(titre, ms) {
   sheet('<h3>' + esc(titre) + '</h3>' + mvCards(ms) + '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; bindOps(bg, close); });
 }
+// correctifs mobqa (08/10) : aucun lot à compter (fiche juste : stock nul) : dit tel quel, avec le stock réel du jour de chaque produit inventorié
+// (lb, aucun montant) ; « Aucune donnée » seulement si la fiche n'a ni lot ni stock
+function stockVide() {
+  const s = STK(), pr = s ? s.produits.filter(p => p.inventorie && p.reel != null) : [];
+  if (!pr.length) return '<div class="card muted">' + t("noData") + '</div>';
+  return '<div class="card"><div class="muted">' + t("noLots") + '</div>' + pr.map(p => '<div class="kv"><span>' + esc(prod(p.produit)) + '</span><span>' + nf(p.reel) + " lb" +
+    (p.inventaire ? ' <span class="muted">· ' + esc(tf("invOf", fmtDM(p.inventaire))) + '</span>' : "") + '</span></div>').join("") + '</div>';
+}
 function renderStock() {
   const inv = data.inventaire || [], b = blocage(), pv = k => { const p = pending[k]; return p && !(p.fichier && b.fichiers.has(p.fichier)) ? p : null; };
   $("#main").innerHTML = inv.length ? inv.map(l => {
@@ -1051,17 +1112,20 @@ function renderStock() {
       (r ? '<div class="refused">' + t("refused") + " : " + esc(r.texte) + '</div>' : "") +
       '</div><div style="text-align:right"><div class="q" style="font-weight:700;font-size:18px">' + nf(l.stock) + ' lb</div>' +
       '<button class="chip" data-lot="' + esc(l.lot) + '" style="margin-top:6px;border:0">' + t("count") + '</button></div></div></div>';
-  }).join("") : '<div class="card muted">' + t("noData") + '</div>';
+  }).join("") : stockVide();
   $("#main").querySelectorAll("[data-lot]").forEach(b => b.onclick = () => countLot(b.dataset.lot));
 }
 
 // ---------- trésorerie (round 23 : à la place du P&L, fiche Head) ----------
 // Chiffres du calendrier « Trésorerie (semaines) » du PC (moteur CashCal) fournis par la fiche, jamais recalculés ici : solde de fin de chaque jour,
 // semaines (ouverture, entrées, sorties, clôture, point bas, financement), opérations (à recevoir, à payer, reçu, payé)
-// round 25 (corrections) : montant COMPLET au dollar, jamais « k » ni « M » : « 850 000 $ », « −1 234 567 $ » ; en anglais « $850,000 »
+// round 25 (corrections) : montant COMPLET au dollar, jamais « k » ni « M » : « 123 456 $ », « −1 234 567 $ » ; en anglais « $123,456 »
 const amt = v => { if (v == null || isNaN(v)) return "—"; const a = Math.abs(v), s = v <= -0.5 ? "−" : "";
   return s + (lang === "en" ? "$" + nf(a) : nf(a) + " $"); };
 const financement = w => w.financement > 0 ? (w.minimal ? "≥ " : "") + amt(w.financement) : w.minimal ? "?" : "—";   // jamais « 0 » seul
+// correctifs mobqa (08/10) : point bas des 26 semaines = une estimation (flux à prix flottant hors totaux) : « ≈ », arrondi au millier de dollars, jamais
+// abrégé (ni « k » ni « M ») ; le montant exact reste dans la feuille de la semaine
+const amtEst = v => v == null || isNaN(v) ? "—" : "≈ " + amt(Math.round(v / 1000) * 1000);
 function courbe(tr) {
   const pts = (tr.jours || []).filter(x => x.f != null); if (pts.length < 2) return "";
   const W = 340, H = 120, P = 8, vs = pts.map(x => x.f), mn = Math.min(0, ...vs), mx = Math.max(0, ...vs), sp = (mx - mn) || 1;
@@ -1073,17 +1137,20 @@ function courbe(tr) {
     (it >= 0 ? '<line x1="' + X(it).toFixed(1) + '" x2="' + X(it).toFixed(1) + '" y1="0" y2="' + H + '" stroke="var(--line)" vector-effect="non-scaling-stroke"/>' : "") +
     '<path d="' + path + '" fill="none" stroke="var(--primary)" stroke-width="2" vector-effect="non-scaling-stroke"/>' +
     (ib >= 0 ? '<circle cx="' + X(ib).toFixed(1) + '" cy="' + Y(vs[ib]).toFixed(1) + '" r="3.5" fill="' + (vs[ib] < 0 ? "var(--out)" : "var(--primary)") + '"/>' : "") + '</svg>' +
-    '<div class="row muted" style="font-size:11px"><span class="grow">' + fmtDM(pts[0].j) + '</span><span>' + (ib >= 0 ? t("lowPt") + " " + amt(vs[ib]) + " " + le(pts[ib].j) : "") + '</span><span class="grow" style="text-align:right">' + fmtDM(pts[pts.length - 1].j) + '</span></div>';
+    '<div class="row muted" style="font-size:11px"><span class="grow">' + fmtDM(pts[0].j) + '</span><span>' + (ib >= 0 ? t("lowPt") + " " + amtEst(vs[ib]) + " " + le(pts[ib].j) : "") + '</span><span class="grow" style="text-align:right">' + fmtDM(pts[pts.length - 1].j) + '</span></div>';
 }
 function renderTreso() {
   const tr = data.tresorerie;
   if (!tr || !Array.isArray(tr.semaines)) { $("#main").innerHTML = '<div class="card muted">' + t("noTreso") + '</div>'; return; }
   const cur = iso(lundi(parseD(today))), jt = (tr.jours || []).find(x => x.j === today);
   const fut = tr.semaines.filter(w => w.du >= cur && w.bas != null), low = fut.reduce((a, w) => !a || w.bas < a.bas ? w : a, null);
+  const sansM = (tr.operations || []).filter(o => o.m == null && o.j >= cur), nMq = sansM.filter(o => o.manque).length, nFl = sansM.length - nMq, nSw = sansM.filter(o => !o.manque && o.src === "Swaps").length;
   let h = '<div class="card"><div class="muted">' + t("todayBal") + ' · ' + esc(tr.devise || "") + '</div><div class="big' + (jt && jt.f <= -0.5 ? " neg" : "") + '">' + amt(jt && jt.f) + '</div>' +
     (tr.releve ? '<div class="muted">' + t("lastStmt") + " : " + amt(tr.soldeReleve) + " " + tf("atDate", fmtD(tr.releve)) + '</div>' : "") +
-    (low ? '<div class="metrics" style="margin-top:8px"><div><small>' + t("lowest") + '</small><b class="' + (low.bas <= -0.5 ? "neg" : "") + '">' + amt(low.bas) + '</b> <span class="muted">' + le(low.basLe) + '</span></div>' +
-           '<div><small>' + t("funding") + '</small><b class="' + (low.financement > 0 ? "neg" : "") + '">' + financement(low) + '</b></div></div>' : "") +
+    (low ? '<div class="metrics" style="margin-top:8px"><div><small>' + t("lowest") + '</small><b class="' + (low.bas <= -0.5 ? "neg" : "") + '">' + amtEst(low.bas) + '</b> <span class="muted">' + le(low.basLe) + '</span></div>' +
+           '<div><small>' + t("funding") + '</small><b class="' + (low.financement > 0 ? "neg" : "") + '">' + financement(low) + '</b></div></div>' +
+           // flux sans montant (prix flottant : achats indexés, swaps sans fixing) dans la fenêtre : comptés à part, jamais dans les totaux (règle du PC)
+           (nFl ? '<div class="muted">' + esc(nSw ? tf("floatingSw", nFl, nSw) : tf("floating", nFl)) + '</div>' : "") + (nMq ? '<div class="note">' + esc(tf("noAmt", nMq)) + '</div>' : "") : "") +
     (tr.previsions === false ? '<div class="note">' + t("bankOnly") + '</div>' : "") + (tr.ecarts ? '<div class="refused">' + tf("gaps", tr.ecarts) + '</div>' : "") + (tr.alertes ? '<div class="note">' + tf("warns", tr.alertes) + '</div>' : "") + '</div>';
   h += '<div class="card">' + courbe(tr) + '</div><h2>' + t("weeks") + '</h2>';
   h += tr.semaines.filter(w => w.du >= iso(addJ(parseD(cur), -7))).map(w => '<div class="card wk" data-tw="' + w.du + '"><div class="row"><span class="grow"><span class="t">' + semTitre(w.du) + '</span></span><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + amt(w.clo) + '</b></div>' +
@@ -1104,7 +1171,11 @@ function tresoSemaine(du) {
   const tr = data.tresorerie, w = tr.semaines.find(x => x.du === du); if (!w) return;
   const d1 = iso(addJ(parseD(du), 6)), os = (tr.operations || []).filter(o => o.j >= du && o.j <= d1);
   const by = new Map();
-  os.forEach(o => { const k = o.sens + "|" + (o.banque ? "b" : "") + "|" + (o.cpty || "") + "|" + (o.produit || ""); let g = by.get(k); if (!g) by.set(k, g = { o, q: 0, na: 0, n: 0, late: false }); if (o.m == null) g.na++; else g.q += Math.abs(o.m); g.n++; g.late = g.late || !!o.retard; });
+  // correctifs mobqa (08/10) : part échue de chaque groupe comptée à part (nl opérations, lq dollars, lna sans montant) : « échu(s) » seulement si tout le
+  // groupe est échu, sinon « dont échu <montant> » (comme le PC) ; avant, « échu(s) » était posé sur le total du groupe
+  os.forEach(o => { const k = o.sens + "|" + (o.banque ? "b" : "") + "|" + (o.cpty || "") + "|" + (o.produit || ""); let g = by.get(k); if (!g) by.set(k, g = { o, q: 0, na: 0, n: 0, late: false, nl: 0, lq: 0, lna: 0 });
+    if (o.m == null) g.na++; else g.q += Math.abs(o.m); g.n++; g.late = g.late || !!o.retard; if (o.retard) { g.nl++; if (o.m == null) g.lna++; else g.lq += Math.abs(o.m); } });
+  const echuTxt = g => g.nl === g.n ? tf("overdue", "").trim() : g.lq >= 0.005 ? tf("lateOf", (g.lna ? "≥ " : "") + amt(g.lq)) : tf("lateOfN", g.nl);
   const word = o => o.sens === 0 ? t("unkDir") : o.banque ? (o.sens > 0 ? t("recvd") : t("paid")) : (o.sens > 0 ? t("recv") : t("pay"));
   const gs = Array.from(by.values()).sort((a, b) => (a.o.sens > 0 ? 0 : a.o.sens < 0 ? 1 : 2) - (b.o.sens > 0 ? 0 : b.o.sens < 0 ? 1 : 2) || (a.o.banque ? 1 : 0) - (b.o.banque ? 1 : 0) || b.q - a.q);
   let h = '<h3>' + semTitre(du) + '</h3><div class="muted">' + esc((tr.entite || "") + " · " + (tr.devise || "")) + '</div>' +
@@ -1114,13 +1185,14 @@ function tresoSemaine(du) {
     (tr.coussin > 0 && w.coussin > w.financement ? '<br><span class="muted">' + tf("cushion", amt(w.coussin)) + '</span>' : "") + '</div></div>' +
     (w.minimal ? '<div class="muted">' + tf("minimal", w.minimal) + '</div>' : "") + (w.echus ? '<div class="note">' + tf("overdue", w.echus) + '</div>' : "");
   if (gs.length) h += '<h2>' + t("byCpty") + '</h2><div class="card">' + gs.map(g => '<div class="who"><span class="a ' + (g.o.sens > 0 ? "in" : g.o.sens < 0 ? "out" : "") + '">' + (g.o.sens > 0 ? "▲" : g.o.sens < 0 ? "▼" : "◆") + '</span><span class="grow">' + word(g.o) + " · " + esc(g.o.cpty || "?") +
-    (g.o.produit ? ' <span class="muted">· ' + esc(prod(g.o.produit)) + '</span>' : "") + (g.late ? ' <span class="chip late">' + tf("overdue", "").trim() + '</span>' : "") + '</span><span class="v ' + (g.o.sens > 0 ? "pos" : g.o.sens < 0 ? "neg" : "muted") + '">' +
+    (g.o.produit ? ' <span class="muted">· ' + esc(prod(g.o.produit)) + '</span>' : "") + (g.late ? ' <span class="chip late">' + esc(echuTxt(g)) + '</span>' : "") + '</span><span class="v ' + (g.o.sens > 0 ? "pos" : g.o.sens < 0 ? "neg" : "muted") + '">' +
     (g.q < 0.005 && g.na ? "?" : (g.na ? "≥ " : "") + amt(g.q)) + '</span></div>').join("") + '</div>';
   h += '<h2>' + t("dayByDay") + '</h2>';
   for (let i = 0; i < 7; i++) {
     const j = iso(addJ(parseD(du), i)), oj = os.filter(o => o.j === j), fj = (tr.jours || []).find(x => x.j === j);
     if (!oj.length && j !== w.basLe) continue;
-    h += '<div class="card"><div class="row"><b class="grow">' + esc(fmtJ(j)) + '</b><span class="' + (fj && fj.f <= -0.5 ? "neg" : "") + '">' + t("cash") + " " + amt(fj && fj.f) + (j === w.basLe ? " ← " + t("lowPt").toLowerCase() : "") + '</span></div>' + oj.map(opTreso).join("") + '</div>';
+    // correctifs mobqa (08/10) : la date ne rétrécit pas sous son mot le plus long (« September » passait sous le solde à 320 px) : c'est le solde qui passe à la ligne
+    h += '<div class="card"><div class="row"><b class="grow" style="min-width:auto">' + esc(fmtJ(j)) + '</b><span style="text-align:right" class="' + (fj && fj.f <= -0.5 ? "neg" : "") + '">' + t("cash") + " " + amt(fj && fj.f) + (j === w.basLe ? " ← " + t("lowPt").toLowerCase() : "") + '</span></div>' + oj.map(opTreso).join("") + '</div>';
   }
   sheet(h + '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; });
 }
@@ -1133,7 +1205,7 @@ const photoOk = () => DEMO || !!(data && Array.isArray(data.accepte) && data.acc
 function photoCard(l) {
   const cls = l.sens === "achat" ? "in" : "out";
   return '<div class="card op ' + cls + '"><div class="bar"></div><div class="grow"><div class="row"><div class="grow"><b>' + esc(l.cpty) + '</b> · ' + esc(prod(l.produit)) + '</div><div class="q">' + nf(l.qte) + ' lb</div></div>' +
-    '<div class="muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : "") + (l.contrat ? " · " + esc(l.contrat) : "") + " · " + esc(l.ref) +
+    '<div class="muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t("noDate")) + (l.contrat ? " · " + esc(l.contrat) : "") + " · " + esc(l.ref) +
     (l.retard ? ' <span class="chip late">' + t("late") + '</span>' : "") + '</div>' + photoTxt(l) + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : "") +
     (l.refus ? '<div class="refused">' + t("refused") + " : " + esc(l.refus.texte) + '</div>' : "") +
     (photoOk() ? '<div class="btns"><button class="btn light" data-cam="' + esc(l.ref) + '">📷 ' + t("camShort") + '</button><button class="btn light" data-lib="' + esc(l.ref) + '">🖼 ' + t("library") + '</button></div>' : "") + '</div></div>';
@@ -1155,14 +1227,52 @@ function renderPhotos() {
   liste();
   $("#phq").oninput = () => { photoFiltre = $("#phq").value; liste(); };
 }
-// mémoire des photos à envoyer : la photo réduite (JPEG en base 64) est gardée dans la mémoire du téléphone, dans l'espace du compte, à côté de
-// la boîte d'envoi (clé « u.<compte>.photo.<nom du fichier de la modification> ») ; retirée après l'envoi ou l'abandon ; mémoire pleine : dit,
-// rien n'est gardé (quelques dizaines de photos réduites tiennent)
+// mémoire des photos à envoyer : la photo réduite (JPEG) est gardée sur le téléphone, dans l'espace du compte, à côté de la boîte d'envoi (clé
+// « u.<compte>.photo.<nom du fichier de la modification> ») ; retirée après l'envoi ou l'abandon ; mémoire pleine : dit, rien n'est gardé.
+// Correctifs mobqa (08/10) : les octets sont gardés dans IndexedDB (base « atlas-photos ») : la mémoire locale (environ 5 millions de caractères pour
+// tout le site, fiche et boîte d'envoi comprises, + un tiers pour la base 64) ne gardait que 8 photos hors réseau (moins sur iPhone). Repli sur la
+// mémoire locale (base 64) si IndexedDB ne répond pas ; une photo gardée par une version précédente (base 64) est encore lue, envoyée et retirée.
 const PHOTO_MAX = 40 * 1024 * 1024, PHOTO_COTE = 1600;
 const octets = b => b.arrayBuffer ? b.arrayBuffer() : new Promise((ok, ko) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = () => ko(r.error); r.readAsArrayBuffer(b); });
 const enB64 = buf => { const u = new Uint8Array(buf); let s = ""; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); };
 const deB64 = s => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; };
-const photoMem = { cle: name => kU(moi(), "photo." + name), get: cle => ls.get(cle, null), put: (cle, b64) => ls.set(cle, b64) && ls.get(cle, null) === b64, del: cle => ls.del(cle) };
+const PDB = { nom: "atlas-photos", p: null, delai: 2000, lent: 0 };   // lent : IndexedDB sans réponse dans le délai : mémoire locale seule pendant 30 s
+const avecDelai = (p, ms) => Promise.race([p, new Promise((ok, ko) => setTimeout(() => ko(new Error("délai")), ms))]);
+function pdbOuvrir() {
+  if (PDB.p) return PDB.p;
+  PDB.p = new Promise((ok, ko) => { try { const r = indexedDB.open(PDB.nom, 1); r.onupgradeneeded = () => { if (!r.result.objectStoreNames.contains("photos")) r.result.createObjectStore("photos"); };
+    r.onsuccess = () => ok(r.result); r.onerror = () => ko(r.error); } catch (e) { ko(e); } });
+  PDB.p.catch(() => { PDB.p = null; });
+  return PDB.p;
+}
+// une opération sur la base des photos (une transaction) ; rend le résultat de la requête ; bornée (PDB.delai) : sinon, repli sur la mémoire locale
+const pdb = (mode, f) => {
+  if (Date.now() < PDB.lent) return Promise.reject(new Error("lent"));
+  return avecDelai(pdbOuvrir().then(db => new Promise((ok, ko) => { const tx = db.transaction("photos", mode), rq = f(tx.objectStore("photos")); let res;
+    if (rq) rq.onsuccess = () => { res = rq.result; }; tx.oncomplete = () => ok(res); tx.onerror = () => ko(tx.error); tx.onabort = () => ko(tx.error || new Error("abandon")); })), PDB.delai)
+    .catch(e => { if (e && e.message === "délai") PDB.lent = Date.now() + 30000; throw e; });
+};
+let photoPersist = false;
+const photoMem = {
+  cle: name => kU(moi(), "photo." + name),
+  // gardée seulement si relue entière ; IndexedDB d'abord, sinon la mémoire locale (base 64) ; true / false
+  put: async (cle, blob) => {
+    const buf = await octets(blob);
+    if (!photoPersist) { photoPersist = true; try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) {} }
+    try { await pdb("readwrite", st => st.put(buf, cle)); const x = await pdb("readonly", st => st.get(cle)); if (x && x.byteLength === buf.byteLength) return true; } catch (e) {}
+    try { const b64 = enB64(buf); return ls.set(cle, b64) && ls.get(cle, null) === b64; } catch (e) { return false; }
+  },
+  // octets de la photo (Uint8Array) ; null : absente des deux mémoires ; IndexedDB sans réponse et rien dans la mémoire locale : erreur passagère
+  // (l'entrée reste dans la boîte, renvoyée plus tard), jamais « photo introuvable »
+  get: async cle => {
+    let lu = false;
+    try { const x = await pdb("readonly", st => st.get(cle)); lu = true; if (x) return new Uint8Array(x); } catch (e) {}
+    const b64 = ls.get(cle, null); if (b64) { try { return deB64(b64); } catch (e) { return null; } }
+    if (!lu) throw Object.assign(new Error(t("readErr")), { cle: "readErr" });
+    return null;
+  },
+  del: async cle => { ls.del(cle); try { await pdb("readwrite", st => st.delete(cle)); } catch (e) {} }
+};
 // réduction sur le téléphone : côté long 1 600 px au plus, JPEG (données de localisation retirées : nouvelle image) ; refus : pas une image, trop grosse
 async function reduire(file) {
   const err = (cle, arg) => Object.assign(new Error(cle), { cle, arg });
@@ -1200,13 +1310,15 @@ async function ajouterPhoto(ref, file) {
   const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "");
   const fichier = String(ref).replace(/[^A-Za-z0-9_\-]/g, "_") + "_" + stamp + "_" + Math.random().toString(36).slice(2, 8) + ".jpg";
   const name = newName(), cle = photoMem.cle(name);
-  let ok = false; try { ok = photoMem.put(cle, enB64(await octets(r.blob))); } catch (e) { ok = false; }
-  if (!ok) { photoMem.del(cle); toast("⚠ " + t("photoNotKept")); return false; }
+  let ok = false; try { ok = await photoMem.put(cle, r.blob); } catch (e) { ok = false; }
+  // mémoire pleine : combien de photos attendent le réseau, et qu'il faudra reprendre celle-ci (jamais « laissez partir » sans dire quand)
+  if (!ok) { await photoMem.del(cle); const nAtt = us.get("outbox", []).filter(x => x.photo).length; toast("⚠ " + (nAtt ? tf("photoNotKeptW", nAtt) : t("photoNotKept"))); return false; }
   const etat = { gardee: false };
   try { await send([{ t: "photo", ref, champ: "photo", valeur: fichier, octets: r.blob.size, largeur: r.l, hauteur: r.h }], name, etat, { fichier, cle }); }
-  catch (e) { if (!etat.gardee) { photoMem.del(cle); toast("⚠ " + (e && e.message)); return false; } }
+  catch (e) { if (!etat.gardee) { await photoMem.del(cle); toast("⚠ " + (e && e.message)); return false; } }
   toast(envoyees.has(name) ? t("photoSent") : bloquees(us.get("outbox", [])).has(name) ? t("blocked") : t("photoKept"));
-  if (!document.querySelector(".sheet-bg")) render();
+  // correctifs mobqa (08/10) : photo prise depuis une feuille : la carte en dessous est redessinée quand la feuille se ferme (Fermer, fond gris, retour)
+  const sb = document.querySelector(".sheet-bg"); if (sb) sb.redessiner = true; else render();
   return true;
 }
 // ---------- exposition (round 27, piste mob, 07/10 22 h : PLAGE de mois, « Où vont mes camions ? », tuile « Position fin de plage », pastilles
@@ -1230,12 +1342,12 @@ async function ajouterPhoto(ref, file) {
 //     lieu de « Position aujourd'hui » (qui n'était que le swap fixé) ; « Qu'est-ce qui cloche ? » avec camions sans client, ventes sans camion, swap
 //     à régler, non couvert juste (swaps à venir) ; « Suis-je couvert ? » : une barre PAR CONTRAT (swaps à venir, non couvert, swaps en trop) et la
 //     pastille 🔒 des swaps déjà fixés (ne couvrent plus), au lieu d'une jauge par produit qui comptait le swap fixé.
-//  Round 28 (piste camions, 08/10, minuit : « sous les camions, « sans client », « direct », « Somis → CAPI » : ça sert à rien, la bulle
+//  Round 28 (piste camions, 08/10, minuit : « sous les camions, « sans client », « direct », « entrepôt → client » : ça sert à rien, la bulle
 //     l'explique déjà » ; « le prix des camions : je ne sais pas si c'est flottant ») : la destination n'est plus écrite sous un camion (elle reste
-//     dans sa feuille) ; à sa place, un BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC) : ardoise « fixe 31,15 », violet « indexé
-//     QP oct. » (« ≈ » si un prix provisoire est saisi), bleu « 🔒 swap 29,30 » (« · 67 % » si le contrat n'est couvert qu'en partie), gris « sans
+//     dans sa feuille) ; à sa place, un BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC) : ardoise « fixe 12,34 », violet « indexé
+//     QP oct. » (« ≈ » si un prix provisoire est saisi), bleu « swap 11,11 » (« · 50 % » si le contrat n'est couvert qu'en partie), gris « sans
 //     prix ». Fiche d'un Atlas 27 (sans pc) : ni badge ni destination (la feuille d'un toucher les donne).
-//  Correctif du 08/10 (« L96 → S:R38-850-2027-01-07:Proposé+V » : un camion Vale de 41 887,83 lb alloué à un créneau CAPI de 41 887 lb montrait son
+//  Correctif du 08/10 (un camion de 10 000,83 lb alloué à un créneau d'une vente de 10 000 lb montrait son
 //     reste de 0,83 lb comme une part « sans client ») : un reste NON ALLOUÉ qui ne dépasse pas la tolérance de pesée d'Atlas (1 lb, celle du moteur
 //     du stock, Stk.DirectTolerance) n'est ni une destination, ni une flèche, ni un camion « sans client » ; la feuille du camion l'écrit (« reste
 //     1 lb »). Même règle que le PC (ExpoCamions.IsVoid) : une fiche corrigée la porte déjà (camions.tolPesee, camion.reste) ; une fiche d'un Atlas
@@ -1249,6 +1361,9 @@ async function ajouterPhoto(ref, file) {
 // périodes ; sans « expo2 » : l'ancien tableau. Mode démo : fiche d'exemple FICTIVE construite ici (vDemo).
 let expoProd = null, expoDu = null, expoAu = null, expoDelta = 1, expoTip = null, expoGloss = false, expoAller = null, vDemoFiche = null, expoCamOuv = {};
 try { expoDu = ls.get("expoDu", null); expoAu = ls.get("expoAu", null); } catch (e) { expoDu = null; expoAu = null; }
+// correctifs mobqa (08/10) : raccourci touché (« mois », « trim », « 6m », « tout ») gardé tel quel et recalculé sur le mois en cours à chaque affichage ;
+// null : plage choisie aux listes « de / à », par un en-tête de mois ou une case
+let expoRac = null; try { expoRac = ls.get("expoRac", null); } catch (e) { expoRac = null; }
 const VT = {
   fr: { q1: "Où et quand suis-je exposé ?", q2: "Comment bouge mon stock ?", q3: "Quelle part a un prix fixé ?", q4: "Suis-je couvert ?",
         q5: "Combien si le prix bouge ?", q6: "Avec qui ?", q7: "Suis-je gagnant au marché ?", q8: "Qu'est-ce qui cloche ?", q9: "Quand se fixent mes swaps ?",
@@ -1267,7 +1382,7 @@ const VT = {
         sansCli: "sans client", nCam: "{0} camions", nCam1: "1 camion", entrepot: "Entrepôt", direct: "direct", aucunCam: "aucun camion dans la plage", aucunCamM: "aucun camion",
         plusCam: "+ {0} camions", replier: "replier", kAchat: "achat", kDirect: "direct", kStock: "entrepôt", kProp: "proposé", kVide: "sans client", kAtt: "vente sans camion",
         deuxDates: "{0} prévu {1} · {2} attend {3}", destD: "→ {0} · direct", destS: "→ {0} · via {1} · {2}", nonAlloue: "aucune allocation, servie par le stock", resteP: "reste {0} lb · sous la tolérance de pesée",
-        bFixe: "fixe {0}", bIdx: "indexé", bQp: "QP {0}", bSwap: "🔒 swap {0}", bSans: "sans prix", kFixe: "prix fixe", kIdx: "indexé (QP)", kSwap: "couvert par swap", kSans: "sans prix",
+        bFixe: "fixe {0}", bIdx: "indexé", bQp: "QP {0}", bSwap: "swap {0}", bSans: "sans prix", kFixe: "prix fixe", kIdx: "indexé (QP)", kSwap: "couvert par swap", kSans: "sans prix",
         thPrix: "Prix", thDetail: "D'où il vient", pxLigne: "saisi sur la livraison", pxContrat: "prix du contrat", pxFixeIdx: "indexé, fixé sur la livraison", pxNonFixe: "non fixé",
         pxProvD: "prix provisoire du trade", pxCouv: "{0} du contrat couvert", pxSaisir: "prix à saisir", pxSwQp: "swap de sa QP", pxQpInc: "QP non écrite",
         stDirect: "directe", stProp: "proposé", stConf: "confirmé", horsStock: "hors stock",
@@ -1281,11 +1396,11 @@ const VT = {
                cptys: "Volumes encore à recevoir (achats, à gauche) ou à livrer (ventes, à droite) avec chaque contrepartie, sur les mois de la plage (livraisons en retard comprises quand la plage commence ce mois-ci).",
                marche: "Repère marché : dernier fixing saisi dans Atlas (moyenne de l'indice sur son mois de cotation), trait en pointillés. Achat et vente moyens : livraisons à venir à prix fixe, pondérées par les lb ; chaque crochet va du prix au repère, son écart dessus : ▲ gagnant, ▼ perdant. Swaps : prix fixe moyen des swaps non réglés.",
                swaps: "Mois de cotation (QP) de chaque swap non réglé : son prix se fixe sur la moyenne de l'indice ce mois-là. Bleu plein : à fixer ; bleu hachuré 🔒 : déjà fixé, verrouillé.",
-               cam: "Chaque camion d'achat du mois, placé par le moteur du stock, avec SA flèche vers SA boîte, sur sa ligne (jamais deux camions sur une même flèche) : directement chez le client (sarcelle), à l'entrepôt puis au client alloué (trait plein si confirmé, pointillés si proposé), ou « sans client » (cadre gris) s'il n'est alloué à aucune vente : il entrera au stock. Sous les camions, l'entrepôt : stock fin du mois et sorties par lot. En bas, en rouge : les ventes qu'aucun camion ni lot n'est alloué à servir. Sous chaque camion, son prix : fixe (ardoise), indexé avec son mois de cotation QP (violet), 🔒 couvert par les swaps à venir de son contrat (bleu, avec la part couverte si elle n'est pas totale), ou sans prix (gris). Toucher un camion, une flèche ou une boîte : ses lignes, sa destination et d'où vient son prix. Changer une destination : sur le PC, en glissant la flèche." },
+               cam: "Chaque camion d'achat du mois, placé par le moteur du stock, avec SA flèche vers SA boîte, sur sa ligne (jamais deux camions sur une même flèche) : directement chez le client (sarcelle), à l'entrepôt puis au client alloué (trait plein si confirmé, pointillés si proposé), ou « sans client » (cadre gris) s'il n'est alloué à aucune vente : il entrera au stock. Sous les camions, l'entrepôt : stock fin du mois et sorties par lot. En bas, en rouge : les ventes qu'aucun camion ni lot n'est alloué à servir. Sous chaque camion, son prix : fixe (ardoise), indexé avec son mois de cotation QP (violet), « swap » couvert par les swaps à venir de son contrat (bleu, avec la part couverte si elle n'est pas totale), ou sans prix (gris). Toucher un camion, une flèche ou une boîte : ses lignes, sa destination et d'où vient son prix. Changer une destination : sur le PC, en glissant la flèche." },
         gl: [["LONG", "on détient : on perd si le prix baisse"], ["SHORT", "on doit livrer : on perd si le prix monte"], ["Prix fixe", "prix d'un trade connu au contrat"],
              ["Indexé", "suit un indice, fixé plus tard"], ["Swap", "fixe le prix d'un achat indexé"], ["Verrouillé 🔒", "swap déjà fixé : ne bouge plus"],
              ["QP", "mois dont la moyenne fixe le prix"], ["Sans prix", "prix pas encore saisi dans Atlas"], ["▲ / ▼", "gain / perte"],
-             ["Plage", "mois choisis : de … à …"], ["Direct", "le fournisseur livre le client, hors stock"], ["Somis", "notre entrepôt"],
+             ["Plage", "mois choisis : de … à …"], ["Direct", "le fournisseur livre le client, hors stock"], ["*entrepot", "notre entrepôt"],
              ["Sans client", "aucune vente allouée : entrera au stock"], ["Proposé", "allocation à confirmer (pointillés)"], ["MT", "1 MT = 2 204,62 lb"]] },
   en: { q1: "Where and when am I exposed?", q2: "How does my stock move?", q3: "How much has a fixed price?", q4: "Am I hedged?",
         q5: "How much if the price moves?", q6: "With whom?", q7: "Am I winning against the market?", q8: "What needs attention?", q9: "When do my swaps fix?",
@@ -1304,7 +1419,7 @@ const VT = {
         sansCli: "no customer", nCam: "{0} trucks", nCam1: "1 truck", entrepot: "Warehouse", direct: "direct", aucunCam: "no truck in the range", aucunCamM: "no truck",
         plusCam: "+ {0} trucks", replier: "fold", kAchat: "purchase", kDirect: "direct", kStock: "warehouse", kProp: "proposed", kVide: "no customer", kAtt: "sale without truck",
         deuxDates: "{0} planned {1} · {2} expects {3}", destD: "→ {0} · direct", destS: "→ {0} · via {1} · {2}", nonAlloue: "no allocation, served from stock", resteP: "remainder {0} lb · within weighing tolerance",
-        bFixe: "fixed {0}", bIdx: "indexed", bQp: "QP {0}", bSwap: "🔒 swap {0}", bSans: "no price", kFixe: "fixed price", kIdx: "indexed (QP)", kSwap: "hedged by swap", kSans: "no price",
+        bFixe: "fixed {0}", bIdx: "indexed", bQp: "QP {0}", bSwap: "swap {0}", bSans: "no price", kFixe: "fixed price", kIdx: "indexed (QP)", kSwap: "hedged by swap", kSans: "no price",
         thPrix: "Price", thDetail: "Where it comes from", pxLigne: "entered on the delivery", pxContrat: "contract price", pxFixeIdx: "indexed, set on the delivery", pxNonFixe: "not set",
         pxProvD: "provisional price on the trade", pxCouv: "{0} of contract hedged", pxSaisir: "price to enter", pxSwQp: "swap of its QP", pxQpInc: "QP not written",
         stDirect: "direct", stProp: "proposed", stConf: "confirmed", horsStock: "outside stock",
@@ -1318,11 +1433,11 @@ const VT = {
                cptys: "Volumes still to receive (purchases, left) or to deliver (sales, right) with each counterparty, over the months of the range (late deliveries included when the range starts this month).",
                marche: "Market reference: last fixing entered in Atlas (index average over its quotation month), dotted line. Average buy and sale: upcoming fixed-price deliveries, weighted by lb; each bracket runs from the price to the reference, its gap on it: ▲ winning, ▼ losing. Swaps: average fixed price of unsettled swaps.",
                swaps: "Quotation month (QP) of each unsettled swap: its price fixes on the index average of that month. Solid blue: to fix; hatched blue 🔒: already fixed, locked.",
-               cam: "Each purchase truck of the month, placed by the stock engine, with ITS arrow to ITS box, on its own line (never two trucks on one arrow): straight to the customer (teal), to the warehouse then to the allocated customer (solid if confirmed, dotted if proposed), or “no customer” (grey frame) when no sale is allocated: it will go into stock. Below the trucks, the warehouse: month-end stock and lot exits. At the bottom, in red: the sales no truck or lot is allocated to serve. Under each truck, its price: fixed (slate), indexed with its quotation month QP (purple), 🔒 hedged by its contract's future swaps (blue, with the hedged share when not full), or no price (grey). Tap a truck, an arrow or a box: its lines, its destination and where its price comes from. To change a destination: on the PC, drag the arrow." },
+               cam: "Each purchase truck of the month, placed by the stock engine, with ITS arrow to ITS box, on its own line (never two trucks on one arrow): straight to the customer (teal), to the warehouse then to the allocated customer (solid if confirmed, dotted if proposed), or “no customer” (grey frame) when no sale is allocated: it will go into stock. Below the trucks, the warehouse: month-end stock and lot exits. At the bottom, in red: the sales no truck or lot is allocated to serve. Under each truck, its price: fixed (slate), indexed with its quotation month QP (purple), “swap” hedged by its contract's future swaps (blue, with the hedged share when not full), or no price (grey). Tap a truck, an arrow or a box: its lines, its destination and where its price comes from. To change a destination: on the PC, drag the arrow." },
         gl: [["LONG", "we hold it: we lose if the price falls"], ["SHORT", "we must deliver: we lose if the price rises"], ["Fixed price", "trade price known in the contract"],
              ["Index-linked", "follows an index, fixed later"], ["Swap", "fixes the price of an index-linked purchase"], ["Locked 🔒", "swap already fixed: no longer moves"],
              ["QP", "month whose average fixes the price"], ["No price", "price not entered in Atlas yet"], ["▲ / ▼", "gain / loss"],
-             ["Range", "chosen months: from … to …"], ["Direct", "the supplier delivers the customer, outside stock"], ["Somis", "our warehouse"],
+             ["Range", "chosen months: from … to …"], ["Direct", "the supplier delivers the customer, outside stock"], ["*entrepot", "our warehouse"],
              ["No customer", "no sale allocated: will go into stock"], ["Proposed", "allocation to confirm (dotted)"], ["MT", "1 MT = 2,204.62 lb"]] } };
 const vt = (k, ...a) => a.reduce((s, v, i) => s.split("{" + i + "}").join(v), (VT[lang][k] != null ? VT[lang][k] : k));
 const vLOC = () => lang === "fr" ? "fr-FR" : "en-US";
@@ -1337,7 +1452,7 @@ function vq(v, o) {
   if (unite === "MT") { const m = a / vLB(), d = m >= 9.995 ? 0 : 2; if (Math.round(m * 100) === 0) return (a >= 0.5 ? "≈ 0" : "0") + u; return sg + m.toLocaleString(vLOC(), { minimumFractionDigits: d, maximumFractionDigits: d }) + u; }
   return (neg || pos ? sg + Math.round(a).toLocaleString(vLOC()) : "0") + u;
 }
-// dollars complets : « +130 072 $ » / « +$130,072 » ; gain / perte : « ▲ +85 980 $ », « ▼ −8 888 $ »
+// dollars complets : « +12 345 $ » / « +$12,345 » ; gain / perte : « ▲ +6 789 $ », « ▼ −8 888 $ »
 function vd(v, signe) { if (v == null || isNaN(v)) return "—"; const a = Math.round(Math.abs(v)), s = v <= -0.5 ? "−" : signe && v >= 0.5 ? "+" : ""; return lang === "en" ? s + "$" + a.toLocaleString("en-US") : s + a.toLocaleString("fr-FR") + " $"; }
 const vGain = v => (v >= 0.5 ? "▲ " : v <= -0.5 ? "▼ " : "") + vd(v, true);
 const vp = v => v == null || isNaN(v) ? "—" : (+v).toLocaleString(vLOC(), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1403,25 +1518,33 @@ function vPlage(p) {
   const ms = (p.mois || []).map(m => m.mois); if (!ms.length) return { ms, m0: null, last: null, du: null, au: null, duR: null, auR: null, tout: false, vide: true, mk: [] };
   const m0 = ms[0], last = ms[ms.length - 1];
   let du = typeof expoDu === "string" && /^\d{4}-\d\d$/.test(expoDu) ? expoDu : null, au = expoAu === "fin" || (typeof expoAu === "string" && /^\d{4}-\d\d$/.test(expoAu)) ? expoAu : null;
+  // correctifs mobqa (08/10) : raccourci retenu : recalculé sur le premier mois du produit (« 6 mois » touché en octobre reste 6 mois en novembre) ;
+  // plage choisie entièrement passée : le défaut (jamais « Ce mois » allumé à la place de « T4 »)
+  if (expoRac === "mois" || expoRac === "trim" || expoRac === "6m" || expoRac === "tout") { du = m0; au = expoRac === "mois" ? m0 : expoRac === "trim" ? vFinTrim(m0) : expoRac === "6m" ? vAddM(m0, 5) : "fin"; }
+  else if (au && au !== "fin" && au < m0) { du = null; au = null; }
   if (!du) du = m0; if (!au) au = du === m0 ? vFinTrim(m0) : du;   // défaut : le trimestre civil en cours
   if (du < m0) du = m0;                                      // jamais un mois passé (plage retenue d'un autre jour)
   const tout = au === "fin", auR = tout ? last : (au < du ? du : au);
   const d2 = du, a2 = auR > last ? last : auR, mk = ms.filter(x => x >= d2 && x <= a2);
-  return { ms, m0, last, du: mk.length ? mk[0] : d2, au: mk.length ? mk[mk.length - 1] : a2, duR: du, auR, tout, vide: !mk.length, mk, debut: du === m0 };
+  // correctifs mobqa (08/10) : plage hors des mois du produit (vide) : « au » reste la borne demandée, jamais le dernier mois du produit (plage à l'envers)
+  return { ms, m0, last, du: mk.length ? mk[0] : d2, au: mk.length ? mk[mk.length - 1] : auR, duR: du, auR, tout, vide: !mk.length, mk, debut: du === m0 };
 }
 const vPlageCle = pl => !pl.m0 || pl.duR !== pl.m0 ? "" : pl.tout ? "tout" : pl.auR === pl.m0 ? "mois" : pl.auR === vFinTrim(pl.m0) ? "trim" : pl.auR === vAddM(pl.m0, 5) ? "6m" : "";
 // texte d'une plage : « nov. 26 », « oct. → déc. 26 » (même année), « déc. 26 → mars 27 »
 const vDeA = (a, b) => a === b ? vMC(a) : a.slice(0, 4) === b.slice(0, 4) ? vMS(a) + " → " + vMC(b) : vMC(a) + " → " + vMC(b);
 const vPlageTxt = pl => !pl.du ? "—" : pl.vide ? vDeA(pl.duR, pl.auR < pl.duR ? pl.duR : pl.auR) : vDeA(pl.du, pl.au);
-function vSetPlage(du, au, quoi) {
+function vSetPlage(du, au, quoi, rac) {
   if (au !== "fin" && du && au && du > au) { if (quoi === "au") du = au; else au = du; }
-  expoDu = du; expoAu = au; try { ls.set("expoDu", du); ls.set("expoAu", au); } catch (e) {}
+  expoDu = du; expoAu = au; expoRac = rac || null; try { ls.set("expoDu", du); ls.set("expoAu", au); ls.set("expoRac", expoRac); } catch (e) {}
 }
 function vBarrePlage(pl) {
   if (!pl.m0) return "";
   const on = vPlageCle(pl), sc = [["mois", vt("rMois")], ["trim", vTrimLab(pl.m0)], ["6m", vt("r6")], ["tout", vt("rTout")]];
-  const sel = (id, v) => '<select id="' + id + '" aria-label="' + esc(vt(id === "vdu" ? "de" : "a")) + '">' + pl.ms.map(mk => '<option value="' + mk + '"' + (mk === v ? " selected" : "") + '>' + esc(vMC(mk)) + '</option>').join("") + '</select>';
-  const vd0 = pl.ms.indexOf(pl.duR) >= 0 ? pl.duR : pl.du, va0 = pl.ms.indexOf(pl.auR) >= 0 ? pl.auR : pl.au;
+  // correctifs mobqa (08/10) : les listes montrent toujours la plage demandée : un mois hors de ceux du produit (« rien dans la plage ») y figure, grisé
+  // (disabled) et sélectionné ; avant, « de » montrait le 1er mois de la liste et « à » le dernier mois du produit
+  const opts = pl.ms.slice(); [pl.duR, pl.auR].forEach(mk => { if (mk && opts.indexOf(mk) < 0) opts.push(mk); }); opts.sort();
+  const sel = (id, v) => '<select id="' + id + '" aria-label="' + esc(vt(id === "vdu" ? "de" : "a")) + '">' + opts.map(mk => '<option value="' + mk + '"' + (mk === v ? " selected" : "") + (pl.ms.indexOf(mk) < 0 ? " disabled" : "") + '>' + esc(vMC(mk)) + '</option>').join("") + '</select>';
+  const vd0 = pl.duR || pl.du, va0 = pl.auR || pl.au;
   return '<div class="vplage" data-outil="plage" data-du="' + esc(pl.du || "") + '" data-au="' + esc(pl.au || "") + '" data-tout="' + pl.tout + '"><div class="seg small vrs">' +
     sc.map(s => '<button data-pr="' + s[0] + '" class="' + (on === s[0] ? "on" : "") + '">' + esc(s[1]) + '</button>').join("") + '</div>' +
     '<div class="vprow"><label class="vpsel"><span>' + esc(vt("de")) + '</span>' + sel("vdu", vd0) + '</label><label class="vpsel"><span>' + esc(vt("a")) + '</span>' + sel("vau", va0) + '</label>' + vUnite() + '</div></div>';
@@ -1444,17 +1567,17 @@ function renderExpo() {
   const p = expoChoix(e), pl = vPlage(p);
   let h = VDEFS + '<div class="vtop">' + vScroll("chipsw", '<div class="vsc-in chips xprods">' + e.produits.map(x => '<button data-p="' + esc(x.produit) + '" class="' + (x.produit === expoProd ? "on" : "") + '">' + esc(prod(x.produit)) + '</button>').join("") + '</div>') +
     '<button class="vq' + (expoGloss ? " on" : "") + '" id="vgl" aria-label="' + esc(vt("glossT")) + '">?</button></div>' +
-    (expoGloss ? '<div class="card vgloss" id="vgloss">' + VT[lang].gl.map(x => '<div><b>' + esc(x[0] === "Somis" ? vCamEnt(p) : x[0]) + '</b> · ' + esc(x[1]) + '</div>').join("") + '</div>' : "");
+    (expoGloss ? '<div class="card vgloss" id="vgloss">' + VT[lang].gl.map(x => '<div><b>' + esc(x[0] === "*entrepot" ? vCamEnt(p) : x[0]) + '</b> · ' + esc(x[1]) + '</div>').join("") + '</div>' : "");
   // ordre (une colonne, spec du round 27) : plage, tuile, ce qui cloche, carte, camions, curseur, stock, marché, parts, couverture, contreparties, swaps
   h += vBarrePlage(pl) + vTuile(p, e, pl) + vAlertes(p, pl) + vCarte(e, pl) + vCamions(p, pl) + vSensib(p, pl) + vStock(p, pl) + vMarche(p) + vParts(p, pl) + vCouv(e, p, pl) + vCptys(p, pl) + vSwaps(p);
   const M = $("#main"); M.innerHTML = h;
   M.querySelectorAll(".xprods [data-p], .vmap .vh[data-p]").forEach(b => b.onclick = () => { expoProd = b.dataset.p; render(); });
   M.querySelectorAll(".xu [data-u]").forEach(b => b.onclick = () => { unite = b.dataset.u === "MT" ? "MT" : "lb"; ls.set("unite", unite); render(); });
   M.querySelectorAll(".vrs [data-pr]").forEach(b => b.onclick = () => { const k = b.dataset.pr, m0 = pl.m0; if (!m0) return;
-    vSetPlage(m0, k === "mois" ? m0 : k === "trim" ? vFinTrim(m0) : k === "6m" ? vAddM(m0, 5) : "fin"); render(); });
+    vSetPlage(m0, k === "mois" ? m0 : k === "trim" ? vFinTrim(m0) : k === "6m" ? vAddM(m0, 5) : "fin", null, k); render(); });
   const sdu = $("#vdu"), sau = $("#vau");
-  if (sdu) sdu.onchange = () => { vSetPlage(sdu.value, pl.tout ? "fin" : (pl.ms.indexOf(pl.auR) >= 0 ? pl.auR : pl.au), "du"); render(); };
-  if (sau) sau.onchange = () => { vSetPlage(pl.ms.indexOf(pl.duR) >= 0 ? pl.duR : pl.du, sau.value, "au"); render(); };
+  if (sdu) sdu.onchange = () => { vSetPlage(sdu.value, pl.tout ? "fin" : (pl.auR || pl.au), "du"); render(); };
+  if (sau) sau.onchange = () => { vSetPlage(pl.duR || pl.du, sau.value, "au"); render(); };
   // en-tête d'un mois de la carte : la plage devient ce mois
   M.querySelectorAll(".vmap .vmh[data-xm]").forEach(b => b.onclick = () => { vSetPlage(b.dataset.xm, b.dataset.xm); render(); });
   M.querySelectorAll("[data-tip]").forEach(b => b.onclick = () => { expoTip = expoTip === b.dataset.tip ? null : b.dataset.tip; render(); });
@@ -1517,7 +1640,15 @@ function vAlertesListe(p, pl) {
   const ng = ms.filter(m => m.stock && m.stock.clo != null && +m.stock.clo <= -0.5); if (ng.length) res.push({ code: "stockNeg", n: ng.length, mois: ng[0].mois });
   const sc = vSansClient(p, pl); if (sc && sc.n) res.push({ code: "sansClient", n: sc.n, q: sc.q });
   const sa = vSansCamion(p, pl); if (sa && sa.n) res.push({ code: "venteSansCamion", n: sa.n, q: sa.q });
-  return res.concat((V.alertes || []).filter(x => ["court", "stockNeg", "pic", "sansClient", "venteSansCamion"].indexOf(x.code) < 0));
+  // correctifs mobqa (08/10) : non couvert et swaps en trop sur les contrats de la plage (vCouvLignes, ceux que « Suis-je couvert ? » montre), jamais sur
+  // tous les contrats : la pastille menait à un outil où tout était couvert à 100 %
+  const cl = vCouvLignes(p, pl), parPlage = Array.isArray(cl);
+  if (parPlage) {
+    const nc = cl.filter(c => vZ(c.indexe) - Math.max(0, vZ(c.aVenir)) >= 0.5), tr = cl.filter(c => Math.max(0, vZ(c.aVenir)) - vZ(c.indexe) >= 0.5);
+    if (nc.length) res.push({ code: "nonCouvert", n: nc.length, q: nc.reduce((s, c) => s + vZ(c.indexe) - Math.max(0, vZ(c.aVenir)), 0), trades: nc.map(c => c.trade) });
+    if (tr.length) res.push({ code: "swapsTrop", n: tr.length, q: tr.reduce((s, c) => s + Math.max(0, vZ(c.aVenir)) - vZ(c.indexe), 0) });
+  }
+  return res.concat((V.alertes || []).filter(x => ["court", "stockNeg", "pic", "sansClient", "venteSansCamion"].concat(parPlage ? ["nonCouvert", "swapsTrop"] : []).indexOf(x.code) < 0));
 }
 function vAlertes(p, pl) {
   if (!p.vis) return vCard("alertes", "q8", "vis.alertes", '<div class="vempty">—</div>');
@@ -1674,14 +1805,22 @@ function vCouvAncien(e) {
   return vCard("couv", "q4", "couvTotal (indexe, swaps, pctMoteur)", '<div class="vgs">' + h + '</div><div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("swaps")) + '</span><span><i class="vsw nc"></i>' + esc(vt("nonCouv")) + '</span></div>');
 }
 // ---------- B · combien si le prix bouge : la barre de la case du DERNIER mois de la plage (bouge / 🔒), curseur −5…+5 $/lb → ▲ gain / ▼ perte ----------
-function vBouge(p, pl) { const m = pl.vide ? null : (p.mois || []).find(x => x.mois === pl.au); const q = (m && m.prix) || {}; return { m, q, b: !p.exposition || !m ? null : q.bouge != null ? +q.bouge : q.position != null ? +q.position : null }; }
+// correctifs mobqa (08/10) : avec « Tout » et des lignes sans date, la position du curseur est celle de la tuile (total de la fiche : fin du dernier mois +
+// sans date), jamais la fin du dernier mois seule (deux positions différentes sur le même écran)
+function vBouge(p, pl) {
+  const tot = p.total || {};
+  if (!pl.vide && pl.tout && tot.sansDate && +tot.sansDate.n > 0 && tot.positionPrix != null) {
+    const q = { position: +tot.positionPrix, bouge: tot.bouge, fixes: tot.fixes, conversion: tot.conversion, sens: tot.sens };
+    return { m: { mois: "sd", prix: q }, q, sd: true, last: pl.last, b: !p.exposition ? null : q.bouge != null ? +q.bouge : q.position };
+  }
+  const m = pl.vide ? null : (p.mois || []).find(x => x.mois === pl.au); const q = (m && m.prix) || {}; return { m, q, b: !p.exposition || !m ? null : q.bouge != null ? +q.bouge : q.position != null ? +q.position : null }; }
 function vSensib(p, pl) {
   const z = vBouge(p, pl); if (z.b == null) return vCard("sens", "q5", "mois[].prix (position, bouge, fixes) × variation", '<div class="vempty">' + esc(vt(pl.vide ? "rienPlage" : "rien")) + '</div>');
   const r = z.b * expoDelta, cv = z.q.conversion === true, s = cv ? "equilibre" : z.q.sens || vSens(z.q.position);
   return vCard("sens", "q5", "mois[].prix (position, bouge, fixes) × variation", '<div class="vsnet">' + vTag(s) + '<b>' + esc(cv ? "≈ 0 " + U() : vq(z.q.position)) + '</b></div>' + (cv ? "" : vBarre(z.b, z.q.fixes, true)) +
     '<button class="vsbig' + (Math.abs(r) < 0.5 ? " z" : "") + '" id="vsv" data-t="sens" data-m="' + z.m.mois + '" data-v="' + r + '" data-b="' + z.b + '">' + esc(vGain(r)) + '</button>' +
     '<input type="range" class="vrange" id="vsr" min="-5" max="5" step="0.25" value="' + expoDelta + '" aria-label="$/lb">' +
-    '<div class="vsrow"><span>' + esc(vpd(-5, true)) + '</span><b id="vsd">' + esc(vpd(expoDelta, true)) + '</b><span>' + esc(vpd(5, true)) + '</span></div>', esc(vt("finM", vMC(z.m.mois))));
+    '<div class="vsrow"><span>' + esc(vpd(-5, true)) + '</span><b id="vsd">' + esc(vpd(expoDelta, true)) + '</b><span>' + esc(vpd(5, true)) + '</span></div>', esc(z.sd ? vt("finM", vMC(z.last)) + " + " + vt("sansDateM") : vt("finM", vMC(z.m.mois))));
 }
 function vSensMaj(p, pl) {
   const z = vBouge(p, pl), v = $("#vsv"); if (z.b == null || !v) return;
@@ -1730,9 +1869,9 @@ const vkCamion = (x, y, lab) => '<rect class="bx" x="' + x + '" y="' + (y + 5) +
 const vkCamionG = (x, y, lab) => '<path class="cb" d="M' + (x + 17) + ' ' + (y + 9) + 'h-10.5l-6.5 6.5v7.5h17z"/><rect class="bx" x="' + (x + 18) + '" y="' + (y + 5) + '" width="50" height="18" rx="2.5"/>' +
   '<circle class="wh" cx="' + (x + 9) + '" cy="' + (y + 25) + '" r="3.6"/><circle class="wh" cx="' + (x + 57) + '" cy="' + (y + 25) + '" r="3.6"/><text class="vkq" x="' + (x + 43) + '" y="' + (y + 17.8) + '" text-anchor="middle">' + esc(lab) + '</text>';
 const vkJ = (j, mo) => !j ? vt("sansDateM") : mo ? "≈ " + vMS(j) : vDM(j);
-// round 28 : la destination n'est plus écrite sous un camion (« → CAPI 08/10 direct », « → Somis › CAPI 30/10 », « → sans client ») : elle est dans
-// sa feuille. À sa place, le BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC ; jamais calculé ici) : « fixe 31,15 », « indexé QP oct. »
-// (« ≈ 24,66 » si un prix provisoire est saisi sur le trade), « 🔒 swap 29,30 » (« · 67 % » si le contrat n'est couvert qu'en partie), « sans prix »
+// round 28 : la destination n'est plus écrite sous un camion (« → Client 08/10 direct », « → Entrepôt › Client 30/10 », « → sans client ») : elle est dans
+// sa feuille. À sa place, le BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC ; jamais calculé ici) : « fixe 12,34 », « indexé QP oct. »
+// (« ≈ 10,00 » si un prix provisoire est saisi sur le trade), « swap 11,11 » (« · 50 % » si le contrat n'est couvert qu'en partie), « sans prix »
 const vp4 = v => v == null || isNaN(v) ? "—" : (+v).toLocaleString(vLOC(), { minimumFractionDigits: 2, maximumFractionDigits: 4 });
 function vkPxTxt(pc) {
   if (!pc || !pc.k) return "";
@@ -1743,6 +1882,9 @@ function vkPxTxt(pc) {
 }
 // largeur estimée du texte du badge (10,5 px gras : 10 px au moins une fois rendu à 375 px) ; pilule bornée à la colonne des textes, texte resserré seulement s'il dépasserait
 const vkPxW = s => Array.from(String(s)).reduce((w, c) => w + (/[\s.,·:]/.test(c) ? 3.05 : /[%mwMW]/.test(c) ? 9 : /[ilfjtrI]/.test(c) ? 3.6 : /\d/.test(c) ? 6.1 : c.codePointAt(0) > 0x2000 && c !== "≈" ? 12.6 : 6), 0);
+// correctifs mobqa (08/10) : prix d'un camion d'une fiche sans « pc » (Atlas 27) : le même repli que sa feuille (t.prix / t.px) : « fixe … », « indexé »,
+// « sans prix » ; l'infobulle annonçait un prix sous chaque camion et l'écran n'en montrait aucun
+const vkPc = t => t.pc || (t.prix === "indexe" ? { k: "indexe" } : t.prix === "fixe" && t.px != null ? { k: "fixe", px: t.px } : t.prix ? { k: "sansprix" } : null);
 function vkPx(pc, x, y, wMax) {
   const s = vkPxTxt(pc); if (!s) return "";
   const est = vkPxW(s), w = Math.min(wMax, Math.ceil(est) + 12), fit = est > w - 12;
@@ -1751,7 +1893,7 @@ function vkPx(pc, x, y, wMax) {
 }
 // round 29 : destination d'UN camion (une branche b, index bi) : sa boîte, sur la rangée du camion ; un toucher : la feuille de cette destination
 // round 29 (correctif) : un camion à plusieurs destinations : boîte sur deux lignes (client et date, puis la quantité de cette part) ; sur une ligne, le
-// texte écrasé par textLength devenait illisible (« CAPI 13/11 · 22 046 » dans 73 px)
+// texte écrasé par textLength devenait illisible (« Client 13/11 · 12 345 » dans 73 px)
 const vkNH = multi => multi ? VK.NH2 : VK.NH;
 const vkDestTxt = b => b.dest === "vide" ? vt("sansCli") : (b.client || "?") + " " + vkJ(b.jv, b.jvMois);
 function vkDest(b, bi, t, key, y, multi) {
@@ -1808,9 +1950,9 @@ function vCamMois(p, m, key, ent, lab) {
   // camions : texte à gauche (fournisseur · produit, badge de prix dessous), camion avec le volume, date dessous
   rows.forEach(r => { const t = r.t, b1 = (t.fournisseur || "?") + " · " + prod(t.produit || p.produit) + (t.fait ? " ✓" : "") + (t.retard ? " ⏱" : "");
     g += '<g class="vkr" data-t="cam" data-k="t" data-m="' + key + '" data-r="' + esc(t.ref) + '" data-v="' + t.q + '"><rect class="hit" x="0" y="' + r.y + '" width="' + VK.AX + '" height="' + r.h + '"/>' +
-      vkTxt(0, r.ty + 15, b1, "t1", 126) + vkPx(t.pc, 0, r.ty + 20, 126) + '<g class="vkt">' + vkCamion(132, r.ty, vq(t.q, { nu: true })) + '</g>' +
+      vkTxt(0, r.ty + 15, b1, "t1", 126) + vkPx(vkPc(t), 0, r.ty + 20, 126) + '<g class="vkt">' + vkCamion(132, r.ty, vq(t.q, { nu: true })) + '</g>' +
       vkTxt(166, r.ty + 38.5, vkJ(t.jf || t.j, t.auMois), "td", 68, "middle") + '</g>'; });
-  // ventes sans camion : camion rouge en pointillés, tourné vers la gauche, sous l'entrepôt ; « CAPI · 07/01 » à sa gauche
+  // ventes sans camion : camion rouge en pointillés, tourné vers la gauche, sous l'entrepôt ; « Client · 07/01 » à sa gauche
   at.forEach((a, i) => { const y = H0 + 8 + i * VK.AH;
     g += '<g class="vka-att" data-t="cam" data-k="a" data-m="' + key + '" data-r="' + esc(a.ref) + '" data-v="' + a.q + '"><rect class="hit" x="0" y="' + y + '" width="340" height="' + VK.AH + '"/>' +
       vkTxt(258, y + 19, (a.client || "?") + " · " + vkJ(a.j, a.auMois), "ta", 200, "end") + '<g class="vkt att">' + vkCamionG(266, y, vq(a.q, { nu: true })) + '</g></g>'; });
@@ -1833,8 +1975,8 @@ function vCamions(p, pl) {
     ic('<path class="vka stk prop" d="M1 7H21" marker-end="url(#vkm-stk)"/>', vt("kProp")) + ic('<rect class="vkld" x="3" y="2" width="20" height="10" rx="2"/>', vt("kVide")) +
     ic('<g class="vkt att"><path class="cb" d="M8 4H5L2 7v3h6z"/><rect class="bx" x="8.6" y="2" width="17" height="8" rx="1"/><circle class="wh" cx="5" cy="11.5" r="2"/><circle class="wh" cx="22" cy="11.5" r="2"/></g>', vt("kAtt")) +
     // round 28 : badges de prix (seulement si la fiche les porte : Atlas 28 et plus, profil Head)
-    (ms.some(m => (m.camions || []).some(t => t.pc)) ? ["fixe", "indexe", "swap", "sansprix"].map(k => ic('<g class="vkp ' + k + '"><rect class="pb" x="1.5" y="1.5" width="24" height="11" rx="5.5"/>' +
-      (k === "swap" ? '<path class="pt" d="M11 7.2V5.6a2.5 2.5 0 0 1 5 0v1.6h-1.2V5.6a1.3 1.3 0 0 0-2.6 0v1.6z"/><rect class="pt" x="10" y="7" width="7" height="4.5" rx="0.8"/>' : "") + '</g>',
+    (ms.some(m => (m.camions || []).some(t => vkPc(t))) ? ["fixe", "indexe", "swap", "sansprix"].map(k => ic('<g class="vkp ' + k + '"><rect class="pb" x="1.5" y="1.5" width="24" height="11" rx="5.5"/>' +
+      '</g>',
       vt(k === "fixe" ? "kFixe" : k === "indexe" ? "kIdx" : k === "swap" ? "kSwap" : "kSans"))).join("") : "") + '</div>';
   return vCard("cam", "q10", "vis.camions (camions, vers, attentes, sorties)", h + leg, esc(vPlageTxt(pl) + " · " + U()));
 }
@@ -1923,7 +2065,7 @@ function vSheetCamion(P, t, ent, bi) {
   const V = P.vis || {}, byRef = {}; (V.lignes || []).forEach(l => { byRef[l.ref] = l; });
   const CK = V.camions, tv = vkVers(t, CK), rs = vkReste(t, CK), vs = bi == null ? tv : [tv[bi]].filter(Boolean), ach = byRef[t.ref];
   // round 28 : prix de l'achat selon camion.pc (fixe : le prix ; swap : 🔒 et le prix des swaps ; indexé : point violet et sa QP ; sans prix : point gris)
-  const pc = t.pc, pxA = pc ? (pc.k === "fixe" ? esc(vp4(pc.px)) : pc.k === "swap" ? '<span class="v-swap">' + esc("🔒 " + (pc.px == null ? "" : vp4(pc.px))) + '</span>' : pc.k === "indexe" ? '<span class="vdot idx"></span>' + (pc.qp ? " " + esc(vMS(pc.qp)) : "") : '<span class="vdot nv"></span>')
+  const pc = t.pc, pxA = pc ? (pc.k === "fixe" ? esc(vp4(pc.px)) : pc.k === "swap" ? '<span class="v-swap">' + esc(pc.px == null ? "" : vp4(pc.px)) + '</span> <span class="vdot swap"></span>' : pc.k === "indexe" ? '<span class="vdot idx"></span>' + (pc.qp ? " " + esc(vMS(pc.qp)) : "") : '<span class="vdot nv"></span>')
     : t.prix === "indexe" ? '<span class="vdot idx"></span>' : t.px != null ? esc(vp(t.px)) : ach && ach.prix != null ? esc(vp(ach.prix)) : '<span class="vdot nv"></span>';
   const rowsA = [[esc(vkJ(t.jf || t.j, t.auMois)), esc(t.fournisseur || "?"), esc(t.contrat || t.trade || ""), vQc(vZ(t.q), "v-long"), pxA]];
   const rowsB = vs.map(b => [esc(b.alloc || "—"), esc(b.dest === "vide" ? vt("sansCli") : vStatut(b.statut)), esc(b.dest === "vide" ? "—" : b.dest === "stock" ? ent + " › " + (b.client || "?") : (b.client || "?")), vQc(vZ(b.q), "v-long")]);
@@ -1937,7 +2079,7 @@ function vSheetCamion(P, t, ent, bi) {
     else if (pc.k === "swap") { rowsP.push([bdg, esc(vt("pxCouv", pc.pct == null ? "—" : vpc(pc.pct)))]); rowsP.push([esc(vt("bIdx")), esc(qpT)]); (pc.swQp || []).forEach(s => rowsP.push([esc(vt("pxSwQp")), esc((s.contrat || "?") + " · " + vq(s.q, { nu: true }) + (s.fixe != null ? " · " + vp4(s.fixe) : ""))])); }
     else rowsP.push([bdg, esc(vt("pxSaisir"))]); }
   vSheet((t.fournisseur || "?") + " · " + t.ref, esc(vq(t.q)), [{ cols: VC.L(), rows: rowsA }, { cols: VC.A(), rows: rowsB }, { cols: VC.L(), rows: rowsV }, { cols: VC.P(), rows: rowsP }],
-    // round 29 : la feuille dit la destination de chaque flèche du camion (« → CAPI 13/11 · via Somis · proposé », « → sans client »)
+    // round 29 : la feuille dit la destination de chaque flèche du camion (« → Client 13/11 · via l'entrepôt · proposé », « → sans client »)
     vs.map(b => b.dest === "vide" ? "→ " + vt("sansCli") : b.dest === "direct" ? vt("destD", (b.client || "?") + " " + vkJ(b.jv, b.jvMois)) : vt("destS", (b.client || "?") + " " + vkJ(b.jv, b.jvMois), ent, String(vStatut(b.statut)).toLowerCase()))
       .concat([d2 ? vt("deuxDates", t.fournisseur || "?", vDM(t.jf), d2.client || "?", vDM(d2.jv)) : null, rs >= 0.005 ? vt("resteP", rs >= 0.5 ? Math.round(rs).toLocaleString(vLOC()) : "< 1") : null]));
 }
@@ -1965,6 +2107,13 @@ function vOuvre(d, e, p) {
   const lignes = refs => (refs || []).map(r => byRef[r]).filter(Boolean), mois = mk => (P.mois || []).find(x => x.mois === mk);
   const range = k => { const z = String(k || "").split("|"); return (P.mois || []).filter(m => z.length === 2 ? m.mois >= z[0] && m.mois <= z[1] : m.mois === z[0]); };
   const tabL = (titre, val, ls) => { const rows = ls.map(vRowL); if (ls.length > 1) rows.push(vLab(vt("total"), esc(vq(ls.reduce((s, l) => s + (l.sens === "vente" ? -1 : 1) * vZ(l.q), 0), { nu: true, signe: true })), 5, 3, true)); vSheet(titre, val, [{ cols: VC.L(), rows }]); };
+  // correctifs mobqa (08/10) : feuille « sans date » (case et tuile de « Tout ») : la position fin du dernier mois, puis les lignes sans date (non indexées,
+  // comme vTabPos), puis la fin = le grand chiffre ; avant, le grand chiffre était la position totale mais le tableau ne montrait que les lignes sans date
+  const tabSD = (v, sn) => { const ms = P.mois || [], mL = ms[ms.length - 1], rows = [];
+    if (mL && mL.prix && mL.prix.position != null) rows.push(vLab(vt("finM", vMC(mL.mois)), esc(vq(mL.prix.position, { nu: true })), 5, 3));
+    lig.filter(l => !l.mois && l.type !== "indexe").forEach(l => rows.push(vRowL(l)));
+    if (rows.length) rows.push(vLab(vt("fin"), esc(v == null ? vt("inconnu") : vq(v, { nu: true })), 5, 3, true));
+    vSheet(prod(P.produit) + " · " + vt("sansDateM"), vPos(v, sn), [{ cols: VC.L(), rows }]); };
   // stock d'un mois ou de la plage : début du 1er mois + mouvements = fin du dernier
   const tabStock = k => { const ms = range(k); if (!ms.length) return; const s0 = ms[0].stock || {}, s1 = ms[ms.length - 1].stock || {}, rows = [];
     if (s0.ouv != null) rows.push(vLab(vt("debutL"), esc(vq(s0.ouv, { nu: true })), 4, 2)); ms.forEach(m => (m.mouvements || []).forEach(x => rows.push(vRowM(x))));
@@ -1993,14 +2142,15 @@ function vOuvre(d, e, p) {
     if (d.m && d.m !== "sd" && !(pl.mk.indexOf(d.m) >= 0 && !pl.vide)) { vSetPlage(d.m, d.m); chg = true; }
     if (chg) render();
     const v = d.v === undefined || d.v === "" ? null : +d.v;
-    if (d.m === "sd") { tabL(prod(P.produit) + " · " + vt("sansDateM"), vPos(v, d.s === "conv" ? "equilibre" : d.s), lig.filter(l => !l.mois)); return; }
+    if (d.m === "sd") { tabSD(v, d.s === "conv" ? "equilibre" : d.s); return; }
     vTabPos(P, d.m, v, d.s === "conv" ? "equilibre" : d.s, d.b === undefined ? v : +d.b, d.f === undefined ? 0 : +d.f); return; }
   if (d.t === "stock") { tabStock(d.m); return; }
   if (d.t === "parts") { const ms = range(d.m); if (!ms.length) return; const ls = [].concat(...ms.map(m => m.lignes || [])).filter(l => !d.k || (d.k === "fixe" ? l.type === "fixe" : d.k === "indexe" ? l.type === "indexe" : l.type === "manque"));
     tabL(prod(P.produit) + " · " + (ms.length === 1 ? vML(ms[0].mois) : vMC(ms[0].mois) + " → " + vMC(ms[ms.length - 1].mois)), d.k ? esc(vt(d.k === "manque" ? "sansPrix" : d.k)) : "", ls); return; }
   if (d.t === "couv") { tabCouv(); return; }
   if (d.t === "couvc") { tabCouvC(d.c || ""); return; }
-  if (d.t === "sens") { const m = mois(d.m); if (m) vTabPos(P, d.m, m.prix.position, m.prix.conversion === true ? "equilibre" : m.prix.sens, m.prix.bouge, m.prix.fixes); return; }
+  if (d.t === "sens") { if (d.m === "sd") { const tt = P.total || {}; tabSD(tt.positionPrix == null ? null : +tt.positionPrix, tt.conversion === true ? "equilibre" : tt.sens); return; }
+    const m = mois(d.m); if (m) vTabPos(P, d.m, m.prix.position, m.prix.conversion === true ? "equilibre" : m.prix.sens, m.prix.bouge, m.prix.fixes); return; }
   if (d.t === "cpty") { const c = vCptysPlage(P, pl).cs.find(x => x.cpty === d.c); if (!c) return; tabL(prod(P.produit) + " · " + (c.cpty || "?"), '<span class="v-long">' + esc(vq(c.achats)) + '</span> · <span class="v-short">' + esc(vq(c.ventes)) + '</span>', lignes(c.refs)); return; }
   if (d.t === "prix") { const x = V.prix || {};
     if (d.k === "swaps" && x.swaps) { const set = new Set(x.swaps.contrats || []); vSheet(prod(P.produit) + " · " + vt("swaps"), esc(vpd(x.swaps.prix)), [{ cols: VC.S(), rows: (V.swaps || []).filter(s => set.has(s.contrat)).map(s => vRowS(s, false)) }]); return; }
@@ -2019,7 +2169,7 @@ function vOuvre(d, e, p) {
     if (d.k === "nocli") { expoAller = "cam"; render(); return; }
     // tuile : les lignes qui font la position fin de plage (comme la case de la carte)
     const v = d.v === undefined || d.v === "" ? null : +d.v, s = v == null ? null : vSens(v);
-    if (d.m === "sd") { tabL(prod(P.produit) + " · " + vt("sansDateM"), vPos(v, s), lig.filter(l => !l.mois)); return; }
+    if (d.m === "sd") { tabSD(v, s); return; }
     if (d.m) vTabPos(P, d.m, v, s, d.b === undefined ? v : +d.b, d.f === undefined ? 0 : +d.f);
   }
 }
@@ -2091,7 +2241,7 @@ function renderSettings() {
     htmlBloquees(box) +
     (orph.length ? '<p class="muted">' + esc(t("orphans").replace("{0}", orph.length)) + '</p>' : "") +
     (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t("login") + '</button>' : "") +
-    htmlCompte(box, false) + '</div>';
+    htmlCompte(box, false) + '<p class="muted" id="versionApp">' + esc(tf("version", VERSION_APP)) + '</p></div>';
   $("#saveCid").onclick = () => { ls.set("clientId", $("#cid").value.trim()); location.reload(); };
   // action volontaire après un échec de connexion : le garde-fou anti-boucle (authFailed) ne bloque que la redirection AUTOMATIQUE
   $("#saveLnk").onclick = () => { us.set("folderLink", $("#lnk").value.trim()); changerDossier(); };
@@ -2102,9 +2252,11 @@ function renderSettings() {
 }
 // entrées bloquées du compte (point 6) : Réessayer, Copier le texte, Abandonner en deux touches ; jamais retirées d'office ; dans Réglages ET sur
 // les écrans sans fiche (Accès refusé, lien du dossier, erreur au démarrage), où elles restent joignables
+// correctifs mobqa (08/10) : jour d'une saisie à l'heure du téléphone (body.quand est en UTC : saisie à 00:30 à Paris montrée la veille)
+const jourLocal = q => { const d = q ? new Date(q) : null; return d && !isNaN(d) ? iso(d) : ""; };
 function htmlBloquees(box) {
   const bq = bloquees(box), lb = box.filter(e => bq.has(e.name));
-  return lb.length ? '<label>' + t("blockedList") + '</label>' + lb.map(e => '<div class="row" style="margin:6px 0"><div class="grow muted">' + esc(fmtD(String(e.body.quand || "").slice(0, 10))) + " · " +
+  return lb.length ? '<label>' + t("blockedList") + '</label>' + lb.map(e => '<div class="row" style="margin:6px 0"><div class="grow muted">' + esc(fmtD(jourLocal(e.body.quand))) + " · " +
     esc(((e.body && e.body.changements) || []).map(c => c.ref + " " + c.champ).join(", ")) + '</div><button class="chip" style="border:0" data-copy="' + esc(e.name) + '">' + t("copy") + '</button>' +
     '<button class="chip out" style="border:0" data-drop="' + esc(e.name) + '">' + t("drop") + '</button></div>').join("") + '<button class="btn light" id="retryBlocked">' + t("retryBtn") + '</button>' : "";
 }
@@ -2166,7 +2318,7 @@ function retirer(noms) {
   render(); return true;
 }
 function proposerSuivantes(e, deps) {
-  const li = x => esc(fmtD(String(x.body.quand || "").slice(0, 10))) + " · " + esc(((x.body && x.body.changements) || []).map(c => c.ref + " " + c.champ).join(", "));
+  const li = x => esc(fmtD(jourLocal(x.body.quand))) + " · " + esc(((x.body && x.body.changements) || []).map(c => c.ref + " " + c.champ).join(", "));
   const noms = [e.name].concat(deps.map(x => x.name));
   sheet('<h3>' + t("drop") + '</h3><div class="muted">' + li(e) + '</div><p class="note">' + esc(t("dropDeps").replace("{0}", deps.length)) + '</p>' +
     deps.map(x => '<div class="muted" data-dep="' + esc(x.name) + '">' + li(x) + '</div>').join("") +
@@ -2190,16 +2342,31 @@ function proposerSuivantes(e, deps) {
 function deconnecter() {
   const a = account, h = moi(); if (!a || !h) return;
   data = null; place = null; pending = {}; refus = {}; account = null; sansFiche = null;
-  document.querySelectorAll(".sheet-bg, .toast").forEach(x => x.remove());
+  document.querySelectorAll(".sheet-bg, .toast").forEach(x => x.remove()); histSansFeuille();
   $("#nav").innerHTML = ""; $("#main").innerHTML = ""; header();
   const pre = "atlas." + kU(h, "d."), ks = [];
   try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith(pre) && k.endsWith(".cache")) ks.push(k); } } catch (er) {}
   ks.forEach(k => { try { localStorage.removeItem(k); } catch (er) {} });
   pca.logoutRedirect({ account: a }).catch(() => boot());
 }
+// correctifs mobqa (08/10) : une feuille ouverte pose UNE entrée d'historique (« ‹ » / geste retour : la feuille se ferme, on reste dans Atlas) ; fermée
+// par Fermer ou le fond gris, l'entrée est retirée (jamais d'entrée fantôme) ; une feuille qui en ouvre une autre garde la même entrée ; à la
+// fermeture, l'écran est redessiné si une photo a été prise depuis la feuille (bg.redessiner)
+// feuilleHist : marque de l'entrée posée (null : aucune) ; le retour n'est fait que si l'entrée courante est EXACTEMENT celle-là (jamais une entrée
+// laissée par une page précédente ou d'avant un rechargement : un retour de trop ferait quitter Atlas)
+let feuilleHist = null;
+function histFeuille() { if (feuilleHist) return; const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  try { history.pushState(Object.assign({}, history.state || {}, { atlasFeuille: id }), ""); feuilleHist = id; } catch (e) {} }
+function histSansFeuille() { setTimeout(() => { if (feuilleHist && !document.querySelector(".sheet-bg") && history.state && history.state.atlasFeuille === feuilleHist) { feuilleHist = null; try { history.back(); } catch (e) {} } }, 0); }
+window.addEventListener("popstate", () => {
+  if (!feuilleHist || (history.state && history.state.atlasFeuille === feuilleHist)) return;
+  feuilleHist = null; document.querySelectorAll(".sheet-bg").forEach(b => { if (b.fermer) b.fermer(); else b.remove(); });
+});
 function sheet(html, onReady) {
   const bg = document.createElement("div"); bg.className = "sheet-bg"; bg.innerHTML = '<div class="sheet">' + html + '</div>';
-  bg.onclick = e => { if (e.target === bg) bg.remove(); }; document.body.appendChild(bg); onReady(bg, () => bg.remove());
+  let fermee = false;
+  bg.fermer = () => { if (fermee) return; fermee = true; bg.remove(); histSansFeuille(); if (bg.redessiner) render(); };
+  bg.onclick = e => { if (e.target === bg) bg.fermer(); }; document.body.appendChild(bg); histFeuille(); onReady(bg, () => bg.fermer());
 }
 // envoi depuis une feuille : bouton bloqué pendant l'envoi ; une fois la modification gardée dans la boîte d'envoi (renvoyée sous le même nom :
 // jamais un second fichier pour la même saisie), la feuille se ferme, partie ou non ; pas gardée (mémoire du téléphone, fiche retirée…) : la
@@ -2243,6 +2410,10 @@ function editOp(ref) {
       if (bLib) bLib.onclick = () => choisirPhoto(ref, false, majPh);
       bg.querySelector("#ok").onclick = async () => {
         const ch = [], d = lk ? "" : bg.querySelector("#d").value, q = lk || lv ? NaN : parseFloat(bg.querySelector("#q").value), c = bg.querySelector("#c").value.trim(), m = bg.querySelector("#m").value.trim();
+        // correctifs mobqa (08/10) : quantité vide, nulle, négative ou illisible (virgule non lue), ou date effacée d'une livraison datée : la feuille reste
+        // ouverte avec le motif, rien n'est envoyé (avant : fermée sans rien dire, et « Livré » partait sans la quantité saisie)
+        if (!lk && !lv && st !== "Annulé" && !(q > 0)) { toast("⚠ " + t("badQty")); return; }
+        if (!lk && !d && l.date) { toast("⚠ " + t("needDate")); return; }
         if (!lk && st !== l.statut) ch.push({ t: "livraison", ref, champ: "statut", valeur: st, vu });
         // « Livré » sans date choisie sur une livraison connue au mois ou datée du futur : la date du jour est ENVOYÉE (Atlas la poserait lui-même,
         // Mobile.cs, au jour de la reprise) ; envoyée, elle figure dans les valeurs en attente, donc dans l'état vu de l'envoi suivant
@@ -2270,6 +2441,7 @@ function countLot(lot) {
       bg.querySelector("#ko").onclick = close;
       bg.querySelector("#ok").onclick = async () => {
         const q = parseFloat(bg.querySelector("#q").value), d = bg.querySelector("#d").value, m = bg.querySelector("#m").value.trim(), ch = [];
+        if (bg.querySelector("#q").value.trim() !== "" && !(q >= 0)) { toast("⚠ " + t("badCount")); return; }   // correctifs mobqa : jamais ignoré en silence
         // stock affiché au moment du comptage : Atlas refuse le comptage si le stock a bougé depuis (mouvement saisi entre-temps)
         if (!isNaN(q) && q >= 0) ch.push({ t: "inventaire", ref: lot, champ: "compte", valeur: q, date: d, stockVu: l.stock });
         if (m) ch.push({ t: "inventaire", ref: lot, champ: "commentaire", valeur: m });
@@ -2283,15 +2455,44 @@ function render() {
   today = todayIso();
   header(); if (!data) { if (sansFiche) sansFiche(); return; } tabs();
   ({ cal: renderCal, stock: renderStock, treso: renderTreso, expo: renderExpo, photos: renderPhotos, settings: renderSettings })[tab]();
+  bandeauMaj();
 }
 // round 23 : mise à jour automatique de la fiche (« que ça se mette à jour côté app ») : au retour au premier plan après 1 min, et toutes les
 // 2 min tant que l'app est ouverte ; jamais pendant une saisie (feuille ouverte, champ actif) ni sur Réglages ; une coupure réseau est muette (la
 // dernière fiche reste affichée) ; un accès refusé donne l'écran Accès refusé, comme ↻
+// correctifs mobqa (08/10) : mise à jour automatique : les rangées qui défilent de côté (carte de chaleur, produits) restent où on les avait mises
+// (render() les recréait au début : la carte revenait au premier mois toutes les 2 min)
+function renderGardeDefil() {
+  const cle = w => Array.from(w.classList).filter(c => c !== "vsc" && c !== "more" && c !== "less").join(".");
+  const avant = Array.from(document.querySelectorAll("#main .vsc")).map((w, i) => { const ii = w.querySelector(".vsc-in"); return { k: cle(w), i, x: ii ? ii.scrollLeft : 0 }; });
+  render();
+  const apres = Array.from(document.querySelectorAll("#main .vsc"));
+  avant.forEach(a => { if (!a.x) return; const w = apres.filter(x => cle(x) === a.k)[avant.filter(z => z.k === a.k).indexOf(a)], ii = w && w.querySelector(".vsc-in");
+    if (ii) { ii.scrollLeft = a.x; if (ii.onscroll) ii.onscroll(); } });
+}
+// correctifs mobqa (08/10) : nouvelle version publiée : page de l'app relue sans le cache du navigateur ; version différente de VERSION_APP : bandeau
+// « Nouvelle version · toucher pour mettre à jour » (rechargement au toucher, jamais pendant une saisie) ; hors démo
+let majDispo = null;
+async function verifierVersion() {
+  if (DEMO) return null;
+  try {
+    const r = await fetch(new URL("./", location.href).href, { cache: "no-cache" }); if (!r || !r.ok || typeof r.text !== "function") return null;
+    const m = (await r.text()).match(/const VERSION_APP = "([^"]+)"/);
+    if (m && m[1] !== VERSION_APP) { majDispo = m[1]; bandeauMaj(); }
+    return m ? m[1] : null;
+  } catch (e) { return null; }
+}
+function bandeauMaj() {
+  if (!majDispo || document.getElementById("majApp")) return; const M = $("#main"); if (!M) return;
+  const b = document.createElement("button"); b.id = "majApp"; b.className = "majapp"; b.textContent = t("newVersion");
+  b.onclick = () => { if (!document.querySelector(".sheet-bg")) location.reload(); };
+  M.insertBefore(b, M.firstChild);
+}
 async function rafraichirSilencieux() {
   if (DEMO || !account || !data || chargement || document.hidden || document.querySelector(".sheet-bg")) return false;
   const a = document.activeElement; if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return false;
   chargement = true;
-  try { await flush(true).catch(() => {}); await load(); if (data && !document.querySelector(".sheet-bg") && tab !== "settings") render(); else header(); return true; }
+  try { await flush(true).catch(() => {}); await load(); if (data && !document.querySelector(".sheet-bg") && tab !== "settings") renderGardeDefil(); else header(); verifierVersion(); return true; }
   catch (e) { console.warn(e); if (e && e.acces) echec(e, false); return false; }
   finally { chargement = false; }
 }
@@ -2318,6 +2519,7 @@ async function boot() {
       await flush(true).catch(e => console.warn(e));      // modifications gardées sur le téléphone pour CE compte : renvoyées d'abord
     } else ouvrir();
     await load(); render();
+    verifierVersion();   // correctifs mobqa : version publiée plus récente : bandeau
   } catch (e) { echec(e, true); }
 }
 // erreur au démarrage (boot) ou sur ↻
@@ -2327,16 +2529,19 @@ function echec(e, auBoot) {
   // une coupure réseau ou une erreur Graph garde son propre message (elles n'ont pas d'errorCode MSAL) (revue 3, défaut 12)
   const auth = !!(authFailed && pca && e && e.errorCode), af = auth ? authFailed : null;
   // motif composé à chaque dessin (langue) : seuls l'erreur et le refus de connexion sont gardés (e.texte : fonction ; e.cle : clé du texte)
-  const motif = () => e && e.texte ? e.texte() : auth ? authMsg(af) + " · " + t("retry") : "⚠ " + (e && e.cle ? t(e.cle) : e && e.message), msg = motif();
+  // correctifs mobqa (08/10) : erreur brute du navigateur (TypeError, SyntaxError…) sans clé de texte : « Lecture impossible · ↻ pour réessayer », jamais
+  // son message anglais ; le message brut reste dans la console
+  const brut = !!e && !e.cle && !e.texte && !e.errorCode && !/^Graph \d/.test(String(e.message || "")) && (e instanceof TypeError || e instanceof SyntaxError || e.name === "AbortError");
+  const motif = () => e && e.texte ? e.texte() : auth ? authMsg(af) + " · " + t("retry") : "⚠ " + (e && e.cle ? t(e.cle) : brut ? t("readErr") : e && e.message), msg = motif();
   // accès refusé (403, ou 404 du dossier) : la fiche est déjà retirée ; une feuille restée ouverte sur elle est fermée ; si son envoi n'avait
   // pas commencé (bouton Enregistrer actif), rien n'est envoyé et c'est dit ; un envoi en cours (bouton désactivé) donnera son propre message
   // (gardée, bloquée ou envoyée) ; écran Accès refusé
   if (e && e.acces) {
-    const f = Array.from(document.querySelectorAll(".sheet-bg")), saisie = f.some(x => { const o = x.querySelector("#ok"); return !!o && !o.disabled; }); f.forEach(x => x.remove());
+    const f = Array.from(document.querySelectorAll(".sheet-bg")), saisie = f.some(x => { const o = x.querySelector("#ok"); return !!o && !o.disabled; }); f.forEach(x => x.remove()); histSansFeuille();
     accesRefuse(msg); toast(saisie ? msg + " · " + t("sheetClosed") : msg); return;
   }
   if (data || !auBoot) { toast(msg); return; }
-  ecranErreur(motif, auth);
+  ecranErreur(e && e.cle === "offline" ? () => motif() + " · " + t("retry") : motif, auth);
 }
 // écrans sans fiche, redessinés par render() (abandon, Réessayer, langue) ; ils gardent les sorties du compte : entrées bloquées (Réessayer,
 // Copier, Abandonner) et Se déconnecter
