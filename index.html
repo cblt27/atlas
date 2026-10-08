@@ -332,6 +332,16 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .vkn.vd .nb { fill:none; stroke:var(--v-nv); stroke-width:1.6; stroke-dasharray:5 3.5; }
 .vkn.pale { opacity:.38; }
 .vksvg .vko { fill:var(--v-short-t); font-size:10.5px; font-weight:700; }
+/* round 28 (piste camions) : badge de prix sous un camion (pilule teintée de la couleur du sens : ardoise fixe, violet indexé, bleu swap, gris sans prix) */
+.vkp .pb { stroke-width:1; fill-opacity:.13; stroke-opacity:.8; } .vksvg .vkp .pt { font-size:10.5px; font-weight:750; font-variant-numeric:tabular-nums; }
+.vkp.fixe .pb { fill:var(--v-fixe); stroke:var(--v-fixe); } .vksvg .vkp.fixe .pt { fill:var(--v-fixe); }
+.vkp.indexe .pb { fill:var(--v-idx); stroke:var(--v-idx); } .vksvg .vkp.indexe .pt { fill:var(--v-idx); }
+.vkp.swap .pb { fill:var(--v-swap); stroke:var(--v-swap); } .vksvg .vkp.swap .pt { fill:var(--v-swap-t); }
+.vkp.sansprix .pb { fill:var(--v-nv); stroke:var(--v-nv); fill-opacity:.2; } .vksvg .vkp.sansprix .pt { fill:var(--muted); }
+.vkleg .vkp .pb { fill-opacity:.2; } .vkleg .vkp.swap .pt { fill:var(--v-swap-t); }
+.vtab .w5 { width:46%; } .vtab td.w5, .vtab td.w6 { white-space:normal; overflow:visible; text-overflow:clip; line-height:1.5; }
+.vpx { display:inline-block; border-radius:999px; padding:1px 7px; font-size:12px; font-weight:750; white-space:nowrap; box-shadow:inset 0 0 0 1px currentColor; }
+.vpx.fixe { color:var(--v-fixe); } .vpx.indexe { color:var(--v-idx); } .vpx.swap { color:var(--v-swap-t); } .vpx.sansprix { color:var(--muted); }
 .vkmore { display:block; margin:2px auto 4px; border:0; background:var(--soft); color:var(--ink); border-radius:999px; padding:6px 14px; font-family:inherit; font-size:13px; font-weight:750; }
 .vkleg svg.vkl { width:24px; height:12px; flex:none; overflow:visible; }
 .vkleg .vkls { fill:var(--ink); } .vkleg .vkld { fill:none; stroke:var(--v-nv); stroke-width:1.5; stroke-dasharray:3 2; }
@@ -1215,6 +1225,16 @@ async function ajouterPhoto(ref, file) {
 //     lieu de « Position aujourd'hui » (qui n'était que le swap fixé) ; « Qu'est-ce qui cloche ? » avec camions sans client, ventes sans camion, swap
 //     à régler, non couvert juste (swaps à venir) ; « Suis-je couvert ? » : une barre PAR CONTRAT (swaps à venir, non couvert, swaps en trop) et la
 //     pastille 🔒 des swaps déjà fixés (ne couvrent plus), au lieu d'une jauge par produit qui comptait le swap fixé.
+//  Round 28 (piste camions, 08/10, minuit : « sous les camions, « sans client », « direct », « Somis → CAPI » : ça sert à rien, la bulle
+//     l'explique déjà » ; « le prix des camions : je ne sais pas si c'est flottant ») : la destination n'est plus écrite sous un camion (elle reste
+//     dans sa feuille) ; à sa place, un BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC) : ardoise « fixe 31,15 », violet « indexé
+//     QP oct. » (« ≈ » si un prix provisoire est saisi), bleu « 🔒 swap 29,30 » (« · 67 % » si le contrat n'est couvert qu'en partie), gris « sans
+//     prix ». Fiche d'un Atlas 27 (sans pc) : ni badge ni destination (la feuille d'un toucher les donne).
+//  Correctif du 08/10 (« L96 → S:R38-850-2027-01-07:Proposé+V » : un camion Vale de 41 887,83 lb alloué à un créneau CAPI de 41 887 lb montrait son
+//     reste de 0,83 lb comme une part « sans client ») : un reste NON ALLOUÉ qui ne dépasse pas la tolérance de pesée d'Atlas (1 lb, celle du moteur
+//     du stock, Stk.DirectTolerance) n'est ni une destination, ni une flèche, ni un camion « sans client » ; la feuille du camion l'écrit (« reste
+//     1 lb »). Même règle que le PC (ExpoCamions.IsVoid) : une fiche corrigée la porte déjà (camions.tolPesee, camion.reste) ; une fiche d'un Atlas
+//     27 (sans tolPesee) la reçoit ici (vkVers, vkReste), sur ses branches « vide ».
 // Fiche d'un Atlas plus ancien : sans vis.camions, la carte des camions est masquée ; sans vis.couv, l'ancienne jauge ; sans cptys[].mois, toutes
 // périodes ; sans « expo2 » : l'ancien tableau. Mode démo : fiche d'exemple FICTIVE construite ici (vDemo).
 let expoProd = null, expoDu = null, expoAu = null, expoDelta = 1, expoTip = null, expoGloss = false, expoAller = null, vDemoFiche = null, expoCamOuv = {};
@@ -1236,7 +1256,10 @@ const VT = {
         rMois: "Ce mois", rTrim: "T{0} {1}", r6: "6 mois", rTout: "Tout", de: "de", a: "à", finM: "fin {0}", sansDateM: "sans date",
         sansCli: "sans client", nCam: "{0} camions", nCam1: "1 camion", entrepot: "Entrepôt", direct: "direct", aucunCam: "aucun camion dans la plage", aucunCamM: "aucun camion",
         plusCam: "+ {0} camions", replier: "replier", kAchat: "achat", kDirect: "direct", kStock: "entrepôt", kProp: "proposé", kVide: "sans client", kAtt: "vente sans camion",
-        vDirect: "→ {0} {1} direct", vStock: "→ {0} › {1} {2}", vVide: "→ sans client", deuxDates: "{0} prévu {1} · {2} attend {3}", nonAlloue: "aucune allocation, servie par le stock",
+        deuxDates: "{0} prévu {1} · {2} attend {3}", nonAlloue: "aucune allocation, servie par le stock", resteP: "reste {0} lb · sous la tolérance de pesée",
+        bFixe: "fixe {0}", bIdx: "indexé", bQp: "QP {0}", bSwap: "🔒 swap {0}", bSans: "sans prix", kFixe: "prix fixe", kIdx: "indexé (QP)", kSwap: "couvert par swap", kSans: "sans prix",
+        thPrix: "Prix", thDetail: "D'où il vient", pxLigne: "saisi sur la livraison", pxContrat: "prix du contrat", pxFixeIdx: "indexé, fixé sur la livraison", pxNonFixe: "non fixé",
+        pxProvD: "prix provisoire du trade", pxCouv: "{0} du contrat couvert", pxSaisir: "prix à saisir", pxSwQp: "swap de sa QP", pxQpInc: "QP non écrite",
         stDirect: "directe", stProp: "proposé", stConf: "confirmé", horsStock: "hors stock",
         aide: "Aide", glossT: "Glossaire", ancien: "Atlas à mettre à jour", suite: "Voir la suite",
         tip: { alertes: "Constats d'Atlas, jamais une décision. Mois short, stock négatif, camions sans client et ventes sans camion : dans la plage choisie. Toucher une pastille : l'outil concerné, ou les lignes en cause.",
@@ -1248,7 +1271,7 @@ const VT = {
                cptys: "Volumes encore à recevoir (achats, à gauche) ou à livrer (ventes, à droite) avec chaque contrepartie, sur les mois de la plage (livraisons en retard comprises quand la plage commence ce mois-ci).",
                marche: "Repère marché : dernier fixing saisi dans Atlas (moyenne de l'indice sur son mois de cotation), trait en pointillés. Achat et vente moyens : livraisons à venir à prix fixe, pondérées par les lb ; chaque crochet va du prix au repère, son écart dessus : ▲ gagnant, ▼ perdant. Swaps : prix fixe moyen des swaps non réglés.",
                swaps: "Mois de cotation (QP) de chaque swap non réglé : son prix se fixe sur la moyenne de l'indice ce mois-là. Bleu plein : à fixer ; bleu hachuré 🔒 : déjà fixé, verrouillé.",
-               cam: "Chaque camion d'achat du mois, placé par le moteur du stock, et où il va : directement chez le client (flèche sarcelle), à l'entrepôt puis au client alloué (trait plein si confirmé, pointillés si proposé), ou vers le vide (cadre gris) s'il n'est alloué à aucune vente : il entrera au stock. En bas, en rouge : les ventes qu'aucun camion ni lot n'est alloué à servir. Toucher un camion, une flèche ou un nœud : ses lignes." },
+               cam: "Chaque camion d'achat du mois, placé par le moteur du stock, et où il va : directement chez le client (flèche sarcelle), à l'entrepôt puis au client alloué (trait plein si confirmé, pointillés si proposé), ou vers le vide (cadre gris) s'il n'est alloué à aucune vente : il entrera au stock. En bas, en rouge : les ventes qu'aucun camion ni lot n'est alloué à servir. Sous chaque camion, son prix : fixe (ardoise), indexé avec son mois de cotation QP (violet), 🔒 couvert par les swaps à venir de son contrat (bleu, avec la part couverte si elle n'est pas totale), ou sans prix (gris). Toucher un camion, une flèche ou un nœud : ses lignes, sa destination et d'où vient son prix." },
         gl: [["LONG", "on détient : on perd si le prix baisse"], ["SHORT", "on doit livrer : on perd si le prix monte"], ["Prix fixe", "prix d'un trade connu au contrat"],
              ["Indexé", "suit un indice, fixé plus tard"], ["Swap", "fixe le prix d'un achat indexé"], ["Verrouillé 🔒", "swap déjà fixé : ne bouge plus"],
              ["QP", "mois dont la moyenne fixe le prix"], ["Sans prix", "prix pas encore saisi dans Atlas"], ["▲ / ▼", "gain / perte"],
@@ -1270,7 +1293,10 @@ const VT = {
         rMois: "This month", rTrim: "Q{0} {1}", r6: "6 months", rTout: "All", de: "from", a: "to", finM: "end {0}", sansDateM: "undated",
         sansCli: "no customer", nCam: "{0} trucks", nCam1: "1 truck", entrepot: "Warehouse", direct: "direct", aucunCam: "no truck in the range", aucunCamM: "no truck",
         plusCam: "+ {0} trucks", replier: "fold", kAchat: "purchase", kDirect: "direct", kStock: "warehouse", kProp: "proposed", kVide: "no customer", kAtt: "sale without truck",
-        vDirect: "→ {0} {1} direct", vStock: "→ {0} › {1} {2}", vVide: "→ no customer", deuxDates: "{0} planned {1} · {2} expects {3}", nonAlloue: "no allocation, served from stock",
+        deuxDates: "{0} planned {1} · {2} expects {3}", nonAlloue: "no allocation, served from stock", resteP: "remainder {0} lb · within weighing tolerance",
+        bFixe: "fixed {0}", bIdx: "indexed", bQp: "QP {0}", bSwap: "🔒 swap {0}", bSans: "no price", kFixe: "fixed price", kIdx: "indexed (QP)", kSwap: "hedged by swap", kSans: "no price",
+        thPrix: "Price", thDetail: "Where it comes from", pxLigne: "entered on the delivery", pxContrat: "contract price", pxFixeIdx: "indexed, set on the delivery", pxNonFixe: "not set",
+        pxProvD: "provisional price on the trade", pxCouv: "{0} of contract hedged", pxSaisir: "price to enter", pxSwQp: "swap of its QP", pxQpInc: "QP not written",
         stDirect: "direct", stProp: "proposed", stConf: "confirmed", horsStock: "outside stock",
         aide: "Help", glossT: "Glossary", ancien: "Atlas to be updated", suite: "See more",
         tip: { alertes: "Atlas findings, never a decision. Short month, negative stock, trucks without customer and sales without truck: within the chosen range. Tap a pill: the tool concerned, or the lines at stake.",
@@ -1282,7 +1308,7 @@ const VT = {
                cptys: "Volumes still to receive (purchases, left) or to deliver (sales, right) with each counterparty, over the months of the range (late deliveries included when the range starts this month).",
                marche: "Market reference: last fixing entered in Atlas (index average over its quotation month), dotted line. Average buy and sale: upcoming fixed-price deliveries, weighted by lb; each bracket runs from the price to the reference, its gap on it: ▲ winning, ▼ losing. Swaps: average fixed price of unsettled swaps.",
                swaps: "Quotation month (QP) of each unsettled swap: its price fixes on the index average of that month. Solid blue: to fix; hatched blue 🔒: already fixed, locked.",
-               cam: "Each purchase truck of the month, placed by the stock engine, and where it goes: straight to the customer (teal arrow), to the warehouse then to the allocated customer (solid if confirmed, dotted if proposed), or to the void (grey frame) when no sale is allocated: it will go into stock. At the bottom, in red: the sales no truck or lot is allocated to serve. Tap a truck, an arrow or a node: its lines." },
+               cam: "Each purchase truck of the month, placed by the stock engine, and where it goes: straight to the customer (teal arrow), to the warehouse then to the allocated customer (solid if confirmed, dotted if proposed), or to the void (grey frame) when no sale is allocated: it will go into stock. At the bottom, in red: the sales no truck or lot is allocated to serve. Under each truck, its price: fixed (slate), indexed with its quotation month QP (purple), 🔒 hedged by its contract's future swaps (blue, with the hedged share when not full), or no price (grey). Tap a truck, an arrow or a node: its lines, its destination and where its price comes from." },
         gl: [["LONG", "we hold it: we lose if the price falls"], ["SHORT", "we must deliver: we lose if the price rises"], ["Fixed price", "trade price known in the contract"],
              ["Index-linked", "follows an index, fixed later"], ["Swap", "fixes the price of an index-linked purchase"], ["Locked 🔒", "swap already fixed: no longer moves"],
              ["QP", "month whose average fixes the price"], ["No price", "price not entered in Atlas yet"], ["▲ / ▼", "gain / loss"],
@@ -1441,8 +1467,16 @@ function vCamMoisPlage(p, pl) {
   if (pl.tout && C.sansDate && ((C.sansDate.camions || []).length || (C.sansDate.attentes || []).length)) ms.push({ mois: "sd", camions: C.sansDate.camions || [], attentes: C.sansDate.attentes || [], sorties: [], stockFin: null });
   return ms;
 }
+// correctif du 08/10 : tolérance de pesée d'Atlas (lb, Stk.DirectTolerance) ; destinations d'un camion SANS le reste qui ne la dépasse pas, et ce reste.
+// Fiche corrigée (C.tolPesee) : la règle y est déjà appliquée (aucun « vide » sous la tolérance, reste dans camion.reste) ; fiche d'un Atlas 27 :
+// un « vide » de la fiche qui ne dépasse pas la tolérance devient le reste du camion (jamais une flèche ni un compte « sans client »)
+const VK_TOL = 1;
+const vkPese = C => !!C && C.tolPesee != null;
+const vkPetit = (b, C) => b.dest === "vide" && vZ(b.q) <= (C && C.tolPesee != null ? +C.tolPesee : VK_TOL) + 1e-9;
+function vkVers(t, C) { const vs = t.vers || []; return vkPese(C) ? vs : vs.filter(b => !vkPetit(b, C)); }
+function vkReste(t, C) { return vZ(t.reste) + (vkPese(C) ? 0 : (t.vers || []).filter(b => vkPetit(b, C)).reduce((s, b) => s + vZ(b.q), 0)); }
 // camions sans client de la plage : un camion compte s'il a une destination « vide » ; lb = somme de ces destinations (comptes de la fiche)
-function vSansClient(p, pl) { const ms = vCamMoisPlage(p, pl); if (!ms) return null; let n = 0, q = 0; ms.forEach(m => (m.camions || []).forEach(t => { const v = (t.vers || []).filter(b => b.dest === "vide"); if (v.length) { n++; q += v.reduce((s, b) => s + vZ(b.q), 0); } })); return { n, q }; }
+function vSansClient(p, pl) { const ms = vCamMoisPlage(p, pl); if (!ms) return null; const C = p.vis && p.vis.camions; let n = 0, q = 0; ms.forEach(m => (m.camions || []).forEach(t => { const v = vkVers(t, C).filter(b => b.dest === "vide"); if (v.length) { n++; q += v.reduce((s, b) => s + vZ(b.q), 0); } })); return { n, q }; }
 function vSansCamion(p, pl) { const ms = vCamMoisPlage(p, pl); if (!ms) return null; let n = 0, q = 0; ms.forEach(m => (m.attentes || []).forEach(a => { n++; q += vZ(a.q); })); return { n, q }; }
 const vCamEnt = p => (p && p.vis && p.vis.camions && p.vis.camions.entrepot) || vt("entrepot");
 // ---------- A · tuile « Position fin <dernier mois de la plage> » (case de la carte, barre bouge / 🔒), stock du jour, camions sans client ----------
@@ -1684,11 +1718,24 @@ const vkCamion = (x, y, lab) => '<rect class="bx" x="' + x + '" y="' + (y + 5) +
 const vkCamionG = (x, y, lab) => '<path class="cb" d="M' + (x + 17) + ' ' + (y + 9) + 'h-10.5l-6.5 6.5v7.5h17z"/><rect class="bx" x="' + (x + 18) + '" y="' + (y + 5) + '" width="50" height="18" rx="2.5"/>' +
   '<circle class="wh" cx="' + (x + 9) + '" cy="' + (y + 25) + '" r="3.6"/><circle class="wh" cx="' + (x + 57) + '" cy="' + (y + 25) + '" r="3.6"/><text class="vkq" x="' + (x + 43) + '" y="' + (y + 17.8) + '" text-anchor="middle">' + esc(lab) + '</text>';
 const vkJ = (j, mo) => !j ? vt("sansDateM") : mo ? "≈ " + vMS(j) : vDM(j);
-// destination en clair : « → CAPI 08/10 direct », « → Somis › CAPI 30/10 », « → sans client » (+n : autres destinations du même camion)
-function vkDest(t, ent) {
-  const vs = t.vers || [], b = vs.find(x => x.dest !== "vide") || vs[0]; if (!b) return "";
-  const s = b.dest === "direct" ? vt("vDirect", b.client || "?", vkJ(b.jv, b.jvMois)) : b.dest === "stock" ? vt("vStock", ent, b.client || "?", vkJ(b.jv, b.jvMois)) : vt("vVide");
-  return s + (vs.length > 1 ? " +" + (vs.length - 1) : "");
+// round 28 : la destination n'est plus écrite sous un camion (« → CAPI 08/10 direct », « → Somis › CAPI 30/10 », « → sans client ») : elle est dans
+// sa feuille. À sa place, le BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC ; jamais calculé ici) : « fixe 31,15 », « indexé QP oct. »
+// (« ≈ 24,66 » si un prix provisoire est saisi sur le trade), « 🔒 swap 29,30 » (« · 67 % » si le contrat n'est couvert qu'en partie), « sans prix »
+const vp4 = v => v == null || isNaN(v) ? "—" : (+v).toLocaleString(vLOC(), { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+function vkPxTxt(pc) {
+  if (!pc || !pc.k) return "";
+  if (pc.k === "fixe") return vt("bFixe", vp4(pc.px));
+  if (pc.k === "swap") return vt("bSwap", pc.px == null ? "" : vp4(pc.px)).trim() + (pc.partiel && pc.pct != null ? " · " + vpc(pc.pct) : "");
+  if (pc.k === "indexe") return vt("bIdx") + (pc.qp ? " " + vt("bQp", vMS(pc.qp)) : "") + (pc.est != null ? " ≈ " + vp4(pc.est) : "");
+  return vt("bSans");
+}
+// largeur estimée du texte du badge (10,5 px gras : 10 px au moins une fois rendu à 375 px) ; pilule bornée à la colonne des textes, texte resserré seulement s'il dépasserait
+const vkPxW = s => Array.from(String(s)).reduce((w, c) => w + (/[\s.,·:]/.test(c) ? 3.05 : /[%mwMW]/.test(c) ? 9 : /[ilfjtrI]/.test(c) ? 3.6 : /\d/.test(c) ? 6.1 : c.codePointAt(0) > 0x2000 && c !== "≈" ? 12.6 : 6), 0);
+function vkPx(pc, x, y, wMax) {
+  const s = vkPxTxt(pc); if (!s) return "";
+  const est = vkPxW(s), w = Math.min(wMax, Math.ceil(est) + 12), fit = est > w - 12;
+  return '<g class="vkp ' + esc(pc.k) + '" data-px="' + esc(pc.k) + '"><rect class="pb" x="' + (x + 0.5) + '" y="' + (y + 0.5) + '" width="' + (w - 1) + '" height="15" rx="7.5"/>' +
+    '<text class="pt" x="' + (x + 6) + '" y="' + (y + 11.4) + '"' + (fit ? ' textLength="' + (w - 12) + '" lengthAdjust="spacingAndGlyphs"' : "") + '>' + esc(s) + '</text></g>';
 }
 // nœuds : ➜ client direct (sarcelle), entrepôt (toit en dents de scie, stock fin du mois, sorties par lot), vide (cadre gris en pointillés, rien dedans)
 function vkNoeud(n, key, ent, stockFin, sorties) {
@@ -1710,7 +1757,8 @@ function vCamMois(p, m, key, ent, lab) {
   const ts = m.camions || [], at = m.attentes || [], so = m.sorties || [], open = !!expoCamOuv[key], show = open || ts.length <= VK.MAX ? ts : ts.slice(0, VK.MAX);
   // compteurs du mois (tous les camions) : ➜ direct (client), entrepôt, sans client : nombre de camions · lb
   const dir = {}, stk = [0, 0], vid = [0, 0];
-  ts.forEach(t => { const seen = {}; (t.vers || []).forEach(b => { if (b.dest === "direct") { const c = b.client || "?", d = dir[c] || (dir[c] = [0, 0]); if (!seen["d" + c]) { d[0]++; seen["d" + c] = 1; } d[1] += vZ(b.q); }
+  const CK = p.vis && p.vis.camions;
+  ts.forEach(t => { const seen = {}; vkVers(t, CK).forEach(b => { if (b.dest === "direct") { const c = b.client || "?", d = dir[c] || (dir[c] = [0, 0]); if (!seen["d" + c]) { d[0]++; seen["d" + c] = 1; } d[1] += vZ(b.q); }
     else if (b.dest === "stock") { if (!seen.s) { stk[0]++; seen.s = 1; } stk[1] += vZ(b.q); } else { if (!seen.v) { vid[0]++; seen.v = 1; } vid[1] += vZ(b.q); } }); });
   const dk = Object.keys(dir), dn = dk.reduce((s, k) => s + dir[k][0], 0), dq = dk.reduce((s, k) => s + dir[k][1], 0);
   const chip = (cls, k, txt, n, q) => '<span class="vkc ' + cls + '" data-k="' + k + '" data-n="' + n + '" data-v="' + q + '">' + esc(txt + " " + n + " · " + vq(q, { nu: true })) + '</span>';
@@ -1719,10 +1767,10 @@ function vCamMois(p, m, key, ent, lab) {
   if (!ts.length && !at.length && !so.length) return '<div class="vkm vkm0" data-m="' + key + '">' + hd.replace('</div>', '<span class="vkc nul">' + esc(vt("aucunCamM")) + '</span></div>') + '</div>';
   // rangées des camions (triés par la fiche : direct, entrepôt, vide, puis date)
   const rows = show.map((t, i) => ({ t, y: 4 + i * VK.RH, yc: 4 + i * VK.RH + 14 }));
-  const dirs = []; rows.forEach(r => (r.t.vers || []).forEach(b => { if (b.dest === "direct" && dirs.indexOf(b.client) < 0) dirs.push(b.client); }));
+  const dirs = []; rows.forEach(r => vkVers(r.t, CK).forEach(b => { if (b.dest === "direct" && dirs.indexOf(b.client) < 0) dirs.push(b.client); }));
   const nodes = (dirs.length ? dirs : [null]).map(c => ({ k: "direct", c, h: 34, ys: [], pale: c == null })).concat([{ k: "stock", h: 38 + 13 * Math.min(4, so.length + (so.length > 3 ? 1 : 0)), ys: [] }, { k: "vide", h: 42, ys: [] }]);
   const arrows = [];
-  rows.forEach(r => (r.t.vers || []).forEach((b, bi) => { const nd = b.dest === "direct" ? nodes.find(n => n.k === "direct" && n.c === b.client) : nodes.find(n => n.k === b.dest); if (!nd) return; nd.ys.push(r.yc); arrows.push({ r, b, bi, nd }); }));
+  rows.forEach(r => vkVers(r.t, CK).forEach((b, bi) => { const nd = b.dest === "direct" ? nodes.find(n => n.k === "direct" && n.c === b.client) : nodes.find(n => n.k === b.dest); if (!nd) return; nd.ys.push(r.yc); arrows.push({ r, b, bi, nd }); }));
   // hauteur des nœuds selon le nombre de flèches reçues (pointes jamais entassées)
   nodes.forEach(n => { const k = n.ys.length; if (n.k === "direct") n.h = Math.max(34, 14 + 9 * k); else if (n.k === "vide") n.h = Math.max(42, 22 + 9 * k); });
   // nœuds placés en face de leurs camions (centre des flèches reçues), empilés sans se chevaucher
@@ -1736,10 +1784,10 @@ function vCamMois(p, m, key, ent, lab) {
   arrows.forEach(a => { const cls = a.b.dest === "direct" ? "dir" : a.b.dest === "stock" ? "stk" + (a.b.statut === "Proposé" ? " prop" : "") : "vide", mk = a.b.dest === "direct" ? "dir" : a.b.dest === "stock" ? "stk" : "vide";
     const x1 = VK.AX, y1 = a.r.yc, dx = (a.ex - x1) * 0.55, d = 'M' + x1 + ' ' + y1.toFixed(1) + 'C' + (x1 + dx).toFixed(1) + ' ' + y1.toFixed(1) + ' ' + (a.ex - dx).toFixed(1) + ' ' + a.ey.toFixed(1) + ' ' + a.ex + ' ' + a.ey.toFixed(1);
     g += '<path class="vka ' + cls + '" d="' + d + '" marker-end="url(#vkm-' + mk + ')"/><path class="vkh" d="' + d + '" data-t="cam" data-k="b" data-m="' + key + '" data-r="' + esc(a.r.t.ref) + '" data-i="' + a.bi + '" data-d="' + a.b.dest + '" data-v="' + a.b.q + '"/>'; });
-  // camions : texte à gauche (fournisseur · produit, destination en clair), camion avec le volume, date dessous
-  rows.forEach(r => { const t = r.t, b1 = (t.fournisseur || "?") + " · " + prod(t.produit || p.produit) + (t.fait ? " ✓" : "") + (t.retard ? " ⏱" : ""), dst = vkDest(t, ent), dirC = (t.vers || []).some(b => b.dest === "direct");
+  // camions : texte à gauche (fournisseur · produit, badge de prix dessous), camion avec le volume, date dessous
+  rows.forEach(r => { const t = r.t, b1 = (t.fournisseur || "?") + " · " + prod(t.produit || p.produit) + (t.fait ? " ✓" : "") + (t.retard ? " ⏱" : "");
     g += '<g class="vkr" data-t="cam" data-k="t" data-m="' + key + '" data-r="' + esc(t.ref) + '" data-v="' + t.q + '"><rect class="hit" x="0" y="' + r.y + '" width="' + VK.AX + '" height="' + VK.RH + '"/>' +
-      vkTxt(0, r.y + 15, b1, "t1", 126) + vkTxt(0, r.y + 31, dst, "t2" + (dirC ? " dir" : ""), 126) + '<g class="vkt">' + vkCamion(132, r.y, vq(t.q, { nu: true })) + '</g>' +
+      vkTxt(0, r.y + 15, b1, "t1", 126) + vkPx(t.pc, 0, r.y + 20, 126) + '<g class="vkt">' + vkCamion(132, r.y, vq(t.q, { nu: true })) + '</g>' +
       vkTxt(166, r.y + 38.5, vkJ(t.jf || t.j, t.auMois), "td", 68, "middle") + '</g>'; });
   // ventes sans camion : camion rouge en pointillés, tourné vers la gauche, sous les nœuds ; « CAPI · 07/01 » à sa gauche
   at.forEach((a, i) => { const y = H0 + 8 + i * VK.AH;
@@ -1762,7 +1810,11 @@ function vCamions(p, pl) {
   const leg = '<div class="vleg vkleg">' + ic('<g class="vkt"><rect class="bx" x="1" y="2" width="17" height="8" rx="1"/><path class="cb" d="M18.6 4h4l3.4 3.4V10h-7.4z"/><circle class="wh" cx="5" cy="11.5" r="2"/><circle class="wh" cx="22" cy="11.5" r="2"/></g>', vt("kAchat")) +
     ic('<path class="vka dir" d="M1 7H21" marker-end="url(#vkm-dir)"/>', vt("kDirect")) + ic('<path class="vkls" d="M3 13V6l4-4v4l4-4v4l4-4v4l4-4v11z"/>', ent) +
     ic('<path class="vka stk prop" d="M1 7H21" marker-end="url(#vkm-stk)"/>', vt("kProp")) + ic('<rect class="vkld" x="3" y="2" width="20" height="10" rx="2"/>', vt("kVide")) +
-    ic('<g class="vkt att"><path class="cb" d="M8 4H5L2 7v3h6z"/><rect class="bx" x="8.6" y="2" width="17" height="8" rx="1"/><circle class="wh" cx="5" cy="11.5" r="2"/><circle class="wh" cx="22" cy="11.5" r="2"/></g>', vt("kAtt")) + '</div>';
+    ic('<g class="vkt att"><path class="cb" d="M8 4H5L2 7v3h6z"/><rect class="bx" x="8.6" y="2" width="17" height="8" rx="1"/><circle class="wh" cx="5" cy="11.5" r="2"/><circle class="wh" cx="22" cy="11.5" r="2"/></g>', vt("kAtt")) +
+    // round 28 : badges de prix (seulement si la fiche les porte : Atlas 28 et plus, profil Head)
+    (ms.some(m => (m.camions || []).some(t => t.pc)) ? ["fixe", "indexe", "swap", "sansprix"].map(k => ic('<g class="vkp ' + k + '"><rect class="pb" x="1.5" y="1.5" width="24" height="11" rx="5.5"/>' +
+      (k === "swap" ? '<path class="pt" d="M11 7.2V5.6a2.5 2.5 0 0 1 5 0v1.6h-1.2V5.6a1.3 1.3 0 0 0-2.6 0v1.6z"/><rect class="pt" x="10" y="7" width="7" height="4.5" rx="0.8"/>' : "") + '</g>',
+      vt(k === "fixe" ? "kFixe" : k === "indexe" ? "kIdx" : k === "swap" ? "kSwap" : "kSans"))).join("") : "") + '</div>';
   return vCard("cam", "q10", "vis.camions (camions, vers, attentes, sorties)", h + leg, esc(vPlageTxt(pl) + " · " + U()));
 }
 // ---------- F · suis-je gagnant au marché : une rangée par prix (achat moyen, vente moyenne, swaps) ; repère « fixing <mois> » en pointillés ;
@@ -1815,7 +1867,8 @@ const VC = { L: () => [[vt("thDate"), "l w0"], [vt("thCpty"), "l w1"], [vt("thCo
              M: () => [[vt("thDate"), "l w0"], [vt("thCpty"), "l"], [U(), ""], ["", "c w0"]],
              A: () => [[vt("thAlloc"), "l w4"], [vt("thStatut"), "l"], [vt("thVers"), "l w1"], [U(), ""]],
              K: () => [[vt("thDate"), "l w0"], [vt("thFour"), "l w1"], [vt("thRef"), "l"], [U(), ""]],
-             F: () => [["Swap", "l w1"], [vt("thQP"), "l"], [vt("thEch"), "l"], [vt("thPnl"), ""]] };
+             F: () => [["Swap", "l w1"], [vt("thQP"), "l"], [vt("thEch"), "l"], [vt("thPnl"), ""]],
+             P: () => [[vt("thPrix"), "l w5"], [vt("thDetail"), "l w6"]] };
 const vQc = (v, cls) => '<span class="' + cls + '">' + esc(vq(v, { nu: true, signe: true })) + '</span>';
 function vRowL(l) {
   const s = l.sens === "vente" ? -1 : 1, px = l.type === "indexe" ? '<span class="vdot idx"></span>' : l.prix != null ? esc(vp(l.prix)) : '<span class="vdot nv"></span>';
@@ -1831,7 +1884,7 @@ function vSheet(titre, val, blocs, note) {
     b.rows.map(r => r && r.lab != null ? '<tr' + (r.tot ? ' class="tot"' : "") + '><td class="l" colspan="' + r.vi + '">' + esc(r.lab) + '</td><td class="' + b.cols[r.vi][1] + '">' + r.val + '</td>' + (r.n - r.vi - 1 > 0 ? '<td colspan="' + (r.n - r.vi - 1) + '"></td>' : "") + '</tr>' :
       '<tr>' + r.map((x, i) => '<td class="' + b.cols[i][1] + '">' + x + '</td>').join("") + '</tr>').join("") + '</table></div>';
   const corps = blocs.map(tb).join("");
-  sheet('<h3>' + esc(titre) + '</h3>' + (val ? '<div class="vbig">' + val + '</div>' : "") + (note ? '<div class="vnote">' + esc(note) + '</div>' : "") + (corps || '<div class="vempty">—</div>') + '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; });
+  sheet('<h3>' + esc(titre) + '</h3>' + (val ? '<div class="vbig">' + val + '</div>' : "") + [].concat(note || []).filter(Boolean).map(n => '<div class="vnote">' + esc(n) + '</div>').join("") + (corps || '<div class="vempty">—</div>') + '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; });
 }
 const vPos = (v, s) => v == null ? esc(vt("inconnu")) : vTag(s || vSens(v)) + " " + esc(s === "equilibre" && Math.abs(v) >= 0.5 ? "≈ 0 " + U() : vq(Math.abs(v)));
 // lignes qui font la position prix fin du mois mk (début = position fin du mois précédent, + achats fixes − ventes fixes + swaps du mois = fin) ;
@@ -1847,14 +1900,23 @@ const vStatut = s => s === "Livraison directe" ? vt("stDirect") : s === "Propos�
 // feuille d'un camion (k = t) ou d'une de ses flèches (k = b, branche i) : achat, allocations (statut), ventes servies
 function vSheetCamion(P, t, ent, bi) {
   const V = P.vis || {}, byRef = {}; (V.lignes || []).forEach(l => { byRef[l.ref] = l; });
-  const vs = bi == null ? (t.vers || []) : [(t.vers || [])[bi]].filter(Boolean), ach = byRef[t.ref];
-  const rowsA = [[esc(vkJ(t.jf || t.j, t.auMois)), esc(t.fournisseur || "?"), esc(t.contrat || t.trade || ""), vQc(vZ(t.q), "v-long"), t.prix === "indexe" ? '<span class="vdot idx"></span>' : t.px != null ? esc(vp(t.px)) : ach && ach.prix != null ? esc(vp(ach.prix)) : '<span class="vdot nv"></span>']];
+  const CK = V.camions, tv = vkVers(t, CK), rs = vkReste(t, CK), vs = bi == null ? tv : [tv[bi]].filter(Boolean), ach = byRef[t.ref];
+  // round 28 : prix de l'achat selon camion.pc (fixe : le prix ; swap : 🔒 et le prix des swaps ; indexé : point violet et sa QP ; sans prix : point gris)
+  const pc = t.pc, pxA = pc ? (pc.k === "fixe" ? esc(vp4(pc.px)) : pc.k === "swap" ? '<span class="v-swap">' + esc("🔒 " + (pc.px == null ? "" : vp4(pc.px))) + '</span>' : pc.k === "indexe" ? '<span class="vdot idx"></span>' + (pc.qp ? " " + esc(vMS(pc.qp)) : "") : '<span class="vdot nv"></span>')
+    : t.prix === "indexe" ? '<span class="vdot idx"></span>' : t.px != null ? esc(vp(t.px)) : ach && ach.prix != null ? esc(vp(ach.prix)) : '<span class="vdot nv"></span>';
+  const rowsA = [[esc(vkJ(t.jf || t.j, t.auMois)), esc(t.fournisseur || "?"), esc(t.contrat || t.trade || ""), vQc(vZ(t.q), "v-long"), pxA]];
   const rowsB = vs.map(b => [esc(b.alloc || "—"), esc(b.dest === "vide" ? vt("sansCli") : vStatut(b.statut)), esc(b.dest === "vide" ? "—" : b.dest === "stock" ? ent + " › " + (b.client || "?") : (b.client || "?")), vQc(vZ(b.q), "v-long")]);
   const rowsV = vs.filter(b => b.dest !== "vide").map(b => { const l = byRef[b.vente] || {};
     return [esc(vkJ(b.jv, b.jvMois)), esc(b.client || "?"), esc(b.contratV || l.contrat || b.vente || ""), vQc(-vZ(b.q), "v-short"), b.pv != null ? esc(vp(b.pv)) : l.prix != null ? esc(vp(l.prix)) : l.type === "indexe" ? '<span class="vdot idx"></span>' : '<span class="vdot nv"></span>']; });
   const d2 = vs.find(b => b.dest === "direct" && t.jf && b.jv && t.jf !== b.jv);
-  vSheet((t.fournisseur || "?") + " · " + t.ref, esc(vq(t.q)), [{ cols: VC.L(), rows: rowsA }, { cols: VC.A(), rows: rowsB }, { cols: VC.L(), rows: rowsV }],
-    d2 ? vt("deuxDates", t.fournisseur || "?", vDM(t.jf), d2.client || "?", vDM(d2.jv)) : null);
+  // round 28 : d'où vient le prix (badge, puis faits courts relus dans camion.pc ; jamais plus de 8 mots par case)
+  const rowsP = []; if (pc && pc.k) { const bdg = '<span class="vpx ' + esc(pc.k) + '">' + esc(vkPxTxt(pc)) + '</span>', qpT = pc.qp ? vt("bQp", vMC(pc.qp)) + (pc.m != null ? " · M-" + pc.m : "") : vt("pxQpInc");
+    if (pc.k === "fixe") rowsP.push([bdg, esc(pc.idx ? vt("pxFixeIdx") : pc.ligne ? vt("pxLigne") : vt("pxContrat"))]);
+    else if (pc.k === "indexe") { rowsP.push([bdg, esc(qpT + " · " + vt("pxNonFixe"))]); if (pc.est != null) rowsP.push([esc("≈ " + vp4(pc.est)), esc(vt("pxProvD"))]); }
+    else if (pc.k === "swap") { rowsP.push([bdg, esc(vt("pxCouv", pc.pct == null ? "—" : vpc(pc.pct)))]); rowsP.push([esc(vt("bIdx")), esc(qpT)]); (pc.swQp || []).forEach(s => rowsP.push([esc(vt("pxSwQp")), esc((s.contrat || "?") + " · " + vq(s.q, { nu: true }) + (s.fixe != null ? " · " + vp4(s.fixe) : ""))])); }
+    else rowsP.push([bdg, esc(vt("pxSaisir"))]); }
+  vSheet((t.fournisseur || "?") + " · " + t.ref, esc(vq(t.q)), [{ cols: VC.L(), rows: rowsA }, { cols: VC.A(), rows: rowsB }, { cols: VC.L(), rows: rowsV }, { cols: VC.P(), rows: rowsP }],
+    [d2 ? vt("deuxDates", t.fournisseur || "?", vDM(t.jf), d2.client || "?", vDM(d2.jv)) : null, rs >= 0.005 ? vt("resteP", rs >= 0.5 ? Math.round(rs).toLocaleString(vLOC()) : "< 1") : null]);
 }
 function vOuvreCam(d, P, ent) {
   const C = P.vis && P.vis.camions; if (!C) return;
@@ -1862,10 +1924,10 @@ function vOuvreCam(d, P, ent) {
   if (!m) return; const lab = d.m === "sd" ? vt("sansDateM") : vML(d.m);
   if (d.k === "t" || d.k === "b") { const t = (m.camions || []).find(x => x.ref === d.r); if (t) vSheetCamion(P, t, ent, d.k === "b" ? +d.i : null); return; }
   if (d.k === "n") {
-    const ts = (m.camions || []).filter(t => (t.vers || []).some(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)));
-    const rows = ts.map(t => { const q = (t.vers || []).filter(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)).reduce((s, b) => s + vZ(b.q), 0); return [esc(vkJ(t.jf || t.j, t.auMois)), esc(t.fournisseur || "?"), esc(t.ref), vQc(q, "v-long")]; });
+    const ts = (m.camions || []).filter(t => vkVers(t, C).some(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)));
+    const rows = ts.map(t => { const q = vkVers(t, C).filter(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)).reduce((s, b) => s + vZ(b.q), 0); return [esc(vkJ(t.jf || t.j, t.auMois)), esc(t.fournisseur || "?"), esc(t.ref), vQc(q, "v-long")]; });
     const so = d.d === "stock" ? (m.sorties || []).map(o => [esc(vDM(o.j)), esc(o.client || "?"), esc(o.lot || o.vente || ""), vQc(-vZ(o.q), "v-short")]) : [];
-    const tq = ts.reduce((s, t) => s + (t.vers || []).filter(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)).reduce((x, b) => x + vZ(b.q), 0), 0);
+    const tq = ts.reduce((s, t) => s + vkVers(t, C).filter(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)).reduce((x, b) => x + vZ(b.q), 0), 0);
     const nom = d.d === "direct" ? "➜ " + (d.c || vt("direct")) : d.d === "stock" ? ent : vt("sansCli");
     vSheet(nom + " · " + lab, esc(vq(tq)), [{ cols: VC.K(), rows: rows.concat(so) }]); return;
   }
