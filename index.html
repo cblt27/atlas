@@ -213,6 +213,16 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .vc.eq b, .vc.nul b { font-weight:650; }
 .vc.nul { background:repeating-linear-gradient(135deg, var(--soft) 0 4px, transparent 4px 8px); }
 .vc.sel { box-shadow:inset 0 0 0 2px var(--ink); }
+/* round 33 : rangées d'information sous le produit choisi (jamais une couleur de sens) : stock physique déjà vendu ; indexé vendu fixe (bleu couvert, orange non couvert) */
+.vmap .vh.vhs span { font-size:11px; font-weight:650; color:var(--muted); flex-direction:column; align-items:flex-start; justify-content:center; line-height:1.15; white-space:nowrap; padding-left:10px; }
+.vmap .vh.vhs small { font-size:11px; font-weight:500; }
+.vc.vsub { height:34px; background:var(--soft); color:var(--muted); gap:3px; }
+.vc.vsub.vend { background:rgba(var(--v-swap-rgb), .10); color:var(--ink); }
+.vc.vsub b { font-size:12px; font-weight:700; }
+.vc .vib { display:flex; height:4px; border-radius:2px; overflow:hidden; margin:0 2px; background:var(--card); }
+.vc .vib .c { background:var(--v-swap); } .vc .vib .n { background:var(--v-nc); }
+.vsw.vend { background:rgba(var(--v-swap-rgb), .22); } .vsw.cv { background:var(--v-swap); } .vsw.ncv { background:var(--v-nc); }
+.vregle { font-size:12px; color:var(--muted); margin:0 0 6px; }
 .vk.l.k1 { background:rgba(var(--v-long-rgb), var(--va1)); color:var(--vt1); } .vk.l.k2 { background:rgba(var(--v-long-rgb), var(--va2)); color:var(--vt2); }
 .vk.l.k3 { background:rgba(var(--v-long-rgb), var(--va3)); color:var(--vt3); } .vk.l.k4 { background:rgba(var(--v-long-rgb), var(--va4)); color:var(--vt4); }
 .vk.l.k5 { background:rgba(var(--v-long-rgb), var(--va5)); color:var(--vt5); }
@@ -533,7 +543,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "31";
+const VERSION_APP = "33";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -1368,7 +1378,7 @@ const VT = {
   fr: { q1: "Où et quand suis-je exposé ?", q2: "Comment bouge mon stock ?", q3: "Quelle part a un prix fixé ?", q4: "Suis-je couvert ?",
         q5: "Combien si le prix bouge ?", q6: "Avec qui ?", q7: "Suis-je gagnant au marché ?", q8: "Qu'est-ce qui cloche ?", q9: "Quand se fixent mes swaps ?",
         q10: "Où vont mes camions ?",
-        tPos: "Position fin {0}", tPosTout: "Position fin {0} + sans date", long: "LONG", court: "SHORT", plat: "À PLAT", bouge: "bouge", gLong: "long", gShort: "short", gVerrou: "verrouillé", gNv: "sans prix",
+        tPos: "Position fin {0}", tPosTout: "Position fin {0} + sans date", tExp: "Exposé fin {0}", tExpTout: "Exposé fin {0} + sans date", regle: "exposé = acheté pas vendu (▲) ou vendu pas acheté (▼)", vendu: "Déjà vendu", venduS: "stock en attente", vendT: "Stock physique (déjà vendu, en attente de livraison)", pasExpo: "pas une exposition : chaque lb a sa vente", idxR: "Indexé", idxS: "vendu fixe", idxT: "Indexé vendu fixe", gVendu: "stock déjà vendu", gCouv: "couvert par swap", gNCv: "non couvert", achNV: "Acheté, pas vendu", venNA: "Vendu, pas acheté", stLibre: "Stock libre", toutApp: "Tout est apparié", aConf: "à confirmer (proposé) : {0}", couvNC: "couvert {0} · non couvert {1}", stVendM: "déjà vendu {0}", long: "LONG", court: "SHORT", plat: "À PLAT", bouge: "bouge", gLong: "long", gShort: "short", gVerrou: "verrouillé", gNv: "sans prix",
         debut: "début", entrees: "entrées", sorties: "sorties", fin: "fin", fixe: "prix fixe", indexe: "indexé", sansPrix: "sans prix",
         aFixer: "à fixer", verrous: "verrouillés", swapsL: "swaps à venir", nonCouv: "non couvert", tropL: "swaps en trop", fixeL: "fixé, ne couvre plus", parContrat: "par contrat",
         achatsR: "achats · à recevoir", ventesL: "ventes · à livrer", tout: "tout",
@@ -1388,16 +1398,16 @@ const VT = {
         stDirect: "directe", stProp: "proposé", stConf: "confirmé", horsStock: "hors stock",
         aide: "Aide", glossT: "Glossaire", ancien: "Atlas à mettre à jour", suite: "Voir la suite",
         tip: { alertes: "Constats d'Atlas, jamais une décision. Mois short, stock négatif, camions sans client et ventes sans camion : dans la plage choisie. Toucher une pastille : l'outil concerné, ou les lignes en cause.",
-               carte: "Position prix à la fin de chaque mois : stock + achats et swaps à prix fixe − ventes à prix fixe. Vert : long, on perd si le prix baisse ; rouge : short, on perd si le prix monte ; plus intense : plus gros, à l'échelle de chaque produit. Barre sous le chiffre : ce qui bouge avec le prix, et la part verrouillée 🔒 par des swaps déjà fixés. Cadre : la plage choisie. Toucher un mois : la plage devient ce mois ; une case : ses lignes.",
+               carte: "Exposé à la fin de chaque mois : ce qui est acheté et pas encore vendu (vert, LONG) ou vendu et pas encore acheté (rouge, SHORT), d'après les allocations achat → vente (proposées ou confirmées). Sous le produit choisi : le stock physique déjà vendu, en attente de livraison (pas une exposition), et l'indexé vendu fixe (risque de prix à part : bleu couvert par swap, orange non couvert). Cadre : la plage choisie. Toucher un mois : la plage devient ce mois ; une case : ses lignes.",
                stock: "Stock en entrepôt mois par mois : début, entrées (vert), sorties (rouge), fin. Même moteur que le calendrier. Bande grise : la plage ; les chiffres dessous vont du début du premier mois à la fin du dernier. Toucher un mois : ses mouvements.",
                parts: "Volume livré chaque mois (achats et ventes) : à prix fixe (ardoise), à prix indexé, fixé plus tard sur la moyenne du mois de cotation (violet), ou sans prix saisi (gris hachuré). Pourcentages : sur la plage.",
                couv: "Une barre par contrat d'achat indexé : bleu, couvert par des swaps encore à fixer ; orange, la part non couverte ; contour bleu, des swaps en trop. 🔒 : swap déjà fixé, son résultat est acquis, il ne couvre plus aucun prix à venir. Contrats montrés : ceux qui livrent ou fixent dans la plage.",
-               sens: "Gain (▲) ou perte (▼) en dollars si le prix bouge, sur ce qui bouge avec le prix à la fin du dernier mois de la plage. La part verrouillée 🔒 par des swaps déjà fixés ne bouge plus : la barre est celle de la case de la carte.",
+               sens: "Gain (▲) ou perte (▼) en dollars si le prix bouge, sur l'exposé à la fin du dernier mois de la plage (acheté pas vendu, vendu pas acheté). L'indexé vendu fixe est à part, sous le produit dans la carte.",
                cptys: "Volumes encore à recevoir (achats, à gauche) ou à livrer (ventes, à droite) avec chaque contrepartie, sur les mois de la plage (livraisons en retard comprises quand la plage commence ce mois-ci).",
                marche: "Repère marché : dernier fixing saisi dans Atlas (moyenne de l'indice sur son mois de cotation), trait en pointillés. Achat et vente moyens : livraisons à venir à prix fixe, pondérées par les lb ; chaque crochet va du prix au repère, son écart dessus : ▲ gagnant, ▼ perdant. Swaps : prix fixe moyen des swaps non réglés.",
                swaps: "Mois de cotation (QP) de chaque swap non réglé : son prix se fixe sur la moyenne de l'indice ce mois-là. Bleu plein : à fixer ; bleu hachuré 🔒 : déjà fixé, verrouillé.",
                cam: "Chaque camion d'achat du mois, placé par le moteur du stock, avec SA flèche vers SA boîte, sur sa ligne (jamais deux camions sur une même flèche) : directement chez le client (sarcelle), à l'entrepôt puis au client alloué (trait plein si confirmé, pointillés si proposé), ou « sans client » (cadre gris) s'il n'est alloué à aucune vente : il entrera au stock. Sous les camions, l'entrepôt : stock fin du mois et sorties par lot. En bas, en rouge : les ventes qu'aucun camion ni lot n'est alloué à servir. Sous chaque camion, son prix : fixe (ardoise), indexé avec son mois de cotation QP (violet), « swap » couvert par les swaps à venir de son contrat (bleu, avec la part couverte si elle n'est pas totale), ou sans prix (gris). Toucher un camion, une flèche ou une boîte : ses lignes, sa destination et d'où vient son prix. Changer une destination : sur le PC, en glissant la flèche." },
-        gl: [["LONG", "on détient : on perd si le prix baisse"], ["SHORT", "on doit livrer : on perd si le prix monte"], ["Prix fixe", "prix d'un trade connu au contrat"],
+        gl: [["LONG", "acheté, pas encore vendu : on perd si le prix baisse"], ["SHORT", "vendu, pas encore acheté : on perd si le prix monte"], ["Stock déjà vendu", "en entrepôt, alloué à une vente : pas une exposition"], ["Indexé vendu fixe", "achat indexé alloué à une vente à prix fixe : risque de prix, à part"], ["Prix fixe", "prix d'un trade connu au contrat"],
              ["Indexé", "suit un indice, fixé plus tard"], ["Swap", "fixe le prix d'un achat indexé"], ["Verrouillé 🔒", "swap déjà fixé : ne bouge plus"],
              ["QP", "mois dont la moyenne fixe le prix"], ["Sans prix", "prix pas encore saisi dans Atlas"], ["▲ / ▼", "gain / perte"],
              ["Plage", "mois choisis : de … à …"], ["Direct", "le fournisseur livre le client, hors stock"], ["*entrepot", "notre entrepôt"],
@@ -1405,7 +1415,7 @@ const VT = {
   en: { q1: "Where and when am I exposed?", q2: "How does my stock move?", q3: "How much has a fixed price?", q4: "Am I hedged?",
         q5: "How much if the price moves?", q6: "With whom?", q7: "Am I winning against the market?", q8: "What needs attention?", q9: "When do my swaps fix?",
         q10: "Where do my trucks go?",
-        tPos: "Position end {0}", tPosTout: "Position end {0} + undated", long: "LONG", court: "SHORT", plat: "FLAT", bouge: "moves", gLong: "long", gShort: "short", gVerrou: "locked", gNv: "no price",
+        tPos: "Position end {0}", tPosTout: "Position end {0} + undated", tExp: "Exposed end {0}", tExpTout: "Exposed end {0} + undated", regle: "exposed = bought not sold (▲) or sold not bought (▼)", vendu: "Already sold", venduS: "stock waiting", vendT: "Physical stock (already sold, awaiting delivery)", pasExpo: "not an exposure: each lb has its sale", idxR: "Index-linked", idxS: "sold fixed", idxT: "Index sold fixed", gVendu: "stock already sold", gCouv: "hedged by swap", gNCv: "not hedged", achNV: "Bought, not sold", venNA: "Sold, not bought", stLibre: "Free stock", toutApp: "All matched", aConf: "to confirm (proposed): {0}", couvNC: "hedged {0} · not hedged {1}", stVendM: "already sold {0}", long: "LONG", court: "SHORT", plat: "FLAT", bouge: "moves", gLong: "long", gShort: "short", gVerrou: "locked", gNv: "no price",
         debut: "start", entrees: "in", sorties: "out", fin: "end", fixe: "fixed price", indexe: "index-linked", sansPrix: "no price",
         aFixer: "to fix", verrous: "locked", swapsL: "swaps to fix", nonCouv: "not hedged", tropL: "excess swaps", fixeL: "fixed, no longer hedges", parContrat: "by contract",
         achatsR: "purchases · to receive", ventesL: "sales · to deliver", tout: "all",
@@ -1425,16 +1435,16 @@ const VT = {
         stDirect: "direct", stProp: "proposed", stConf: "confirmed", horsStock: "outside stock",
         aide: "Help", glossT: "Glossary", ancien: "Atlas to be updated", suite: "See more",
         tip: { alertes: "Atlas findings, never a decision. Short month, negative stock, trucks without customer and sales without truck: within the chosen range. Tap a pill: the tool concerned, or the lines at stake.",
-               carte: "Price position at the end of each month: stock + fixed-price purchases and swaps − fixed-price sales. Green: long, we lose if the price falls; red: short, we lose if the price rises; stronger: bigger, on each product's own scale. Bar under the number: what moves with the price, and the part locked 🔒 by swaps already fixed. Frame: the chosen range. Tap a month: the range becomes that month; a cell: its lines.",
+               carte: "Exposure at the end of each month: what is bought and not yet sold (green, LONG) or sold and not yet bought (red, SHORT), from the purchase → sale allocations (proposed or confirmed). Under the chosen product: the physical stock already sold, awaiting delivery (not an exposure), and index-linked buys sold at a fixed price (price risk, apart: blue hedged by swap, orange not hedged). Frame: the chosen range. Tap a month: the range becomes that month; a cell: its lines.",
                stock: "Stock in the warehouses month by month: start, in (green), out (red), end. Same engine as the calendar. Grey band: the range; the figures below run from the start of its first month to the end of its last. Tap a month: its movements.",
                parts: "Volume delivered each month (purchases and sales): at a fixed price (slate), index-linked, fixed later on the average of the quotation month (violet), or without a price entered (grey hatched). Percentages: over the range.",
                couv: "One bar per index-linked purchase contract: blue, hedged by swaps still to fix; orange, the part not hedged; blue outline, excess swaps. 🔒: swap already fixed, its result is known, it no longer hedges any future price. Contracts shown: those delivering or fixing in the range.",
-               sens: "Gain (▲) or loss (▼) in dollars if the price moves, on what moves with the price at the end of the range's last month. The part locked 🔒 by swaps already fixed no longer moves: the bar is the one of the map cell.",
+               sens: "Gain (▲) or loss (▼) in dollars if the price moves, on the exposure at the end of the range's last month (bought not sold, sold not bought). Index-linked buys sold fixed are apart, under the product in the map.",
                cptys: "Volumes still to receive (purchases, left) or to deliver (sales, right) with each counterparty, over the months of the range (late deliveries included when the range starts this month).",
                marche: "Market reference: last fixing entered in Atlas (index average over its quotation month), dotted line. Average buy and sale: upcoming fixed-price deliveries, weighted by lb; each bracket runs from the price to the reference, its gap on it: ▲ winning, ▼ losing. Swaps: average fixed price of unsettled swaps.",
                swaps: "Quotation month (QP) of each unsettled swap: its price fixes on the index average of that month. Solid blue: to fix; hatched blue 🔒: already fixed, locked.",
                cam: "Each purchase truck of the month, placed by the stock engine, with ITS arrow to ITS box, on its own line (never two trucks on one arrow): straight to the customer (teal), to the warehouse then to the allocated customer (solid if confirmed, dotted if proposed), or “no customer” (grey frame) when no sale is allocated: it will go into stock. Below the trucks, the warehouse: month-end stock and lot exits. At the bottom, in red: the sales no truck or lot is allocated to serve. Under each truck, its price: fixed (slate), indexed with its quotation month QP (purple), “swap” hedged by its contract's future swaps (blue, with the hedged share when not full), or no price (grey). Tap a truck, an arrow or a box: its lines, its destination and where its price comes from. To change a destination: on the PC, drag the arrow." },
-        gl: [["LONG", "we hold it: we lose if the price falls"], ["SHORT", "we must deliver: we lose if the price rises"], ["Fixed price", "trade price known in the contract"],
+        gl: [["LONG", "bought, not yet sold: we lose if the price falls"], ["SHORT", "sold, not yet bought: we lose if the price rises"], ["Stock already sold", "in the warehouse, allocated to a sale: not an exposure"], ["Index sold fixed", "index-linked buy allocated to a fixed-price sale: price risk, apart"], ["Fixed price", "trade price known in the contract"],
              ["Index-linked", "follows an index, fixed later"], ["Swap", "fixes the price of an index-linked purchase"], ["Locked 🔒", "swap already fixed: no longer moves"],
              ["QP", "month whose average fixes the price"], ["No price", "price not entered in Atlas yet"], ["▲ / ▼", "gain / loss"],
              ["Range", "chosen months: from … to …"], ["Direct", "the supplier delivers the customer, outside stock"], ["*entrepot", "our warehouse"],
@@ -1562,7 +1572,7 @@ function vCard(k, q, src, body, em) {
 const vUnite = () => '<div class="seg small xu">' + ["lb", "MT"].map(u => '<button data-u="' + u + '" class="' + (U() === u ? "on" : "") + '">' + u + '</button>').join("") + '</div>';
 function renderExpo() {
   // mode démo (?demo) sans expo2 : fiche d'exemple fictive construite ici, comme la vraie page (jamais l'ancien tableau, aucun demo_*.json)
-  const e = data.expo2 && Array.isArray(data.expo2.produits) && data.expo2.produits.length ? data.expo2 : DEMO && data.profil === "head" ? (vDemoFiche || (vDemoFiche = vDemo())) : null;
+  const e = data.expo2 && Array.isArray(data.expo2.produits) && data.expo2.produits.length ? data.expo2 : DEMO && data.profil === "head" ? (vDemoFiche || (vDemoFiche = vDemo())) : null; vE = e;
   if (!e) { renderExpoAncien(); return; }
   const p = expoChoix(e), pl = vPlage(p);
   let h = VDEFS + '<div class="vtop">' + vScroll("chipsw", '<div class="vsc-in chips xprods">' + e.produits.map(x => '<button data-p="' + esc(x.produit) + '" class="' + (x.produit === expoProd ? "on" : "") + '">' + esc(prod(x.produit)) + '</button>').join("") + '</div>') +
@@ -1617,13 +1627,17 @@ function vTuile(p, e, pl) {
   const c = vCarteData(e), r = c.produits.find(x => x.produit === p.produit), tot = p.total || {};
   const sd = pl.tout && tot.sansDate && +tot.sansDate.n > 0 && tot.positionPrix != null;
   let mk = pl.auR && c.mois.indexOf(pl.auR) >= 0 ? pl.auR : pl.au, v = null, b = null, f = 0, cv = false;
-  if (sd) { v = +tot.positionPrix; f = vZ(tot.fixes); b = tot.bouge != null ? +tot.bouge : v; cv = tot.conversion === true; mk = pl.last; }
+  const ou = vOuv(p);
+  if (sd && ou && ou.r.sd != null) { v = +ou.r.sd; f = 0; b = v; mk = pl.last; }
+  else if (sd) { v = +tot.positionPrix; f = vZ(tot.fixes); b = tot.bouge != null ? +tot.bouge : v; cv = tot.conversion === true; mk = pl.last; }
   else if (r && mk) { const i = c.mois.indexOf(mk); if (i >= 0 && r.v[i] != null) { v = +r.v[i]; f = r.fixes && r.fixes[i] != null ? +r.fixes[i] : 0; b = r.bouge && r.bouge[i] != null ? +r.bouge[i] : v; cv = !!(r.conv && r.conv[i]); } }
   const sn = v == null ? null : cv ? "equilibre" : vSens(v), ar = sn === "long" ? "▲ " : sn === "court" ? "▼ " : "", cls = sn === "long" ? "v-long" : sn === "court" ? "v-short" : "v-nv";
-  const lab = vt(sd ? "tPosTout" : "tPos", mk ? vMC(mk) : "—");
-  const body = v != null ? '<span class="vpl"><b class="' + cls + '">' + ar + esc(cv ? "≈ 0 " + U() : vq(Math.abs(v))) + '</b>' + vTag(sn) + '</span>' + (cv ? "" : vBarre(b, f)) : '<span class="vpl"><b class="v-nv">—</b></span>';
+  const lab = vt((ou ? "tExp" : "tPos") + (sd ? "Tout" : ""), mk ? vMC(mk) : "—");   // round 33 : « Exposé fin … » pour une fiche à position ouverte
+  const body = v != null ? '<span class="vpl"><b class="' + cls + '">' + ar + esc(cv ? "≈ 0 " + U() : vq(Math.abs(v))) + '</b>' + vTag(sn) + '</span>' + (cv || ou ? "" : vBarre(b, f)) : '<span class="vpl"><b class="v-nv">—</b></span>';
   const nc = vSansClient(p, pl), sj = p.stockJour;
-  const mini = '<div class="vtmini"><button data-t="tuile" data-k="stocknow"' + (sj != null ? ' data-v="' + sj + '"' : "") + '><small>' + esc(vt("stockJour")) + '</small><b>' + esc(sj == null ? vt("inconnu") : vq(sj)) + '</b></button>' +
+  const iv = ou && mk ? c.mois.indexOf(mk) : -1, sv = iv >= 0 && ou.r.vendu ? vZ(ou.r.vendu[iv]) : null;
+  const svB = sv != null ? '<button data-t="cartev" data-p="' + esc(p.produit) + '" data-m="' + mk + '" data-v="' + sv + '"><small>' + esc(vt("gVendu")) + '</small><b>' + esc(vq(sv)) + '</b></button>' : "";
+  const mini = '<div class="vtmini">' + svB + '<button data-t="tuile" data-k="stocknow"' + (sj != null ? ' data-v="' + sj + '"' : "") + '><small>' + esc(vt("stockJour")) + '</small><b>' + esc(sj == null ? vt("inconnu") : vq(sj)) + '</b></button>' +
     (nc ? '<button data-t="tuile" data-k="nocli" data-n="' + nc.n + '" data-v="' + nc.q + '"><small>' + esc(vt("sansCli")) + '</small><b>' + VK_ICO.truck + esc(nc.n ? nc.n + " · " + vq(nc.q) : "0") + '</b></button>' : "") + '</div>';
   return '<div class="vtile" data-outil="tuiles" data-serie="carte (v, bouge, fixes) au dernier mois de la plage · stockJour · vis.camions (vide)" data-t="tuile" data-k="pos" data-m="' + esc(sd ? "sd" : mk || "") + '"' +
     (v != null ? ' data-v="' + v + '" data-b="' + b + '" data-f="' + f + '"' : "") + ' role="button" tabindex="0"><small>' + esc(lab) + '</small>' + body + mini + '</div>';
@@ -1635,7 +1649,8 @@ const VAL = { court: ["▼", "short", "alCourt", "carte"], stockNeg: ["↓", "sh
               retard: ["⏱", "nv", "alRet", null], sansDate: ["?", "nv", "alSD", null], inventaire: ["∅", "nv", "alInv", "stock"] };
 function vAlertesListe(p, pl) {
   const V = p.vis || {}, res = [], ms = (p.mois || []).filter(m => pl.mk.indexOf(m.mois) >= 0);
-  const sh = p.exposition === false ? [] : ms.filter(m => m.prix && m.prix.position != null && +m.prix.position <= -0.5 && m.prix.conversion !== true);
+  const oo = vOuv(p), sh = oo ? pl.mk.filter(k => { const i = oo.c.mois.indexOf(k); return i >= 0 && oo.r.v[i] != null && +oo.r.v[i] <= -0.5 && !(oo.r.conv && oo.r.conv[i]); }).map(k => ({ mois: k }))
+    : p.exposition === false ? [] : ms.filter(m => m.prix && m.prix.position != null && +m.prix.position <= -0.5 && m.prix.conversion !== true);
   if (sh.length) res.push({ code: "court", n: sh.length, mois: sh[0].mois });
   const ng = ms.filter(m => m.stock && m.stock.clo != null && +m.stock.clo <= -0.5); if (ng.length) res.push({ code: "stockNeg", n: ng.length, mois: ng[0].mois });
   const sc = vSansClient(p, pl); if (sc && sc.n) res.push({ code: "sansClient", n: sc.n, q: sc.q });
@@ -1659,6 +1674,10 @@ function vAlertes(p, pl) {
 }
 // ---------- E · carte de chaleur : produits en lignes × mois en colonnes ; case = position prix fin de mois (couleur = sens, palier = taille dans
 // le produit, barre = ce qui bouge / verrouillé 🔒) ; UN cadre autour des mois de la plage ; colonne « sans date » avec « Tout » ----------
+// round 33 : fiche courante (vE) ; vOuv(p) : la rangée de la carte du produit quand la carte porte la POSITION OUVERTE (carte.ouvert, Atlas du round 33 :
+// exposé = acheté pas vendu / vendu pas acheté) ; null pour une fiche plus ancienne (règle d'avant, inchangée)
+let vE = null;
+function vOuv(p) { const c = vE && vE.carte; if (!c || c.ouvert !== true || !Array.isArray(c.produits)) return null; const r = c.produits.find(x => x.produit === (p && p.produit)); return r ? { c, r } : null; }
 function vCarteData(e) {
   if (e.carte && Array.isArray(e.carte.mois) && Array.isArray(e.carte.produits)) return e.carte;
   // fiche sans « carte » (Atlas du round 25) : positions de la fiche par produit, mois de la fiche de chaque produit seulement
@@ -1681,23 +1700,43 @@ function vCarte(e, pl) {
     let cls = "vc", txt, bar = "";
     if (v == null) { cls += " nul"; txt = "—"; }
     else if (cv || s === "equilibre" || Math.abs(v) < 0.5) { cls += " eq"; txt = cv ? "≈ 0" : "0"; }
-    else { cls += " vk " + (s === "court" ? "s" : "l") + " k" + vNiv(Math.min(1, Math.abs(v) / mx[r.produit])); txt = vq(v, { nu: true }); bar = vBarre(b, f, false, false); }
+    else { cls += " vk " + (s === "court" ? "s" : "l") + " k" + vNiv(Math.min(1, Math.abs(v) / mx[r.produit])); txt = vq(v, { nu: true }); bar = c.ouvert === true ? "" : vBarre(b, f, false, false); }
     return '<button class="' + cls + '" data-t="carte" data-p="' + esc(r.produit) + '" data-m="' + mk + '" style="grid-area:' + (j + 2) + '/' + col + '"' +
       (v != null ? ' data-v="' + v + '" data-s="' + (cv ? "conv" : s) + '" data-b="' + b + '" data-f="' + f + '"' : "") + '><b>' + esc(txt) + '</b>' + bar + '</button>';
   };
+  // round 33 : carte.ouvert : la case = l'exposé (acheté pas vendu / vendu pas acheté) ; sous le produit choisi : stock physique déjà vendu (en attente de
+  // livraison, pas une exposition) et indexé vendu fixe (bleu couvert par swap, orange non couvert), jamais en couleur de sens
+  const oc = c.ouvert === true, hasIdx = r => (r.idx || []).some(x => vZ(x) >= 0.5); let ri = 2, anyIdx = false;
+  const sub = (r, r0) => {
+    let x = '<span class="vh vhs" style="grid-area:' + r0 + '/1"><span>' + esc(vt("vendu")) + '<small>' + esc(vt("venduS")) + '</small></span></span>';
+    c.mois.forEach((mk, i) => { const q = r.vendu ? vZ(r.vendu[i]) : 0; x += '<button class="vc vsub' + (q >= 0.5 ? " vend" : "") + '" data-t="cartev" data-p="' + esc(r.produit) + '" data-m="' + mk + '" data-v="' + q + '" style="grid-area:' + r0 + '/' + (i + 2) + '"><b>' + esc(q >= 0.5 ? vq(q, { nu: true }) : "0") + '</b></button>'; });
+    if (sdC) x += '<span class="vc vsub" style="grid-area:' + r0 + '/' + (n + 2) + '"></span>';
+    if (!hasIdx(r)) return x;
+    anyIdx = true; const r1 = r0 + 1;
+    x += '<span class="vh vhs" style="grid-area:' + r1 + '/1"><span>' + esc(vt("idxR")) + '<small>' + esc(vt("idxS")) + '</small></span></span>';
+    c.mois.forEach((mk, i) => { const q = vZ(r.idx[i]), cv = Math.min(q, vZ(r.idxCouv && r.idxCouv[i])), pc = q > 0 ? Math.round(cv / q * 100) : 0;
+      x += '<button class="vc vsub" data-t="cartei" data-p="' + esc(r.produit) + '" data-m="' + mk + '" data-v="' + q + '" data-c="' + cv + '" style="grid-area:' + r1 + '/' + (i + 2) + '"><b>' + esc(q >= 0.5 ? vq(q, { nu: true }) : "0") + '</b>' +
+        (q >= 0.5 ? '<span class="vib"><i class="c" style="width:' + pc + '%"></i><i class="n" style="width:' + (100 - pc) + '%"></i></span>' : "") + '</button>'; });
+    if (sdC) x += '<span class="vc vsub" style="grid-area:' + r1 + '/' + (n + 2) + '"></span>';
+    return x;
+  };
   c.produits.forEach((r, j) => {
-    h += '<button class="vh' + (r.produit === expoProd ? " on" : "") + '" data-p="' + esc(r.produit) + '" style="grid-area:' + (j + 2) + '/1"><span>' + esc(prod(r.produit)) + '</span></button>';
-    c.mois.forEach((mk, i) => { const v = r.v[i]; h += cell(r, j, i + 2, mk, v, r.sens ? r.sens[i] : vSens(v), !!(r.conv && r.conv[i]), r.fixes && r.fixes[i] != null ? +r.fixes[i] : 0, r.bouge && r.bouge[i] != null ? +r.bouge[i] : v); });
-    if (sdC) { const t = tot[r.produit], v = t.positionPrix == null ? null : +t.positionPrix; h += cell(r, j, n + 2, "sd", v, vSens(v), t.conversion === true, vZ(t.fixes), t.bouge != null ? +t.bouge : v); }
+    h += '<button class="vh' + (r.produit === expoProd ? " on" : "") + '" data-p="' + esc(r.produit) + '" style="grid-area:' + ri + '/1"><span>' + esc(prod(r.produit)) + '</span></button>';
+    c.mois.forEach((mk, i) => { const v = r.v[i]; h += cell(r, ri - 2, i + 2, mk, v, r.sens ? r.sens[i] : vSens(v), !!(r.conv && r.conv[i]), r.fixes && r.fixes[i] != null ? +r.fixes[i] : 0, r.bouge && r.bouge[i] != null ? +r.bouge[i] : v); });
+    if (sdC) { const t = tot[r.produit]; if (oc) { const v = r.sd != null ? +r.sd : r.v.length ? r.v[r.v.length - 1] : null; h += cell(r, ri - 2, n + 2, "sd", v, vSens(v), false, 0, v); }
+      else { const v = t.positionPrix == null ? null : +t.positionPrix; h += cell(r, ri - 2, n + 2, "sd", v, vSens(v), t.conversion === true, vZ(t.fixes), t.bouge != null ? +t.bouge : v); } }
+    ri++;
+    if (oc && r.produit === expoProd) { h += sub(r, ri); ri += hasIdx(r) ? 2 : 1; }
   });
   // cadre de la plage : par-dessus les colonnes des mois de la plage (et « sans date » avec « Tout »)
   const k0 = c.mois.findIndex(inR); let k1 = -1; c.mois.forEach((mk, i) => { if (inR(mk)) k1 = i; }); if (sdC) k1 = n;
-  if (k0 >= 0) h += '<i class="vfr" style="grid-row:1/' + (c.produits.length + 2) + ';grid-column:' + (k0 + 2) + '/' + (k1 + 3) + '"></i>';
+  if (k0 >= 0) h += '<i class="vfr" style="grid-row:1/' + ri + ';grid-column:' + (k0 + 2) + '/' + (k1 + 3) + '"></i>';
   h += '</div>';
   const ramp = s => '<span class="vramp">' + [1, 2, 3, 4, 5].map(k => '<i class="vk ' + s + ' k' + k + '"></i>').join("") + '</span>';
-  const leg = '<div class="vleg"><span>' + ramp("l") + '▲ ' + esc(vt("gLong")) + '</span><span>' + ramp("s") + '▼ ' + esc(vt("gShort")) + '</span><span><i class="vsw lk"></i>🔒 ' + esc(vt("gVerrou")) + '</span>' +
+  const leg = '<div class="vleg"><span>' + ramp("l") + '▲ ' + esc(vt("gLong")) + '</span><span>' + ramp("s") + '▼ ' + esc(vt("gShort")) + '</span>' +
+    (oc ? '<span><i class="vsw vend"></i>' + esc(vt("gVendu")) + '</span>' + (anyIdx ? '<span><i class="vsw cv"></i>' + esc(vt("gCouv")) + '</span><span><i class="vsw ncv"></i>' + esc(vt("gNCv")) + '</span>' : "") : '<span><i class="vsw lk"></i>🔒 ' + esc(vt("gVerrou")) + '</span>') +
     (nul ? '<span><i class="vsw nv"></i>' + esc(vt("gNv")) + '</span>' : "") + '</div>';
-  return vCard("carte", "q1", "carte (v, bouge, fixes : position prix fin de mois)", vScroll("vmapw nl", '<div class="vsc-in">' + h + '</div>') + leg, U());
+  return vCard("carte", "q1", oc ? "carte (v : exposé = acheté pas vendu / vendu pas acheté ; vendu ; idx, idxCouv)" : "carte (v, bouge, fixes : position prix fin de mois)", (oc ? '<div class="vregle">' + esc(vt("regle")) + '</div>' : "") + vScroll("vmapw nl", '<div class="vsc-in">' + h + '</div>') + leg, U());
 }
 // géométrie commune des graphiques par mois (escalier du stock, parts, swaps) : mêmes colonnes, de L à R
 const VG = { W: 340, L: 50, R: 336 };
@@ -1808,6 +1847,12 @@ function vCouvAncien(e) {
 // correctifs mobqa (08/10) : avec « Tout » et des lignes sans date, la position du curseur est celle de la tuile (total de la fiche : fin du dernier mois +
 // sans date), jamais la fin du dernier mois seule (deux positions différentes sur le même écran)
 function vBouge(p, pl) {
+  const o = vOuv(p);
+  if (o) {
+    if (!pl.vide && pl.tout && o.r.sd != null) { const v = +o.r.sd, q = { position: v, bouge: v, fixes: 0, sens: vSens(v) }; return { m: { mois: "sd", prix: q }, q, sd: true, last: pl.last, b: v }; }
+    const i = pl.vide ? -1 : o.c.mois.indexOf(pl.au); if (i < 0 || o.r.v[i] == null) return { m: null, q: {}, b: null };
+    const v = +o.r.v[i], cv = !!(o.r.conv && o.r.conv[i]), q = { position: v, bouge: cv ? 0 : v, fixes: 0, sens: cv ? "equilibre" : vSens(v), conversion: cv }; return { m: { mois: pl.au, prix: q }, q, b: cv ? 0 : v };   // écart de pesée : « ≈ 0 », comme la carte
+  }
   const tot = p.total || {};
   if (!pl.vide && pl.tout && tot.sansDate && +tot.sansDate.n > 0 && tot.positionPrix != null) {
     const q = { position: +tot.positionPrix, bouge: tot.bouge, fixes: tot.fixes, conversion: tot.conversion, sens: tot.sens };
@@ -1817,7 +1862,7 @@ function vBouge(p, pl) {
 function vSensib(p, pl) {
   const z = vBouge(p, pl); if (z.b == null) return vCard("sens", "q5", "mois[].prix (position, bouge, fixes) × variation", '<div class="vempty">' + esc(vt(pl.vide ? "rienPlage" : "rien")) + '</div>');
   const r = z.b * expoDelta, cv = z.q.conversion === true, s = cv ? "equilibre" : z.q.sens || vSens(z.q.position);
-  return vCard("sens", "q5", "mois[].prix (position, bouge, fixes) × variation", '<div class="vsnet">' + vTag(s) + '<b>' + esc(cv ? "≈ 0 " + U() : vq(z.q.position)) + '</b></div>' + (cv ? "" : vBarre(z.b, z.q.fixes, true)) +
+  return vCard("sens", "q5", vOuv(p) ? "carte.v (exposé : acheté pas vendu / vendu pas acheté) × variation" : "mois[].prix (position, bouge, fixes) × variation", '<div class="vsnet">' + vTag(s) + '<b>' + esc(cv ? "≈ 0 " + U() : vq(z.q.position)) + '</b></div>' + (cv || vOuv(p) ? "" : vBarre(z.b, z.q.fixes, true)) +
     '<button class="vsbig' + (Math.abs(r) < 0.5 ? " z" : "") + '" id="vsv" data-t="sens" data-m="' + z.m.mois + '" data-v="' + r + '" data-b="' + z.b + '">' + esc(vGain(r)) + '</button>' +
     '<input type="range" class="vrange" id="vsr" min="-5" max="5" step="0.25" value="' + expoDelta + '" aria-label="$/lb">' +
     '<div class="vsrow"><span>' + esc(vpd(-5, true)) + '</span><b id="vsd">' + esc(vpd(expoDelta, true)) + '</b><span>' + esc(vpd(5, true)) + '</span></div>', esc(z.sd ? vt("finM", vMC(z.last)) + " + " + vt("sansDateM") : vt("finM", vMC(z.m.mois))));
@@ -2059,6 +2104,33 @@ function vTabPos(p, mk, v, s, b, f) {
   if (rows.length) rows.push(vLab(vt("fin"), esc(vq(v, { nu: true })), 5, 3, true));
   vSheet(prod(p.produit) + " · " + vML(mk), vPos(v, s) + (s === "equilibre" ? "" : '<div class="vbarw">' + vBarre(b, f) + '</div>'), [{ cols: VC.L(), rows }]);
 }
+// round 33 : lignes d'une case de l'exposé : stock libre + reste NON alloué de chaque achat (+) et vente (−) jusqu'à la fin du mois ; total = la case
+function vTabOuv(p, mk) {
+  const o = vOuv(p); if (!o) return; const r = o.r, sd = mk === "sd", i = sd ? -1 : o.c.mois.indexOf(mk);
+  const v = sd ? (r.sd != null ? +r.sd : r.v.length ? +r.v[r.v.length - 1] : null) : i >= 0 ? +r.v[i] : null;
+  const ls = (r.ouvertes || []).filter(l => sd || (l.mois && l.mois <= mk)), rows = [];
+  if (Math.abs(vZ(r.stockLibre)) >= 0.5) rows.push(vLab(vt("stLibre"), esc(vq(vZ(r.stockLibre), { nu: true })), 5, 3));
+  ls.forEach(l => { const x = vRowL({ date: l.date, mois: l.mois, cpty: l.cpty, contrat: (l.sens === "achat" ? vt("achNV") : vt("venNA")) + " · " + l.ref, sens: l.sens, q: l.q, type: "fixe", prix: null }); x[4] = ""; rows.push(x); });
+  rows.push(vLab(rows.length ? vt("fin") : vt("toutApp"), esc(vq(v == null ? 0 : v, { nu: true })), 5, 3, true));
+  const ac = !sd && i >= 0 && r.aConf ? vZ(r.aConf[i]) : 0;
+  vSheet(prod(p.produit) + " · " + (sd ? vt("sansDateM") : vML(mk)), vPos(v, vSens(v)), [{ cols: VC.L(), rows }], [vt("regle"), ac >= 0.5 ? vt("aConf", vq(ac)) : null]);
+}
+// stock physique déjà vendu fin du mois : appariements (hors livraison directe) dont l'achat est arrivé et la vente pas encore livrée
+function vTabVend(p, mk) {
+  const o = vOuv(p); if (!o) return; const r = o.r, i = o.c.mois.indexOf(mk); if (i < 0) return;
+  const ps = (r.vendus || []).filter(z => (z.de === "" || (z.de && z.de <= mk)) && !(z.a && z.a <= mk));
+  const rows = ps.map(z => [esc(z.achat || "?"), esc((z.vente || "") + (z.propose ? " (" + vt("stProp") + ")" : "")), esc(z.cpty || ""), esc(vq(vZ(z.q), { nu: true }))]);
+  const cols = [[vt("achNV").split(",")[0], "l w0"], [vt("venNA").split(",")[0], "l w1"], [vt("thCpty"), "l w2"], [U(), ""]];
+  rows.push(vLab(vt("gVendu"), esc(vq(vZ(r.vendu[i]), { nu: true })), 4, 3, true));
+  vSheet(prod(p.produit) + " · " + vML(mk) + " · " + vt("gVendu"), esc(vq(vZ(r.vendu[i]))), [{ cols, rows }], [vt("vendT"), vt("pasExpo")]);
+}
+// indexé vendu fixe des achats du mois : chaque appariement, sa part couverte par swap
+function vTabIdx(p, mk) {
+  const o = vOuv(p); if (!o) return; const r = o.r, i = o.c.mois.indexOf(mk); if (i < 0) return;
+  const ps = (r.idxl || []).filter(z => z.mois === mk), q = vZ(r.idx[i]), cv = vZ(r.idxCouv && r.idxCouv[i]);
+  const rows = ps.map(z => [esc(z.achat || "?"), esc(z.vente || ""), esc((z.swaps || []).join(", ") || "—"), esc(vq(vZ(z.q), { nu: true })), esc(vq(vZ(z.couvert), { nu: true }))]);
+  vSheet(prod(p.produit) + " · " + vML(mk) + " · " + vt("idxT"), esc(vt("couvNC", vq(cv), vq(Math.max(0, q - cv)))), [{ cols: [[vt("achNV").split(",")[0], "l w0"], [vt("venNA").split(",")[0], "l w1"], ["Swaps", "l w2"], [U(), ""], [vt("gCouv"), ""]], rows }]);
+}
 const vStatut = s => s === "Livraison directe" ? vt("stDirect") : s === "Proposé" ? vt("stProp") : s === "Confirmé" ? vt("stConf") : (s || "");
 // feuille d'un camion (k = t) ou d'une de ses flèches (k = b, branche i) : achat, allocations (statut), ventes servies
 function vSheetCamion(P, t, ent, bi) {
@@ -2142,6 +2214,7 @@ function vOuvre(d, e, p) {
     if (d.m && d.m !== "sd" && !(pl.mk.indexOf(d.m) >= 0 && !pl.vide)) { vSetPlage(d.m, d.m); chg = true; }
     if (chg) render();
     const v = d.v === undefined || d.v === "" ? null : +d.v;
+    if (vOuv(P)) { vTabOuv(P, d.m); return; }   // round 33 : l'exposé (acheté pas vendu / vendu pas acheté)
     if (d.m === "sd") { tabSD(v, d.s === "conv" ? "equilibre" : d.s); return; }
     vTabPos(P, d.m, v, d.s === "conv" ? "equilibre" : d.s, d.b === undefined ? v : +d.b, d.f === undefined ? 0 : +d.f); return; }
   if (d.t === "stock") { tabStock(d.m); return; }
@@ -2149,6 +2222,9 @@ function vOuvre(d, e, p) {
     tabL(prod(P.produit) + " · " + (ms.length === 1 ? vML(ms[0].mois) : vMC(ms[0].mois) + " → " + vMC(ms[ms.length - 1].mois)), d.k ? esc(vt(d.k === "manque" ? "sansPrix" : d.k)) : "", ls); return; }
   if (d.t === "couv") { tabCouv(); return; }
   if (d.t === "couvc") { tabCouvC(d.c || ""); return; }
+  if (d.t === "cartev") { vTabVend(P, d.m); return; }
+  if (d.t === "cartei") { vTabIdx(P, d.m); return; }
+  if (d.t === "sens" && vOuv(P)) { vTabOuv(P, d.m); return; }
   if (d.t === "sens") { if (d.m === "sd") { const tt = P.total || {}; tabSD(tt.positionPrix == null ? null : +tt.positionPrix, tt.conversion === true ? "equilibre" : tt.sens); return; }
     const m = mois(d.m); if (m) vTabPos(P, d.m, m.prix.position, m.prix.conversion === true ? "equilibre" : m.prix.sens, m.prix.bouge, m.prix.fixes); return; }
   if (d.t === "cpty") { const c = vCptysPlage(P, pl).cs.find(x => x.cpty === d.c); if (!c) return; tabL(prod(P.produit) + " · " + (c.cpty || "?"), '<span class="v-long">' + esc(vq(c.achats)) + '</span> · <span class="v-short">' + esc(vq(c.ventes)) + '</span>', lignes(c.refs)); return; }
@@ -2169,6 +2245,7 @@ function vOuvre(d, e, p) {
     if (d.k === "nocli") { expoAller = "cam"; render(); return; }
     // tuile : les lignes qui font la position fin de plage (comme la case de la carte)
     const v = d.v === undefined || d.v === "" ? null : +d.v, s = v == null ? null : vSens(v);
+    if (vOuv(P) && d.m) { vTabOuv(P, d.m); return; }
     if (d.m === "sd") { tabSD(v, s); return; }
     if (d.m) vTabPos(P, d.m, v, s, d.b === undefined ? v : +d.b, d.f === undefined ? 0 : +d.f);
   }
