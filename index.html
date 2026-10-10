@@ -411,6 +411,30 @@ main{max-width:880px;padding-top:22px}.card{background:transparent;border:0;bord
 .calendar-controls{display:flex;gap:8px;margin:6px 0 10px}.calendar-controls select:first-child{flex:1;min-width:0}.calendar-controls select{min-height:44px;margin:0}.cal .day{min-height:56px;height:clamp(56px,8vh,76px);padding:4px 2px}.cal .marks{gap:1px}.cal .calleg{margin:8px 0;line-height:1.5}.cal .grid{gap:3px}.workspace-tabs{margin-bottom:10px}.period-picker{margin-bottom:8px}.positions-detail .section-heading{margin:12px 0 4px}.positions-detail .detail-table table{min-width:0;width:100%;table-layout:fixed}.positions-detail .detail-table th,.positions-detail .detail-table td{padding:4px 3px;font-size:12px;overflow-wrap:anywhere}.positions-detail .detail-table th:first-child{width:19%}.positions-detail .detail-table td button{font-size:12px;min-height:44px;width:100%;overflow-wrap:anywhere}.positions-detail .detail-table td button .cell-bar{display:block;height:5px;background:var(--soft);margin-top:5px}.cell-bar i{display:block;height:5px}.positions-detail .fold .detail-table table{min-width:480px}.stock-now{margin:4px 0;padding:10px 0}.stock-now strong{font-size:18px}.positions-detail .chart-note{margin:4px 0 6px}.positions-detail .fold{margin-top:8px}
 @media(max-height:780px){.cal .day{min-height:44px;height:44px}.calhead{margin-bottom:6px}.cal .calleg{font-size:11px}}
 @media(max-width:360px){.calhead b{font-size:13px;white-space:nowrap}.calhead .txt{font-size:12px;padding:6px}.calhead{gap:3px}}
+/* Exposure is a bounded workspace. Detail sheets are separate from its layout. */
+body.exposure-screen{height:100dvh;display:flex;flex-direction:column}
+.exposure-screen header{position:relative;flex:none}
+.exposure-screen nav{position:relative;flex:none;margin-top:auto}
+.exposure-screen #main{width:100%;flex:1;min-height:0;padding:10px 16px 6px;display:flex;flex-direction:column;gap:6px}
+.expo-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.expo-top h2{font-size:22px;margin:0}.expo-alert{font:inherit;font-size:12px;background:none;border:0;color:var(--amber);min-height:36px;padding:4px}.expo-alert b{display:inline-block;padding:3px 7px;background:var(--amber-t);border-radius:4px;margin-left:4px}
+.expo-selectors{display:flex;gap:8px}.expo-selectors select{margin:0;min-height:40px;height:40px;padding:6px 10px;font-size:16px;background:var(--card);border:1px solid var(--line);border-radius:4px}.expo-selectors>select:first-child{flex:1;min-width:0}.expo-selectors .unit-select{width:72px}
+.exposure-screen .workspace-tabs{margin:0;flex:none;min-height:40px}.exposure-screen .workspace-tabs button{padding:8px 3px;min-height:40px}
+.expo-month{display:flex;align-items:center;gap:4px;flex:none}.expo-month button{border:0;color:var(--ink);background:none;min-width:44px;min-height:40px;font-size:24px}.expo-month button:disabled{opacity:.25}.expo-month select{flex:1;min-width:0;margin:0;padding:6px 8px;min-height:40px;height:40px;font-size:14px;text-align:center;border:0;background:transparent;font-weight:600;color:var(--ink)}
+.expo-board{display:flex;flex:1;min-height:0;flex-direction:column;justify-content:space-evenly;gap:8px}.expo-board button{font-family:inherit;color:var(--ink);cursor:pointer}.expo-hero{border:0;background:transparent;text-align:center;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:4px}.expo-hero>span{font-size:13px;color:var(--muted)}.expo-hero>strong{font-size:clamp(30px,7vw,48px);line-height:1.12;font-weight:650;letter-spacing:-1px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;max-width:100%}.expo-hero>strong small{font-size:14px;letter-spacing:0;color:var(--muted);font-weight:400}.expo-hero .expo-direction{font-size:12px;color:var(--primary)}.expo-hero>strong.negative{color:var(--out)}
+.expo-spark{display:flex;justify-content:center;gap:10px;height:80px;flex:none;max-width:440px;width:100%;margin:0 auto}.expo-spark button{flex:1;min-width:0;max-width:66px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 4px;gap:5px}.spark-space{position:relative;display:flex;align-items:flex-end;justify-content:center;height:52px;width:100%;border-bottom:1px solid var(--muted)}.spark-space i{width:70%;background:var(--primary);opacity:.35;border-radius:2px 2px 0 0}.spark-space i.negative{background:var(--out)}.spark-space b{position:absolute;font-size:14px;top:14px}.expo-spark [aria-pressed=true] i{opacity:1}.expo-spark small{font-size:11px;color:var(--muted)}.expo-spark [aria-pressed=true] small{color:var(--ink);font-weight:700}
+.expo-metrics{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.expo-metric{padding:10px 6px;background:none;border:0;text-align:left;min-width:0;display:flex;flex-direction:column;gap:4px}.expo-metric+.expo-metric{border-left:1px solid var(--line);padding-left:14px}.expo-metric>span{font-size:12px;color:var(--muted)}.expo-metric strong{font-size:23px;line-height:1.15;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.expo-metric small{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.expo-stock{display:flex;align-items:center;justify-content:space-between;gap:8px;background:none;border:0;padding:8px 0;min-height:40px;font-size:12px}.expo-stock span{color:var(--muted)}.expo-stock b{font-size:14px;text-align:right}
+.expo-tools{display:grid;grid-template-columns:1.3fr 1fr;gap:8px}.expo-tools button{min-height:44px;padding:9px 8px;border:1px solid var(--line);border-radius:4px;background:var(--card);font-size:12px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:4px}.expo-tools-grid{grid-template-columns:1fr 1fr}.expo-help{flex:none;min-height:30px;background:none;border:0;color:var(--muted);font-size:11px;text-decoration:underline}
+.expo-route{display:flex;align-items:center;justify-content:space-between;gap:5px;padding:16px 0;font-size:12px}.expo-route span{border-bottom:3px solid var(--primary);padding:10px 0}.expo-route i{font-style:normal;color:var(--muted)}
+.expo-cover{display:flex;flex-direction:column;align-items:center;gap:12px;background:none;border:0;padding:6px}.expo-ring{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--primary) var(--coverage),var(--line) 0);position:relative;display:grid;place-items:center}.expo-ring:before{content:'';position:absolute;inset:13px;background:var(--bg);border-radius:50%}.expo-ring strong{z-index:1;font-size:32px}.expo-cover>span:last-child{display:flex;flex-direction:column;gap:5px}.expo-cover b{font-size:14px}.expo-cover small{font-size:12px;color:var(--muted)}
+@media(min-width:700px){.exposure-screen #main{max-width:620px}.expo-hero>strong{font-size:48px}.expo-spark{height:100px}.spark-space{height:72px}}
+@media(max-height:740px){.exposure-screen #main{gap:3px;padding-top:5px}.expo-board{gap:5px}.expo-top h2{font-size:20px}.expo-hero>strong{font-size:32px}.expo-spark{height:60px}.spark-space{height:36px}.expo-metric{padding-top:7px;padding-bottom:7px}.expo-metric strong{font-size:20px}.expo-cover{gap:6px}.expo-ring{width:94px;height:94px}.expo-ring strong{font-size:26px}.expo-ring:before{inset:10px}}
+@media(max-height:640px){.exposure-screen header .sub{display:none}.expo-spark{height:43px}.spark-space{height:24px}.expo-hero{padding:2px 0;gap:2px}.expo-hero>strong{font-size:28px}.expo-metric{padding:5px}.expo-metric strong{font-size:18px}.expo-ring{width:76px;height:76px}.expo-help{min-height:24px}.expo-top{display:none}.expo-route{padding:6px 0}}
+/* Allow zoomed/landscape layouts to remain accessible instead of clipping data. */
+@media(max-height:480px){body.exposure-screen{height:auto;min-height:100dvh}.exposure-screen #main{min-height:400px}}
+
+.expo-selectors .expo-alert{flex:none;font-size:11px;min-width:62px;text-align:center}.expo-selectors .expo-alert b{margin-left:1px;padding:3px 4px}.expo-selectors .unit-select{width:62px}.expo-spark.signed .spark-space{border-bottom:0}.expo-spark.signed .spark-space:after{content:'';position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--muted)}.expo-spark.signed .spark-space i{position:absolute;bottom:50%;border-radius:2px 2px 0 0}.expo-spark.signed .spark-space i.negative{bottom:auto;top:50%;border-radius:0 0 2px 2px}
+.expo-cover{flex-direction:row;justify-content:center;text-align:left;gap:14px}.expo-cover .expo-ring{flex:none}.expo-cover>span:last-child{max-width:170px;min-width:0}.expo-cover small{overflow-wrap:anywhere}.exposure-screen .workspace-tabs{width:100%;grid-template-columns:1fr 1fr 1.65fr}.exposure-screen .workspace-tabs button{min-width:0;white-space:normal;overflow:visible}.expo-selectors select{color:var(--ink)}
+.expo-month .expo-help-icon{min-width:28px;width:28px;font-size:14px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -582,7 +606,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "36";
+const VERSION_APP = "37";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -1628,56 +1652,80 @@ function vCard(k, q, src, body, em) {
     '<button class="vi' + (open ? " on" : "") + '" data-tip="' + k + '" aria-label="' + esc(vt("aide") + " · " + vt(q)) + '" aria-expanded="' + open + '">i</button></h3>' + (open ? '<div class="vtip">' + esc(VT[lang].tip[k]) + '</div>' : "") + body + '</section>';
 }
 const vUnite = () => '<div class="seg small xu">' + ["lb", "MT"].map(u => '<button data-u="' + u + '" class="' + (U() === u ? "on" : "") + '">' + u + '</button>').join("") + '</div>';
-function renderExpo() {
-  // mode démo (?demo) sans expo2 : fiche d'exemple fictive construite ici, comme la vraie page (jamais l'ancien tableau, aucun demo_*.json)
-  const e = data.expo2 && Array.isArray(data.expo2.produits) && data.expo2.produits.length ? data.expo2 : DEMO && data.profil === "head" ? (vDemoFiche || (vDemoFiche = vDemo())) : null; vE = e;
-  if (!e) { renderExpoAncien(); return; }
-  const p = expoChoix(e), pl = vPlage(p);
-  if (expoAller) {
-    us.set('detailed35', true);
-    expoView = ["cam", "stock", "cptys"].includes(expoAller) ? "flows" : ["couv", "swaps", "marche", "parts", "sens"].includes(expoAller) ? "prices" : "overview";
-  }
-  const detailed = true;
-  let h = VDEFS + '<h2 class="page-title">'+t('expo')+'</h2>' + '<div class="expo-toolbar"><label class="product-select"><span class="sr-only">' + ui('Produit','Product') + '</span><select id="expoProduct" aria-label="'+ui('Produit','Product')+'">' + e.produits.map(x=>'<option value="'+esc(x.produit)+'"'+(x.produit===p.produit?' selected':'')+'>'+esc(prod(x.produit))+'</option>').join('') + '</select></label>' + unitSelect('expoUnit') + '<button class="text-action" id="vgl" aria-expanded="'+expoGloss+'">'+ui('Aide','Help')+'</button></div>' +
-    '<details class="period-picker" id="expoPeriod"'+(expoFiltersOpen?' open':'')+'><summary><span>'+ui('Période','Period')+'</span><b>'+esc(vPlageTxt(pl))+(pl.tout?' · '+ui('tout','all'):'')+'</b></summary>'+vBarrePlage(pl,false)+'</details>' +
-    (expoGloss ? '<div class="vgloss">'+VT[lang].gl.map(x=>'<p><b>'+esc(x[0]==='*entrepot'?vCamEnt(p):x[0])+'</b> · '+esc(x[1])+'</p>').join('')+'</div>' : '');
-  if (!detailed) {
-    h += vTuile(p,e,pl,true) + vTimeline(p,e,pl) + vAlertes(p,pl) + '<button class="detail-link" data-detail-view="overview">'+ui('Ouvrir la vue détaillée','Open detailed view')+' <span aria-hidden="true">→</span></button>';
-  } else {
-    h += '<div class="workspace-tabs" aria-label="'+ui('Détails de l’exposition','Exposure details')+'">'+[['overview',ui('Volumes','Volumes')],['flows',ui('Livraisons','Deliveries')],['prices',ui('Prix & couverture','Prices & hedges')]].map(x=>'<button data-view="'+x[0]+'" aria-pressed="'+(expoView===x[0])+'" class="'+(expoView===x[0]?'on':'')+'">'+x[1]+'</button>').join('')+'</div>';
-    if (expoView==='overview') h += '<button class="stock-now" data-t="tuile" data-k="stocknow"><span>'+ui('Stock physique aujourd’hui','Physical stock today')+'</span><strong>'+esc(p.stockJour==null?vt('inconnu'):vq(p.stockJour))+'</strong><span aria-hidden="true">›</span></button>' + vDetailedPositions(p,e,pl) + uiFold(ui('Comparer les produits · tous les mois','Compare products · all months'),vCarte(e,pl),'compare') + vAlertes(p,pl);
-    if (expoView==='flows') h += '<button class="stock-now" data-t="tuile" data-k="stocknow"><span>'+ui('Stock physique aujourd’hui','Physical stock today')+'</span><strong>'+esc(p.stockJour==null?vt('inconnu'):vq(p.stockJour))+'</strong><span aria-hidden="true">›</span></button>' + vCamions(p,pl) + uiFold(ui('Évolution du stock','Stock movements'),vStock(p,pl),'stock') + uiFold(ui('Volumes par contrepartie','Counterparty volumes'),vCptys(p,pl),'cptys');
-    if (expoView==='prices') h += vCouv(e,p,pl) + uiFold(ui('Simulation de prix','Price simulation'),vSensib(p,pl),'sens') + uiFold(ui('Répartition des prix','Price breakdown'),vParts(p,pl),'parts') + uiFold(ui('Prix comparés au fixing · toutes périodes','Prices against fixing · all periods'),vMarche(p),'marche') + uiFold(ui('Fixing des swaps · toutes périodes','Swap fixing · all periods'),vSwaps(p),'swaps');
-  }
-  const M = $("#main"); M.innerHTML = h;
-  $('#expoProduct').onchange = ev => { expoProd = ev.target.value; render(); };
-  $('#expoUnit').onchange = ev => { unite = ev.target.value; ls.set('unite',unite); render(); };
-  $('#expoPeriod').ontoggle = ev => { expoFiltersOpen = ev.target.open; };
-  M.querySelectorAll("[data-view]").forEach(b => b.onclick = () => { expoView = b.dataset.view; render(); });
-  M.querySelectorAll(".xprods [data-p], .vmap .vh[data-p]").forEach(b => b.onclick = () => { expoProd = b.dataset.p; render(); });
-  M.querySelectorAll(".xu [data-u]").forEach(b => b.onclick = () => { unite = b.dataset.u === "MT" ? "MT" : "lb"; ls.set("unite", unite); render(); });
-  M.querySelectorAll(".vrs [data-pr]").forEach(b => b.onclick = () => { const k = b.dataset.pr, m0 = pl.m0; if (!m0) return;
-    vSetPlage(m0, k === "mois" ? m0 : k === "trim" ? vFinTrim(m0) : k === "6m" ? vAddM(m0, 5) : "fin", null, k); render(); });
-  const sdu = $("#vdu"), sau = $("#vau");
-  if (sdu) sdu.onchange = () => { vSetPlage(sdu.value, pl.tout ? "fin" : (pl.auR || pl.au), "du"); render(); };
-  if (sau) sau.onchange = () => { vSetPlage(pl.duR || pl.du, sau.value, "au"); render(); };
-  // en-tête d'un mois de la carte : la plage devient ce mois
-  M.querySelectorAll(".vmap .vmh[data-xm]").forEach(b => b.onclick = () => { vSetPlage(b.dataset.xm, b.dataset.xm); render(); });
-  M.querySelectorAll("[data-tip]").forEach(b => b.onclick = () => {
-    const section = b.closest('section'), old = section.querySelector('.vtip');
-    if (old) { old.remove(); b.setAttribute('aria-expanded', 'false'); return; }
-    const tip = document.createElement('div'); tip.className = 'vtip'; tip.textContent = VT[lang].tip[b.dataset.tip] || ''; section.querySelector('h3').after(tip); b.setAttribute('aria-expanded', 'true');
-  });
-  M.querySelectorAll("[data-camx]").forEach(b => b.onclick = ev => { ev.stopPropagation(); const k = b.dataset.camx; expoCamOuv[k] = !expoCamOuv[k]; render(); });
-  $("#vgl").onclick = () => { expoGloss = !expoGloss; render(); };
-  M.querySelectorAll("[data-t]").forEach(b => b.onclick = ev => { ev.stopPropagation(); vOuvre(b.dataset, e, p); });
-  const r = $("#vsr"); if (r) r.oninput = () => { expoDelta = +r.value; const n = $('#deltaValue'); if (n) n.value = expoDelta; vSensMaj(p, pl); };
-  const dn = $('#deltaValue'), dr = $('#deltaReset');
-  if (dn) dn.oninput = () => { if (dn.value === '' || !dn.validity.valid) return; expoDelta = +dn.value; r.value = expoDelta; vSensMaj(p, pl); };
-  if (dr) dr.onclick = () => { expoDelta = 0; dn.value = 0; r.value = 0; vSensMaj(p, pl); };
-  vScrollInit(M);
-  if (expoAller) { const o = M.querySelector('[data-outil="' + expoAller + '"]'); expoAller = null; if (o) { const fold = o.closest("details"); if (fold) fold.open = true; try { o.scrollIntoView({ block: "start" }); } catch (x) {} o.classList.add("flash"); } }
+function vCoverage37(cs) {
+  if(cs==null)return null;
+  return cs.reduce((a,c)=>{const q=vZ(c.indexe),sw=Math.max(0,vZ(c.aVenir));a.idx+=q;a.covered+=Math.min(q,sw);a.extra+=Math.max(0,sw-q);a.fixed+=vZ(c.fixe);return a;},{idx:0,covered:0,extra:0,fixed:0});
 }
+let expoFocus37=null;
+function renderExpo() {
+  const e=data.expo2&&data.expo2.produits&&data.expo2.produits.length?data.expo2:DEMO&&data.profil==='head'?(vDemoFiche||(vDemoFiche=vDemo())):null;
+  vE=e;if(!e){renderExpoAncien();return;}
+  document.body.classList.add('exposure-screen');
+  const p=expoChoix(e),all=(p.mois||[]).length?p.mois.map(m=>m.mois):vCarteData(e).mois;
+  if(!all.includes(expoFocus37)&&expoFocus37!=='*')expoFocus37=all.find(m=>m>=today.slice(0,7))||all[0]||null;
+  if(expoFocus37)vSetPlage(expoFocus37==='*'?all[0]:expoFocus37,expoFocus37==='*'?'fin':expoFocus37);
+  const pl=vPlage(p),rows=vPositionRows(p,e,pl),x=rows[rows.length-1],open=vCarteData(e).ouvert===true;
+  const alerts=vAlertesListe(p,pl).filter(a=>VAL[a.code]);
+  const quantity=n=>n==null?vt('inconnu'):vq(n,{nu:true});
+  const tile=(label,value,attrs,sub='')=>'<button class="expo-metric" '+attrs+(attrs.includes('data-m="sd"')?' disabled':'')+'><span>'+esc(label)+'</span><strong>'+esc(value)+'</strong>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</button>';
+  const tool=(key,label)=>'<button data-expo-tool="'+key+'">'+esc(label)+' <span aria-hidden="true">↗</span></button>';
+  let h=VDEFS+'<div class="expo-top"><h2>'+t('expo')+'</h2></div>';
+  h+='<div class="expo-selectors"><select id="expoProduct" aria-label="'+ui('Produit','Product')+'">'+e.produits.map(z=>'<option value="'+esc(z.produit)+'"'+(z.produit===p.produit?' selected':'')+'>'+esc(prod(z.produit))+'</option>').join('')+'</select>'+unitSelect('expoUnit')+'<button data-expo-tool="alertes" class="expo-alert">'+ui('Alertes','Checks')+' <b>'+(p.vis?alerts.length:'—')+'</b></button></div>';
+  h+='<div class="workspace-tabs">'+[['overview',ui('Volumes','Volumes')],['flows',ui('Livraisons','Deliveries')],['prices',ui('Prix & couverture','Prices & hedges')]].map(z=>'<button data-view="'+z[0]+'" aria-pressed="'+(expoView===z[0])+'" class="'+(expoView===z[0]?'on':'')+'">'+z[1]+'</button>').join('')+'</div>';
+  const index=all.indexOf(expoFocus37);
+  h+='<div class="expo-month"><button id="expoPrev" aria-label="'+ui('Mois précédent','Previous month')+'"'+(index<=0?' disabled':'')+'>‹</button><select id="expoMonth" aria-label="'+ui('Mois de l’exposition','Exposure month')+'">'+all.map(m=>'<option value="'+m+'"'+(expoFocus37===m?' selected':'')+'>'+esc(vML(m))+'</option>').join('')+'<option value="*"'+(expoFocus37==='*'?' selected':'')+'>'+ui('Tout · sans date inclus','All · including undated')+'</option></select><button id="expoNext" aria-label="'+ui('Mois suivant','Next month')+'"'+(index<0||index>=all.length-1?' disabled':'')+'>›</button><button class="expo-help-icon" data-expo-tool="aide" aria-label="'+ui('Comprendre les chiffres','Understand the figures')+'">?</button></div>';
+  h+='<section class="expo-board">';
+  if(expoView==='overview') {
+    const value=x?(x.cv?0:x.v):null;
+    h+='<button class="expo-hero"'+(x?vPositionAttrs(p,x):' disabled')+'><span>'+ui(open?'Exposé en fin de période':'Position de prix en fin de période',open?'Exposure at period end':'Price position at period end')+'</span><strong class="'+(value<0?'negative':'')+'">'+esc(quantity(value))+' <small>'+U()+'</small></strong><span class="expo-direction">'+esc(value==null?ui('Donnée indisponible','Data unavailable'):x.cv?ui('≈ Équilibre · conversion','≈ Balanced · conversion'):open?(value<-.5?ui('Vendu sans achat','Sold without purchase'):value>.5?ui('Acheté sans vente','Bought without sale'):ui('Équilibré','Balanced')):vSens(value))+' <span aria-hidden="true">↗</span></span></button>';
+    const allrows=vPositionRows(p,e,{...pl,mk:all,tout:false}),start=Math.max(0,Math.min(Math.floor(Math.max(0,index)/6)*6,Math.max(0,allrows.length-6))),visible=allrows.slice(start,start+6),max=Math.max(1,...visible.map(z=>Math.abs(z.cv?0:+z.v||0)));
+    h+='<div class="expo-spark '+(visible.some(z=>z.v<0)?'signed':'')+'" aria-label="'+ui('Exposition par mois','Exposure by month')+'">'+visible.map(z=>'<button data-expo-month="'+z.mk+'" aria-label="'+esc(vML(z.mk)+' : '+quantity(z.v)+' '+U())+'" aria-pressed="'+(z.mk===expoFocus37)+'"><span class="spark-space"><i class="'+(z.v<0?'negative':'')+'" style="height:'+Math.abs(z.cv?0:+z.v||0)/max*(visible.some(z=>z.v<0)?50:100)+'%"></i>'+(z.v==null?'<b>?</b>':'')+'</span><small>'+esc((z.v<0?'− ':'')+vMC(z.mk).split(' ')[0])+'</small></button>').join('')+'</div>';
+    h+='<div class="expo-metrics">'+(open?tile(ui('Vendu à livrer','Sold to deliver'),quantity(x&&x.sold),'data-t="cartev" data-m="'+(x?x.mk:'')+'"',U())+tile(ui('Indexé vendu fixe','Indexed sold fixed'),quantity(x&&x.indexed),'data-t="cartei" data-m="'+(x?x.mk:'')+'"',ui('Couvert : ','Hedged: ')+quantity(x&&x.covered)+' '+U()):tile(ui('Part variable','Variable portion'),quantity(x&&x.b),x?vPositionAttrs(p,x):'disabled',U())+tile(ui('Part fixe','Fixed portion'),quantity(x&&x.f),x?vPositionAttrs(p,x):'disabled',U()))+'</div>';
+    h+='<button class="expo-stock" data-t="tuile" data-k="stocknow"><span>'+ui('Stock physique aujourd’hui','Physical stock today')+'</span><b>'+esc(quantity(p.stockJour))+' '+U()+' ↗</b></button>';
+    h+='<div class="expo-tools">'+tool('positions',ui('Tableau & opérations','Table & operations'))+tool('carte',ui('Comparer','Compare'))+'</div>';
+  } else if(expoView==='flows') {
+    const ms=vCamMoisPlage(p,pl),nc=vSansClient(p,pl),na=vSansCamion(p,pl),n=ms?ms.reduce((a,m)=>a+(m.camions||[]).length,0):null;
+    h+='<button class="expo-hero" data-expo-tool="cam"><span>'+ui('Camions de la période','Trucks in period')+'</span><strong>'+esc(n==null?'—':n)+'</strong><span class="expo-direction">'+ui('Voir les trajets et les quantités','View routes and quantities')+' ↗</span></button>';
+    h+='<div class="expo-route" aria-hidden="true"><span>'+ui('Fournisseurs','Suppliers')+'</span><i>→</i><span>'+ui('Stock / direct','Stock / direct')+'</span><i>→</i><span>'+ui('Clients','Customers')+'</span></div>';
+    h+='<div class="expo-metrics">'+tile(ui('Camions sans client','Trucks without customer'),nc?String(nc.n):'—','data-expo-tool="cam"',nc?vq(nc.q):'')+tile(ui('Ventes sans camion','Sales without truck'),na?String(na.n):'—','data-expo-tool="cam"',na?vq(na.q):'')+'</div><div class="expo-tools">'+tool('stock',ui('Évolution du stock','Stock movements'))+tool('cptys',ui('Contreparties','Counterparties'))+'</div>';
+  } else {
+    const cs=vCouvLignes(p,pl),tot=vCoverage37(cs);
+    const pc=tot&&tot.idx>=.5?Math.round(100*tot.covered/tot.idx):null;
+    h+='<button class="expo-cover" data-expo-tool="couv"><span class="expo-ring" style="--coverage:'+(pc||0)+'%"><strong>'+esc(pc==null?'—':pc+'%')+'</strong></span><span><b>'+ui('Achats indexés couverts','Indexed purchases hedged')+'</b><small>'+esc(tot?vq(tot.covered)+' / '+vq(tot.idx):vt('inconnu'))+'</small></span></button>';
+    h+='<div class="expo-metrics">'+tile(ui('Non couvert','Unhedged'),quantity(tot?tot.idx-tot.covered:null),'data-expo-tool="couv"',U())+tile(ui('Swaps en trop','Excess swaps'),quantity(tot?tot.extra:null),'data-expo-tool="couv"',U())+'</div>';
+    h+='<div class="expo-tools expo-tools-grid">'+tool('sens',ui('Simuler un prix','Simulate a price'))+tool('parts',ui('Répartition','Breakdown'))+tool('marche',ui('Prix / fixing','Prices / fixing'))+tool('swaps',ui('Fixing des swaps','Swap fixing'))+'</div>';
+  }
+  h+='</section>';
+  const M=$('#main');M.innerHTML=h;
+  $('#expoProduct').onchange=ev=>{expoProd=ev.target.value;render();};$('#expoUnit').onchange=ev=>{unite=ev.target.value;ls.set('unite',unite);render();};
+  const change=m=>{expoFocus37=m;render();};$('#expoMonth').onchange=ev=>change(ev.target.value);$('#expoPrev').onclick=()=>change(all[index-1]);$('#expoNext').onclick=()=>change(all[index+1]);
+  M.querySelectorAll('[data-expo-month]').forEach(b=>b.onclick=()=>change(b.dataset.expoMonth));
+  M.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{expoView=b.dataset.view;render();});
+  bindExpo37(M,e,p,pl);
+  if(expoAller){const key=expoAller;expoAller=null;openExpo37(key,e,p,pl);}
+}
+function bindExpo37(root,e,p,pl,close) {
+  root.querySelectorAll('[data-expo-tool]').forEach(b=>b.onclick=()=>{if(close)close();openExpo37(b.dataset.expoTool,e,p,pl);});
+  root.querySelectorAll('[data-t]').forEach(b=>b.onclick=ev=>{ev.stopPropagation();if(close)close();vOuvre(b.dataset,e,p);});
+  root.querySelectorAll('[data-tip]').forEach(b=>b.onclick=()=>{const sec=b.closest('section'),old=sec.querySelector('.vtip');if(old){old.remove();b.setAttribute('aria-expanded','false');}else{const el=document.createElement('div');el.className='vtip';el.textContent=VT[lang].tip[b.dataset.tip]||'';sec.querySelector('h3').after(el);b.setAttribute('aria-expanded','true');}});
+  root.querySelectorAll('[data-camx]').forEach(b=>b.onclick=()=>{expoCamOuv[b.dataset.camx]=!expoCamOuv[b.dataset.camx];if(close)close();openExpo37('cam',e,p,pl);});
+  const r=root.querySelector('#vsr'),dn=root.querySelector('#deltaValue'),dr=root.querySelector('#deltaReset');
+  if(r)r.oninput=ev=>{ev.stopPropagation();expoDelta=+r.value;dn.value=expoDelta;vSensMaj(p,pl);};
+  if(dn)dn.oninput=ev=>{ev.stopPropagation();if(dn.value===''||!dn.validity.valid)return;expoDelta=+dn.value;r.value=expoDelta;vSensMaj(p,pl);};
+  if(dr)dr.onclick=()=>{expoDelta=0;dn.value=0;r.value=0;vSensMaj(p,pl);};
+  vScrollInit(root);
+}
+function openExpo37(key,e,p,pl) {
+  const titles={positions:ui('Tableau & opérations','Table & operations'),carte:ui('Comparer · tous les mois','Compare · all months'),cam:ui('Livraisons','Deliveries'),stock:ui('Évolution du stock','Stock movements'),cptys:ui('Contreparties','Counterparties'),couv:ui('Couverture par contrat','Hedges by contract'),sens:ui('Simulation','Simulation'),parts:ui('Répartition des prix','Price breakdown'),marche:ui('Prix · toutes périodes','Prices · all periods'),swaps:ui('Swaps · toutes périodes','Swaps · all periods'),alertes:ui('À vérifier','Needs attention'),aide:ui('Comprendre les chiffres','Understand the figures')};
+  const build={positions:()=>vDetailedPositions(p,e,pl),carte:()=>vCarte(e,pl),cam:()=>vCamions(p,pl),stock:()=>vStock(p,pl),cptys:()=>vCptys(p,pl),couv:()=>vCouv(e,p,pl),sens:()=>vSensib(p,pl),parts:()=>vParts(p,pl),marche:()=>vMarche(p),swaps:()=>vSwaps(p),alertes:()=>vAlertes(p,pl),aide:()=>VT[lang].gl.map(z=>'<p><b>'+esc(z[0]==='*entrepot'?vCamEnt(p):z[0])+'</b> · '+esc(z[1])+'</p>').join('')};
+  if(!build[key])return;
+  sheet('<h3>'+esc(titles[key])+'</h3><p class="chart-note">'+esc(prod(p.produit)+' · '+(['carte','marche','swaps'].includes(key)?ui('Toutes périodes','All periods'):vPlageTxt(pl))+' · '+U())+'</p>'+build[key](),(bg,close)=>{
+    bindExpo37(bg,e,p,pl,close);
+    bg.querySelectorAll('.vmap .vmh[data-xm]').forEach(b=>b.onclick=()=>{close();expoFocus37=b.dataset.xm;render();});
+    bg.querySelectorAll('.vmap .vh[data-p]').forEach(b=>b.onclick=()=>{close();expoProd=b.dataset.p;render();});
+  });
+}
+
 // petites icônes dessinées (jamais un émoji pour un camion) : camion d'achat, vide (cadre en pointillés), vente sans camion (camion rouge en pointillés)
 const VK_ICO = {
   truck: '<svg class="vki" viewBox="0 0 22 12" aria-hidden="true"><rect class="bx" x="0" y="1" width="14" height="7.5" rx="1"/><path class="cb" d="M14.6 3h3.6l3 3v2.5h-6.6z"/><circle class="wh" cx="4" cy="10" r="1.7"/><circle class="wh" cx="18" cy="10" r="1.7"/></svg>',
@@ -2610,6 +2658,7 @@ function countLot(lot) {
 }
 const phLigne = l => (l.photos ? tf("photoN", l.photos) : "") + (l.photosAttente ? (l.photos ? " · " : "") + tf("photoWait", l.photosAttente) : "");
 function render() {
+  document.body.classList.remove("exposure-screen");
   today = todayIso();
   header(); if (!data) { if (sansFiche) sansFiche(); enhanceUI(); return; } tabs();
   ({ cal: renderCal, stock: renderStock, treso: renderTreso, expo: renderExpo, photos: renderPhotos, settings: renderSettings })[tab]();
