@@ -4,7 +4,7 @@
 // hors réseau, une adresse avec « ?… » ouvre l'app (jamais la page d'erreur du navigateur) ; la page est revalidée à chaque ouverture (cache « no-cache » :
 // une nouvelle version publiée arrive tout de suite, pas 10 minutes plus tard) ; nom du cache = version de l'app (VERSION_APP de index.html) : à changer à
 // chaque publication, l'ancien cache est alors effacé à l'activation.
-const C = "atlas-35", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+const C = "atlas-36", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // bibliothèque Microsoft (MSAL) : adresse à version fixe (contenu immuable, empreinte contrôlée par la page) gardée ici pour l'ouverture hors connexion
 const MSAL = "https://cdn.jsdelivr.net/npm/@azure/msal-browser@4.30.0/lib/msal-browser.min.js";

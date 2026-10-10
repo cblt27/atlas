@@ -407,6 +407,10 @@ main{max-width:880px;padding-top:22px}.card{background:transparent;border:0;bord
 
 .op-context{font-size:11px;color:var(--muted);margin-top:5px}[data-reading="detailed"] .op-context{display:none}[data-reading="simple"] .grid .wband{display:none}
 .secondary-risk{display:flex;gap:10px;align-items:center;width:100%;margin-top:18px;padding:12px 0;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-size:13px;text-align:left}.secondary-risk>span:first-child{flex:1}.secondary-risk small{display:block;font-size:11px;color:var(--muted);margin-top:3px}.secondary-risk strong{font-weight:600;font-size:14px}.secondary-risk>span:last-child{color:var(--muted)}
+/* v36: compact calendar and data-first exposure */
+.calendar-controls{display:flex;gap:8px;margin:6px 0 10px}.calendar-controls select:first-child{flex:1;min-width:0}.calendar-controls select{min-height:44px;margin:0}.cal .day{min-height:56px;height:clamp(56px,8vh,76px);padding:4px 2px}.cal .marks{gap:1px}.cal .calleg{margin:8px 0;line-height:1.5}.cal .grid{gap:3px}.workspace-tabs{margin-bottom:10px}.period-picker{margin-bottom:8px}.positions-detail .section-heading{margin:12px 0 4px}.positions-detail .detail-table table{min-width:0;width:100%;table-layout:fixed}.positions-detail .detail-table th,.positions-detail .detail-table td{padding:4px 3px;font-size:12px;overflow-wrap:anywhere}.positions-detail .detail-table th:first-child{width:19%}.positions-detail .detail-table td button{font-size:12px;min-height:44px;width:100%;overflow-wrap:anywhere}.positions-detail .detail-table td button .cell-bar{display:block;height:5px;background:var(--soft);margin-top:5px}.cell-bar i{display:block;height:5px}.positions-detail .fold .detail-table table{min-width:480px}.stock-now{margin:4px 0;padding:10px 0}.stock-now strong{font-size:18px}.positions-detail .chart-note{margin:4px 0 6px}.positions-detail .fold{margin-top:8px}
+@media(max-height:780px){.cal .day{min-height:44px;height:44px}.calhead{margin-bottom:6px}.cal .calleg{font-size:11px}}
+@media(max-width:360px){.calhead b{font-size:13px;white-space:nowrap}.calhead .txt{font-size:12px;padding:6px}.calhead{gap:3px}}
 </style>
 </head>
 <body>
@@ -578,7 +582,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "35";
+const VERSION_APP = "36";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -1023,22 +1027,20 @@ function moisHtml(mk) {
 }
 function renderCal() {
   calChoix();
-  if (calMode === "agenda") return renderAgenda();
+  calMode = "jours";
   const now = new Date(); if (!calMonth) calMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const s = STK(), y = calMonth.getFullYear(), m = calMonth.getMonth(), mk = iso(calMonth).slice(0, 7);
   const first = new Date(y, m, 1), start = lundi(first), last = new Date(y, m + 1, 0), nW = Math.round((addJ(lundi(last), 7) - start) / 864e5 / 7);
   // round 23 (correction) : seuls les mois que la fiche couvre en entier ; elle part du lundi de la semaine du 1er du mois M−2 (27/07 pour août) :
   // juillet, couvert du 27 seulement, s'affichait presque vide sans explication (de même le dernier mois)
   const minM = s ? moisPlein(s.du, false) : null, maxM = s ? moisPlein(s.au, true) : null;
-  let h = readingHead(t('cal')) + '<div class="cal"><div class="calhead"><button id="pm" aria-label="‹">‹</button><b>' + t("months")[m] + " " + y + '</b><button class="txt" id="tm">' + t("today") + '</button><button id="nm" aria-label="›">›</button></div>';
+  let h = '<h2 class="page-title">'+t('cal')+'</h2>' + '<div class="cal"><div class="calhead"><button id="pm" aria-label="‹">‹</button><b>' + t("months")[m] + " " + y + '</b><button class="txt" id="tm">' + t("today") + '</button><button id="nm" aria-label="›">›</button></div>';
   if (s) {
     // correctifs mobqa (08/10) : bascule lb / MT toujours visible (au bout de la ligne Jours | Contreparties : seul moyen de passer en MT pour la
     // Logistique), rangée des produits avec fondu et flèche « › » quand elle défile (jamais une puce coupée net)
-    h += '<div class="row" style="margin:0 4px 6px;gap:8px"><div class="seg small grow" id="mode">' + [["agenda", ui("Liste", "List")], ["jours", ui("Mois", "Month")], ["cpty", t("cpties")]].map(x => '<button data-m="' + x[0] + '" class="' + (x[0] === calMode ? "on" : "") + '">' + x[1] + '</button>').join("") + '</div>' +
-         '<button class="calu" data-u="1">' + (unite === "MT" ? "MT → lb" : "lb → MT") + '</button></div>' +
-         vScroll("chipsw calp", '<div class="vsc-in chips" style="padding:2px 0 6px">' + [["*", t("allProd")]].concat(s.produits.map(p => [p.produit, prod(p.produit)])).map(x => '<button data-p="' + esc(x[0]) + '" class="' + (x[0] === calProd ? "on" : "") + '">' + esc(x[1]) + '</button>').join("") + '</div>');
-    h += (mk < minM || mk > maxM ? '<div class="note" style="padding:0 6px">' + tf("outWin", fmtM(minM), fmtM(maxM)) + '</div>' : isDetailed() ? moisHtml(mk) : uiFold(ui('Stock du mois','Monthly stock'),moisHtml(mk),'calendarStock'));
-  } else h += '<div class="seg" id="mode"><button data-m="agenda">' + ui('Liste','List') + '</button><button data-m="jours" class="on">' + ui('Mois','Month') + '</button></div><div class="note" style="padding:0 6px 6px">' + t("noStock") + '</div>';
+    h += '<div class="calendar-controls"><select id="calProduct" aria-label="'+ui('Produit','Product')+'">'+[['*',t('allProd')]].concat(s.produits.map(p=>[p.produit,prod(p.produit)])).map(x=>'<option value="'+esc(x[0])+'"'+(calProd===x[0]?' selected':'')+'>'+esc(x[1])+'</option>').join('')+'</select>'+unitSelect('calUnit')+'</div>';
+    if(mk<minM||mk>maxM)h+='<p class="note">'+tf('outWin',fmtM(minM),fmtM(maxM))+'</p>';
+  }
   // jours : mouvements du moteur ; fiche sans stock : livraisons datées (comme avant)
   const byDay = {};
   if (s) mvSel(iso(start), iso(addJ(start, 7 * nW - 1))).forEach(e => (byDay[e.j] = byDay[e.j] || []).push(e));
@@ -1056,7 +1058,7 @@ function renderCal() {
         h += '<button class="day' + (d.getMonth() !== m ? " other" : "") + (k === today ? " today" : "") + (k === selDay ? " sel" : "") + '" data-d="' + k + '"><span class="n">' + d.getDate() + '</span><div class="marks">' +
              mark(ev.filter(e => e.type !== "directe" && e.q >= 0), "in") + mark(ev.filter(e => e.type !== "directe" && e.q < 0), "out") + mark(ev.filter(e => e.type === "directe"), "dir") + '</div></button>';
       }
-      if (s) h += bandHtml(iso(addJ(start, wi * 7)));
+      // Day details contain stock and movements; no extra rows below the calendar.
     }
     h += '</div></div>';
   } else {
@@ -1077,8 +1079,7 @@ function renderCal() {
     renderCal.gs = gs;
   }
   // jour choisi : position de début et de fin de journée, mouvements du jour, autres livraisons du jour ; sinon les listes de l'ancien onglet Livraisons
-  if (selDay && (!s || calMode === "jours")) h += jourHtml(selDay, byDay[selDay] || []);
-  else h += listesHtml();
+  // Calendar only; day details open without extending the page.
   $("#main").innerHTML = h;
   const nav = d => { calMonth = d; selDay = null; render(); };
   $("#pm").onclick = () => nav(new Date(y, m - 1, 1)); $("#nm").onclick = () => nav(new Date(y, m + 1, 1));
@@ -1087,7 +1088,14 @@ function renderCal() {
   $("#main").querySelectorAll("#mode button").forEach(b => b.onclick = () => { calMode = b.dataset.m; us.set("calMode34", calMode); selDay = null; render(); });
   $("#main").querySelectorAll(".cal .chips [data-p]").forEach(b => b.onclick = () => { calProd = b.dataset.p; us.set("calProd", calProd); render(); });
   const bu = $("#main").querySelector(".cal [data-u]"); if (bu) bu.onclick = () => { unite = unite === "MT" ? "lb" : "MT"; ls.set("unite", unite); render(); };
-  $("#main").querySelectorAll(".day").forEach(b => b.onclick = () => { selDay = b.dataset.d === selDay ? null : b.dataset.d; render(); if (selDay) { const j = $("#jour"); if (j && j.scrollIntoView) j.scrollIntoView({ block: "start", behavior: "smooth" }); } });
+  const cp=$('#calProduct'),cu=$('#calUnit');
+  if(cp)cp.onchange=()=>{calProd=cp.value;us.set('calProd',calProd);render();};
+  if(cu)cu.onchange=()=>{unite=cu.value;ls.set('unite',unite);render();};
+  MCalendarDays();
+  function MCalendarDays(){ $('#main').querySelectorAll('.day').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.d;
+    sheet(jourHtml(k,byDay[k]||[]),(bg,close)=>bindOps(bg,close));
+  }); }
   $("#main").querySelectorAll("[data-w]").forEach(b => b.onclick = () => semaineSheet(b.dataset.w));
   $("#main").querySelectorAll(".who[data-g]").forEach(b => b.onclick = () => { const g = (renderCal.gs || [])[+b.dataset.g]; if (g) mvSheet((g.d > 0 ? "▲ " : g.d < 0 ? "▼ " : "◇ ") + g.who + " · " + prod(g.produit), g.ms); });
   $("#main").querySelectorAll(".chips [data-f]").forEach(b => b.onclick = () => { delivFilter = b.dataset.f; render(); });
@@ -1095,7 +1103,7 @@ function renderCal() {
   vScrollInit($("#main"));
 }
 function jourHtml(k, ms) {
-  const s = STK(); let h = '<h2 id="jour">' + esc(fmtJ(k)) + '</h2>';
+  const s = STK(); let h = '<h3 id="jour">' + esc(fmtJ(k)) + '</h3>';
   if (s) {
     // round 23 (correction) : début → fin de journée de chaque produit dont la position est connue, même un jour sans mouvement ; produit sans
     // position connue ni mouvement ce jour : omis ; ordre de la journée non prouvé (moteur, semaine) dit sur le jour, comme le PC
@@ -1110,7 +1118,7 @@ function jourHtml(k, ms) {
     if (st.length) h += mvCards(st);
     if (dr.length) h += '<h2>◇ ' + t("directs") + '</h2>' + mvCards(dr);
     const refs = new Set(s.mouvements.map(e => e.ref).filter(Boolean));
-    const autres = ops().filter(l => l.date === k && l.statut !== "Annulé" && !refs.has(l.ref));
+    const autres = ops().filter(l => l.date === k && l.statut !== "Annulé" && (calProd === "*" || l.produit === calProd) && !refs.has(l.ref));
     if (autres.length) h += '<h2>' + t("others") + '</h2>' + autres.map(opCard).join("");
     if (!st.length && !dr.length && !autres.length) h += '<div class="card muted">' + t("noMove") + '</div>';
   } else {
@@ -1629,15 +1637,15 @@ function renderExpo() {
     us.set('detailed35', true);
     expoView = ["cam", "stock", "cptys"].includes(expoAller) ? "flows" : ["couv", "swaps", "marche", "parts", "sens"].includes(expoAller) ? "prices" : "overview";
   }
-  const detailed = isDetailed();
-  let h = VDEFS + readingHead(t('expo')) + '<div class="expo-toolbar"><label class="product-select"><span class="sr-only">' + ui('Produit','Product') + '</span><select id="expoProduct" aria-label="'+ui('Produit','Product')+'">' + e.produits.map(x=>'<option value="'+esc(x.produit)+'"'+(x.produit===p.produit?' selected':'')+'>'+esc(prod(x.produit))+'</option>').join('') + '</select></label>' + unitSelect('expoUnit') + '<button class="text-action" id="vgl" aria-expanded="'+expoGloss+'">'+ui('Aide','Help')+'</button></div>' +
+  const detailed = true;
+  let h = VDEFS + '<h2 class="page-title">'+t('expo')+'</h2>' + '<div class="expo-toolbar"><label class="product-select"><span class="sr-only">' + ui('Produit','Product') + '</span><select id="expoProduct" aria-label="'+ui('Produit','Product')+'">' + e.produits.map(x=>'<option value="'+esc(x.produit)+'"'+(x.produit===p.produit?' selected':'')+'>'+esc(prod(x.produit))+'</option>').join('') + '</select></label>' + unitSelect('expoUnit') + '<button class="text-action" id="vgl" aria-expanded="'+expoGloss+'">'+ui('Aide','Help')+'</button></div>' +
     '<details class="period-picker" id="expoPeriod"'+(expoFiltersOpen?' open':'')+'><summary><span>'+ui('Période','Period')+'</span><b>'+esc(vPlageTxt(pl))+(pl.tout?' · '+ui('tout','all'):'')+'</b></summary>'+vBarrePlage(pl,false)+'</details>' +
     (expoGloss ? '<div class="vgloss">'+VT[lang].gl.map(x=>'<p><b>'+esc(x[0]==='*entrepot'?vCamEnt(p):x[0])+'</b> · '+esc(x[1])+'</p>').join('')+'</div>' : '');
   if (!detailed) {
     h += vTuile(p,e,pl,true) + vTimeline(p,e,pl) + vAlertes(p,pl) + '<button class="detail-link" data-detail-view="overview">'+ui('Ouvrir la vue détaillée','Open detailed view')+' <span aria-hidden="true">→</span></button>';
   } else {
     h += '<div class="workspace-tabs" aria-label="'+ui('Détails de l’exposition','Exposure details')+'">'+[['overview',ui('Volumes','Volumes')],['flows',ui('Livraisons','Deliveries')],['prices',ui('Prix & couverture','Prices & hedges')]].map(x=>'<button data-view="'+x[0]+'" aria-pressed="'+(expoView===x[0])+'" class="'+(expoView===x[0]?'on':'')+'">'+x[1]+'</button>').join('')+'</div>';
-    if (expoView==='overview') h += vDetailedPositions(p,e,pl) + uiFold(ui('Comparer les produits · tous les mois','Compare products · all months'),vCarte(e,pl),'compare') + vAlertes(p,pl);
+    if (expoView==='overview') h += '<button class="stock-now" data-t="tuile" data-k="stocknow"><span>'+ui('Stock physique aujourd’hui','Physical stock today')+'</span><strong>'+esc(p.stockJour==null?vt('inconnu'):vq(p.stockJour))+'</strong><span aria-hidden="true">›</span></button>' + vDetailedPositions(p,e,pl) + uiFold(ui('Comparer les produits · tous les mois','Compare products · all months'),vCarte(e,pl),'compare') + vAlertes(p,pl);
     if (expoView==='flows') h += '<button class="stock-now" data-t="tuile" data-k="stocknow"><span>'+ui('Stock physique aujourd’hui','Physical stock today')+'</span><strong>'+esc(p.stockJour==null?vt('inconnu'):vq(p.stockJour))+'</strong><span aria-hidden="true">›</span></button>' + vCamions(p,pl) + uiFold(ui('Évolution du stock','Stock movements'),vStock(p,pl),'stock') + uiFold(ui('Volumes par contrepartie','Counterparty volumes'),vCptys(p,pl),'cptys');
     if (expoView==='prices') h += vCouv(e,p,pl) + uiFold(ui('Simulation de prix','Price simulation'),vSensib(p,pl),'sens') + uiFold(ui('Répartition des prix','Price breakdown'),vParts(p,pl),'parts') + uiFold(ui('Prix comparés au fixing · toutes périodes','Prices against fixing · all periods'),vMarche(p),'marche') + uiFold(ui('Fixing des swaps · toutes périodes','Swap fixing · all periods'),vSwaps(p),'swaps');
   }
@@ -2771,13 +2779,15 @@ function vTimeline(p,e,pl) {
 }
 function vDetailedPositions(p,e,pl) {
   const rows=vPositionRows(p,e,pl),open=vCarteData(e).ouvert===true;
-  const cell=(x,key,type)=>x[key]==null?'—':'<button data-t="'+type+'" data-p="'+esc(p.produit)+'" data-m="'+x.mk+'">'+esc(vq(x[key],{nu:true}))+'</button>';
+  const scale=Math.max(1,...rows.map(x=>Math.abs(x.cv?0:+x.v||0)));
+  const bar=x=>x.v==null?'':'<span class="cell-bar" aria-hidden="true"><i style="width:'+Math.abs(x.cv?0:x.v)/scale*100+'%;background:var(--'+(x.v<0?'out':'primary')+')"></i></span>';
+  const cell=(x,key,type)=>x[key]==null?'—':'<button data-t="'+type+'" data-p="'+esc(p.produit)+'" data-m="'+x.mk+'">'+esc(vq(x[key],{nu:true}))+(key==='indexed'&&x.covered!=null?'<small>'+ui('Couvert ','Hedged ')+esc(vq(x.covered,{nu:true}))+'</small>':'')+'</button>';
   const head='<div class="section-heading"><h3>'+ui('Positions de fin de mois','Month-end positions')+'</h3><span>'+U()+'</span></div>';
   if(!rows.length)return head+'<p class="empty-state">'+esc(vt('rienPlage'))+'</p>';
-  const h='<div class="detail-table" role="region" tabindex="0" aria-label="'+ui('Positions mensuelles, tableau défilant','Monthly positions, scrollable table')+'"><table><thead><tr><th scope="col">'+ui('Mois','Month')+'</th><th scope="col">'+(open?ui('Exposé','Exposed'):ui('Position de prix','Price position'))+'</th>'+(open?'<th scope="col">'+ui('Déjà vendu<br>à livrer','Sold<br>to deliver')+'</th><th scope="col">'+ui('Indexé<br>vendu fixe','Indexed<br>sold fixed')+'</th>':'')+'</tr></thead><tbody>'+rows.map(x=>'<tr><th scope="row">'+esc(x.mk==='sd'?vt('sansDateM'):vMC(x.mk))+'</th><td><button'+vPositionAttrs(p,x)+'>'+esc(x.v==null?vt('inconnu'):x.cv?'≈ 0':vq(x.v,{nu:true}))+'</button></td>'+(open?'<td>'+cell(x,'sold','cartev')+'</td><td>'+cell(x,'indexed','cartei')+'</td>':'')+'</tr>').join('')+'</tbody></table></div>';
+  const h='<div class="detail-table" role="region" tabindex="0" aria-label="'+ui('Positions mensuelles, tableau défilant','Monthly positions, scrollable table')+'"><table><thead><tr><th scope="col">'+ui('Mois','Month')+'</th><th scope="col">'+(open?ui('Exposé','Exposed'):ui('Position de prix','Price position'))+'</th>'+(open?'<th scope="col">'+ui('Déjà vendu<br>à livrer','Sold<br>to deliver')+'</th><th scope="col">'+ui('Indexé<br>vendu fixe','Indexed<br>sold fixed')+'</th>':'')+'</tr></thead><tbody>'+rows.map(x=>'<tr><th scope="row">'+esc(x.mk==='sd'?vt('sansDateM'):vMC(x.mk))+'</th><td><button'+vPositionAttrs(p,x)+'>'+esc(x.v==null?vt('inconnu'):x.cv?'≈ 0':vq(x.v,{nu:true}))+bar(x)+'</button></td>'+(open?'<td>'+cell(x,'sold','cartev')+'</td><td>'+cell(x,'indexed','cartei')+'</td>':'')+'</tr>').join('')+'</tbody></table></div>';
   const lines=((p.vis||{}).lignes||[]).filter(l=>l.mois?pl.mk.includes(l.mois):pl.tout);
   const ledger=lines.length?uiFold(ui('Opérations de la période','Period operations')+' ('+lines.length+')','<div class="detail-table" role="region" tabindex="0" aria-label="'+ui('Opérations, tableau défilant','Operations, scrollable table')+'"><table><thead><tr>'+[ui('Date','Date'),ui('Contrepartie / contrat','Counterparty / contract'),ui('Sens','Side'),U(),ui('Prix $/lb','Price $/lb')].map(c=>'<th scope="col">'+c+'</th>').join('')+'</tr></thead><tbody>'+lines.map(l=>'<tr><td>'+esc(l.date?fmtD(l.date):l.mois?fmtM(l.mois):t('noDate'))+'</td><td>'+esc(l.cpty||'?')+'<small>'+esc([l.contrat,l.ref].filter(Boolean).join(' · '))+'</small></td><td>'+ui(l.sens==='achat'?'Achat':'Vente',l.sens==='achat'?'Buy':'Sell')+'</td><td>'+esc(vq(l.q,{nu:true}))+'</td><td>'+esc(l.type==='indexe'?ui('Indexé','Indexed'):l.prix==null?vt('inconnu'):vp4(l.prix))+'</td></tr>').join('')+'</tbody></table></div>','ledger'):'';
-  return '<section class="positions-detail" data-outil="positions">'+head+'<p class="chart-note">'+ui('Touchez un chiffre pour retrouver les opérations.','Tap a figure to see its operations.')+'</p>'+h+ledger+'</section>';
+  return '<section class="positions-detail" data-outil="positions">'+head+'<p class="chart-note">'+ui('Chiffres tactiles · détail des opérations','Tap a figure for its operations')+'</p>'+h+ledger+'</section>';
 }
 
 // Version 35 · UI helpers. No business calculations or network writes here.
