@@ -294,7 +294,7 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .vdot.ok { background:var(--v-long); } .vdot.prev { background:none; box-shadow:inset 0 0 0 1.5px var(--muted); }
 .xold td:first-child, .xold th:first-child { position:sticky; left:0; background:var(--card); z-index:1; }
 /* round 27 (piste mob, 07/10 22 h) : plage de mois (raccourcis + « de … à … »), tuile « Position fin de plage » (stock du jour, camions sans client),
-   cadre de la plage sur la carte, « Où vont mes camions ? » (camion d'achat vert, ➜ direct sarcelle, entrepôt, vide en pointillés gris, vente sans
+   cadre de la plage sur la carte, « Destination des livraisons » (camion d'achat vert, ➜ direct sarcelle, entrepôt, vide en pointillés gris, vente sans
    camion en pointillés rouges), couverture par contrat (bleu à venir, orange non couvert, contour bleu en trop, 🔒 hachuré fixé). Deux thèmes. */
 .vplage { background:var(--card); border-radius:14px; padding:8px 10px 9px; box-shadow:0 1px 2px var(--shadow); margin:0 0 10px; }
 .vrs button { font-size:13.5px; padding:7px 0; white-space:nowrap; }
@@ -372,6 +372,20 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .vkleg .vkls { fill:var(--ink); } .vkleg .vkld { fill:none; stroke:var(--v-nv); stroke-width:1.5; stroke-dasharray:3 2; }
 .vnote { font-size:13px; color:var(--muted); margin:-4px 0 8px; }
 .vtab .w4 { width:78px; }
+
+/* v34 · calm surfaces, readable data, mobile-first workspaces */
+:root{--radius:8px}body{line-height:1.45}header{padding:10px 16px;padding-top:calc(env(safe-area-inset-top) + 10px)}header h1{font-size:17px;font-weight:650}header .sub{font-size:12px;opacity:1}header button{min-width:44px;min-height:44px;border-radius:6px}
+main{max-width:760px;padding:16px 14px 100px}.card,.cal,.vtile,.vplage{box-shadow:none;border-radius:var(--radius);border:1px solid var(--line);margin-bottom:14px}.card{padding:14px}.card h2:first-child{margin-top:0}h2{text-transform:none;letter-spacing:0;color:var(--ink);font-size:15px;font-weight:650}.muted{font-size:14px}.note,.pending,.refused{font-size:13px;line-height:1.5}.ph{color:var(--muted)}
+button{touch-action:manipulation}button:focus-visible,[tabindex]:focus-visible,summary:focus-visible{outline:3px solid var(--primary);outline-offset:3px}button[hidden]{display:none!important}button,.btn,.chip,.seg,.seg button,input,textarea,select{border-radius:6px}.btn{font-size:16px;padding:12px;min-height:46px}.chip{border-radius:4px;font-size:12px}.chips button{border-radius:5px;min-height:44px}.seg button{min-height:44px;font-size:14px;padding:8px 5px}.seg button.on{box-shadow:none;border:1px solid var(--line)}nav button{font-size:12px;min-height:62px;gap:4px}nav button.on{box-shadow:inset 0 3px var(--primary)}nav svg{pointer-events:none}
+.op{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:14px 2px;margin:0;background:transparent}.op-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px}.op-heading>b{font-size:16px;overflow-wrap:anywhere}.quantity{font-size:17px;font-variant-numeric:tabular-nums;white-space:normal}.op-detail{display:block;font-size:13px;color:var(--primary);margin-top:7px}.op .bar{display:none}.op .q{white-space:normal}.op .row{flex-wrap:wrap}.op .grow{min-width:0}.agenda-day{margin:22px 0}.agenda-day h2{padding-bottom:8px;border-bottom:2px solid var(--line)}.agenda-controls{display:flex;align-items:center;gap:10px;margin-top:12px}.agenda-controls .chips{flex:1;min-width:0;margin:0;padding:0}.calu{min-height:44px;border-radius:6px}.calhead{margin-bottom:12px}.calhead button{min-width:44px;min-height:44px}.calleg{font-size:12px}.day .m,.day .m.l6,.day .m.l7{font-size:11px;letter-spacing:0}.day .m i{font-size:10px}.day{border-radius:4px}.wband{border-radius:4px;min-height:44px;font-size:13px}.who{font-size:14px;flex-wrap:wrap}.who .v{white-space:normal}.metrics b{overflow-wrap:anywhere}.kv{flex-wrap:wrap}
+.workspace-tabs{display:grid;grid-template-columns:1fr 1.4fr 1.4fr;border-bottom:1px solid var(--line);margin:4px 0 18px;gap:3px}.workspace-tabs button{border:0;background:none;min-height:48px;font:inherit;font-size:13px;color:var(--muted);padding:6px 3px;border-radius:0}.workspace-tabs button.on{color:var(--primary);box-shadow:inset 0 -3px var(--primary);font-weight:650}.vplage{padding:10px}.vprow{gap:8px}.vpsel select{min-height:44px;font-size:15px}.vplage .vrs button{font-size:13px}.position-detail{display:block;width:100%;border:0;background:none;text-align:left;color:var(--ink);font:inherit;padding:0}.vpl b{color:var(--ink);font-size:28px;white-space:normal;overflow-wrap:anywhere;font-weight:700}.vtag{font-size:12px;font-weight:650}.vtile .vtmini{display:block;margin-top:14px;border-top:1px solid var(--line)}.vtmini button{display:flex;align-items:baseline;justify-content:space-between;width:100%;gap:10px;padding:12px 0;background:none;border-bottom:1px solid var(--line);border-radius:0}.vtmini button:last-child{border:0}.vtmini small{white-space:normal;font-size:13px}.vtmini b{display:block;font-size:16px;white-space:normal;overflow:visible;flex-shrink:0}.val button{border-radius:5px;min-height:44px;font-weight:500;font-size:14px}.val button b{margin-left:5px}.val .short,.val .nc,.val .sw,.val .vsk,.val .vide,.val .nv{background:var(--soft);color:var(--ink);box-shadow:none}.val .short:before,.val .vsk:before{content:'!';color:var(--out);font-weight:700}.quiet-status{font-size:14px;color:var(--muted);margin:10px 0 18px}
+.fold{border-bottom:1px solid var(--line);padding:4px 0;margin-bottom:12px}.fold>summary{cursor:pointer;padding:13px 2px;min-height:48px;font-size:15px;font-weight:650;list-style-position:inside}.fold>.card{margin-top:8px}.fold>.card>h3{display:none}.fold[open]>.card>h3{display:flex}.fold select,select#uiLanguage{width:100%;padding:10px;font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line)}.vo h3{font-size:16px;flex-wrap:wrap;font-weight:650;gap:6px}.vo h3>span{flex:1 1 150px}.vo h3 em{order:3;flex:1 0 100%;background:none;padding:0;font-size:13px;font-weight:400;white-space:normal}.vi,.vq{width:44px;height:44px;min-width:44px;line-height:44px;border-radius:6px;font-weight:600}.vleg{font-size:13px}.vleg span{white-space:normal}.vmap .vh span{white-space:normal;overflow-wrap:anywhere}.vc{height:48px;border-radius:4px;overflow:visible}.vc b{white-space:normal;font-size:13px;overflow-wrap:anywhere}.vc.vsub{height:44px}.vc.vsub.vend,.vsw.vend{background:var(--soft);color:var(--ink)}.scale-note{display:block;font-size:12px;color:var(--muted);margin-top:8px}.vval{grid-template-columns:1fr}.vval.v3{grid-template-columns:1fr}.vval button{display:flex;justify-content:space-between;gap:12px;align-items:baseline;min-height:44px;background:none;border-bottom:1px solid var(--line);border-radius:0;padding:10px 0}.vval small{font-size:13px;white-space:normal}.vval b{font-size:16px;white-space:normal;overflow:visible;text-overflow:clip}.vcvh b,.vcp>b{white-space:normal;overflow:visible;text-overflow:clip;font-size:14px}.vcvl{white-space:normal;flex-wrap:wrap;font-size:13px}.vcpb>span{font-size:13px;height:auto;min-height:28px;flex-wrap:wrap}.vcp> b{text-align:left}.vcph{font-size:13px}.vcph span{overflow-wrap:anywhere}.vsvg text{font-size:12px}.vsvg{min-width:280px}.vo{overflow-x:auto}.vtab{font-size:14px}.vtab th{font-size:12px}.vtab td.l{overflow-wrap:normal;word-break:normal;min-width:70px}.vtabw{padding-bottom:6px}.vbig{font-size:24px;white-space:normal;overflow-wrap:anywhere}.vnomk{background:none;padding:8px 0;text-align:left;font-weight:400}
+.route-month h4{font-size:15px;margin:22px 0 8px}.route-month:first-child h4{margin-top:0}.delivery-route{padding:12px 0;border-bottom:1px solid var(--line)}.route-head,.route-destination{display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:10px;text-align:left;border:0;background:none;color:var(--ink);font:inherit;padding:8px 0;min-height:44px}.route-head>span,.route-destination>span{min-width:0;overflow-wrap:anywhere}.route-head b,.route-destination b{font-size:15px;font-weight:650}.route-head strong,.route-destination strong{font-size:15px;white-space:normal;flex-shrink:0;font-variant-numeric:tabular-nums}.route-head small,.route-destination small{display:block;color:var(--muted);font-size:13px;margin-top:3px}.route-price{font-size:13px;color:var(--muted)}.route-destination{padding-left:12px;border-left:2px solid var(--line);margin-top:8px}.route-destination .route-arrow{flex:0 0 14px;color:var(--muted)}.route-destination>span:not(.route-arrow){flex:1}.route-destination.attention{border-left-color:var(--amber)}.stock-end{border-left:0;border-top:1px solid var(--line);padding-left:0}.text-action{min-height:44px;border:0;background:none;color:var(--primary);font:inherit;font-size:14px;text-align:left;padding:10px 0}.empty-state{padding:24px 0;color:var(--muted)}.photo-status:empty{display:none}.photo-status{margin-bottom:12px}.photo-status .muted:empty{display:none}.cash-list{border-top:1px solid var(--line)}.cash-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 10px;gap:10px;width:100%;padding:16px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;color:var(--ink);font:inherit}.cash-row>span:nth-child(2){text-align:right}.cash-row b{font-size:14px}.cash-row strong{display:block;font-size:17px;overflow-wrap:anywhere}.cash-row small{display:block;font-size:12px;color:var(--muted)}.cash-row .warn{color:var(--amber)}.cash-row .neg{color:var(--out)}.simulation-input{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}.simulation-input label{margin:0;flex:1}.simulation-input input{width:105px}.simulation-input button{flex-basis:100%}.vsbig{font-weight:700;font-size:28px}.vsrow{font-size:13px}
+.sheet{max-height:92dvh;border-radius:10px 10px 0 0;padding-top:12px;overscroll-behavior:contain}.sheet-close{display:block;margin-left:auto;position:sticky;top:0;z-index:4;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:26px}.sheet h3{font-size:18px;overflow-wrap:anywhere}.sheet input,.sheet textarea{font-size:17px}.toast{display:flex;align-items:center;gap:12px;font-size:14px;max-height:40dvh;overflow:auto}.toast button{min-width:36px;min-height:36px;color:#fff;background:none;border:1px solid #777;font-size:22px}.form-error{padding:10px;border-left:3px solid var(--out);color:var(--out);font-size:14px}.version{font-size:12px;color:var(--muted);padding:8px 0}.center{padding:24px 4px;text-align:left}.center>.fold{margin-top:28px}.center h2{font-size:24px}.vpx{border-radius:4px}.vkn.pale{opacity:1}
+@media(max-width:360px){main{padding-left:10px;padding-right:10px}.card{padding:12px}.route-head,.route-destination{flex-wrap:wrap}.route-head strong,.route-destination strong{flex-basis:100%;text-align:right}.vtmini b{flex-shrink:1}.workspace-tabs button{font-size:12px}.vsvg{min-width:270px}.cash-row{gap:6px}.cash-row strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+.fold>.vo>h3>span{display:none}.fold>.vo>h3{justify-content:flex-end;margin-bottom:8px}.fold>.vo>h3 em{order:0;flex:1}.fold>.vo>h3 .vi{flex:none}.day .m{font-size:12px;line-height:16px}.curve-caption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:13px}.curve-caption small{flex-basis:100%;font-size:13px}.day:focus-visible{outline-offset:-3px}main{padding-bottom:calc(env(safe-area-inset-bottom) + 100px)}
+
 </style>
 </head>
 <body>
@@ -394,26 +408,26 @@ const SCOPES = ["Files.ReadWrite.All", "User.Read"];
 const G = "https://graph.microsoft.com/v1.0";
 const T = {
   fr: { cal:"Calendrier", deliv:"Livraisons", stock:"Stock", pnl:"P&L", expo:"Exposition", settings:"Réglages", login:"Se connecter avec Microsoft",
-        loginTxt:"Connectez-vous avec le compte Microsoft avec lequel le dossier Atlas vous a été partagé.", data:"Données du", none:"Rien ce jour-là",
+        loginTxt:"Utilisez le compte Microsoft ayant accès au dossier Atlas.", data:"Données du", none:"Rien ce jour-là",
         planned:"Prévu", delivered:"Livré", cancelled:"Annulé", late:"en retard", receipt:"Réception", delivery:"Livraison", qty:"Quantité (lb)",
-        date:"Date", carrier:"Transporteur", comment:"Commentaire", save:"Enregistrer", cancel:"Fermer", sent:"Envoyé : Atlas le reprendra sur le PC",
-        pending:"en attente de reprise par Atlas", upcoming:"À venir", lateF:"En retard", done:"Livrées", all:"Tout", count:"Compter", counted:"Quantité comptée (lb)",
+        date:"Date", carrier:"Transporteur", comment:"Commentaire", save:"Enregistrer", cancel:"Fermer", sent:"Envoyé · traitement PC en attente",
+        pending:"traitement PC en attente", upcoming:"À venir", lateF:"En retard", done:"Livrées", all:"Tout", count:"Compter", counted:"Quantité comptée (lb)",
         countDate:"Date du comptage", realised:"Réalisé", forecast:"Prévu", swaps:"Swaps", total:"Total", byProduct:"Par produit", byMonth:"Par mois",
         floating:"hors totaux : {0} à prix flottant", searching:"Recherche du dossier Atlas…",
-        notFound:"Aucune fiche Atlas trouvée. Collez le lien du dossier reçu par e-mail, puis Enregistrer.", folderLink:"Lien de partage du dossier (reçu par e-mail)",
+        notFound:"Aucune fiche Atlas trouvée. Collez le lien du dossier reçu par e-mail, puis Enregistrer.", folderLink:"Lien du dossier Atlas",
         badLink:"Lien non reconnu", clientId:"Identifiant de l'application (client ID)", logout:"Se déconnecter", folder:"Dossier", reset:"Changer de dossier",
         noData:"Aucune donnée", lot:"Lot", location:"Lieu", refused:"refusé par Atlas", noMargin:"{0} sans marge", toConfirm:"{0} à confirmer",
-        kept:"Pas envoyé (réseau ou connexion) : gardé sur le téléphone, envoi automatique", offline:"Pas de réseau", authErr:"Connexion Microsoft refusée : {0}", retry:"↻ pour réessayer",
+        kept:"Envoi en attente · conservé sur ce téléphone", offline:"Pas de réseau", authErr:"Connexion Microsoft refusée : {0}", retry:"↻ pour réessayer",
         noLib:"Bibliothèque Microsoft non chargée", locked:"Livraison confirmée ou facturée : statut, date et quantité se modifient dans Atlas", prebilled:"Facturée d'avance : la date (prévue ou de livraison) et « Livré » se saisissent ici ; la quantité se modifie dans Atlas", part:"partie", status:"Statut",
         futureDone:"Une livraison réalisée ne peut pas être datée dans le futur",
         choose:"Plusieurs comptes Microsoft sont connectés sur ce téléphone : choisissez le vôtre.", denied:"Accès refusé à ce dossier pour {0}",
         noFile:"fiche absente du dossier pour l'instant (Atlas la réécrit) : {0}", lastKept:"dernière fiche gardée", blocked:"Bloquée : OneDrive refuse l'envoi (voir Réglages)",
-        blockedList:"Modifications bloquées (jamais retirées d'office)", retryBtn:"Réessayer", copy:"Copier", copied:"Copié", drop:"Abandonner", dropConfirm:"Confirmer l'abandon",
+        blockedList:"Modifications bloquées", retryBtn:"Réessayer", copy:"Copier", copied:"Copié", drop:"Abandonner", dropConfirm:"Confirmer l'abandon",
         dropBusy:"Envoi en cours : abandon impossible",
         dropDeps:"{0} modification(s) saisie(s) ensuite sur la même livraison partent de l'état que celle-ci donne : abandonnée seule, Atlas refusera leur reprise",
         dropAll:"Abandonner aussi ces {0}", dropOne:"Abandonner celle-ci seule", dropOneDone:"Abandonnée seule : Atlas refusera la reprise des {0} modification(s) suivante(s)",
         boxKept:"{0} modification(s) pas encore envoyée(s) (photos comprises) : gardée(s) sur ce téléphone pour {1}, envoi automatique au retour du réseau ; après « Se déconnecter », à sa prochaine connexion",
-        boxBlocked:"{0} bloquée(s) : Réglages › Réessayer", boxBlockedIci:"{0} bloquée(s) : Réessayer ci-dessus", lineBlocked:"Modification bloquée sur cette ligne : Réglages › Réessayer ou Abandonner d'abord",
+        boxBlocked:"{0} bloquée(s) à réessayer", boxBlockedIci:"{0} bloquée(s) : Réessayer ci-dessus", lineBlocked:"Modification bloquée sur cette ligne : Réglages › Réessayer ou Abandonner d'abord",
         other:"Utiliser un autre compte", sheetClosed:"saisie en cours fermée, rien n'a été envoyé", noSheet:"fiche, dossier ou compte absent : rien n'est gardé",
         orphans:"{0} modification(s) d'une ancienne version de l'app mise(s) de côté : jamais envoyée(s)", demoSent:"Démo : rien n'est envoyé",
         treso:"Trésorerie", photos:"Photos", days:"Jours", cpties:"Contreparties", allProd:"Tous", today:"Aujourd'hui", deliveries:"Livraisons",
@@ -431,11 +445,11 @@ const T = {
         src:{ Invoices:"Facture", Costs:"Coût", Swaps:"Swap", Schedule:"Livraison", bank:"Banque" }, cushion:"avec coussin {0}", estAmt:"date estimée",
         addPhoto:"Ajouter une photo", takePhoto:"Prendre une photo", camShort:"Photo", library:"Galerie", photoN:"{0} photo(s)", photoWait:"{0} photo(s) en attente",
         notImage:"Ce fichier n'est pas une image", tooBig:"Photo trop grosse ({0} Mo ; 40 Mo au plus)", photoErr:"Photo illisible", photoNotKept:"Photo non gardée : mémoire du téléphone pleine",
-        photoKept:"Photo gardée sur le téléphone : envoi automatique au retour du réseau", photoSent:"Photo envoyée : Atlas la range dans les pièces de la livraison",
+        photoKept:"Photo conservée · envoi au retour du réseau", photoSent:"Photo envoyée · rangement sur le PC en attente",
         photoLost:"Photo introuvable sur ce téléphone", noDeliv:"Livraison introuvable", photosHelp:"Photo d'une livraison : réduite sur le téléphone, envoyée dans votre dossier, rangée par Atlas dans les pièces de la livraison.",
         noPhotoAtlas:"Photos : Atlas doit d'abord être mis à jour sur le PC (sa fiche ne les reprend pas encore)",
         photoNotFiled:"photo non rangée : Atlas sur le PC n'a pas encore la mise à jour (photo restée dans le dossier « photos ») ; renvoyez-la après la mise à jour",
-        search:"Contrepartie, contrat, réf.", recent:"Récentes et à venir", appearance:"Apparence", light:"Clair", dark:"Sombre", auto:"Auto (système)",
+        search:"Contrepartie, contrat, réf.", recent:"Livraisons proches", appearance:"Apparence", light:"Clair", dark:"Sombre", auto:"Selon l’appareil",
         week:["L","M","M","J","V","S","D"], months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"], demo:"Démo (données d'exemple)",
         // correctifs mobqa (08/10)
         noLots:"Aucun lot en stock à compter", invOf:"inventaire du {0}", noDate:"sans date",
@@ -486,7 +500,7 @@ const T = {
         photoLost:"Photo not found on this phone", noDeliv:"Delivery not found", photosHelp:"Delivery photo: reduced on the phone, sent to your folder, filed by Atlas with the delivery's documents.",
         noPhotoAtlas:"Photos: Atlas must first be updated on the PC (its sheet does not take them yet)",
         photoNotFiled:"photo not filed: Atlas on the PC is not updated yet (photo left in the « photos » folder); send it again after the update",
-        search:"Counterparty, contract, ref.", recent:"Recent and upcoming", appearance:"Appearance", light:"Light", dark:"Dark", auto:"Auto (system)",
+        search:"Counterparty, contract, ref.", recent:"Nearby deliveries", appearance:"Appearance", light:"Light", dark:"Dark", auto:"Auto (system)",
         week:["M","T","W","T","F","S","S"], months:["January","February","March","April","May","June","July","August","September","October","November","December"], demo:"Demo (sample data)",
         noLots:"No lot in stock to count", invOf:"inventory of {0}", noDate:"undated",
         memFull:"Not kept: phone storage full. Let the waiting photos go (network) or abandon a blocked change (Settings), then try again",
@@ -543,7 +557,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "33";
+const VERSION_APP = "34";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -575,7 +589,16 @@ function ouvrir() {
 }
 
 // un message n'en masque jamais un autre : le précédent est retiré (revue 3, défaut 12)
-function toast(s) { document.querySelectorAll(".toast").forEach(x => x.remove()); const d = document.createElement("div"); d.className = "toast"; d.textContent = s; document.body.appendChild(d); setTimeout(() => d.remove(), 3200); }
+function toast(message) {
+  document.querySelectorAll('.toast').forEach(x=>x.remove());
+  const panel=document.querySelector('.sheet');
+  if(panel&&panel.querySelector('input,textarea')&&!/envoy|sent|démo|demo|photo/i.test(message)){
+    let error=panel.querySelector('.form-error');if(!error){error=document.createElement('p');error.className='form-error';error.setAttribute('role','alert');panel.querySelector('h3')?.after(error);}error.textContent=message;error.scrollIntoView({block:'nearest'});return;
+  }
+  const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');
+  const text=document.createElement('span');text.textContent=message;const close=document.createElement('button');close.textContent='×';close.setAttribute('aria-label',ui('Fermer le message','Dismiss message'));close.onclick=()=>d.remove();d.append(text,close);document.body.appendChild(d);
+  if(!/refus|bloqu|impossible|non gard|not saved|failed|rejected|⚠/i.test(message))setTimeout(()=>d.remove(),8000);
+}
 
 // ---------- Microsoft (MSAL) et OneDrive (Graph) ----------
 // correctifs mobqa (08/10) : adresse de retour de Microsoft = le DOSSIER de l'app (« …/atlas/ », celle qui est inscrite), même ouverte par « index.html »
@@ -842,7 +865,7 @@ function tabs() {
   $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => { tab = b.dataset.tab; us.set("tab", tab); selDay = null; render(); window.scrollTo(0, 0); });
 }
 function header() {
-  $("#title").textContent = "Atlas" + (data ? " · " + (data.profil === "head" ? "Head" : (lang === "fr" ? "Logistique" : "Logistics")) : "");
+  $("#title").textContent = "Atlas" + (data ? " · " + (data.profil === "head" ? (lang === "fr" ? "Direction" : "Management") : (lang === "fr" ? "Logistique" : "Logistics")) : "");
   const g = data && data.genere ? new Date(data.genere) : null;   // heure UTC (suffixe Z) : affichée à l'heure du téléphone
   $("#sub").textContent = g && !isNaN(g) ? t("data") + " " + g.toLocaleString(lang === "fr" ? "fr-FR" : "en-US", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" }) + (DEMO ? " · " + t("demo") : "") : (DEMO && data ? t("demo") : "");
   $("#btnLang").textContent = lang === "fr" ? "EN" : "FR";
@@ -863,15 +886,16 @@ function opView(l, b) {
 function ops() { const b = blocage(); return (data.livraisons || []).map(l => opView(l, b)); }
 const photoTxt = l => (l.photos || l.photosAttente) ? '<div class="ph">📷 ' + (l.photos ? esc(tf("photoN", l.photos)) : "") + (l.photos && l.photosAttente ? " · " : "") + (l.photosAttente ? esc(tf("photoWait", l.photosAttente)) : "") + '</div>' : "";
 // correctifs mobqa (08/10) : livraison sans date ni mois : « sans date » et sa référence (des cartes d’un même contrat ne se distinguaient que par la quantité)
-function opCard(l) {
+function opCard(l, groupedDate = false) {
   const cls = l.sens === "achat" ? "in" : "out";
-  const stChip = l.statut === "Réalisé" ? '<span class="chip in">' + t("delivered") + '</span>' : l.statut === "Annulé" ? '<span class="chip">' + t("cancelled") + '</span>'
-               : l.retard ? '<span class="chip late">' + t("late") + '</span>' : '<span class="chip">' + t("planned") + '</span>';
-  return '<div class="card op ' + cls + '" data-ref="' + esc(l.ref) + '"><div class="bar"></div><div class="grow">' +
-    '<div class="row"><div class="grow"><b>' + esc(l.cpty) + '</b> · ' + esc(prod(l.produit)) + '</div>' + stChip + '</div>' +
-    '<div class="row"><div class="grow muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + (l.partie ? " " + esc(l.partie) : "") + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t("noDate")) + (l.contrat ? " · " + esc(l.contrat) : "") + (!l.date && !l.mois ? " · " + esc(l.ref) : "") + (l.transporteur ? " · " + esc(l.transporteur) : "") + '</div>' +
-    '<div class="q">' + nf(l.qte) + ' lb</div></div>' + photoTxt(l) + (l.attente ? '<div class="pending">' + t("pending") + '</div>' : "") + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : "") +
-    (l.refus ? '<div class="refused">' + t("refused") + " : " + esc(l.refus.texte) + '</div>' : "") + '</div></div>';
+  const state = l.statut === "Réalisé" ? t("delivered") : l.statut === "Annulé" ? t("cancelled") : l.retard ? t("late") : t("planned");
+  return '<div class="card op ' + cls + '" data-ref="' + esc(l.ref) + '" role="button" tabindex="0"><div class="grow">' +
+    '<div class="op-heading"><b>' + esc(l.cpty) + '</b><span class="chip' + (l.retard ? ' late' : '') + '">' + esc(state) + '</span></div>' +
+    '<div class="op-heading"><span>' + esc(prod(l.produit)) + ' · ' + (l.sens === "achat" ? t("receipt") : t("delivery")) + '</span><strong class="quantity">' + (l.qte == null ? t('unknown') : qn(l.qte) + ' ' + U()) + '</strong></div>' +
+    '<div class="muted">' + esc([groupedDate === true && l.date ? null : l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t("noDate"), l.contrat, l.partie, l.ref, l.transporteur].filter(Boolean).join(' · ')) + '</div>' +
+    '<span class="op-detail">' + ui('Détail', 'Details') + ' →</span>' + photoTxt(l) +
+    (l.attente ? '<div class="pending">' + t("pending") + '</div>' : '') + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : '') +
+    (l.refus ? '<div class="refused">' + t("refused") + ' : ' + esc(l.refus.texte) + '</div>' : '') + '</div></div>';
 }
 function bindOps(root, avant) { root.querySelectorAll(".op[data-ref]").forEach(c => c.onclick = () => { if (avant) avant(); editOp(c.dataset.ref); }); }
 
@@ -905,7 +929,7 @@ const nomCourt = p => { const n = prod(p); return n.slice(0, 2); };
 const BESOIN_MIN = 1;
 const besoinVu = w => !!w && +w.besoin > BESOIN_MIN;
 function calChoix() {
-  const s = STK(); if (calMode == null) calMode = us.get("calMode", "jours"); if (calMode !== "cpty") calMode = "jours";
+  const s = STK(); if (calMode == null) calMode = us.get("calMode34", "agenda"); if (!["agenda", "jours", "cpty"].includes(calMode)) calMode = "agenda";
   if (calProd == null) calProd = us.get("calProd", "*");
   if (!s || (calProd !== "*" && !s.produits.some(p => p.produit === calProd))) calProd = "*";
 }
@@ -978,6 +1002,7 @@ function moisHtml(mk) {
 }
 function renderCal() {
   calChoix();
+  if (calMode === "agenda") return renderAgenda();
   const now = new Date(); if (!calMonth) calMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const s = STK(), y = calMonth.getFullYear(), m = calMonth.getMonth(), mk = iso(calMonth).slice(0, 7);
   const first = new Date(y, m, 1), start = lundi(first), last = new Date(y, m + 1, 0), nW = Math.round((addJ(lundi(last), 7) - start) / 864e5 / 7);
@@ -988,24 +1013,24 @@ function renderCal() {
   if (s) {
     // correctifs mobqa (08/10) : bascule lb / MT toujours visible (au bout de la ligne Jours | Contreparties : seul moyen de passer en MT pour la
     // Logistique), rangée des produits avec fondu et flèche « › » quand elle défile (jamais une puce coupée net)
-    h += '<div class="row" style="margin:0 4px 6px;gap:8px"><div class="seg small grow" id="mode">' + [["jours", t("days")], ["cpty", t("cpties")]].map(x => '<button data-m="' + x[0] + '" class="' + (x[0] === calMode ? "on" : "") + '">' + x[1] + '</button>').join("") + '</div>' +
+    h += '<div class="row" style="margin:0 4px 6px;gap:8px"><div class="seg small grow" id="mode">' + [["agenda", ui("Liste", "List")], ["jours", ui("Mois", "Month")], ["cpty", t("cpties")]].map(x => '<button data-m="' + x[0] + '" class="' + (x[0] === calMode ? "on" : "") + '">' + x[1] + '</button>').join("") + '</div>' +
          '<button class="calu" data-u="1">' + (unite === "MT" ? "MT → lb" : "lb → MT") + '</button></div>' +
          vScroll("chipsw calp", '<div class="vsc-in chips" style="padding:2px 0 6px">' + [["*", t("allProd")]].concat(s.produits.map(p => [p.produit, prod(p.produit)])).map(x => '<button data-p="' + esc(x[0]) + '" class="' + (x[0] === calProd ? "on" : "") + '">' + esc(x[1]) + '</button>').join("") + '</div>');
     h += (mk < minM || mk > maxM ? '<div class="note" style="padding:0 6px">' + tf("outWin", fmtM(minM), fmtM(maxM)) + '</div>' : moisHtml(mk));
-  } else h += '<div class="note" style="padding:0 6px 6px">' + t("noStock") + '</div>';
+  } else h += '<div class="seg" id="mode"><button data-m="agenda">' + ui('Liste','List') + '</button><button data-m="jours" class="on">' + ui('Mois','Month') + '</button></div><div class="note" style="padding:0 6px 6px">' + t("noStock") + '</div>';
   // jours : mouvements du moteur ; fiche sans stock : livraisons datées (comme avant)
   const byDay = {};
   if (s) mvSel(iso(start), iso(addJ(start, 7 * nW - 1))).forEach(e => (byDay[e.j] = byDay[e.j] || []).push(e));
   else ops().filter(l => l.date && l.statut !== "Annulé").forEach(l => (byDay[l.date] = byDay[l.date] || []).push({ j: l.date, q: l.sens === "achat" ? l.qte : -l.qte, produit: l.produit, ref: l.ref, retard: l.retard }));
   if (!s || calMode === "jours") {
-    // round 25 (corrections) : légende des cases (sens et unité : les quantités des cases sont complètes, sans « k » ni unité répétée)
-    h += '<div class="calleg">▲ ' + t("legIn") + " · ▼ " + t("legOut") + (s ? " · ◇ " + t("legDir") : "") + " · " + tf("legUnit", U()) + '</div>';
+    // Counts fit narrow day cells; exact quantities remain in day details and the agenda.
+    h += '<div class="calleg">▲ ' + t("legIn") + " · ▼ " + t("legOut") + (s ? " · ◇ " + t("legDir") : "") + '<br>' + ui('Nombre de mouvements · touchez un jour pour les quantités', 'Movement count · tap a day for quantities') + '</div>';
     h += '<div class="grid">' + t("week").map(w => '<div class="dow">' + w + '</div>').join("");
     for (let wi = 0; wi < nW; wi++) {
       for (let i = 0; i < 7; i++) {
         const d = addJ(start, wi * 7 + i), k = iso(d), ev = byDay[k] || [];
-        const mark = (list, cls) => { if (!list.length) return ""; const prods = new Set(list.map(e => e.produit)), est = list.some(e => e.est), late = list.some(e => e.retard);
-          const q = markQ(cls === "in" ? "▲" : cls === "out" ? "▼" : "◇", prods.size === 1 && est, prods.size === 1 ? qk(Math.abs(list.reduce((a, e) => a + e.q, 0))) : list.length + "×");
+        const mark = (list, cls) => { if (!list.length) return ""; const est = list.some(e => e.est), late = list.some(e => e.retard);
+          const q = markQ(cls === "in" ? "▲" : cls === "out" ? "▼" : "◇", est, String(list.length));
           return '<span class="m ' + cls + (late ? " late" : "") + q.cls + '">' + q.html + '</span>'; };
         h += '<button class="day' + (d.getMonth() !== m ? " other" : "") + (k === today ? " today" : "") + (k === selDay ? " sel" : "") + '" data-d="' + k + '"><span class="n">' + d.getDate() + '</span><div class="marks">' +
              mark(ev.filter(e => e.type !== "directe" && e.q >= 0), "in") + mark(ev.filter(e => e.type !== "directe" && e.q < 0), "out") + mark(ev.filter(e => e.type === "directe"), "dir") + '</div></button>';
@@ -1038,7 +1063,7 @@ function renderCal() {
   $("#pm").onclick = () => nav(new Date(y, m - 1, 1)); $("#nm").onclick = () => nav(new Date(y, m + 1, 1));
   $("#tm").onclick = () => { selDay = null; nav(new Date(now.getFullYear(), now.getMonth(), 1)); };
   if (s) { if (iso(new Date(y, m - 1, 1)).slice(0, 7) < minM) $("#pm").disabled = true; if (iso(new Date(y, m + 1, 1)).slice(0, 7) > maxM) $("#nm").disabled = true; }
-  $("#main").querySelectorAll("#mode button").forEach(b => b.onclick = () => { calMode = b.dataset.m; us.set("calMode", calMode); selDay = null; render(); });
+  $("#main").querySelectorAll("#mode button").forEach(b => b.onclick = () => { calMode = b.dataset.m; us.set("calMode34", calMode); selDay = null; render(); });
   $("#main").querySelectorAll(".cal .chips [data-p]").forEach(b => b.onclick = () => { calProd = b.dataset.p; us.set("calProd", calProd); render(); });
   const bu = $("#main").querySelector(".cal [data-u]"); if (bu) bu.onclick = () => { unite = unite === "MT" ? "lb" : "MT"; ls.set("unite", unite); render(); };
   $("#main").querySelectorAll(".day").forEach(b => b.onclick = () => { selDay = b.dataset.d === selDay ? null : b.dataset.d; render(); if (selDay) { const j = $("#jour"); if (j && j.scrollIntoView) j.scrollIntoView({ block: "start", behavior: "smooth" }); } });
@@ -1077,9 +1102,9 @@ function jourHtml(k, ms) {
 function listesHtml() {
   const f = { upcoming: l => l.statut === "Prévu" && !l.retard, lateF: l => l.retard, done: l => l.statut === "Réalisé", all: l => l.statut !== "Annulé" };
   if (!f[delivFilter]) delivFilter = "upcoming";
-  const all = ops(), list = all.filter(f[delivFilter]).sort((a, b) => ((a.date || (a.mois ? a.mois + "-15" : "9999")).localeCompare(b.date || (b.mois ? b.mois + "-15" : "9999"))) * (delivFilter === "done" ? -1 : 1));
+  const all = scopedOps(), list = all.filter(f[delivFilter]).sort((a, b) => ((a.date || (a.mois ? a.mois + "-15" : "9999")).localeCompare(b.date || (b.mois ? b.mois + "-15" : "9999"))) * (delivFilter === "done" ? -1 : 1));
   return '<h2>' + t("deliveries") + '</h2>' + vScroll("chipsw", '<div class="vsc-in chips">' + ["upcoming", "lateF", "done", "all"].map(k => '<button data-f="' + k + '" class="' + (k === delivFilter ? "on" : "") + '">' + t(k) +
-    (k === "lateF" ? " (" + all.filter(f.lateF).length + ")" : "") + '</button>').join("") + '</div>') + (list.length ? list.map(opCard).join("") : '<div class="card muted">' + t("noData") + '</div>');
+    (k === "lateF" && all.filter(f.lateF).length ? " (" + all.filter(f.lateF).length + ")" : "") + '</button>').join("") + '</div>') + (list.length ? list.map(opCard).join("") : '<div class="card muted">' + t("noData") + '</div>');
 }
 // feuille d'une semaine : par produit ouverture, entrées, sorties, clôture, besoin (moteur), puis par contrepartie et les mouvements
 function semaineSheet(du) {
@@ -1091,7 +1116,7 @@ function semaineSheet(du) {
     h += '<div class="card" style="margin-top:10px;background:var(--cell)"><b>' + esc(prod(p.produit)) + '</b><div class="metrics"><div><small>' + t("opening") + '</small><b>' + (w.ouv == null ? "—" : qs(w.ouv)) + '</b></div><div><small>' + t("closing") + '</small><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + (w.clo == null ? "—" : (w.approx ? "≈" : "") + qs(w.clo)) + '</b></div>' +
       '<div><small>' + t("inW") + '</small><b class="' + (w.ent ? "pos" : "") + '">' + (w.ent ? "+" + qn(w.ent) : "—") + '</b></div><div><small>' + t("outW") + '</small><b class="' + (w.sor ? "neg" : "") + '">' + (w.sor ? "−" + qn(w.sor) : "—") + '</b></div></div>' +
       (w.clo == null && !p.inventorie ? '<div class="muted">' + t("notInv") + (w.ent || w.sor ? " · " + t("change") + " " + sgn(w.ent - w.sor) : "") + '</div>' : "") +
-      (besoinVu(w) ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.deficit && besoinVu(w) ? '<div class="note">' + t("deficit") + '</div>' : "") +
+      (besoinVu(w) ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + "" +
       (w.ordre || []).map(o => '<div class="note">' + tf("order", fmtDM(o)) + '</div>').join("") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : "") + (w.approx ? '<div class="muted">' + t("approx") + '</div>' : "") + '</div>';
   });
   if (g.length) h += '<h2>' + t("byCpty") + '</h2><div class="card">' + g.map(whoHtml).join("") + '</div>';
@@ -1147,7 +1172,7 @@ function courbe(tr) {
     (it >= 0 ? '<line x1="' + X(it).toFixed(1) + '" x2="' + X(it).toFixed(1) + '" y1="0" y2="' + H + '" stroke="var(--line)" vector-effect="non-scaling-stroke"/>' : "") +
     '<path d="' + path + '" fill="none" stroke="var(--primary)" stroke-width="2" vector-effect="non-scaling-stroke"/>' +
     (ib >= 0 ? '<circle cx="' + X(ib).toFixed(1) + '" cy="' + Y(vs[ib]).toFixed(1) + '" r="3.5" fill="' + (vs[ib] < 0 ? "var(--out)" : "var(--primary)") + '"/>' : "") + '</svg>' +
-    '<div class="row muted" style="font-size:11px"><span class="grow">' + fmtDM(pts[0].j) + '</span><span>' + (ib >= 0 ? t("lowPt") + " " + amtEst(vs[ib]) + " " + le(pts[ib].j) : "") + '</span><span class="grow" style="text-align:right">' + fmtDM(pts[pts.length - 1].j) + '</span></div>';
+    '<div class="curve-caption muted"><span>' + fmtDM(pts[0].j) + '</span><span>' + fmtDM(pts[pts.length - 1].j) + '</span><small>' + (ib >= 0 ? ui('Point bas à partir d’aujourd’hui : ', 'Lowest from today: ') + amtEst(vs[ib]) + " " + le(pts[ib].j) : "") + '</small></div>';
 }
 function renderTreso() {
   const tr = data.tresorerie;
@@ -1162,12 +1187,13 @@ function renderTreso() {
            // flux sans montant (prix flottant : achats indexés, swaps sans fixing) dans la fenêtre : comptés à part, jamais dans les totaux (règle du PC)
            (nFl ? '<div class="muted">' + esc(nSw ? tf("floatingSw", nFl, nSw) : tf("floating", nFl)) + '</div>' : "") + (nMq ? '<div class="note">' + esc(tf("noAmt", nMq)) + '</div>' : "") : "") +
     (tr.previsions === false ? '<div class="note">' + t("bankOnly") + '</div>' : "") + (tr.ecarts ? '<div class="refused">' + tf("gaps", tr.ecarts) + '</div>' : "") + (tr.alertes ? '<div class="note">' + tf("warns", tr.alertes) + '</div>' : "") + '</div>';
-  h += '<div class="card">' + courbe(tr) + '</div><h2>' + t("weeks") + '</h2>';
-  h += tr.semaines.filter(w => w.du >= iso(addJ(parseD(cur), -7))).map(w => '<div class="card wk" data-tw="' + w.du + '"><div class="row"><span class="grow"><span class="t">' + semTitre(w.du) + '</span></span><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + amt(w.clo) + '</b></div>' +
-    '<div class="metrics"><div><small>' + t("inW") + '</small><b class="' + (w.ent ? "pos" : "") + '">' + (w.ent ? "+" + amt(w.ent) : "—") + '</b></div><div><small>' + t("outW") + '</small><b class="' + (w.sor ? "neg" : "") + '">' + (w.sor ? "−" + amt(w.sor) : "—") + '</b></div>' +
-    '<div><small>' + t("lowPt") + '</small><b class="' + (w.bas != null && w.bas <= -0.5 ? "neg" : "") + '">' + amt(w.bas) + '</b> <span class="muted">' + le(w.basLe) + '</span></div><div><small>' + t("funding") + '</small><b class="' + (w.financement > 0 ? "neg" : "") + '">' + financement(w) + '</b></div></div>' +
-    (w.echus ? '<div class="note">' + tf("overdue", w.echus) + '</div>' : "") + (w.sansMontant ? '<div class="muted">' + tf("noAmt", w.sansMontant) + '</div>' : "") + '</div>').join("");
+  h += uiFold(ui('Évolution du solde', 'Balance trend'), '<div class="card">' + courbe(tr) + '</div>', 'cashCurve') + '<h2>' + t("weeks") + '</h2>';
+  const weeks = tr.semaines.filter(w => w.du >= iso(addJ(parseD(cur), -7))), visible = cashExpanded ? weeks : weeks.slice(0, 6);
+  h += '<div class="cash-list">' + visible.map(w => '<button class="cash-row" data-tw="' + w.du + '"><span><b>' + semTitre(w.du) + '</b>' + (w.echus ? '<small class="warn">' + tf('overdue', w.echus) + '</small>' : '') + (w.sansMontant ? '<small>' + tf('noAmt', w.sansMontant) + '</small>' : '') + '</span><span><small>' + t('closing') + '</small><strong class="' + (w.clo != null && w.clo < 0 ? 'neg' : '') + '">' + amt(w.clo) + '</strong>' + (w.financement > 0 ? '<small class="warn">' + t('funding') + ' ' + financement(w) + '</small>' : '') + '</span><span aria-hidden="true">›</span></button>').join('') + '</div>';
+  if (weeks.length > 6) h += '<button class="text-action" id="cashMore">' + (cashExpanded ? ui('Voir moins', 'Show less') : ui('Voir les autres semaines', 'Show more weeks')) + '</button>';
+
   $("#main").innerHTML = h;
+  if ($("#cashMore")) $("#cashMore").onclick = () => { cashExpanded = !cashExpanded; render(); };
   $("#main").querySelectorAll("[data-tw]").forEach(b => b.onclick = () => tresoSemaine(b.dataset.tw));
 }
 const srcTxt = o => o.banque ? T[lang].src.bank : (T[lang].src[o.src] || "");
@@ -1194,9 +1220,9 @@ function tresoSemaine(du) {
     '<div><small>' + t("lowPt") + '</small><b class="' + (w.bas != null && w.bas <= -0.5 ? "neg" : "") + '">' + amt(w.bas) + '</b> <span class="muted">' + le(w.basLe) + '</span></div><div><small>' + t("funding") + '</small><b class="' + (w.financement > 0 ? "neg" : "") + '">' + financement(w) + '</b>' +
     (tr.coussin > 0 && w.coussin > w.financement ? '<br><span class="muted">' + tf("cushion", amt(w.coussin)) + '</span>' : "") + '</div></div>' +
     (w.minimal ? '<div class="muted">' + tf("minimal", w.minimal) + '</div>' : "") + (w.echus ? '<div class="note">' + tf("overdue", w.echus) + '</div>' : "");
-  if (gs.length) h += '<h2>' + t("byCpty") + '</h2><div class="card">' + gs.map(g => '<div class="who"><span class="a ' + (g.o.sens > 0 ? "in" : g.o.sens < 0 ? "out" : "") + '">' + (g.o.sens > 0 ? "▲" : g.o.sens < 0 ? "▼" : "◆") + '</span><span class="grow">' + word(g.o) + " · " + esc(g.o.cpty || "?") +
+  if (gs.length) h += '<details class="fold"><summary>' + t("byCpty") + '</summary><div class="card">' + gs.map(g => '<div class="who"><span class="a ' + (g.o.sens > 0 ? "in" : g.o.sens < 0 ? "out" : "") + '">' + (g.o.sens > 0 ? "▲" : g.o.sens < 0 ? "▼" : "◆") + '</span><span class="grow">' + word(g.o) + " · " + esc(g.o.cpty || "?") +
     (g.o.produit ? ' <span class="muted">· ' + esc(prod(g.o.produit)) + '</span>' : "") + (g.late ? ' <span class="chip late">' + esc(echuTxt(g)) + '</span>' : "") + '</span><span class="v ' + (g.o.sens > 0 ? "pos" : g.o.sens < 0 ? "neg" : "muted") + '">' +
-    (g.q < 0.005 && g.na ? "?" : (g.na ? "≥ " : "") + amt(g.q)) + '</span></div>').join("") + '</div>';
+    (g.q < 0.005 && g.na ? "?" : (g.na ? "≥ " : "") + amt(g.q)) + '</span></div>').join("") + '</div></details>';
   h += '<h2>' + t("dayByDay") + '</h2>';
   for (let i = 0; i < 7; i++) {
     const j = iso(addJ(parseD(du), i)), oj = os.filter(o => o.j === j), fj = (tr.jours || []).find(x => x.j === j);
@@ -1214,16 +1240,16 @@ let photoFiltre = "";
 const photoOk = () => DEMO || !!(data && Array.isArray(data.accepte) && data.accepte.indexOf("photo") >= 0);
 function photoCard(l) {
   const cls = l.sens === "achat" ? "in" : "out";
-  return '<div class="card op ' + cls + '"><div class="bar"></div><div class="grow"><div class="row"><div class="grow"><b>' + esc(l.cpty) + '</b> · ' + esc(prod(l.produit)) + '</div><div class="q">' + nf(l.qte) + ' lb</div></div>' +
+  return '<div class="card op ' + cls + '"><div class="bar"></div><div class="grow"><div class="row"><div class="grow"><b>' + esc(l.cpty) + '</b> · ' + esc(prod(l.produit)) + '</div><div class="q">' + qn(l.qte) + ' ' + U() + '</div></div>' +
     '<div class="muted">' + (l.sens === "achat" ? "▲ " + t("receipt") : "▼ " + t("delivery")) + " · " + (l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t("noDate")) + (l.contrat ? " · " + esc(l.contrat) : "") + " · " + esc(l.ref) +
     (l.retard ? ' <span class="chip late">' + t("late") + '</span>' : "") + '</div>' + photoTxt(l) + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : "") +
     (l.refus ? '<div class="refused">' + t("refused") + " : " + esc(l.refus.texte) + '</div>' : "") +
-    (photoOk() ? '<div class="btns"><button class="btn light" data-cam="' + esc(l.ref) + '">📷 ' + t("camShort") + '</button><button class="btn light" data-lib="' + esc(l.ref) + '">🖼 ' + t("library") + '</button></div>' : "") + '</div></div>';
+    (photoOk() ? '<button class="text-action" data-photo="' + esc(l.ref) + '">+ ' + t("addPhoto") + '</button>' : "") + '</div></div>';
 }
 function renderPhotos() {
   const box = DEMO ? [] : us.get("outbox", []), nAtt = box.filter(e => e.photo).length;
-  $("#main").innerHTML = '<div class="card"><div class="muted">' + t("photosHelp") + '</div>' + (photoOk() ? "" : '<div class="note">' + t("noPhotoAtlas") + '</div>') + (nAtt ? '<div class="pending">' + tf("photoWait", nAtt) + '</div>' : "") + '</div>' +
-    '<input id="phq" type="search" autocomplete="off" placeholder="' + esc(t("search")) + '" value="' + esc(photoFiltre) + '" style="margin-bottom:10px"><div id="phl"></div>';
+  $("#main").innerHTML = '<div class="photo-status">' + (photoOk() ? "" : '<div class="note">' + t("noPhotoAtlas") + '</div>') + (nAtt ? '<div class="pending">' + tf("photoWait", nAtt) + '</div>' : "") + '</div>' +
+    '<input id="phq" type="search" autocomplete="off" aria-label="' + esc(t("search")) + '" placeholder="' + esc(t("search")) + '" value="' + esc(photoFiltre) + '" style="margin-bottom:10px"><div id="phl"></div>';
   const liste = () => {
     const t0 = parseD(today), ecart = x => { const d = parseD(x.date || (x.mois ? x.mois + "-15" : "")); return d ? Math.abs(d - t0) : 9e15; };
     const all = ops().filter(l => l.statut !== "Annulé"), q = photoFiltre.trim().toLowerCase(), lo = iso(addJ(parseD(today), -14)), hi = iso(addJ(parseD(today), 14)), mNow = today.slice(0, 7);
@@ -1231,6 +1257,7 @@ function renderPhotos() {
                  : all.filter(x => x.retard || x.photosAttente || x.refus || (x.date && x.date >= lo && x.date <= hi) || (!x.date && x.mois === mNow)))
       .sort((a, b) => ecart(a) - ecart(b) || (a.date || "").localeCompare(b.date || ""));   // les plus proches d'aujourd'hui d'abord
     $("#phl").innerHTML = (q ? "" : '<h2>' + t("recent") + '</h2>') + (l.length ? l.map(photoCard).join("") : '<div class="card muted">' + t("noData") + '</div>');
+    $("#phl").querySelectorAll("[data-photo]").forEach(b => b.onclick = () => photoPicker(b.dataset.photo));
     $("#phl").querySelectorAll("[data-cam]").forEach(b => b.onclick = () => choisirPhoto(b.dataset.cam, true));
     $("#phl").querySelectorAll("[data-lib]").forEach(b => b.onclick = () => choisirPhoto(b.dataset.lib, false));
   };
@@ -1331,7 +1358,7 @@ async function ajouterPhoto(ref, file) {
   const sb = document.querySelector(".sheet-bg"); if (sb) sb.redessiner = true; else render();
   return true;
 }
-// ---------- exposition (round 27, piste mob, 07/10 22 h : PLAGE de mois, « Où vont mes camions ? », tuile « Position fin de plage », pastilles
+// ---------- exposition (round 27, piste mob, 07/10 22 h : PLAGE de mois, « Destination des livraisons », tuile « Position fin de plage », pastilles
 // justes, couverture par contrat ; décisions A à G du round 26 b gardées, communes au PC et au téléphone) ----------
 // Un outil par question, chacun avec SA série de la fiche (expo2 : MobileExpo25.cs, MobileExpo26.cs, MobileExpo27.cs), jamais recalculée : le
 // téléphone ne fait que placer les nombres (longueurs, couleurs) ; seuls calculs : le gain ou la perte du curseur (« ce qui bouge » × variation),
@@ -1342,15 +1369,15 @@ async function ajouterPhoto(ref, file) {
 //  1. PLAGE de mois (au lieu d'un seul mois) : raccourcis « Ce mois · T4 26 · 6 mois · Tout » et « de [mois] à [mois] » (deux listes natives) ;
 //     retenue sur le téléphone (expoDu, expoAu, comme l'unité) ; défaut : le trimestre civil en cours ; « Tout » = jusqu'au dernier mois, lignes sans
 //     date comprises. Un « de » après le « à » : l'autre borne prend la même valeur. Plage au-delà du dernier mois d'un produit : bornée ; hors de
-//     sa fenêtre : « rien dans la plage ». Chaque outil lié aux mois suit la plage : cadre sur la carte, bande sur l'escalier et sur les parts,
+//     sa fenêtre : « aucune opération sur cette période ». Chaque outil lié aux mois suit la plage : cadre sur la carte, bande sur l'escalier et sur les parts,
 //     curseur au dernier mois, contreparties sur les mois de la plage, camions des mois de la plage.
-//  2. « Où vont mes camions ? » (vis.camions) : une carte par mois ; à gauche les camions d'achat (cabine, caisse verte avec le volume, fournisseur,
+//  2. « Destination des livraisons » (vis.camions) : une carte par mois ; à gauche les camions d'achat (cabine, caisse verte avec le volume, fournisseur,
 //     produit, date), à droite trois nœuds : ➜ client direct (sarcelle), entrepôt (toit en dents de scie, stock fin du mois, sorties par lot), et le
 //     VIDE (cadre gris en pointillés, rien dedans) ; une flèche par destination (pleine si directe ou confirmée, en pointillés si proposée, grise en
 //     pointillés vers le vide) ; ventes sans camion en bas (camion rouge en pointillés tourné vers la gauche). Plus de 8 camions : « + n camions ».
 //  3. Remplacements : tuile « Position fin <dernier mois de la plage> » (case de la carte, barre bouge / 🔒) + stock du jour + camions sans client, au
-//     lieu de « Position aujourd'hui » (qui n'était que le swap fixé) ; « Qu'est-ce qui cloche ? » avec camions sans client, ventes sans camion, swap
-//     à régler, non couvert juste (swaps à venir) ; « Suis-je couvert ? » : une barre PAR CONTRAT (swaps à venir, non couvert, swaps en trop) et la
+//     lieu de « Position aujourd'hui » (qui n'était que le swap fixé) ; « À vérifier » avec camions sans client, ventes sans camion, swap
+//     à régler, non couvert juste (swaps à venir) ; « Couverture par contrat » : une barre PAR CONTRAT (swaps à venir, non couvert, swaps en trop) et la
 //     pastille 🔒 des swaps déjà fixés (ne couvrent plus), au lieu d'une jauge par produit qui comptait le swap fixé.
 //  Round 28 (piste camions, 08/10, minuit : « sous les camions, « sans client », « direct », « entrepôt → client » : ça sert à rien, la bulle
 //     l'explique déjà » ; « le prix des camions : je ne sais pas si c'est flottant ») : la destination n'est plus écrite sous un camion (elle reste
@@ -1369,21 +1396,22 @@ async function ajouterPhoto(ref, file) {
 //     les branches (camion.vers) portent déjà client, date et statut. Le changement d'une destination se fait sur le PC (glisser-déposer).
 // Fiche d'un Atlas plus ancien : sans vis.camions, la carte des camions est masquée ; sans vis.couv, l'ancienne jauge ; sans cptys[].mois, toutes
 // périodes ; sans « expo2 » : l'ancien tableau. Mode démo : fiche d'exemple FICTIVE construite ici (vDemo).
+let expoView = "overview", cashExpanded = false;
 let expoProd = null, expoDu = null, expoAu = null, expoDelta = 1, expoTip = null, expoGloss = false, expoAller = null, vDemoFiche = null, expoCamOuv = {};
 try { expoDu = ls.get("expoDu", null); expoAu = ls.get("expoAu", null); } catch (e) { expoDu = null; expoAu = null; }
 // correctifs mobqa (08/10) : raccourci touché (« mois », « trim », « 6m », « tout ») gardé tel quel et recalculé sur le mois en cours à chaque affichage ;
 // null : plage choisie aux listes « de / à », par un en-tête de mois ou une case
 let expoRac = null; try { expoRac = ls.get("expoRac", null); } catch (e) { expoRac = null; }
 const VT = {
-  fr: { q1: "Où et quand suis-je exposé ?", q2: "Comment bouge mon stock ?", q3: "Quelle part a un prix fixé ?", q4: "Suis-je couvert ?",
-        q5: "Combien si le prix bouge ?", q6: "Avec qui ?", q7: "Suis-je gagnant au marché ?", q8: "Qu'est-ce qui cloche ?", q9: "Quand se fixent mes swaps ?",
-        q10: "Où vont mes camions ?",
-        tPos: "Position fin {0}", tPosTout: "Position fin {0} + sans date", tExp: "Exposé fin {0}", tExpTout: "Exposé fin {0} + sans date", regle: "exposé = acheté pas vendu (▲) ou vendu pas acheté (▼)", vendu: "Déjà vendu", venduS: "stock en attente", vendT: "Stock physique (déjà vendu, en attente de livraison)", pasExpo: "pas une exposition : chaque lb a sa vente", idxR: "Indexé", idxS: "vendu fixe", idxT: "Indexé vendu fixe", gVendu: "stock déjà vendu", gCouv: "couvert par swap", gNCv: "non couvert", achNV: "Acheté, pas vendu", venNA: "Vendu, pas acheté", stLibre: "Stock libre", toutApp: "Tout est apparié", aConf: "à confirmer (proposé) : {0}", couvNC: "couvert {0} · non couvert {1}", stVendM: "déjà vendu {0}", long: "LONG", court: "SHORT", plat: "À PLAT", bouge: "bouge", gLong: "long", gShort: "short", gVerrou: "verrouillé", gNv: "sans prix",
+  fr: { q1: "Exposition par mois", q2: "Évolution du stock", q3: "Répartition des prix", q4: "Couverture par contrat",
+        q5: "Simulation de prix", q6: "Volumes par contrepartie", q7: "Prix comparés au fixing", q8: "À vérifier", q9: "Fixing des swaps",
+        q10: "Destination des livraisons",
+        tPos: "Position fin {0}", tPosTout: "Position fin {0} + sans date", tExp: "Exposé fin {0}", tExpTout: "Exposé fin {0} + sans date", regle: "exposé = acheté pas vendu (▲) ou vendu pas acheté (▼)", vendu: "Déjà vendu", venduS: "à livrer", vendT: "Stock vendu, en attente de livraison", pasExpo: "pas une exposition : chaque lb a sa vente", idxR: "Indexé", idxS: "vendu fixe", idxT: "Indexé vendu fixe", gVendu: "stock déjà vendu", gCouv: "couvert par swap", gNCv: "non couvert", achNV: "Acheté, pas vendu", venNA: "Vendu, pas acheté", stLibre: "Stock libre", toutApp: "Tout est apparié", aConf: "à confirmer (proposé) : {0}", couvNC: "couvert {0} · non couvert {1}", stVendM: "déjà vendu {0}", long: "LONG", court: "SHORT", plat: "À PLAT", bouge: "bouge", gLong: "long", gShort: "short", gVerrou: "verrouillé", gNv: "sans prix",
         debut: "début", entrees: "entrées", sorties: "sorties", fin: "fin", fixe: "prix fixe", indexe: "indexé", sansPrix: "sans prix",
         aFixer: "à fixer", verrous: "verrouillés", swapsL: "swaps à venir", nonCouv: "non couvert", tropL: "swaps en trop", fixeL: "fixé, ne couvre plus", parContrat: "par contrat",
         achatsR: "achats · à recevoir", ventesL: "ventes · à livrer", tout: "tout",
-        achatMoy: "achat moyen", venteMoy: "vente moyenne", swaps: "swaps", fixing: "fixing {0}", sansRepere: "pas de repère marché",
-        inconnu: "inconnu", stockInc: "stock inconnu", aucunIdx: "aucun achat indexé", aucunSw: "aucun swap ouvert", rien: "rien", rienPlage: "rien dans la plage",
+        achatMoy: "achat moyen", venteMoy: "vente moyenne", swaps: "swaps", fixing: "fixing {0}", sansRepere: "aucun fixing de référence",
+        inconnu: "inconnu", stockInc: "stock inconnu", aucunIdx: "aucun achat indexé", aucunSw: "aucun swap à suivre", rien: "rien", rienPlage: "aucune opération sur cette période",
         alCourt: "Mois short", alNeg: "Stock négatif", alNC: "Non couvert", alPM: "Prix manquant", alRet: "En retard", alSD: "Sans date", alInv: "Stock inconnu", alOk: "Rien à signaler",
         alSC: "Camions sans client", alVSC: "Ventes sans camion", alSR: "Swap à régler", alTrop: "Swaps en trop",
         thDate: "Date", thCpty: "Contrepartie", thContrat: "Contrat", thQP: "QP", thIdx: "indexé", thCouv: "couvert", debutL: "début", stockJour: "stock du jour", total: "total",
@@ -1412,9 +1440,9 @@ const VT = {
              ["QP", "mois dont la moyenne fixe le prix"], ["Sans prix", "prix pas encore saisi dans Atlas"], ["▲ / ▼", "gain / perte"],
              ["Plage", "mois choisis : de … à …"], ["Direct", "le fournisseur livre le client, hors stock"], ["*entrepot", "notre entrepôt"],
              ["Sans client", "aucune vente allouée : entrera au stock"], ["Proposé", "allocation à confirmer (pointillés)"], ["MT", "1 MT = 2 204,62 lb"]] },
-  en: { q1: "Where and when am I exposed?", q2: "How does my stock move?", q3: "How much has a fixed price?", q4: "Am I hedged?",
-        q5: "How much if the price moves?", q6: "With whom?", q7: "Am I winning against the market?", q8: "What needs attention?", q9: "When do my swaps fix?",
-        q10: "Where do my trucks go?",
+  en: { q1: "Exposure by month", q2: "Stock movements", q3: "Price breakdown", q4: "Hedge by contract",
+        q5: "Price simulation", q6: "Volumes by counterparty", q7: "Prices against fixing", q8: "Needs attention", q9: "Swap fixing",
+        q10: "Delivery destinations",
         tPos: "Position end {0}", tPosTout: "Position end {0} + undated", tExp: "Exposed end {0}", tExpTout: "Exposed end {0} + undated", regle: "exposed = bought not sold (▲) or sold not bought (▼)", vendu: "Already sold", venduS: "stock waiting", vendT: "Physical stock (already sold, awaiting delivery)", pasExpo: "not an exposure: each lb has its sale", idxR: "Index-linked", idxS: "sold fixed", idxT: "Index sold fixed", gVendu: "stock already sold", gCouv: "hedged by swap", gNCv: "not hedged", achNV: "Bought, not sold", venNA: "Sold, not bought", stLibre: "Free stock", toutApp: "All matched", aConf: "to confirm (proposed): {0}", couvNC: "hedged {0} · not hedged {1}", stVendM: "already sold {0}", long: "LONG", court: "SHORT", plat: "FLAT", bouge: "moves", gLong: "long", gShort: "short", gVerrou: "locked", gNv: "no price",
         debut: "start", entrees: "in", sorties: "out", fin: "end", fixe: "fixed price", indexe: "index-linked", sansPrix: "no price",
         aFixer: "to fix", verrous: "locked", swapsL: "swaps to fix", nonCouv: "not hedged", tropL: "excess swaps", fixeL: "fixed, no longer hedges", parContrat: "by contract",
@@ -1453,13 +1481,13 @@ const vt = (k, ...a) => a.reduce((s, v, i) => s.split("{" + i + "}").join(v), (V
 const vLOC = () => lang === "fr" ? "fr-FR" : "en-US";
 const vLB = () => (data && data.expo2 && +data.expo2.lbParMT) || lbMT();
 const vZ = v => v == null || isNaN(v) ? 0 : +v;
-// quantité COMPLÈTE dans l'unité choisie (jamais « k ») : lb entières ; MT sans décimale dès 10 MT, deux en dessous ; signe « − » (o.signe : « + »
+// quantité COMPLÈTE dans l'unité choisie (jamais « k ») : lb entières ; MT à deux décimales maximum, comme le calendrier ; signe « − » (o.signe : « + »
 // devant un positif) ; o.nu : sans l'unité ; « 0 » si nul, « ≈ 0 » pour un reste qui n'arrondit pas à 0 lb
 function vq(v, o) {
   o = o || {};
   if (v == null || isNaN(v)) return vt("inconnu");
   const a = Math.abs(+v), neg = +v <= -0.5, pos = +v >= 0.5, sg = neg ? "−" : (o.signe && pos ? "+" : ""), u = o.nu ? "" : " " + U();
-  if (unite === "MT") { const m = a / vLB(), d = m >= 9.995 ? 0 : 2; if (Math.round(m * 100) === 0) return (a >= 0.5 ? "≈ 0" : "0") + u; return sg + m.toLocaleString(vLOC(), { minimumFractionDigits: d, maximumFractionDigits: d }) + u; }
+  if (unite === "MT") { const m = a / vLB(); if (Math.round(m * 100) === 0) return (a >= 0.5 ? "≈ 0" : "0") + u; return sg + m.toLocaleString(vLOC(), { maximumFractionDigits: 2 }) + u; }
   return (neg || pos ? sg + Math.round(a).toLocaleString(vLOC()) : "0") + u;
 }
 // dollars complets : « +12 345 $ » / « +$12,345 » ; gain / perte : « ▲ +6 789 $ », « ▼ −8 888 $ »
@@ -1550,7 +1578,7 @@ function vSetPlage(du, au, quoi, rac) {
 function vBarrePlage(pl) {
   if (!pl.m0) return "";
   const on = vPlageCle(pl), sc = [["mois", vt("rMois")], ["trim", vTrimLab(pl.m0)], ["6m", vt("r6")], ["tout", vt("rTout")]];
-  // correctifs mobqa (08/10) : les listes montrent toujours la plage demandée : un mois hors de ceux du produit (« rien dans la plage ») y figure, grisé
+  // correctifs mobqa (08/10) : les listes montrent toujours la plage demandée : un mois hors de ceux du produit (« aucune opération sur cette période ») y figure, grisé
   // (disabled) et sélectionné ; avant, « de » montrait le 1er mois de la liste et « à » le dernier mois du produit
   const opts = pl.ms.slice(); [pl.duR, pl.auR].forEach(mk => { if (mk && opts.indexOf(mk) < 0) opts.push(mk); }); opts.sort();
   const sel = (id, v) => '<select id="' + id + '" aria-label="' + esc(vt(id === "vdu" ? "de" : "a")) + '">' + opts.map(mk => '<option value="' + mk + '"' + (mk === v ? " selected" : "") + (pl.ms.indexOf(mk) < 0 ? " disabled" : "") + '>' + esc(vMC(mk)) + '</option>').join("") + '</select>';
@@ -1567,7 +1595,7 @@ function expoChoix(e) {
 function vCard(k, q, src, body, em) {
   const open = expoTip === k;
   return '<section class="card vo" data-outil="' + k + '" data-serie="' + src + '"><h3><span>' + esc(vt(q)).replace(/ \?$/, "\u00a0?") + '</span>' + (em ? '<em>' + em + '</em>' : "") +
-    '<button class="vi' + (open ? " on" : "") + '" data-tip="' + k + '" aria-label="' + esc(vt("aide")) + '">i</button></h3>' + (open ? '<div class="vtip">' + esc(VT[lang].tip[k]) + '</div>' : "") + body + '</section>';
+    '<button class="vi' + (open ? " on" : "") + '" data-tip="' + k + '" aria-label="' + esc(vt("aide") + " · " + vt(q)) + '" aria-expanded="' + open + '">i</button></h3>' + (open ? '<div class="vtip">' + esc(VT[lang].tip[k]) + '</div>' : "") + body + '</section>';
 }
 const vUnite = () => '<div class="seg small xu">' + ["lb", "MT"].map(u => '<button data-u="' + u + '" class="' + (U() === u ? "on" : "") + '">' + u + '</button>').join("") + '</div>';
 function renderExpo() {
@@ -1578,9 +1606,15 @@ function renderExpo() {
   let h = VDEFS + '<div class="vtop">' + vScroll("chipsw", '<div class="vsc-in chips xprods">' + e.produits.map(x => '<button data-p="' + esc(x.produit) + '" class="' + (x.produit === expoProd ? "on" : "") + '">' + esc(prod(x.produit)) + '</button>').join("") + '</div>') +
     '<button class="vq' + (expoGloss ? " on" : "") + '" id="vgl" aria-label="' + esc(vt("glossT")) + '">?</button></div>' +
     (expoGloss ? '<div class="card vgloss" id="vgloss">' + VT[lang].gl.map(x => '<div><b>' + esc(x[0] === "*entrepot" ? vCamEnt(p) : x[0]) + '</b> · ' + esc(x[1]) + '</div>').join("") + '</div>' : "");
-  // ordre (une colonne, spec du round 27) : plage, tuile, ce qui cloche, carte, camions, curseur, stock, marché, parts, couverture, contreparties, swaps
-  h += vBarrePlage(pl) + vTuile(p, e, pl) + vAlertes(p, pl) + vCarte(e, pl) + vCamions(p, pl) + vSensib(p, pl) + vStock(p, pl) + vMarche(p) + vParts(p, pl) + vCouv(e, p, pl) + vCptys(p, pl) + vSwaps(p);
+  // Three workspaces share the product and period controls.
+  if (expoAller) expoView = ["cam", "stock", "cptys"].includes(expoAller) ? "flows" : ["couv", "swaps", "marche", "parts", "sens"].includes(expoAller) ? "prices" : "overview";
+  h += vBarrePlage(pl) + '<div class="workspace-tabs" aria-label="' + ui('Vue exposition', 'Exposure view') + '">' +
+    [["overview", ui("Synthèse", "Overview")], ["flows", ui("Livraisons & stock", "Deliveries & stock")], ["prices", ui("Prix & couverture", "Prices & hedges")]].map(x => '<button data-view="' + x[0] + '" aria-pressed="' + (expoView === x[0]) + '" class="' + (expoView === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div>';
+  if (expoView === "overview") h += vTuile(p, e, pl) + vAlertes(p, pl) + vCarte(e, pl);
+  if (expoView === "flows") h += vCamions(p, pl) + uiFold(ui('Évolution du stock', 'Stock movements'), vStock(p, pl), 'stock') + uiFold(ui('Volumes par contrepartie', 'Counterparty volumes'), vCptys(p, pl), 'cptys');
+  if (expoView === "prices") h += vCouv(e, p, pl) + uiFold(ui('Simulation de prix', 'Price simulation'), vSensib(p, pl), 'sens') + uiFold(ui('Répartition des prix', 'Price breakdown'), vParts(p, pl), 'parts') + uiFold(ui('Prix comparés au fixing · toutes périodes', 'Prices against fixing · all periods'), vMarche(p), 'marche') + uiFold(ui('Fixing des swaps · toutes périodes', 'Swap fixing · all periods'), vSwaps(p), 'swaps');
   const M = $("#main"); M.innerHTML = h;
+  M.querySelectorAll("[data-view]").forEach(b => b.onclick = () => { expoView = b.dataset.view; render(); });
   M.querySelectorAll(".xprods [data-p], .vmap .vh[data-p]").forEach(b => b.onclick = () => { expoProd = b.dataset.p; render(); });
   M.querySelectorAll(".xu [data-u]").forEach(b => b.onclick = () => { unite = b.dataset.u === "MT" ? "MT" : "lb"; ls.set("unite", unite); render(); });
   M.querySelectorAll(".vrs [data-pr]").forEach(b => b.onclick = () => { const k = b.dataset.pr, m0 = pl.m0; if (!m0) return;
@@ -1590,13 +1624,20 @@ function renderExpo() {
   if (sau) sau.onchange = () => { vSetPlage(pl.duR || pl.du, sau.value, "au"); render(); };
   // en-tête d'un mois de la carte : la plage devient ce mois
   M.querySelectorAll(".vmap .vmh[data-xm]").forEach(b => b.onclick = () => { vSetPlage(b.dataset.xm, b.dataset.xm); render(); });
-  M.querySelectorAll("[data-tip]").forEach(b => b.onclick = () => { expoTip = expoTip === b.dataset.tip ? null : b.dataset.tip; render(); });
+  M.querySelectorAll("[data-tip]").forEach(b => b.onclick = () => {
+    const section = b.closest('section'), old = section.querySelector('.vtip');
+    if (old) { old.remove(); b.setAttribute('aria-expanded', 'false'); return; }
+    const tip = document.createElement('div'); tip.className = 'vtip'; tip.textContent = VT[lang].tip[b.dataset.tip] || ''; section.querySelector('h3').after(tip); b.setAttribute('aria-expanded', 'true');
+  });
   M.querySelectorAll("[data-camx]").forEach(b => b.onclick = ev => { ev.stopPropagation(); const k = b.dataset.camx; expoCamOuv[k] = !expoCamOuv[k]; render(); });
   $("#vgl").onclick = () => { expoGloss = !expoGloss; render(); };
   M.querySelectorAll("[data-t]").forEach(b => b.onclick = ev => { ev.stopPropagation(); vOuvre(b.dataset, e, p); });
-  const r = $("#vsr"); if (r) r.oninput = () => { expoDelta = +r.value; vSensMaj(p, pl); };
+  const r = $("#vsr"); if (r) r.oninput = () => { expoDelta = +r.value; const n = $('#deltaValue'); if (n) n.value = expoDelta; vSensMaj(p, pl); };
+  const dn = $('#deltaValue'), dr = $('#deltaReset');
+  if (dn) dn.oninput = () => { if (dn.value === '' || !dn.validity.valid) return; expoDelta = +dn.value; r.value = expoDelta; vSensMaj(p, pl); };
+  if (dr) dr.onclick = () => { expoDelta = 0; dn.value = 0; r.value = 0; vSensMaj(p, pl); };
   vScrollInit(M);
-  if (expoAller) { const o = M.querySelector('[data-outil="' + expoAller + '"]'); expoAller = null; if (o) { try { o.scrollIntoView({ block: "start" }); } catch (x) {} o.classList.add("flash"); } }
+  if (expoAller) { const o = M.querySelector('[data-outil="' + expoAller + '"]'); expoAller = null; if (o) { const fold = o.closest("details"); if (fold) fold.open = true; try { o.scrollIntoView({ block: "start" }); } catch (x) {} o.classList.add("flash"); } }
 }
 // petites icônes dessinées (jamais un émoji pour un camion) : camion d'achat, vide (cadre en pointillés), vente sans camion (camion rouge en pointillés)
 const VK_ICO = {
@@ -1638,9 +1679,9 @@ function vTuile(p, e, pl) {
   const iv = ou && mk ? c.mois.indexOf(mk) : -1, sv = iv >= 0 && ou.r.vendu ? vZ(ou.r.vendu[iv]) : null;
   const svB = sv != null ? '<button data-t="cartev" data-p="' + esc(p.produit) + '" data-m="' + mk + '" data-v="' + sv + '"><small>' + esc(vt("gVendu")) + '</small><b>' + esc(vq(sv)) + '</b></button>' : "";
   const mini = '<div class="vtmini">' + svB + '<button data-t="tuile" data-k="stocknow"' + (sj != null ? ' data-v="' + sj + '"' : "") + '><small>' + esc(vt("stockJour")) + '</small><b>' + esc(sj == null ? vt("inconnu") : vq(sj)) + '</b></button>' +
-    (nc ? '<button data-t="tuile" data-k="nocli" data-n="' + nc.n + '" data-v="' + nc.q + '"><small>' + esc(vt("sansCli")) + '</small><b>' + VK_ICO.truck + esc(nc.n ? nc.n + " · " + vq(nc.q) : "0") + '</b></button>' : "") + '</div>';
-  return '<div class="vtile" data-outil="tuiles" data-serie="carte (v, bouge, fixes) au dernier mois de la plage · stockJour · vis.camions (vide)" data-t="tuile" data-k="pos" data-m="' + esc(sd ? "sd" : mk || "") + '"' +
-    (v != null ? ' data-v="' + v + '" data-b="' + b + '" data-f="' + f + '"' : "") + ' role="button" tabindex="0"><small>' + esc(lab) + '</small>' + body + mini + '</div>';
+    "" + '</div>';
+  return '<div class="vtile" data-outil="tuiles"><button class="position-detail" data-t="tuile" data-k="pos" data-m="' + esc(sd ? "sd" : mk || "") + '"' +
+    (v != null ? ' data-v="' + v + '" data-b="' + b + '" data-f="' + f + '"' : "") + '><small>' + esc(lab) + '</small>' + body + '<span class="op-detail">' + ui("Voir le détail", "View details") + ' →</span></button>' + mini + '</div>';
 }
 // ---------- C · ce qui cloche : pastilles sans chiffre (2-3 mots + icône) ; un toucher : l'outil concerné ou les lignes en cause ----------
 // [icône, style, texte, outil où aller (sinon : ses lignes)] ; mois short, stock négatif, camions sans client et ventes sans camion : dans la plage
@@ -1655,7 +1696,7 @@ function vAlertesListe(p, pl) {
   const ng = ms.filter(m => m.stock && m.stock.clo != null && +m.stock.clo <= -0.5); if (ng.length) res.push({ code: "stockNeg", n: ng.length, mois: ng[0].mois });
   const sc = vSansClient(p, pl); if (sc && sc.n) res.push({ code: "sansClient", n: sc.n, q: sc.q });
   const sa = vSansCamion(p, pl); if (sa && sa.n) res.push({ code: "venteSansCamion", n: sa.n, q: sa.q });
-  // correctifs mobqa (08/10) : non couvert et swaps en trop sur les contrats de la plage (vCouvLignes, ceux que « Suis-je couvert ? » montre), jamais sur
+  // correctifs mobqa (08/10) : non couvert et swaps en trop sur les contrats de la plage (vCouvLignes, ceux que « Couverture par contrat » montre), jamais sur
   // tous les contrats : la pastille menait à un outil où tout était couvert à 100 %
   const cl = vCouvLignes(p, pl), parPlage = Array.isArray(cl);
   if (parPlage) {
@@ -1669,7 +1710,8 @@ function vAlertes(p, pl) {
   if (!p.vis) return vCard("alertes", "q8", "vis.alertes", '<div class="vempty">—</div>');
   const al = vAlertesListe(p, pl);
   const b = Object.keys(VAL).map(k => al.find(x => x.code === k)).filter(Boolean).map(x => { const d = VAL[x.code];
-    return '<button class="' + d[1] + '" data-t="alerte" data-k="' + x.code + '"' + (d[3] ? ' data-aller="' + d[3] + '"' : "") + (x.mois ? ' data-m="' + x.mois + '"' : "") + '><i>' + (VK_ICO[x.code] || d[0]) + '</i>' + esc(vt(d[2])) + '</button>'; });
+    return '<button class="' + d[1] + '" data-t="alerte" data-k="' + x.code + '"' + (d[3] ? ' data-aller="' + d[3] + '"' : "") + (x.mois ? ' data-m="' + x.mois + '"' : "") + '><i>' + (VK_ICO[x.code] || d[0]) + '</i>' + esc(vt(d[2])) + (x.n ? ' <b>' + esc(x.n) + '</b>' : "") + '</button>'; });
+  if (!b.length) return '<p class="quiet-status">✓ ' + esc(vt("alOk")) + '</p>';
   return vCard("alertes", "q8", "vis.alertes + plage (court, stockNeg, sansClient, venteSansCamion)", '<div class="val">' + (b.length ? b.join("") : '<span class="ok"><i>✓</i>' + esc(vt("alOk")) + '</span>') + '</div>');
 }
 // ---------- E · carte de chaleur : produits en lignes × mois en colonnes ; case = position prix fin de mois (couleur = sens, palier = taille dans
@@ -1736,7 +1778,7 @@ function vCarte(e, pl) {
   const leg = '<div class="vleg"><span>' + ramp("l") + '▲ ' + esc(vt("gLong")) + '</span><span>' + ramp("s") + '▼ ' + esc(vt("gShort")) + '</span>' +
     (oc ? '<span><i class="vsw vend"></i>' + esc(vt("gVendu")) + '</span>' + (anyIdx ? '<span><i class="vsw cv"></i>' + esc(vt("gCouv")) + '</span><span><i class="vsw ncv"></i>' + esc(vt("gNCv")) + '</span>' : "") : '<span><i class="vsw lk"></i>🔒 ' + esc(vt("gVerrou")) + '</span>') +
     (nul ? '<span><i class="vsw nv"></i>' + esc(vt("gNv")) + '</span>' : "") + '</div>';
-  return vCard("carte", "q1", oc ? "carte (v : exposé = acheté pas vendu / vendu pas acheté ; vendu ; idx, idxCouv)" : "carte (v, bouge, fixes : position prix fin de mois)", (oc ? '<div class="vregle">' + esc(vt("regle")) + '</div>' : "") + vScroll("vmapw nl", '<div class="vsc-in">' + h + '</div>') + leg, U());
+  return vCard("carte", "q1", oc ? "carte (v : exposé = acheté pas vendu / vendu pas acheté ; vendu ; idx, idxCouv)" : "carte (v, bouge, fixes : position prix fin de mois)", "" + vScroll("vmapw nl", '<div class="vsc-in">' + h + '</div>') + leg + '<small class="scale-note">' + ui("Intensité relative à chaque produit", "Intensity relative to each product") + '</small>', U());
 }
 // géométrie commune des graphiques par mois (escalier du stock, parts, swaps) : mêmes colonnes, de L à R
 const VG = { W: 340, L: 50, R: 336 };
@@ -1815,7 +1857,7 @@ function vCouvLignes(p, pl) {
 function vCouv(e, p, pl) {
   const rows = vCouvLignes(p, pl); if (rows == null) return vCouvAncien(e);
   const SRC = "vis.couv (indexe, aVenir, fixe : par contrat)";
-  if (!rows.length) return vCard("couv", "q4", SRC, '<div class="vempty">' + esc(vt((p.vis.couv || []).length ? "rienPlage" : "aucunIdx")) + '</div>', esc(vt("parContrat")));
+  if (!rows.length) return vCard("couv", "q4", SRC, '<div class="vempty">' + esc(vt((p.vis.couv || []).length ? "rienPlage" : "aucunIdx")) + '</div>');
   const mx = Math.max(1, ...rows.map(c => Math.max(vZ(c.indexe), vZ(c.aVenir))));
   const h = rows.map(c => {
     const idx = vZ(c.indexe), av = Math.max(0, vZ(c.aVenir)), sw = Math.min(av, idx), nc = Math.max(0, idx - av), tr = Math.max(0, av - idx), fx = vZ(c.fixe), W = x => (x / mx * 100).toFixed(2) + "%";
@@ -1826,7 +1868,7 @@ function vCouv(e, p, pl) {
       '<span class="vcvl"><span>' + esc(vq(av, { nu: true }) + " / " + vq(idx)) + '</span>' + (fx >= 0.5 ? '<span class="vlk">🔒 ' + esc(vq(fx, { nu: true })) + '</span>' : "") + '</span></button>';
   }).join("");
   const leg = '<div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("swapsL")) + '</span><span><i class="vsw nc"></i>' + esc(vt("nonCouv")) + '</span><span><i class="vsw tr"></i>' + esc(vt("tropL")) + '</span><span><i class="vsw lk"></i>🔒 ' + esc(vt("fixeL")) + '</span></div>';
-  return vCard("couv", "q4", SRC, '<div class="vcvs">' + h + '</div>' + leg, esc(vt("parContrat")));
+  return vCard("couv", "q4", SRC, '<div class="vcvs">' + h + '</div>' + leg);
 }
 // fiche sans vis.couv (Atlas du round 26) : l'ancienne jauge par produit (achats indexés ouverts, tous les swaps)
 function vCouvAncien(e) {
@@ -1862,10 +1904,10 @@ function vBouge(p, pl) {
 function vSensib(p, pl) {
   const z = vBouge(p, pl); if (z.b == null) return vCard("sens", "q5", "mois[].prix (position, bouge, fixes) × variation", '<div class="vempty">' + esc(vt(pl.vide ? "rienPlage" : "rien")) + '</div>');
   const r = z.b * expoDelta, cv = z.q.conversion === true, s = cv ? "equilibre" : z.q.sens || vSens(z.q.position);
-  return vCard("sens", "q5", vOuv(p) ? "carte.v (exposé : acheté pas vendu / vendu pas acheté) × variation" : "mois[].prix (position, bouge, fixes) × variation", '<div class="vsnet">' + vTag(s) + '<b>' + esc(cv ? "≈ 0 " + U() : vq(z.q.position)) + '</b></div>' + (cv || vOuv(p) ? "" : vBarre(z.b, z.q.fixes, true)) +
+  return vCard("sens", "q5", vOuv(p) ? "carte.v (exposé : acheté pas vendu / vendu pas acheté) × variation" : "mois[].prix (position, bouge, fixes) × variation", '<p class="muted">' + ui('Base : ', 'Based on: ') + esc(cv ? "≈ 0 " + U() : vq(z.q.position)) + '</p>' + (cv || vOuv(p) ? "" : vBarre(z.b, z.q.fixes, true)) +
     '<button class="vsbig' + (Math.abs(r) < 0.5 ? " z" : "") + '" id="vsv" data-t="sens" data-m="' + z.m.mois + '" data-v="' + r + '" data-b="' + z.b + '">' + esc(vGain(r)) + '</button>' +
     '<input type="range" class="vrange" id="vsr" min="-5" max="5" step="0.25" value="' + expoDelta + '" aria-label="$/lb">' +
-    '<div class="vsrow"><span>' + esc(vpd(-5, true)) + '</span><b id="vsd">' + esc(vpd(expoDelta, true)) + '</b><span>' + esc(vpd(5, true)) + '</span></div>', esc(z.sd ? vt("finM", vMC(z.last)) + " + " + vt("sansDateM") : vt("finM", vMC(z.m.mois))));
+    '<div class="simulation-input"><label for="deltaValue">' + ui('Variation ($/lb)', 'Change ($/lb)') + '</label><input id="deltaValue" type="number" min="-5" max="5" step="0.25" value="' + expoDelta + '"><button id="deltaReset" class="text-action">' + ui('Remettre à zéro', 'Reset') + '</button></div><div class="vsrow"><span>' + esc(vpd(-5, true)) + '</span><b id="vsd">' + esc(vpd(expoDelta, true)) + '</b><span>' + esc(vpd(5, true)) + '</span></div>', esc(z.sd ? vt("finM", vMC(z.last)) + " + " + vt("sansDateM") : vt("finM", vMC(z.m.mois))));
 }
 function vSensMaj(p, pl) {
   const z = vBouge(p, pl), v = $("#vsv"); if (z.b == null || !v) return;
@@ -2005,25 +2047,24 @@ function vCamMois(p, m, key, ent, lab) {
   return '<div class="vkm" data-m="' + key + '">' + hd + '<svg class="vsvg vksvg" viewBox="0 0 340 ' + H + '" role="img" aria-label="' + esc(vt("q10") + " " + lab) + '">' + g + '</svg>' + more + '</div>';
 }
 function vCamions(p, pl) {
-  const C = p.vis && p.vis.camions; if (!C) return "";   // fiche d'un Atlas plus ancien : carte masquée
-  const ent = vCamEnt(p), ms = vCamMoisPlage(p, pl) || [];
-  const rien = !ms.some(m => (m.camions || []).length || (m.attentes || []).length || (m.sorties || []).length);
-  let h;
-  if (rien) {
-    // aucun camion dans la plage : les trois nœuds en pâle
-    const ns = [{ k: "direct", c: null, h: 34, y: 2, pale: true }, { k: "stock", h: 38, y: 42, pale: true }, { k: "vide", h: 42, y: 86, pale: true }];
-    h = '<div class="vkm vkm0" data-m=""><svg class="vsvg vksvg" viewBox="0 0 340 130" role="img" aria-label="' + esc(vt("aucunCam")) + '">' + vkTxt(0, 66, vt("aucunCam"), "t2", 200) + ns.map(n => vkNoeud(n, "", ent, null, [])).join("") + '</svg></div>';
-  } else h = ms.map(m => vCamMois(p, m, m.mois, ent, m.mois === "sd" ? vt("sansDateM") : vMC(m.mois))).join("");
-  const ic = (svg, txt) => '<span><svg class="vkl" viewBox="0 0 28 14" aria-hidden="true">' + svg + '</svg>' + esc(txt) + '</span>';
-  const leg = '<div class="vleg vkleg">' + ic('<g class="vkt"><rect class="bx" x="1" y="2" width="17" height="8" rx="1"/><path class="cb" d="M18.6 4h4l3.4 3.4V10h-7.4z"/><circle class="wh" cx="5" cy="11.5" r="2"/><circle class="wh" cx="22" cy="11.5" r="2"/></g>', vt("kAchat")) +
-    ic('<path class="vka dir" d="M1 7H21" marker-end="url(#vkm-dir)"/>', vt("kDirect")) + ic('<path class="vkls" d="M3 13V6l4-4v4l4-4v4l4-4v4l4-4v11z"/>', ent) +
-    ic('<path class="vka stk prop" d="M1 7H21" marker-end="url(#vkm-stk)"/>', vt("kProp")) + ic('<rect class="vkld" x="3" y="2" width="20" height="10" rx="2"/>', vt("kVide")) +
-    ic('<g class="vkt att"><path class="cb" d="M8 4H5L2 7v3h6z"/><rect class="bx" x="8.6" y="2" width="17" height="8" rx="1"/><circle class="wh" cx="5" cy="11.5" r="2"/><circle class="wh" cx="22" cy="11.5" r="2"/></g>', vt("kAtt")) +
-    // round 28 : badges de prix (seulement si la fiche les porte : Atlas 28 et plus, profil Head)
-    (ms.some(m => (m.camions || []).some(t => vkPc(t))) ? ["fixe", "indexe", "swap", "sansprix"].map(k => ic('<g class="vkp ' + k + '"><rect class="pb" x="1.5" y="1.5" width="24" height="11" rx="5.5"/>' +
-      '</g>',
-      vt(k === "fixe" ? "kFixe" : k === "indexe" ? "kIdx" : k === "swap" ? "kSwap" : "kSans"))).join("") : "") + '</div>';
-  return vCard("cam", "q10", "vis.camions (camions, vers, attentes, sorties)", h + leg, esc(vPlageTxt(pl) + " · " + U()));
+  const C = p.vis && p.vis.camions; if (!C) return '<p class="muted">' + ui('Destinations indisponibles dans cette fiche.', 'Destinations unavailable in this sheet.') + '</p>';
+  const ent = vCamEnt(p), months = vCamMoisPlage(p, pl) || [];
+  let h = months.map(m => {
+    const trucks = m.camions || [], waits = m.attentes || [], outputs = m.sorties || [];
+    if (!trucks.length && !waits.length && !outputs.length && m.stockFin == null) return '';
+    const key = m.mois, label = key === 'sd' ? vt('sansDateM') : vMC(key), expanded = !!expoCamOuv[key];
+    const rows = (expanded ? trucks : trucks.slice(0, 4)).map(t => {
+      const price = vkPc(t), branches = vkVers(t, C);
+      return '<article class="delivery-route"><button class="route-head" data-t="cam" data-k="t" data-m="' + key + '" data-r="' + esc(t.ref) + '"><span><b>' + esc(t.fournisseur || '?') + '</b><small>' + esc(vkJ(t.jf || t.j, t.auMois)) + (t.retard ? ' · ' + ui('En retard', 'Overdue') : '') + '</small></span><strong>' + esc(vq(t.q)) + '</strong></button>' +
+        (price ? '<span class="route-price">' + esc(vkPxTxt(price)) + (price.px != null || price.est != null ? ' $/lb' : '') + '</span>' : '') +
+        branches.map((b, i) => '<button class="route-destination" data-t="cam" data-k="b" data-m="' + key + '" data-r="' + esc(t.ref) + '" data-i="' + i + '"><span class="route-arrow">→</span><span><b>' + esc(b.dest === 'vide' ? ui('Sans client', 'No customer') : b.client || '?') + '</b><small>' + esc(b.dest === 'vide' ? ui('À affecter', 'Unallocated') : (b.dest === 'stock' ? ent + ' · ' : ui('Direct', 'Direct') + ' · ') + vkJ(b.jv, b.jvMois) + (b.statut && b.statut !== 'Livraison directe' ? ' · ' + vStatut(b.statut) : '')) + '</small></span><strong>' + esc(vq(b.q)) + '</strong></button>').join('') + '</article>';
+    }).join('');
+    const more = trucks.length > 4 ? '<button class="text-action" data-camx="' + key + '">' + (expanded ? ui('Réduire', 'Show less') : ui('Voir les ', 'Show ') + (trucks.length - 4) + ui(' autres livraisons', ' more deliveries')) + '</button>' : '';
+    const unassigned = waits.map(a => '<button class="route-destination attention" data-t="cam" data-k="a" data-m="' + key + '" data-r="' + esc(a.ref) + '"><span><b>' + esc(a.client || '?') + '</b><small>' + ui('Vente sans camion', 'Sale without truck') + ' · ' + esc(vkJ(a.j, a.auMois)) + '</small></span><strong>' + esc(vq(a.q)) + '</strong></button>').join('');
+    const stock = m.stockFin == null && !outputs.length ? '' : '<button class="route-destination stock-end" data-t="cam" data-k="n" data-d="stock" data-m="' + key + '"><span>' + esc(ent) + '<small>' + ui('Stock en fin de mois', 'Month-end stock') + '</small></span><strong>' + esc(m.stockFin == null ? vt('inconnu') : vq(m.stockFin)) + '</strong></button>';
+    return '<section class="route-month"><h4>' + esc(label) + '</h4>' + rows + more + unassigned + stock + '</section>';
+  }).join('');
+  return vCard('cam', 'q10', 'vis.camions', h || '<p class="muted">' + vt('aucunCam') + '</p>', esc(vPlageTxt(pl)));
 }
 // ---------- F · suis-je gagnant au marché : une rangée par prix (achat moyen, vente moyenne, swaps) ; repère « fixing <mois> » en pointillés ;
 // crochet de l'achat et de la vente jusqu'au repère, leur écart ▲ / ▼ posé dessus ; sans repère : carte grise (inchangé : toutes livraisons ouvertes) ----------
@@ -2111,9 +2152,9 @@ function vTabOuv(p, mk) {
   const ls = (r.ouvertes || []).filter(l => sd || (l.mois && l.mois <= mk)), rows = [];
   if (Math.abs(vZ(r.stockLibre)) >= 0.5) rows.push(vLab(vt("stLibre"), esc(vq(vZ(r.stockLibre), { nu: true })), 5, 3));
   ls.forEach(l => { const x = vRowL({ date: l.date, mois: l.mois, cpty: l.cpty, contrat: (l.sens === "achat" ? vt("achNV") : vt("venNA")) + " · " + l.ref, sens: l.sens, q: l.q, type: "fixe", prix: null }); x[4] = ""; rows.push(x); });
-  rows.push(vLab(rows.length ? vt("fin") : vt("toutApp"), esc(vq(v == null ? 0 : v, { nu: true })), 5, 3, true));
+  rows.push(vLab(rows.length ? vt("fin") : vt("toutApp"), esc(v == null ? vt("inconnu") : vq(v, { nu: true })), 5, 3, true));
   const ac = !sd && i >= 0 && r.aConf ? vZ(r.aConf[i]) : 0;
-  vSheet(prod(p.produit) + " · " + (sd ? vt("sansDateM") : vML(mk)), vPos(v, vSens(v)), [{ cols: VC.L(), rows }], [vt("regle"), ac >= 0.5 ? vt("aConf", vq(ac)) : null]);
+  vSheet(prod(p.produit) + " · " + (sd ? vt("sansDateM") : vML(mk)), vPos(v, vSens(v)), [{ cols: VC.L(), rows }], [ac >= 0.5 ? vt("aConf", vq(ac)) : null]);
 }
 // stock physique déjà vendu fin du mois : appariements (hors livraison directe) dont l'achat est arrivé et la vente pas encore livrée
 function vTabVend(p, mk) {
@@ -2122,7 +2163,7 @@ function vTabVend(p, mk) {
   const rows = ps.map(z => [esc(z.achat || "?"), esc((z.vente || "") + (z.propose ? " (" + vt("stProp") + ")" : "")), esc(z.cpty || ""), esc(vq(vZ(z.q), { nu: true }))]);
   const cols = [[vt("achNV").split(",")[0], "l w0"], [vt("venNA").split(",")[0], "l w1"], [vt("thCpty"), "l w2"], [U(), ""]];
   rows.push(vLab(vt("gVendu"), esc(vq(vZ(r.vendu[i]), { nu: true })), 4, 3, true));
-  vSheet(prod(p.produit) + " · " + vML(mk) + " · " + vt("gVendu"), esc(vq(vZ(r.vendu[i]))), [{ cols, rows }], [vt("vendT"), vt("pasExpo")]);
+  vSheet(prod(p.produit) + " · " + vML(mk) + " · " + vt("gVendu"), esc(vq(vZ(r.vendu[i]))), [{ cols, rows }], [vt("vendT")]);
 }
 // indexé vendu fixe des achats du mois : chaque appariement, sa part couverte par swap
 function vTabIdx(p, mk) {
@@ -2166,7 +2207,7 @@ function vOuvreCam(d, P, ent) {
     const so = d.d === "stock" ? (m.sorties || []).map(o => [esc(vDM(o.j)), esc(o.client || "?"), esc(o.lot || o.vente || ""), vQc(-vZ(o.q), "v-short")]) : [];
     const tq = ts.reduce((s, t) => s + vkVers(t, C).filter(b => b.dest === d.d && (d.d !== "direct" || !d.c || b.client === d.c)).reduce((x, b) => x + vZ(b.q), 0), 0);
     const nom = d.d === "direct" ? "➜ " + (d.c || vt("direct")) : d.d === "stock" ? ent : vt("sansCli");
-    vSheet(nom + " · " + lab, esc(vq(tq)), [{ cols: VC.K(), rows: rows.concat(so) }]); return;
+    vSheet(nom + " · " + lab, d.d === 'stock' ? ui('Stock en fin de mois : ', 'Month-end stock: ') + esc(m.stockFin == null ? vt('inconnu') : vq(m.stockFin)) : esc(vq(tq)), [{ cols: VC.K(), rows: rows.concat(so) }]); return;
   }
   if (d.k === "a") { const a = (m.attentes || []).find(x => x.ref === d.r); if (!a) return; const l = ((P.vis || {}).lignes || []).find(x => x.ref === a.ref);
     vSheet((a.client || "?") + " · " + a.ref, esc(vq(a.q)), [{ cols: VC.L(), rows: [l ? vRowL(l) : [esc(vkJ(a.j, a.auMois)), esc(a.client || "?"), esc(a.contrat || ""), vQc(-vZ(a.q), "v-short"), ""]] }], vt("nonAlloue")); return; }
@@ -2307,24 +2348,16 @@ function renderExpoAncien() {
   $("#main").querySelectorAll(".xu [data-u]").forEach(b => b.onclick = () => { unite = b.dataset.u === "MT" ? "MT" : "lb"; ls.set("unite", unite); render(); });
 }
 function renderSettings() {
-  const box = us.get("outbox", []), orph = ls.get("orphelin.outbox", []);
-  // round 23 : apparence (clair, sombre, celle du système), gardée sur le téléphone
-  $("#main").innerHTML = '<div class="card"><label style="margin-top:2px">' + t("appearance") + '</label><div class="seg" id="theme">' +
-    THEMES.map(x => '<button data-th="' + x + '" class="' + (x === theme ? "on" : "") + '">' + t(x) + '</button>').join("") + '</div></div>' +
-    '<div class="card"><label>' + t("clientId") + '</label><input id="cid" value="' + esc(ls.get("clientId", CONFIG.clientId)) + '" autocapitalize="off" autocorrect="off">' +
-    '<button class="btn" id="saveCid">' + t("save") + '</button>' +
-    '<label>' + t("folderLink") + '</label><input id="lnk" autocapitalize="off" autocorrect="off" value="' + esc(us.get("folderLink", "")) + '"><button class="btn light" id="saveLnk">' + t("save") + '</button>' +
-    (place ? '<label>' + t("folder") + '</label><div class="muted">' + esc(place.name) + '</div><button class="btn light" id="resetPlace">' + t("reset") + '</button>' : "") +
-    htmlBloquees(box) +
-    (orph.length ? '<p class="muted">' + esc(t("orphans").replace("{0}", orph.length)) + '</p>' : "") +
-    (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t("login") + '</button>' : "") +
-    htmlCompte(box, false) + '<p class="muted" id="versionApp">' + esc(tf("version", VERSION_APP)) + '</p></div>';
-  $("#saveCid").onclick = () => { ls.set("clientId", $("#cid").value.trim()); location.reload(); };
-  // action volontaire après un échec de connexion : le garde-fou anti-boucle (authFailed) ne bloque que la redirection AUTOMATIQUE
-  $("#saveLnk").onclick = () => { us.set("folderLink", $("#lnk").value.trim()); changerDossier(); };
-  if ($("#resetPlace")) $("#resetPlace").onclick = changerDossier;
-  if ($("#relogin")) $("#relogin").onclick = () => { authFailed = null; pca.acquireTokenRedirect({ scopes: SCOPES, account }); };
-  $("#theme").querySelectorAll("button").forEach(b => b.onclick = () => { ls.set("theme", b.dataset.th); appliquerTheme(b.dataset.th); renderSettings(); });
+  const box = us.get('outbox', []), orph = ls.get('orphelin.outbox', []);
+  $('#main').innerHTML = '<section class="card"><h2>' + t('appearance') + '</h2><div class="seg" id="theme">' + THEMES.map(x => '<button data-th="' + x + '" class="' + (theme === x ? 'on' : '') + '">' + t(x) + '</button>').join('') + '</div><label for="uiLanguage">' + ui('Langue', 'Language') + '</label><select id="uiLanguage"><option value="fr"' + (lang === 'fr' ? ' selected' : '') + '>Français</option><option value="en"' + (lang === 'en' ? ' selected' : '') + '>English</option></select></section>' +
+    '<section class="card"><h2>' + ui('Compte et synchronisation', 'Account and sync') + '</h2>' + (place ? '<p>' + esc(place.name) + '</p><button class="text-action" id="resetPlace">' + t('reset') + '</button>' : '<p class="muted">' + ui('Aucun dossier sélectionné', 'No folder selected') + '</p>') + htmlBloquees(box) + (orph.length ? '<p class="note">' + tf('orphans', orph.length) + '</p>' : '') + (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t('login') + '</button>' : '') + htmlCompte(box, false) + '</section>' +
+    '<details class="fold"><summary>' + ui('Configuration avancée', 'Advanced configuration') + '</summary><label for="cid">' + t('clientId') + '</label><input id="cid" value="' + esc(ls.get('clientId', CONFIG.clientId)) + '" autocapitalize="off"><button class="btn light" id="saveCid">' + ui('Enregistrer la configuration', 'Save configuration') + '</button><label for="lnk">' + t('folderLink') + '</label><input id="lnk" value="' + esc(us.get('folderLink', '')) + '" autocapitalize="off"><button class="btn light" id="saveLnk">' + ui('Utiliser ce dossier', 'Use this folder') + '</button></details><p class="version" id="versionApp">' + esc(tf('version', VERSION_APP)) + '</p>';
+  $('#saveCid').onclick = () => { ls.set('clientId', $('#cid').value.trim()); location.reload(); };
+  $('#saveLnk').onclick = () => { us.set('folderLink', $('#lnk').value.trim()); changerDossier(); };
+  if ($('#resetPlace')) $('#resetPlace').onclick = changerDossier;
+  if ($('#relogin')) $('#relogin').onclick = () => { authFailed = null; pca.acquireTokenRedirect({scopes:SCOPES,account}); };
+  $('#uiLanguage').onchange = () => { lang = $('#uiLanguage').value; ls.set('lang',lang); render(); };
+  $('#theme').querySelectorAll('button').forEach(b => b.onclick = () => { ls.set('theme',b.dataset.th); appliquerTheme(b.dataset.th); renderSettings(); enhanceUI(); });
   lierSorties();
 }
 // entrées bloquées du compte (point 6) : Réessayer, Copier le texte, Abandonner en deux touches ; jamais retirées d'office ; dans Réglages ET sur
@@ -2440,10 +2473,16 @@ window.addEventListener("popstate", () => {
   feuilleHist = null; document.querySelectorAll(".sheet-bg").forEach(b => { if (b.fermer) b.fermer(); else b.remove(); });
 });
 function sheet(html, onReady) {
-  const bg = document.createElement("div"); bg.className = "sheet-bg"; bg.innerHTML = '<div class="sheet">' + html + '</div>';
-  let fermee = false;
-  bg.fermer = () => { if (fermee) return; fermee = true; bg.remove(); histSansFeuille(); if (bg.redessiner) render(); };
-  bg.onclick = e => { if (e.target === bg) bg.fermer(); }; document.body.appendChild(bg); histFeuille(); onReady(bg, () => bg.fermer());
+  const opener=document.activeElement, bg=document.createElement('div');bg.className='sheet-bg';
+  bg.innerHTML='<div class="sheet" role="dialog" aria-modal="true" tabindex="-1"><button class="sheet-close" aria-label="'+ui('Fermer','Close')+'">×</button>'+html+'</div>';
+  const panel=bg.querySelector('.sheet'),heading=panel.querySelector('h3');if(heading){heading.id='sheetTitle';panel.setAttribute('aria-labelledby',heading.id);}
+  let closed=false,dirty=false;
+  const dismiss=()=>{if(dirty&&!window.confirm(ui('Fermer sans enregistrer les changements ?','Close without saving changes?')))return;bg.fermer();};
+  bg.fermer=()=>{if(closed)return;closed=true;bg.remove();histSansFeuille();if(bg.redessiner)render();if(opener&&opener.isConnected)opener.focus();};
+  bg.addEventListener('input',()=>{dirty=true;});bg.addEventListener('click',e=>{if(e.target.closest('#seg button')){dirty=true;enhanceUI(bg);}});bg.onclick=e=>{if(e.target===bg)dismiss();};
+  bg.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();dismiss();}if(e.key==='Tab'){const nodes=Array.from(panel.querySelectorAll('button,input,textarea,select,[tabindex="0"]')).filter(n=>!n.disabled&&n.getClientRects().length);const first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===panel)){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}});
+  document.body.appendChild(bg);histFeuille();onReady(bg,()=>bg.fermer());
+  bg.querySelector('.sheet-close').onclick=dismiss;const close=bg.querySelector('#ko');if(close)close.onclick=dismiss;enhanceUI(bg);panel.focus();
 }
 // envoi depuis une feuille : bouton bloqué pendant l'envoi ; une fois la modification gardée dans la boîte d'envoi (renvoyée sous le même nom :
 // jamais un second fichier pour la même saisie), la feuille se ferme, partie ou non ; pas gardée (mémoire du téléphone, fiche retirée…) : la
@@ -2527,12 +2566,12 @@ function countLot(lot) {
       };
     });
 }
-const phLigne = l => "📷 " + tf("photoN", l.photos || 0) + (l.photosAttente ? " · " + tf("photoWait", l.photosAttente) : "");
+const phLigne = l => (l.photos ? tf("photoN", l.photos) : "") + (l.photosAttente ? (l.photos ? " · " : "") + tf("photoWait", l.photosAttente) : "");
 function render() {
   today = todayIso();
-  header(); if (!data) { if (sansFiche) sansFiche(); return; } tabs();
+  header(); if (!data) { if (sansFiche) sansFiche(); enhanceUI(); return; } tabs();
   ({ cal: renderCal, stock: renderStock, treso: renderTreso, expo: renderExpo, photos: renderPhotos, settings: renderSettings })[tab]();
-  bandeauMaj();
+  bandeauMaj(); enhanceUI();
 }
 // round 23 : mise à jour automatique de la fiche (« que ça se mette à jour côté app ») : au retour au premier plan après 1 min, et toutes les
 // 2 min tant que l'app est ouverte ; jamais pendant une saisie (feuille ouverte, champ actif) ni sur Réglages ; une coupure réseau est muette (la
@@ -2585,8 +2624,8 @@ async function boot() {
       if (!ok || !account) {
         data = null; place = null; pending = {}; refus = {}; header();
         $("#nav").innerHTML = "";
-        $("#main").innerHTML = '<div class="center"><div class="big" style="margin-bottom:10px">Atlas</div><p class="muted">' + t("loginTxt") + '</p>' + (authFailed ? '<p class="refused">' + esc(authText()) + '</p>' : "") +
-          (ok ? '<button class="btn" id="login">' + t("login") + '</button>' : "") + '<label>' + t("clientId") + '</label><input id="cid" autocapitalize="off" autocorrect="off" value="' + esc(ls.get("clientId", CONFIG.clientId)) + '"><button class="btn light" id="saveCid">' + t("save") + '</button></div>';
+        $("#main").innerHTML = '<div class="center"><h2>' + ui('Votre espace de travail', 'Your workspace') + '</h2><p class="muted">' + t("loginTxt") + '</p>' + (authFailed ? '<p class="refused">' + esc(authText()) + '</p>' : "") +
+          (ok ? '<button class="btn" id="login">' + t("login") + '</button>' : "") + '<details class="fold"><summary>' + ui('Configuration avancée', 'Advanced configuration') + '</summary><label>' + t("clientId") + '</label><input id="cid" autocapitalize="off" autocorrect="off" value="' + esc(ls.get("clientId", CONFIG.clientId)) + '"><button class="btn light" id="saveCid">' + t("save") + '</button></details></div>';
         if ($("#login")) $("#login").onclick = () => pca.loginRedirect({ scopes: SCOPES });
         $("#saveCid").onclick = () => { ls.set("clientId", $("#cid").value.trim()); location.reload(); };
         return;
@@ -2662,6 +2701,52 @@ if (!window.ATLAS_ESSAI) setInterval(() => { if (!document.hidden && Date.now() 
 window.addEventListener("pageshow", e => { if (!e.persisted) return; if (!DEMO && !account) boot(); else document.dispatchEvent(new Event("visibilitychange")); });
 // page d'essai : l'app est chargée sans démarrer, les essais appellent ses fonctions
 if ("serviceWorker" in navigator && !DEMO && !window.ATLAS_ESSAI) navigator.serviceWorker.register("sw.js").catch(() => {});
+
+// Version 34 · UI helpers. No business calculations or network writes here.
+function ui(fr, en) { return lang === 'fr' ? fr : en; }
+function uiFold(label, html, key) { return '<details class="fold" data-fold="' + key + '"><summary>' + esc(label) + '</summary>' + html + '</details>'; }
+function scopedOps() {
+  const month = calMonth ? iso(calMonth).slice(0,7) : today.slice(0,7);
+  return ops().filter(l => (calProd === '*' || l.produit === calProd) && (l.date ? l.date.slice(0,7) === month : l.mois ? l.mois === month : true));
+}
+function renderAgenda() {
+  if (!calMonth) calMonth = new Date(new Date().getFullYear(),new Date().getMonth(),1);
+  const mk = iso(calMonth).slice(0,7), stock = STK(), all = scopedOps().filter(l=>l.statut!=='Annulé');
+  const groups = new Map(); all.sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')).forEach(l=>{const k=l.date||''; if(!groups.has(k))groups.set(k,[]);groups.get(k).push(l);});
+  let h='<div class="calhead"><button id="pm" aria-label="'+ui('Mois précédent','Previous month')+'">‹</button><b>'+esc(fmtM(mk))+'</b><button id="tm" class="txt">'+t('today')+'</button><button id="nm" aria-label="'+ui('Mois suivant','Next month')+'">›</button></div>';
+  h+='<div class="seg" id="mode">'+[['agenda',ui('Liste','List')],['jours',ui('Mois','Month')],['cpty',t('cpties')]].map(x=>'<button data-m="'+x[0]+'" class="'+(calMode===x[0]?'on':'')+'">'+x[1]+'</button>').join('')+'</div>';
+  h+='<div class="agenda-controls"><div class="chips">'+[['*',t('allProd')]].concat((stock?stock.produits:[]).map(p=>[p.produit,prod(p.produit)])).map(x=>'<button data-p="'+esc(x[0])+'" class="'+(calProd===x[0]?'on':'')+'">'+esc(x[1])+'</button>').join('')+'</div><button class="calu" id="agendaUnit">'+U()+'</button></div>';
+  if(stock)h+=uiFold(ui('Stock du mois','Monthly stock'),moisHtml(mk),'agendaStock');
+  h+='<p class="muted">'+all.length+' '+ui('livraison(s) · ','delivery/deliveries · ')+esc(fmtM(mk))+'</p>';
+  h+=groups.size?Array.from(groups).map(([d,ls])=>'<section class="agenda-day"><h2>'+esc(d?fmtJ(d):ui('Date à préciser','Date to confirm'))+'</h2>'+ls.map(l=>opCard(l,true)).join('')+'</section>').join(''):'<p class="empty-state">'+ui('Aucune livraison pour ce produit et ce mois.','No deliveries for this product and month.')+'</p>';
+  $('#main').innerHTML=h;
+  const move=n=>{calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+n,1);render();};
+  $('#pm').onclick=()=>move(-1);$('#nm').onclick=()=>move(1);$('#tm').onclick=()=>{calMonth=null;render();};
+  if(stock){$('#pm').disabled=mk<=moisPlein(stock.du,false);$('#nm').disabled=mk>=moisPlein(stock.au,true);}
+  $('#main').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{calMode=b.dataset.m;us.set('calMode34',calMode);render();});
+  $('#main').querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{calProd=b.dataset.p;us.set('calProd',calProd);render();});
+  $('#agendaUnit').onclick=()=>{unite=U()==='lb'?'MT':'lb';ls.set('unite',unite);render();};bindOps($('#main'));
+}
+function photoPicker(ref) {
+  sheet('<h3>'+t('addPhoto')+'</h3><button class="btn" id="pickCamera">'+t('takePhoto')+'</button><button class="btn light" id="pickLibrary">'+t('library')+'</button>',(bg,close)=>{
+    bg.querySelector('#pickCamera').onclick=()=>{close();choisirPhoto(ref,true);};
+    bg.querySelector('#pickLibrary').onclick=()=>{close();choisirPhoto(ref,false);};
+  });
+}
+function enhanceUI(root) {
+  root=root||document;
+  document.documentElement.lang=lang;
+  $('#btnLang').hidden=!!data;
+  root.querySelectorAll('.seg button,.chips button,.xprods button').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('on'))));
+  root.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.classList.contains('on')?'page':'false'));
+  root.querySelectorAll('label').forEach(l=>{const n=l.nextElementSibling;if(n&&n.id&&/^(INPUT|TEXTAREA|SELECT)$/.test(n.tagName))l.htmlFor=n.id;});
+  root.querySelectorAll('.op[data-ref],.who[data-g],.wk[data-w],.wk[data-tw]').forEach(el=>{el.setAttribute('role','button');el.tabIndex=0;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}};});
+  const pm=$('#pm'),nm=$('#nm');if(pm)pm.setAttribute('aria-label',ui('Mois précédent','Previous month'));if(nm)nm.setAttribute('aria-label',ui('Mois suivant','Next month'));
+  root.querySelectorAll('.vsc-arr').forEach(b=>b.removeAttribute('tabindex'));
+  root.querySelectorAll('.vsvg [data-t]').forEach(el=>{el.setAttribute('role','button');el.tabIndex=0;el.setAttribute('aria-label',ui('Ouvrir le détail','Open details')+' '+(el.dataset.m||el.dataset.k||''));el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));}};});
+  root.querySelectorAll('.vsvg:has([data-t])').forEach(el=>el.setAttribute('role','group'));
+}
+
 if (!window.ATLAS_ESSAI) boot();
 </script>
 </body>
