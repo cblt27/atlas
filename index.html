@@ -506,7 +506,11 @@ const T = {
         badQty:"Quantité à saisir en lb, plus grande que 0 (livraison qui n'a pas lieu : « Annulé »)", needDate:"Date à choisir : une livraison datée garde une date",
         badCount:"Quantité comptée : 0 ou plus, en lb", readErr:"Lecture impossible · ↻ pour réessayer", badSheet:"Fiche Atlas illisible (en cours d'écriture ?) · ↻ pour réessayer",
         noDemo:"Mode démo indisponible à cette adresse : aucune fiche d'exemple publiée. Ouvrez l'adresse sans ?demo", newVersion:"Nouvelle version d'Atlas · toucher pour mettre à jour",
-        version:"Version {0}", floatingSw:"hors totaux : {0} à prix flottant, dont {1} swaps", lateOf:"dont échu {0}", lateOfN:"dont {0} échu(s)", photoNotKeptW:"Photo non gardée : mémoire du téléphone pleine ({0} photo(s) en attente partiront au retour du réseau) ; reprenez-la ensuite" },
+        version:"Version {0}", floatingSw:"hors totaux : {0} à prix flottant, dont {1} swaps", lateOf:"dont échu {0}", lateOfN:"dont {0} échu(s)", photoNotKeptW:"Photo non gardée : mémoire du téléphone pleine ({0} photo(s) en attente partiront au retour du réseau) ; reprenez-la ensuite",
+        // round 41 (piste F) : fiche Head : alertes ouvertes et derniers cours
+        mkts:"Marchés", mkAll:"Tous les cours ({0})", mkLast:"Derniers cours", mkFx:"Changes", alOpen:"{0} alerte(s) ouverte(s)", alNone:"Aucune alerte ouverte",
+        alBlock:"{0} bloquante(s)", alTodo:"À traiter : {0}", alTitle:"Alertes d'Atlas", alBlk:"Bloquantes", alAtt:"Attention", alInfo:"Information", alCheck:"À vérifier",
+        alMarg:"Marges", alDocs:"Pièces", alPc:"Le détail est dans Atlas, sur le PC (À traiter)" },
   en: { cal:"Calendar", deliv:"Deliveries", stock:"Inventory", pnl:"P&L", expo:"Exposure", settings:"Settings", login:"Sign in with Microsoft",
         loginTxt:"Sign in with the Microsoft account the Atlas folder was shared with.", data:"Data of", none:"Nothing that day",
         planned:"Planned", delivered:"Delivered", cancelled:"Cancelled", late:"late", receipt:"Receipt", delivery:"Delivery", qty:"Quantity (lb)",
@@ -556,7 +560,10 @@ const T = {
         badQty:"Enter a quantity in lb, greater than 0 (delivery not happening: “Cancelled”)", needDate:"Choose a date: a dated delivery keeps a date",
         badCount:"Counted quantity: 0 or more, in lb", readErr:"Cannot read · tap ↻ to retry", badSheet:"Atlas sheet unreadable (being written?) · tap ↻ to retry",
         noDemo:"Demo mode not available at this address: no sample sheet published. Open the address without ?demo", newVersion:"New version of Atlas · tap to update",
-        version:"Version {0}", floatingSw:"not in totals: {0} floating-price, of which {1} swaps", lateOf:"of which overdue {0}", lateOfN:"of which {0} overdue", photoNotKeptW:"Photo not kept: phone storage full ({0} photo(s) waiting will go when the network is back); take it again then" } };
+        version:"Version {0}", floatingSw:"not in totals: {0} floating-price, of which {1} swaps", lateOf:"of which overdue {0}", lateOfN:"of which {0} overdue", photoNotKeptW:"Photo not kept: phone storage full ({0} photo(s) waiting will go when the network is back); take it again then",
+        mkts:"Markets", mkAll:"All prices ({0})", mkLast:"Latest prices", mkFx:"FX", alOpen:"{0} open alert(s)", alNone:"No open alert",
+        alBlock:"{0} blocking", alTodo:"To do: {0}", alTitle:"Atlas alerts", alBlk:"Blocking", alAtt:"Warning", alInfo:"Information", alCheck:"To check",
+        alMarg:"Margins", alDocs:"Documents", alPc:"The detail is in Atlas, on the PC (Action list)" } };
 const ls = { get(k, d) { try { const v = localStorage.getItem("atlas." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
              set(k, v) { try { localStorage.setItem("atlas." + k, JSON.stringify(v)); return true; } catch (e) { return false; } },
              del(k) { try { localStorage.removeItem("atlas." + k); } catch (e) {} } };
@@ -606,7 +613,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "37";
+const VERSION_APP = "41";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -1228,6 +1235,59 @@ function courbe(tr) {
     (ib >= 0 ? '<circle cx="' + X(ib).toFixed(1) + '" cy="' + Y(vs[ib]).toFixed(1) + '" r="3.5" fill="' + (vs[ib] < 0 ? "var(--out)" : "var(--primary)") + '"/>' : "") + '</svg>' +
     '<div class="curve-caption muted"><span>' + fmtDM(pts[0].j) + '</span><span>' + fmtDM(pts[pts.length - 1].j) + '</span>' + (isDetailed() && ib >= 0 ? '<small>'+ui('Point bas à partir d’aujourd’hui : ', 'Lowest from today: ') + amtEst(vs[ib]) + " " + le(pts[ib].j)+'</small>' : "") + '</div>';
 }
+// ---------- round 41 (piste F) : fiche Head : alertes ouvertes et derniers cours (« alertes », « marches » d'Atlas 41) ----------
+// Seulement les cours des historiques de marché d'Atlas (origine « mkt » : westmetall, BCE, fiches de prix), jamais un repère du carnet d'ordres ni
+// le taux de l'onglet Europe : rien de l'Europe sur la fiche Head (règle de l'utilisateur). Fiche d'un Atlas plus ancien (sans ces champs) ou
+// Logistique : rien. Chiffres de la fiche, jamais recalculés ici ; pas de précision inutile (0, 2 ou 4 décimales selon l'ordre de grandeur).
+const mkRows = () => data && data.profil === "head" && Array.isArray(data.marches)
+  ? data.marches.filter(x => x && x.origine === "mkt" && typeof x.v === "number" && isFinite(x.v) && x.v > 0 && !!parseD(x.le)) : [];
+const nfx = (v, d) => Number(v).toLocaleString(lang === "fr" ? "fr-FR" : "en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const mkDec = v => Math.abs(v) >= 1000 ? 0 : Math.abs(v) >= 10 ? 2 : 4;
+function mkVal(x) {
+  const n = nfx(x.v, mkDec(x.v)), u = x.unite || "", c = x.devise === "USD" ? "$" : (x.devise || "");
+  if (!c) return n + (u ? " " + u : "");
+  return lang === "fr" ? n + " " + c + u : c === "$" ? "$" + n + u : n + " " + c + u;
+}
+function mkChg(x) {
+  if (typeof x.prec !== "number" || !(x.prec > 0)) return "";
+  const r = Math.round((x.v - x.prec) / x.prec * 1000) / 10;
+  if (r === 0) return '<small class="muted">=</small>';
+  return '<small class="' + (r > 0 ? "pos" : "neg") + '">' + (r > 0 ? "▲ " : "▼ ") + nfx(Math.abs(r), 1) + (lang === "fr" ? " %" : "%") + '</small>';
+}
+const mkDate = s => { const d = parseD(s); return !d ? "" : fmtDM(s) + (d.getFullYear() !== new Date().getFullYear() ? "/" + String(d.getFullYear()).slice(2) : ""); };
+// source courte (comme la page Marchés du PC) : première partie avant « · », sans le code final entre parenthèses ; la feuille la donne en entier
+const mkSrc = s => { let r = String(s || ""); const k = r.indexOf(" · "); if (k > 0) r = r.slice(0, k).trim(); const p = r.lastIndexOf(" ("); if (/\)$/.test(r) && p > 0) r = r.slice(0, p).trim(); return r; };
+const mkRow = (x, full) => '<div class="who mk41"><span class="grow">' + esc(x.nom || x.id) + '<br><span class="muted">' + esc(mkDate(x.le) + (x.src ? " · " + (full ? x.src : mkSrc(x.src)) : "")) + '</span></span>' +
+  '<span class="v" style="text-align:right">' + esc(mkVal(x)) + (mkChg(x) ? '<br>' + mkChg(x) : "") + '</span></div>';
+const mkGroup = g => g === "FX" ? t("mkFx") : g || "";
+// carte : le premier cours de chaque groupe (dans l'ordre de la fiche) ; tous les cours dans une feuille
+function mkHtml() {
+  const xs = mkRows(); if (!xs.length) return "";
+  const seen = new Set(), top = xs.filter(x => { const g = x.groupe || ""; if (seen.has(g)) return false; seen.add(g); return true; });
+  return '<div class="card" id="mk41"><div class="row"><b class="grow">' + esc(t("mkts")) + '</b><span class="muted">' + esc(t("mkLast")) + '</span></div>' + top.map(x => mkRow(x, false)).join("") +
+    (xs.length > top.length ? '<button class="btn light" id="mk41all">' + esc(tf("mkAll", xs.length)) + ' ›</button>' : "") + '</div>';
+}
+function mkSheet() {
+  const xs = mkRows(); if (!xs.length) return; const gs = [];
+  xs.forEach(x => { const g = x.groupe || ""; let e = gs.find(z => z.g === g); if (!e) gs.push(e = { g, xs: [] }); e.xs.push(x); });
+  sheet('<h3>' + esc(t("mkLast")) + '</h3>' + gs.map(e => '<h2>' + esc(mkGroup(e.g)) + '</h2><div class="card">' + e.xs.map(x => mkRow(x, true)).join("") + '</div>').join("") +
+    '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; });
+}
+const alData = () => data && data.profil === "head" && data.alertes && typeof data.alertes === "object" ? data.alertes : null;
+const alN = (a, k) => { const v = +a[k]; return isFinite(v) && v > 0 ? Math.round(v) : 0; };
+function alHtml() {
+  const a = alData(); if (!a) return "";
+  const n = alN(a, "ouvertes"), b = alN(a, "bloquantes");
+  return '<div class="card" id="al41"><div class="row"><span class="grow"><b class="' + (b > 0 ? "neg" : n > 0 ? "warn" : "") + '">' + esc(n > 0 ? "⚠ " + tf("alOpen", n) : t("alNone")) + '</b>' +
+    (b > 0 ? ' <span class="neg">· ' + esc(tf("alBlock", b)) + '</span>' : "") + '</span><span class="muted" style="white-space:nowrap">' + esc(tf("alTodo", alN(a, "aTraiter"))) + ' ›</span></div></div>';
+}
+function alSheet() {
+  const a = alData(); if (!a) return;
+  const m = (k, lab, cls) => '<div><small>' + esc(t(lab)) + '</small><b class="' + (alN(a, k) > 0 ? cls : "") + '">' + alN(a, k) + '</b></div>';
+  sheet('<h3>' + esc(t("alTitle")) + '</h3><div class="metrics">' + m("bloquantes", "alBlk", "neg") + m("attention", "alAtt", "warn") + m("info", "alInfo", "") + m("aVerifier", "alCheck", "warn") +
+    m("marges", "alMarg", "warn") + m("pieces", "alDocs", "warn") + '</div><p class="muted">' + esc(t("alPc")) + '</p><button class="btn light" id="ko">' + t("cancel") + '</button>',
+    (bg, close) => { bg.querySelector("#ko").onclick = close; });
+}
 function renderTreso() {
   const tr = data.tresorerie;
   if (!tr || !Array.isArray(tr.semaines)) { $("#main").innerHTML = '<div class="card muted">' + t("noTreso") + '</div>'; return; }
@@ -1241,6 +1301,7 @@ function renderTreso() {
            // flux sans montant (prix flottant : achats indexés, swaps sans fixing) dans la fenêtre : comptés à part, jamais dans les totaux (règle du PC)
            (nFl ? '<div class="muted">' + esc(nSw ? tf("floatingSw", nFl, nSw) : tf("floating", nFl)) + '</div>' : "") + (nMq ? '<div class="note">' + esc(tf("noAmt", nMq)) + '</div>' : "") : "") +
     (tr.previsions === false ? '<div class="note">' + t("bankOnly") + '</div>' : "") + (tr.ecarts ? '<div class="refused">' + tf("gaps", tr.ecarts) + '</div>' : "") + (tr.alertes ? '<div class="note">' + tf("warns", tr.alertes) + '</div>' : "") + '</div>';
+  h += alHtml() + mkHtml();   // round 41 (piste F) : alertes ouvertes et derniers cours (fiche Head d'Atlas 41) ; la carte du solde reste la première
   h += '<section class="cash-trend"><h2>'+ui('Évolution du solde','Balance trend')+'</h2>'+courbe(tr)+'</section><h2>' + t("weeks") + '</h2>';
   const weeks = tr.semaines.filter(w => w.du >= iso(addJ(parseD(cur), -7))), visible = isDetailed() || cashExpanded ? weeks : weeks.slice(0, 6);
   h += '<div class="cash-list">' + visible.map(w => '<button class="cash-row" data-tw="' + w.du + '"><span><b>' + semTitre(w.du) + '</b>' + (isDetailed() ? '<small>' + t('inW') + ' ' + amt(w.ent) + '<br>' + t('outW') + ' ' + amt(w.sor) + '</small>' : '') + (w.echus ? '<small class="warn">' + tf('overdue', w.echus) + '</small>' : '') + (w.sansMontant ? '<small>' + tf('noAmt', w.sansMontant) + '</small>' : '') + '</span><span><small>' + t('closing') + '</small><strong class="' + (w.clo != null && w.clo < 0 ? 'neg' : '') + '">' + amt(w.clo) + '</strong>' + (w.financement > 0 ? '<small class="warn">' + t('funding') + ' ' + financement(w) + '</small>' : '') + '</span><span aria-hidden="true">›</span></button>').join('') + '</div>';
@@ -1249,6 +1310,7 @@ function renderTreso() {
   $("#main").innerHTML = h;
   if ($("#cashMore")) $("#cashMore").onclick = () => { cashExpanded = !cashExpanded; render(); };
   $("#main").querySelectorAll("[data-tw]").forEach(b => b.onclick = () => tresoSemaine(b.dataset.tw));
+  const al41 = $("#al41"), mk41 = $("#mk41all"); if (al41) al41.onclick = alSheet; if (mk41) mk41.onclick = mkSheet;
 }
 const srcTxt = o => o.banque ? T[lang].src.bank : (T[lang].src[o.src] || "");
 function opTreso(o) {
