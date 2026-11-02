@@ -7,12 +7,13 @@
 // mobile v124 (02/11) : style Bloomberg, courbes des prix (cours lus en direct sur OneDrive, jamais gardés ici)
 // mobile v126 (02/11) : livraison en parties (k/n, restes), livraison ouverte jamais verrouillée
 // mobile v130 (02/11) : une seule app, Atlas (seconde édition retirée) ; nouveau nom de cache : l'ancienne page gardée est effacée à l'activation
+// v130 (2) : à l'activation, seuls les anciens caches d'Atlas (« atlas-… ») sont effacés : une autre app publiée sur le même site garde le sien
 const C = "atlas-130", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // bibliothèque Microsoft (MSAL) : adresse à version fixe (contenu immuable, empreinte contrôlée par la page) gardée ici pour l'ouverture hors connexion
 const MSAL = "https://cdn.jsdelivr.net/npm/@azure/msal-browser@4.30.0/lib/msal-browser.min.js";
 self.addEventListener("install", e => e.waitUntil(caches.open(C).then(c => c.addAll(APP.map(u => new Request(u, { cache: "reload" }))).then(() => c.add(new Request(MSAL, { mode: "cors" })).catch(() => {}))).then(() => self.skipWaiting())));
-self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())));
+self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("atlas-") && k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
   if (e.request.url === MSAL) {
