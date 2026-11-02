@@ -642,6 +642,8 @@ const T = {
         noData:"Aucune donnée", lot:"Lot", location:"Lieu", refused:"refusé par Atlas", noMargin:"{0} sans marge", toConfirm:"{0} à confirmer",
         kept:"Envoi en attente · conservé sur ce téléphone", offline:"Pas de réseau", authErr:"Connexion Microsoft refusée : {0}", retry:"↻ pour réessayer",
         noLib:"Bibliothèque Microsoft non chargée", locked:"Livraison confirmée ou facturée : statut, date et quantité se modifient dans Atlas", prebilled:"Facturée d'avance : la date (prévue ou de livraison) et « Livré » se saisissent ici ; la quantité se modifie dans Atlas", part:"partie", status:"Statut",
+        partsOpen:"Livraison en parties, encore ouverte : la date et « Livré » du reste se saisissent ici ; quantité et annulation se modifient sur le poste", partsClosed:"Livraison en parties, colisée en entier ou réalisée : statut, date et quantité se modifient sur le poste",
+        partsTitle:"Parties", partsInv:"Facturé", partsPack:"Colisé", partsShip:"Transporté", partsLeft:"reste {0}", partsWhole:"en entier", partsFinal:"finale", partsOver:"Parties au-delà de la livraison : à corriger sur le poste",
         futureDone:"Une livraison réalisée ne peut pas être datée dans le futur",
         choose:"Plusieurs comptes Microsoft sont connectés sur ce téléphone : choisissez le vôtre.", denied:"Accès refusé à ce dossier pour {0}",
         noFile:"fiche absente du dossier pour l'instant (Atlas la réécrit) : {0}", lastKept:"dernière fiche gardée", blocked:"Bloquée : OneDrive refuse l'envoi (voir Réglages)",
@@ -697,6 +699,8 @@ const T = {
         noData:"No data", lot:"Lot", location:"Location", refused:"rejected by Atlas", noMargin:"{0} without margin", toConfirm:"{0} to confirm",
         kept:"Not sent (network or sign-in): kept on the phone, will be sent automatically", offline:"No network", authErr:"Microsoft sign-in failed: {0}", retry:"tap ↻ to retry",
         noLib:"Microsoft library not loaded", locked:"Delivery confirmed or invoiced: status, date and quantity are changed in Atlas", prebilled:"Invoiced in advance: the date (planned or delivered) and “Delivered” are entered here; the quantity is changed in Atlas", part:"part", status:"Status",
+        partsOpen:"Delivery in parts, still open: the date and “Delivered” for the rest are entered here; quantity and cancellation are changed on the desktop", partsClosed:"Delivery in parts, fully packed or delivered: status, date and quantity are changed on the desktop",
+        partsTitle:"Parts", partsInv:"Invoiced", partsPack:"Packed", partsShip:"Shipped", partsLeft:"{0} left", partsWhole:"in full", partsFinal:"final", partsOver:"Parts beyond the delivery: to correct on the desktop",
         futureDone:"A delivered line cannot be dated in the future",
         choose:"Several Microsoft accounts are signed in on this phone: choose yours.", denied:"Access to this folder denied for {0}",
         noFile:"sheet missing from the folder for now (Atlas rewrites it): {0}", lastKept:"last sheet kept", blocked:"Blocked: OneDrive refuses the upload (see Settings)",
@@ -787,7 +791,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "124b";
+const VERSION_APP = "126";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -1144,10 +1148,27 @@ function opCard(l, groupedDate = false) {
     '<div class="op-heading"><span>' + esc(prod(l.produit)) + ' · ' + (l.sens === "achat" ? t("receipt") : t("delivery")) + '</span><strong class="quantity">' + (l.qte == null ? t('unknown') : qn(l.qte) + ' ' + U()) + '</strong></div>' +
     '<div class="muted op-metadata">' + esc([groupedDate === true && l.date ? null : l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t("noDate"), l.contrat, l.partie, l.ref, l.transporteur].filter(Boolean).join(' · ')) + '</div>' +
     '<div class="op-context">' + esc([groupedDate === true && l.date ? null : l.date ? fmtD(l.date) : l.mois ? fmtM(l.mois) : t('noDate'),l.ref].filter(Boolean).join(' · ')) + '</div><span class="row-chevron" aria-hidden="true">›</span>' + photoTxt(l) +
+    (l.parties ? '<div class="muted op-parts">' + esc(partsSum(l.parties)) + '</div>' : '') +   // mobile v126 : livraison en parties (fiche du poste)
     (l.attente ? '<div class="pending">' + t("pending") + '</div>' : '') + (l.bloquee ? '<div class="refused">' + t("blocked") + '</div>' : '') +
     (l.refus ? '<div class="refused">' + t("refused") + ' : ' + esc(l.refus.texte) + '</div>' : '') + '</div></div>';
 }
 function bindOps(root, avant) { root.querySelectorAll(".op[data-ref]").forEach(c => c.onclick = () => { if (avant) avant(); editOp(c.dataset.ref); }); }
+// mobile v126 (round 86) : livraison couverte par plusieurs pièces (« parties » de la fiche du poste) : chaque facture, colisage et transport k/n
+// avec sa quantité, le reste de chaque sorte ; quantités seulement (la fiche n'a ni prix, ni montant, ni n° de pièce)
+const partsQ = v => qn(v) + " " + U();
+function partsSum(p) {
+  if (!p) return "";
+  const seg = (lab, done, whole) => lab + " " + (whole ? t("partsWhole") : qn(done) + "/" + qn(p.total));
+  return [seg(t("partsInv"), p.facture, p.factureEntiere), seg(t("partsPack"), p.colise, p.colisEntier), seg(t("partsShip"), p.transporte, false)].join(" · ") + " " + U() + (p.depasse ? " ⚠" : "");
+}
+function partsHtml(p) {
+  if (!p) return "";
+  const one = (lab, xs, done, rest, whole, closed) => '<div class="row" style="margin:6px 0 2px"><b class="grow">' + esc(lab) + '</b><span>' + esc(whole ? t("partsWhole") : qn(done) + " / " + partsQ(p.total)) + '</span></div>' +
+    ((xs || []).length ? '<div class="muted">' + xs.map(x => esc(x.k + "/" + x.n + " · " + partsQ(x.qte) + (x.nature === "finale" ? " · " + t("partsFinal") : ""))).join("<br>") + '</div>' : "") +
+    (!whole && !closed && rest > 0.0005 ? '<div class="muted">' + esc(tf("partsLeft", partsQ(rest))) + '</div>' : "");
+  return '<label>' + t("partsTitle") + '</label>' + one(t("partsInv"), p.factures, p.facture, p.resteFacture, p.factureEntiere, p.factureClose) + one(t("partsPack"), p.colisages, p.colise, p.resteColis, p.colisEntier, false) +
+    one(t("partsShip"), p.transports, p.transporte, p.resteTransport, false, false) + (p.depasse ? '<div class="refused">' + t("partsOver") + '</div>' : "");
+}
 
 // ---------- calendrier « Livraisons & stock » (round 23 : celui du PC) ----------
 // Chiffres de la fiche d'Atlas (moteur Stk du PC), jamais recalculés ici : ouverture et clôture du mois, stock de fin de semaine, besoin, position
@@ -2818,8 +2839,9 @@ function editOp(ref) {
   const vu = { trade: l.trade || "", jour: l.date || l.mois || "", qte: l.qte, statut: l.statut, transporteur: l.transporteur || "" };
   let st = l.statut;
   sheet('<h3>' + esc(l.cpty) + " · " + esc(prod(l.produit)) + '</h3><div class="muted">' + (l.sens === "achat" ? t("receipt") : t("delivery")) + (l.contrat ? " · " + esc(l.contrat) : "") + " · " + esc(l.ref) + (l.partie ? " · " + t("part") + " " + esc(l.partie) + (l.total ? " (" + nf(l.total) + " lb)" : "") : "") + '</div>' +
-    (lk ? '<div class="note">' + t("locked") + '</div>'
-      : lv ? '<div class="note">' + t("prebilled") + '</div><label>' + t("status") + '</label><div class="seg" id="seg">' + [["Prévu", "planned"], ["Réalisé", "delivered"]].map(x => '<button data-s="' + x[0] + '" class="' + (x[0] === st ? "on" : "") + '">' + t(x[1]) + '</button>').join("") + '</div>' +
+    partsHtml(l.parties) +   // mobile v126 : parties k/n et restes ; ouverte (« livrable ») : date et « Livré » du reste, jamais la quantité ni l'annulation
+    (lk ? '<div class="note">' + t(l.parties ? "partsClosed" : "locked") + '</div>'
+      : lv ? '<div class="note">' + t(l.parties ? "partsOpen" : "prebilled") + '</div><label>' + t("status") + '</label><div class="seg" id="seg">' + [["Prévu", "planned"], ["Réalisé", "delivered"]].map(x => '<button data-s="' + x[0] + '" class="' + (x[0] === st ? "on" : "") + '">' + t(x[1]) + '</button>').join("") + '</div>' +
           '<label>' + t("date") + '</label><input id="d" type="date" value="' + esc(l.date || "") + '">'
         : '<label>' + t("status") + '</label><div class="seg" id="seg">' + [["Prévu", "planned"], ["Réalisé", "delivered"], ["Annulé", "cancelled"]].map(x => '<button data-s="' + x[0] + '" class="' + (x[0] === st ? "on" : "") + '">' + t(x[1]) + '</button>').join("") + '</div>' +
           '<label>' + t("date") + '</label><input id="d" type="date" value="' + esc(l.date || "") + '"><label>' + t("qty") + '</label><input id="q" type="number" inputmode="decimal" value="' + esc(l.qte) + '">') +
