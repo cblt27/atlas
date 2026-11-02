@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Atlas">
-<meta name="theme-color" content="#1f3a5f">
+<meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Atlas</title>
@@ -121,7 +121,7 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 /* round 26 b (piste expomob, 07/10, juge à l'œil neuf : décisions A à G, identiques au PC) : onglet Exposition = un outil par question
    (titre-question, visuel, légende) ; explications dans les infobulles ⓘ et le glossaire ?, fermés par défaut. Un sens par couleur, dans les
    deux thèmes : vert = long / achat, rouge = short / vente, bleu (un seul) = swap, orange = non couvert, ardoise = prix fixe, violet = indexé,
-   gris clair hachuré = sans prix ; bleu hachuré 🔒 = verrouillé (swap déjà fixé) ; gain / perte = ▲ / ▼ avec signe, jamais une couleur.
+   gris clair hachuré = sans prix ; bleu hachuré ▣ = verrouillé (swap déjà fixé) ; gain / perte = ▲ / ▼ avec signe, jamais une couleur.
    Carte de chaleur : 5 paliers par thème (--va1…5) et texte noir ou blanc selon le fond (--vt1…5 : contraste ≥ 4,5 calculé pour chaque palier). */
 :root { --v-long:#1f7a4d; --v-short:#b3261e; --v-swap:#2563c9; --v-nc:#c25e00; --v-fixe:#334155; --v-idx:#7c3aed; --v-nv:#7d8794;
         --v-long-rgb:31,122,77; --v-short-rgb:179,38,30; --v-swap-rgb:37,99,201; --v-long-t:#16603b; --v-short-t:#9c1f18; --v-nc-t:#8a4300; --v-swap-t:#1d4fa3;
@@ -159,7 +159,7 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .xu { width:104px; flex:none; } .xu button { padding:6px 0; font-size:13.5px; }
 .xprods button { white-space:nowrap; padding:7px 11px; font-size:14px; }
 .vmois button { padding:6px 11px; font-size:13.5px; }
-/* A · tuile « Position aujourd'hui » : gros chiffre et barre en deux segments (bouge avec le prix / verrouillé 🔒) */
+/* A · tuile « Position aujourd'hui » : gros chiffre et barre en deux segments (bouge avec le prix / verrouillé ▣) */
 .vtile { display:block; width:100%; background:var(--card); border-radius:14px; padding:11px 14px 12px; box-shadow:0 1px 2px var(--shadow); border:0; text-align:left; font-family:inherit; color:var(--ink); margin-bottom:10px; cursor:pointer; }
 .vtile small { display:block; font-size:12.5px; color:var(--muted); font-weight:650; }
 .vpl { display:flex; align-items:center; gap:10px; margin:2px 0 8px; flex-wrap:wrap; }
@@ -197,7 +197,7 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .val i { font-style:normal; font-size:13px; }
 .val .short { background:rgba(var(--v-short-rgb), .14); color:var(--v-short-t); }
 .val .nc { background:var(--amber-t); color:var(--v-nc-t); } .val .nv { background:var(--soft); color:var(--ink); } .val .ok { color:var(--v-long-t); }
-/* E · carte de chaleur : produits en lignes, mois en colonnes (défilement) ; case = position nette du mois + barre bouge / 🔒 */
+/* E · carte de chaleur : produits en lignes, mois en colonnes (défilement) ; case = position nette du mois + barre bouge / ▣ */
 .vmapw { margin:0 -4px; }
 .vmap { display:grid; gap:4px; align-items:stretch; --vm0:92px; --vmc:68px; padding:0 4px 2px; width:max-content; min-width:100%; }
 .vmap .vm0, .vmap .vh { position:sticky; left:0; z-index:2; background:var(--card); box-shadow:-6px 0 0 var(--card), 4px 0 0 var(--card); }
@@ -295,7 +295,7 @@ input,textarea { width:100%; font-size:17px; padding:11px 12px; border:1px solid
 .xold td:first-child, .xold th:first-child { position:sticky; left:0; background:var(--card); z-index:1; }
 /* round 27 (piste mob, 07/10 22 h) : plage de mois (raccourcis + « de … à … »), tuile « Position fin de plage » (stock du jour, camions sans client),
    cadre de la plage sur la carte, « Destination des livraisons » (camion d'achat vert, ➜ direct sarcelle, entrepôt, vide en pointillés gris, vente sans
-   camion en pointillés rouges), couverture par contrat (bleu à venir, orange non couvert, contour bleu en trop, 🔒 hachuré fixé). Deux thèmes. */
+   camion en pointillés rouges), couverture par contrat (bleu à venir, orange non couvert, contour bleu en trop, ▣ hachuré fixé). Deux thèmes. */
 .vplage { background:var(--card); border-radius:14px; padding:8px 10px 9px; box-shadow:0 1px 2px var(--shadow); margin:0 0 10px; }
 .vrs button { font-size:13.5px; padding:7px 0; white-space:nowrap; }
 .vprow { display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }   /* écran étroit : lb | MT passe à la ligne, l'année des listes reste entière */
@@ -435,11 +435,183 @@ body.exposure-screen{height:100dvh;display:flex;flex-direction:column}
 .expo-selectors .expo-alert{flex:none;font-size:11px;min-width:62px;text-align:center}.expo-selectors .expo-alert b{margin-left:1px;padding:3px 4px}.expo-selectors .unit-select{width:62px}.expo-spark.signed .spark-space{border-bottom:0}.expo-spark.signed .spark-space:after{content:'';position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--muted)}.expo-spark.signed .spark-space i{position:absolute;bottom:50%;border-radius:2px 2px 0 0}.expo-spark.signed .spark-space i.negative{bottom:auto;top:50%;border-radius:0 0 2px 2px}
 .expo-cover{flex-direction:row;justify-content:center;text-align:left;gap:14px}.expo-cover .expo-ring{flex:none}.expo-cover>span:last-child{max-width:170px;min-width:0}.expo-cover small{overflow-wrap:anywhere}.exposure-screen .workspace-tabs{width:100%;grid-template-columns:1fr 1fr 1.65fr}.exposure-screen .workspace-tabs button{min-width:0;white-space:normal;overflow:visible}.expo-selectors select{color:var(--ink)}
 .expo-month .expo-help-icon{min-width:28px;width:28px;font-size:14px;color:var(--muted)}
+
+/* ================= Mobile v124 · style Bloomberg (thème Bloomberg d'Atlas et de GRANORE CTRM : Theme41, Theme47, Chrome48) =================
+   Fond noir ; libellés et titres en ambre, données en blanc, chiffres en chasse fixe ; barre rouge des fonctions (titre de la page) ; onglets ardoise
+   à texte clair, l'onglet choisi en bleu à texte blanc ; boutons gris à texte blanc, action principale bleue ; champ modifiable = pavé ambre à texte
+   noir ; angles droits, aucune ombre de décor ; achat / entrée en vert, vente / sortie en rouge. Un seul thème (le réglage Apparence est retiré). */
+html:root, html:root[data-theme] {
+  --bg:#000; --card:#0a0a0a; --ink:#e6e6e6; --muted:#b0b0b0; --line:#2c343e; --primary:#2b7bd4; --on-primary:#fff; --head:#000; --soft:#161616;
+  --cell:#0a0a0a; --nav:#000; --shadow:transparent; --in:#36c24a; --in-t:#0d2a12; --out:#ff3b4a; --out-t:#3a0d12; --amber:#f0a21e; --amber-t:#2a1c05;
+  --teal:#9fe0f2; --teal-t:#0f2a30; --back:rgba(0,0,0,.74); color-scheme:dark; --fix:#5aa0ff; --fix-t:#0e1f38; --idx:#f0a21e; --idx-t:#2a1c05;
+  --sw:#b79cff; --sw-t:#221a38; --stk0:#6e747c; --gl:#0d2a12; --gc:#3a0d12;
+  --v-long:#36c24a; --v-short:#ff3b4a; --v-swap:#5aa0ff; --v-nc:#f0a21e; --v-fixe:#b8b8b8; --v-idx:#b79cff; --v-nv:#6e747c;
+  --v-long-rgb:54,194,74; --v-short-rgb:255,59,74; --v-swap-rgb:90,160,255; --v-long-t:#6fdc7f; --v-short-t:#ff7a85; --v-nc-t:#ffc940; --v-swap-t:#9cc2ff;
+  --va1:.20; --va2:.38; --va3:.56; --va4:.76; --va5:.95; --vt1:#fff; --vt2:#fff; --vt3:#fff; --vt4:#000; --vt5:#000;
+  --radius:0; --bar:#8c141a; --bar-hot:#a81c23; --bar-line:#c9474d; --tab:#383b42; --tab-ink:#f2f2f2; --tab-on:#1565a8; --key:#1f5fbf;
+  --btn:#2e2e2e; --btn-line:#6e6e6e; --field:#ffa018; --field-ink:#000; --dim:#8a8a8a; --white:#f5f5f5; --gut:14px;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+html,body { background:#000; color:var(--ink); font-family:-apple-system,"Helvetica Neue",Arial,"Segoe UI",Roboto,sans-serif; }
+*, *::before, *::after { border-radius:0 !important; }
+body { font-size:15px; line-height:1.4; }
+::selection { background:var(--tab-on); color:#fff; }
+/* chiffres : chasse fixe, alignés */
+.big, .q, .quantity, .v, .metrics b, .kv span:last-child, td, .position-number, .cash-row strong, .trend-row strong, .stock-now strong, .day .m,
+.route-head strong, .route-destination strong, .attention-row>b, .expo-hero>strong, .vpl b, .mono, .num { font-family:var(--mono); font-variant-numeric:tabular-nums; letter-spacing:0; }
+/* en-tête : marque de l'édition, bascule Atlas | GRANORE, actualiser */
+header { background:#000; color:var(--ink); border-bottom:1px solid var(--line); gap:8px; padding:calc(env(safe-area-inset-top) + 6px) var(--gut) 6px; min-height:52px; }
+header .hl { min-width:0; }
+header h1, header h1.brand { margin:0; font-size:15px; line-height:1.1; font-weight:700; letter-spacing:.14em; color:var(--amber); font-family:var(--mono); white-space:nowrap; overflow:hidden; }
+header .sub { font-size:11px; color:var(--muted); font-family:var(--mono); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+header button { min-width:44px; min-height:40px; background:var(--btn); border:1px solid var(--btn-line); color:#fff; font-size:16px; padding:4px 8px; }
+.brand .grlogo { display:block; height:21px; width:auto; }
+.brand .brand-ctrm { font-size:9px; letter-spacing:.32em; color:var(--muted); font-weight:400; display:block; margin-top:1px; }
+.edsw { display:flex; flex:none; gap:1px; background:#000; }
+.edsw button { min-width:0; min-height:40px; padding:4px 8px; font:700 11px/1 var(--mono); letter-spacing:.06em; background:var(--tab); color:var(--tab-ink); border:0; }
+.edsw button.on { background:var(--tab-on); color:#fff; }
+/* barre rouge des fonctions : titre de la page, sur toute la largeur */
+main { padding-top:10px; }
+.fbar, .reading-head { display:flex; align-items:center; gap:8px; justify-content:space-between; background:var(--bar); color:#fff; margin:-10px calc(-1 * var(--gut)) 12px;
+  padding:6px var(--gut); min-height:40px; border:0; }
+.fbar h2, .reading-head .page-title, .page-title { margin:0; font-size:14px !important; letter-spacing:.08em !important; text-transform:uppercase; font-weight:600; color:#fff; line-height:1.2; }
+h2.page-title { color:var(--amber); }
+.fbar h2, .reading-head h2.page-title { color:#fff; }
+.fbar .fb-r { font:11px var(--mono); color:#fff; opacity:.92; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.reading-switch { border:0; gap:1px; }
+.reading-switch button { color:#fff; min-height:36px; padding:4px 9px; font-size:12px; background:var(--bar); border:1px solid var(--bar); box-shadow:none !important; }
+.reading-switch button[aria-pressed="true"] { background:var(--bar-hot); border-color:var(--bar-line); color:#fff; font-weight:600; }
+/* titres de section : ambre, capitales */
+h2, .section-heading h2, .section-heading h3, .cash-trend h2, .agenda-day h2 { color:var(--amber); text-transform:uppercase; letter-spacing:.06em; font-size:12px; font-weight:600; }
+h3 { color:var(--amber); }
+.sheet h3 { color:var(--amber); text-transform:uppercase; letter-spacing:.05em; font-size:15px; }
+label { color:var(--amber); text-transform:uppercase; letter-spacing:.05em; font-size:11px; }
+th, .detail-table th { color:var(--amber); text-transform:uppercase; letter-spacing:.04em; font-size:11px; font-weight:600; }
+.muted, .status-text, .list-count, .section-heading>span, .trend-month, .op-heading>span:not(.status-text) { color:var(--muted); }
+/* panneaux : noirs, filets fins, aucune ombre */
+.card, .cal, .vtile, .vplage { background:var(--card); border:1px solid var(--line); box-shadow:none; }
+.card { padding:12px; margin:0 0 10px; }
+.card+.card { border-top:1px solid var(--line); }
+.sheet { background:#050505; border-top:2px solid var(--amber); }
+.sheet-close { background:var(--btn) !important; color:#fff; border:1px solid var(--btn-line) !important; }
+.toast { background:#161616; color:#fff; border:1px solid var(--amber); box-shadow:none; }
+/* onglets, segments, puces : ardoise ; choisi : bleu, texte blanc */
+.seg { background:transparent; padding:0; gap:1px; }
+.seg button { background:var(--tab); color:var(--tab-ink); border:0; min-height:40px; font-size:13px; box-shadow:none !important; }
+.seg button.on { background:var(--tab-on); color:#fff; font-weight:600; box-shadow:none !important; border:0; }
+.chips button, .workspace-tabs button { background:var(--tab); color:var(--tab-ink); border:0; box-shadow:none !important; font-size:13px; }
+.chips button.on, .workspace-tabs button.on { background:var(--tab-on); color:#fff; border:0; }
+.chips { gap:1px; }
+.chip { background:var(--soft); color:var(--ink); }
+.chip.late { background:var(--amber-t); color:var(--amber); }
+/* boutons : gris à texte blanc ; action principale bleue */
+.btn { background:var(--key); color:#fff; border:1px solid var(--key); font-size:15px; font-weight:600; letter-spacing:.02em; }
+.btn.light, .text-action, .calhead button, .calu { background:var(--btn); color:#fff; border:1px solid var(--btn-line); }
+.text-action { min-height:40px; padding:8px 12px; font:inherit; font-size:13px; }
+.majapp { background:var(--key); color:#fff; }
+/* champs modifiables : pavé ambre, texte noir (lecture seule : sombre) */
+input:not([type=checkbox]):not([type=radio]):not([readonly]), select, .fold select, select#uiLanguage, .unit-select, .product-select select, .vpsel select {
+  background:var(--field) !important; color:var(--field-ink) !important; border:1px solid var(--field) !important; font-family:inherit; }
+input::placeholder { color:#5c3a00; }
+textarea[readonly], input[readonly] { background:var(--soft); color:var(--ink); border:1px solid var(--line); }
+textarea:not([readonly]) { background:var(--soft); color:var(--ink); border:1px solid var(--field); }
+button:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+/* barre des onglets du bas : ardoise, l'onglet choisi bleu */
+nav { background:#000; border-top:1px solid var(--line); gap:1px; }
+nav button { background:var(--tab); color:var(--tab-ink); font-size:10.5px; letter-spacing:.02em; min-height:56px; gap:3px; box-shadow:none !important; padding:6px 0 5px; }
+nav button.on { background:var(--tab-on); color:#fff; font-weight:600; box-shadow:none !important; }
+nav button svg { width:21px; height:21px; }
+/* calendrier */
+.cal { padding:8px 4px; }
+.day { background:#0f0f0f; color:var(--ink); }
+.day.today .n { background:var(--amber); color:#000; }
+.day.sel { outline:2px solid var(--amber); }
+.day .m.late { box-shadow:none; outline:1px solid var(--amber); outline-offset:-1px; }
+.wband { background:#111; }
+/* sens : achat / entrée vert, vente / sortie rouge */
+.neg { color:var(--out); } .pos { color:var(--in); } .warn { color:var(--amber); }
+.note, .pending { color:var(--amber); } .refused { color:var(--out); }
+.op { border-bottom:1px solid var(--line); }
+.op.in .op-heading>b, .hm-op.in .hm-d { color:var(--in); } .op.out .op-heading>b, .hm-op.out .hm-d { color:var(--out); }
+.cash-focus .big { color:var(--white); font-size:32px; letter-spacing:0; }
+.cash-focus .big.neg { color:var(--out); }
+.cash-row { background:transparent; color:var(--ink); border-bottom:1px solid var(--line); }
+.curve path { stroke:var(--amber); }
+.version { color:var(--dim); font-family:var(--mono); }
+.fold>summary { color:var(--amber); text-transform:uppercase; letter-spacing:.05em; font-size:12px; }
+@media (max-width:360px) { html:root, html:root[data-theme] { --gut:10px; } .edsw button { padding:4px 6px; font-size:10px; } }
+
+/* ---------- écran Jour ---------- */
+.hm-tiles { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; width:100%; padding:0; border:1px solid var(--line); background:var(--line); margin:0 0 12px; font:inherit; color:inherit; text-align:left; cursor:pointer; }
+.hm-tile { background:var(--card); padding:8px 6px 7px; min-width:0; }
+.hm-tile small { display:block; color:var(--amber); font-size:10px; letter-spacing:.04em; text-transform:uppercase; line-height:1.15; min-height:23px; overflow-wrap:anywhere; }
+.hm-tile b { display:block; font:600 22px/1.1 var(--mono); color:var(--white); margin-top:3px; }
+.hm-tile b.neg { color:var(--out); } .hm-tile b.warn { color:var(--amber); } .hm-tile b.zero { color:var(--dim); }
+.hm-blk { display:block; width:100%; text-align:left; background:var(--card); border:1px solid var(--line); color:var(--ink); font:inherit; padding:10px 12px; margin:0 0 12px; cursor:pointer; }
+.hm-h { display:flex; justify-content:space-between; gap:8px; align-items:baseline; color:var(--amber); font-size:11px; letter-spacing:.05em; text-transform:uppercase; margin-bottom:4px; }
+.hm-h span:last-child { color:var(--muted); letter-spacing:0; text-transform:none; font-family:var(--mono); }
+.hm-big { font:600 26px/1.15 var(--mono); color:var(--white); }
+.hm-big.neg { color:var(--out); }
+.hm-kv { display:flex; justify-content:space-between; gap:10px; font-size:13px; padding:3px 0; border-top:1px solid #15191e; }
+.hm-kv span:first-child { color:var(--muted); } .hm-kv b { font-family:var(--mono); font-weight:500; text-align:right; }
+.hm-list { border:1px solid var(--line); margin:0 0 12px; }
+.hm-list .hm-h { padding:8px 12px 4px; margin:0; background:var(--card); }
+.hm-op, .mk-row { display:grid; grid-template-columns:44px 14px minmax(0,1fr) auto; gap:6px; align-items:baseline; width:100%; min-height:44px; padding:8px 12px; border:0; border-top:1px solid #15191e;
+  background:#000; color:var(--ink); font:inherit; font-size:13px; text-align:left; cursor:pointer; }
+.hm-op .hm-d { font-family:var(--mono); font-size:12px; color:var(--muted); }
+.hm-op .hm-a { font-weight:700; } .hm-op.in .hm-a { color:var(--in); } .hm-op.out .hm-a { color:var(--out); }
+.hm-op .hm-w { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hm-op .hm-q { font-family:var(--mono); text-align:right; white-space:nowrap; }
+.hm-op.late .hm-d { color:var(--amber); }
+.hm-more { display:block; width:100%; padding:10px 12px; border:0; border-top:1px solid #15191e; background:var(--card); color:var(--amber); font:inherit; font-size:12px; text-align:right; letter-spacing:.04em; cursor:pointer; min-height:40px; }
+.hm-empty { padding:10px 12px; color:var(--muted); font-size:13px; border-top:1px solid #15191e; }
+
+/* ---------- Marchés : moniteur et courbes ---------- */
+.mk-seg { margin:0 0 8px; }
+.mk-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; margin:2px 0 6px; }
+.mk-head .mk-name { flex:1 1 100%; color:var(--amber); font-size:12px; letter-spacing:.05em; text-transform:uppercase; }
+.mk-head .mk-last { font:600 26px/1.1 var(--mono); color:var(--white); }
+.mk-head .mk-last small { font-size:12px; color:var(--muted); font-weight:400; margin-left:4px; }
+.mk-head .mk-chg { font:13px var(--mono); }
+.mk-head .mk-meta { flex:1 1 100%; font:11.5px var(--mono); color:var(--muted); }
+.mk-per { display:flex; gap:1px; margin:6px 0 4px; }
+.mk-per button { flex:1; min-height:40px; background:var(--tab); color:var(--tab-ink); border:0; font:600 12px var(--mono); letter-spacing:.04em; }
+.mk-per button.on { background:var(--tab-on); color:#fff; }
+.mk-chart { position:relative; width:100%; height:236px; background:#000; border:1px solid var(--line); touch-action:pan-y; user-select:none; -webkit-user-select:none; overflow:hidden; }
+.mk-chart svg { display:block; width:100%; height:100%; }
+.mk-chart .mk-empty { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:16px; color:var(--muted); font-size:13px; }
+.mk-read { min-height:18px; font:11.5px/1.5 var(--mono); color:var(--white); margin:4px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mk-leg { margin:6px 0 10px; border-top:1px solid var(--line); }
+.mk-leg div { display:grid; grid-template-columns:14px minmax(0,1fr) auto; gap:6px; align-items:baseline; padding:5px 0; border-bottom:1px solid #15191e; font-size:12.5px; }
+.mk-leg i { display:inline-block; width:12px; height:3px; transform:translateY(-3px); }
+.mk-leg i.dash { background:none !important; border-top:3px dashed currentColor; height:0; }
+.mk-leg i.dot { background:none !important; border-top:3px dotted currentColor; height:0; }
+.mk-leg span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.mk-leg b { font:500 12.5px var(--mono); text-align:right; white-space:nowrap; }
+.mk-leg small { display:block; color:var(--muted); font:11px var(--mono); white-space:normal; }
+.mk-list { border:1px solid var(--line); margin:10px 0 12px; }
+.mk-list .hm-h { padding:8px 12px 4px; margin:0; background:var(--card); }
+.mk-row { grid-template-columns:minmax(0,1fr) auto 62px; gap:8px; }
+.mk-row.on { background:#0b2342; }
+.mk-row .mk-n { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.mk-row .mk-n small { display:block; color:var(--muted); font:11px var(--mono); }
+.mk-row .mk-v { font-family:var(--mono); text-align:right; white-space:nowrap; color:var(--white); }
+.mk-row .mk-c { font-family:var(--mono); text-align:right; white-space:nowrap; font-size:12px; }
+.mk-tab { width:100%; border:1px solid var(--line); margin:0 0 12px; font-size:12.5px; }
+.mk-tab th { text-align:right; background:var(--card); padding:7px 8px; }
+.mk-tab th:first-child, .mk-tab td:first-child { text-align:left; }
+.mk-tab td { padding:7px 8px; border-bottom:1px solid #15191e; font-size:12.5px; }
+.mk-tab td:first-child { font-family:inherit; white-space:normal; }
+.mk-src { font-size:11px; color:var(--muted); margin:0 0 14px; font-family:var(--mono); line-height:1.5; }
+.mk-msg { padding:10px 12px; border:1px solid var(--line); background:var(--card); color:var(--muted); font-size:13px; margin:0 0 12px; }
+.mk-msg.err { color:var(--out); border-color:var(--out); }
+.mk-msg button { margin-top:8px; }
 </style>
 </head>
 <body>
 <header>
-  <div class="grow"><h1 id="title">Atlas</h1><div class="sub" id="sub"></div></div>
+  <div class="grow hl"><h1 id="title" class="brand">ATLAS</h1><div class="sub" id="sub"></div></div>
+  <div class="edsw" id="edsw" role="group" aria-label="Édition" hidden></div>
   <button id="btnLang" aria-label="Langue">EN</button>
   <button id="btnRefresh" aria-label="Actualiser">↻</button>
 </header>
@@ -454,7 +626,9 @@ body.exposure-screen{height:100dvh;display:flex;flex-direction:column}
 // dans un petit fichier (sous-dossier « modifs ») qu'Atlas reprend sur le PC, au nom de la personne. Aucune donnée n'est stockée ailleurs.
 const CONFIG = { clientId: "478abaf6-f241-4911-ab57-79c2d7d8c995" };   // identifiant de l'application enregistrée chez Microsoft (rempli au déploiement ; modifiable dans Réglages)
 const SCOPES = ["Files.ReadWrite.All", "User.Read"];
-const G = "https://graph.microsoft.com/v1.0";
+// mobile v124 : essai local seulement (adresse localhost ET « ?fixture ») : Graph imité par le serveur d'essai, aucune connexion Microsoft
+const FIXTURE = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]fixture(=|&|$)/.test(location.search);
+const G = FIXTURE ? location.origin + "/graph/v1.0" : "https://graph.microsoft.com/v1.0";
 const T = {
   fr: { cal:"Calendrier", deliv:"Livraisons", stock:"Stock", pnl:"P&L", expo:"Exposition", settings:"Réglages", login:"Se connecter avec Microsoft",
         loginTxt:"Utilisez le compte Microsoft ayant accès au dossier Atlas.", data:"Données du", none:"Rien ce jour-là",
@@ -588,13 +762,13 @@ const t = k => (T[lang][k] != null ? T[lang][k] : k);
 const tf = (k, ...a) => a.reduce((s, v, i) => s.split("{" + i + "}").join(v), t(k));   // texte avec {0}, {1}…
 // round 23 (piste mobile) : thème clair, sombre ou celui du système, réglage du téléphone (commun aux comptes, comme la langue), appliqué à tous
 // les écrans par l'attribut data-theme de la page (couleurs en variables CSS) ; couleur de la barre du navigateur suivie
-const THEMES = ["light", "dark", "auto"];
-let theme = ls.get("theme", "auto");
-function appliquerTheme(v) {
-  theme = THEMES.includes(v) ? v : "auto"; document.documentElement.setAttribute("data-theme", theme);
-  const sombre = theme === "dark" || (theme === "auto" && !!window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", sombre ? "#142338" : "#1f3a5f");
-  return sombre;
+// mobile v124 : un seul thème, celui du terminal Bloomberg (noir) ; le réglage Apparence est retiré (l'ancien choix gardé est ignoré)
+const THEMES = ["dark"];
+let theme = "dark";
+function appliquerTheme() {
+  theme = "dark"; document.documentElement.setAttribute("data-theme", "dark");
+  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", "#000000");
+  return true;
 }
 appliquerTheme(theme);
 try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => appliquerTheme(theme)); } catch (e) {}
@@ -613,7 +787,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "41";
+const VERSION_APP = "124";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -637,8 +811,12 @@ let sansFiche = null;
 const envoyees = new Set();
 // espace du compte actif : son dossier, son onglet, et la fiche, les attentes et les refus de CE dossier ; la fiche n'est montrée que si elle
 // appartient à ce compte et à ce dossier (point 3)
+// mobile v124 : édition affichée (Atlas | GRANORE CTRM) gardée par compte ; chaque édition a son dossier, son onglet et sa fiche
+const EDS = ["atlas", "granore"];
+let edition = "atlas";
 function ouvrir() {
-  place = us.get("place", null); tab = us.get("tab", "cal");
+  edition = EDS.includes(us.get("edition", "atlas")) && (us.get("edition", "atlas") === "atlas" || edOk()) ? us.get("edition", "atlas") : "atlas";
+  place = us.get(placeKey(), null); tab = us.get(tabKey(), isGr() ? "mkts" : "home");
   const c = ds.get("cache", null);
   data = c && place && c.owner === moi() && c.dossier === dosId(place) ? c.fiche : null;
   pending = ds.get("pending", {}); refus = ds.get("refus", {});
@@ -653,7 +831,7 @@ function toast(message) {
   }
   const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');
   const text=document.createElement('span');text.textContent=message;const close=document.createElement('button');close.textContent='×';close.setAttribute('aria-label',ui('Fermer le message','Dismiss message'));close.onclick=()=>d.remove();d.append(text,close);document.body.appendChild(d);
-  if(!/refus|bloqu|impossible|non gard|not saved|failed|rejected|⚠/i.test(message))setTimeout(()=>d.remove(),8000);
+  if(!/refus|bloqu|impossible|non gard|not saved|failed|rejected|⚠︎/i.test(message))setTimeout(()=>d.remove(),8000);
 }
 
 // ---------- Microsoft (MSAL) et OneDrive (Graph) ----------
@@ -661,6 +839,7 @@ function toast(message) {
 // ou avec « ?… » ; MSAL ramène ensuite sur la page de départ
 const adresseRetour = () => new URL("./", location.href).href;
 async function initAuth() {
+  if (FIXTURE) return fixtureAuth();
   const id = ls.get("clientId", CONFIG.clientId);
   if (!id) return false;
   // clé du texte gardée avec l'erreur (e.cle) : l'écran d'erreur le recompose dans la langue du moment
@@ -696,6 +875,7 @@ const NET = ["no_network_connectivity", "post_request_failed", "get_request_fail
 // jeton : une coupure réseau ne redirige jamais (la page serait remplacée par une page d'erreur) ; une reconnexion n'a lieu que si rien n'est
 // en cours de saisie (quiet : envoi en arrière-plan) ; ce qui est à envoyer est déjà gardé dans la boîte d'envoi
 async function token(quiet) {
+  if (FIXTURE) return "fixture";
   try { return (await pca.acquireTokenSilent({ scopes: SCOPES, account })).accessToken; }
   catch (e) {
     if (!navigator.onLine || NET.includes(e && e.errorCode)) throw Object.assign(new Error(t("offline")), { cle: "offline" });
@@ -735,9 +915,13 @@ async function findPlace() {
   try {
     for (const n of names) {
       const s = await (await gfetch("/me/drive/root/search(q='" + n + "')")).json();
-      const it = (s.value || []).find(x => x.name === n);
-      const ri = it && (it.remoteItem || it);
-      if (ri && ri.parentReference && ri.parentReference.driveId) return { driveId: ri.parentReference.driveId, folderId: ri.parentReference.id, fileId: ri.id, name: n };
+      // mobile v124 : la fiche de GRANORE CTRM (…/Stark/Telephone/…) n'est jamais prise pour celle d'Atlas (chemin vérifié à la découverte)
+      const its = (s.value || []).filter(x => x.name === n).map(x => x.remoteItem || x).filter(ri => ri.parentReference && ri.parentReference.driveId);
+      for (const ri of its) {
+        let p = null; try { p = await itemPath(ri.parentReference.driveId, ri.id); } catch (e) { if (e && (e.errorCode || e.cle === "offline")) throw e; }
+        if (p && /\/Stark\/Telephone\//i.test(p)) continue;
+        return { driveId: ri.parentReference.driveId, folderId: ri.parentReference.id, fileId: ri.id, name: n };
+      }
     }
   } catch (e) { if (e && e.errorCode) throw e; console.warn(e); }   // connexion refusée (erreur MSAL) : motif montré, jamais « aucune fiche trouvée »
   let sh = { value: [] };
@@ -763,7 +947,7 @@ function linkScreen() {
   lierSorties();
 }
 // autre dossier, même compte : la fiche de l'ancien dossier est effacée ; ses attentes et ses refus restent rangés sous lui (retrouvés au retour)
-function changerDossier() { if (!DEMO) { ds.del("cache"); data = null; } us.set("place", null); place = null; pending = {}; refus = {}; authFailed = null; boot(); }
+function changerDossier() { if (!DEMO) { ds.del("cache"); data = null; } us.set(placeKey(), null); if (!isGr()) us.set("roots", null); place = null; pending = {}; refus = {}; authFailed = null; boot(); }
 // entrées de la boîte bloquées : refusées par OneDrive (403 ou 404) à l'envoi, et celles qui attendent derrière elles dans le même dossier
 // (ordre gardé par dossier) ; jamais retirées d'office
 function bloquees(box) { const s = new Set(), d = new Set(); box.forEach(e => { const f = dosId(e); if (e.bloque || d.has(f)) { s.add(e.name); d.add(f); } }); return s; }
@@ -801,7 +985,7 @@ async function refusLecture(e) {
   if (e.status === 404) {
     // « dernière fiche gardée » seulement s'il y en a une à l'écran ; sinon, rien de gardé : ↻ pour réessayer ; e.texte est une fonction : seul
     // l'état « fiche gardée » au moment de l'erreur est retenu, le texte est composé à chaque dessin (langue)
-    try { await gfetch("/drives/" + place.driveId + "/items/" + place.folderId); const garde = !!data; e.texte = () => "⚠ " + e.message + " · " + t("noFile").replace("{0}", garde ? t("lastKept") : t("retry")); return; }
+    try { await gfetch("/drives/" + place.driveId + "/items/" + place.folderId); const garde = !!data; e.texte = () => "⚠︎ " + e.message + " · " + t("noFile").replace("{0}", garde ? t("lastKept") : t("retry")); return; }
     catch (e2) { if (!e2 || (e2.status !== 403 && e2.status !== 404)) return; }
   }
   ds.del("cache"); data = null; e.acces = true;
@@ -815,6 +999,7 @@ async function lireDemo(url) {
 async function load() {
   if (DEMO) { data = await lireDemo(ls.get("demoFile", "demo_head.json") + "?t=" + Date.now()); derniereLecture = Date.now(); settle(); return; }
   const h = moi();
+  if (isGr()) { await loadGr(h); return; }   // mobile v124 : GRANORE CTRM (fiche de Stark si son export est allumé ; cours toujours)
   if (!place) {
     $("#main").innerHTML = '<div class="center muted">' + t("searching") + '</div>';
     const p = await findPlace(); if (moi() !== h) return;
@@ -829,6 +1014,7 @@ async function load() {
   let fiche; try { fiche = await r.json(); } catch (e) { throw Object.assign(new Error(t("badSheet")), { cle: "badSheet", cause: e }); }
   if (moi() !== h || place !== p) return;   // compte ou dossier changé pendant la lecture : rien n'est rangé
   data = fiche; ds.set("cache", { owner: h, dossier: dosId(p), fiche }); derniereLecture = Date.now();
+  us.set("headOk", !!fiche && fiche.profil === "head");   // mobile v124 : bascule des éditions et cours : direction seulement
   settle();
 }
 // nom du fichier d'une modification : fixé à l'ouverture de la feuille (un nouvel essai réécrit le même fichier, jamais un second)
@@ -909,22 +1095,30 @@ const ICONES = { cal: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" hei
              box: '<svg viewBox="0 0 24 24"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></svg>',
              expo: '<svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 16l4-5 4 3 6-8"/><circle cx="19" cy="6" r="1.4"/></svg>',   // round 25 : icône de l'onglet Exposition (courbe), distincte du stock
              cam: '<svg viewBox="0 0 24 24"><path d="M4 8h3l1.6-2.4h6.8L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.2" r="3.6"/></svg>',
-             gear: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>' };
+             gear: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>',
+             // mobile v124 : Jour (tableau de bord) et Marchés (bougies)
+             home: '<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7"/><rect x="13.5" y="3.5" width="7" height="7"/><rect x="3.5" y="13.5" width="7" height="7"/><rect x="13.5" y="13.5" width="7" height="7"/></svg>',
+             mkts: '<svg viewBox="0 0 24 24"><path d="M6 3v18M12 5v15M18 2v18"/><rect x="4" y="8" width="4" height="7"/><rect x="10" y="10" width="4" height="5"/><rect x="16" y="5" width="4" height="9"/></svg>' };
 // round 23 (piste mobile) : plus d'onglet Livraisons : le calendrier fait la même chose (jour, semaine ou contrepartie touchés → les mêmes fiches
 // et la même saisie ; listes À venir / En retard / Livrées / Tout sous le calendrier) ; Head : Trésorerie à la place du P&L ; Photos (les deux)
+// mobile v124 : direction : Jour (ce qui demande une action) d'abord, Marchés (courbes) ; l'onglet Photos de la direction est retiré (les photos
+// restent dans la fiche de chaque livraison) ; logistique : inchangée, jamais de cours
 function tabs() {
   const h = data && data.profil === "head", I = ICONES;
-  const list = h ? [["cal", I.cal, t("cal")], ["treso", I.cash, t("treso")], ["expo", I.expo, t("expo")], ["photos", I.cam, t("photos")], ["settings", I.gear, t("settings")]]
+  const list = h ? [["home", I.home, t("home")], ["cal", I.cal, t("cal")], ["treso", I.cash, t("treso")], ["expo", I.expo, t("expo")], ["mkts", I.mkts, t("mkTab")], ["settings", I.gear, t("settings")]]
                  : [["cal", I.cal, t("cal")], ["stock", I.box, t("stock")], ["photos", I.cam, t("photos")], ["settings", I.gear, t("settings")]];
-  if (!list.some(x => x[0] === tab)) tab = "cal";
+  if (!list.some(x => x[0] === tab)) tab = list[0][0];
   $("#nav").innerHTML = list.map(x => '<button data-tab="' + x[0] + '" class="' + (x[0] === tab ? "on" : "") + '">' + x[1] + esc(x[2]) + '</button>').join("");
-  $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => { tab = b.dataset.tab; us.set("tab", tab); selDay = null; render(); window.scrollTo(0, 0); });
+  $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => goTab(b.dataset.tab));
 }
 function header() {
-  $("#title").textContent = "Atlas" + (data ? " · " + (data.profil === "head" ? (lang === "fr" ? "Direction" : "Management") : (lang === "fr" ? "Logistique" : "Logistics")) : "");
+  $("#title").innerHTML = brandHtml(); grStar();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(grStar).catch(() => {});
   const g = data && data.genere ? new Date(data.genere) : null;   // heure UTC (suffixe Z) : affichée à l'heure du téléphone
-  $("#sub").textContent = g && !isNaN(g) ? t("data") + " " + g.toLocaleString(lang === "fr" ? "fr-FR" : "en-US", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" }) + (DEMO ? " · " + t("demo") : "") : (DEMO && data ? t("demo") : "");
+  const prof = data ? (data.profil === "head" ? (lang === "fr" ? "Direction" : "Management") : (lang === "fr" ? "Logistique" : "Logistics")) : isGr() && grInfo ? (lang === "fr" ? "Cours" : "Prices") : "";
+  $("#sub").textContent = [prof, g && !isNaN(g) ? dtShort(data.genere) : "", DEMO ? t("demo") : "", FIXTURE ? "essai local" : ""].filter(Boolean).join(" · ");
   $("#btnLang").textContent = lang === "fr" ? "EN" : "FR";
+  edSwitch();
 }
 // livraison telle que le téléphone la voit : valeurs de la fiche, recouvertes par les modifications envoyées pas encore reprises, sauf celles
 // d'une entrée bloquée : la carte dit alors « bloquée », jamais « en attente » (amendement a) ; round 23 : photos rangées par Atlas (fiche) et
@@ -940,7 +1134,7 @@ function opView(l, b) {
                                 photos: +l.photos || 0, photosAttente: pa });
 }
 function ops() { const b = blocage(); return (data.livraisons || []).map(l => opView(l, b)); }
-const photoTxt = l => (l.photos || l.photosAttente) ? '<div class="ph">📷 ' + (l.photos ? esc(tf("photoN", l.photos)) : "") + (l.photos && l.photosAttente ? " · " : "") + (l.photosAttente ? esc(tf("photoWait", l.photosAttente)) : "") + '</div>' : "";
+const photoTxt = l => (l.photos || l.photosAttente) ? '<div class="ph">' + (l.photos ? esc(tf("photoN", l.photos)) : "") + (l.photos && l.photosAttente ? " · " : "") + (l.photosAttente ? esc(tf("photoWait", l.photosAttente)) : "") + '</div>' : "";
 // correctifs mobqa (08/10) : livraison sans date ni mois : « sans date » et sa référence (des cartes d’un même contrat ne se distinguaient que par la quantité)
 function opCard(l, groupedDate = false) {
   const cls = l.sens === "achat" ? "in" : "out";
@@ -1052,7 +1246,7 @@ function moisHtml(mk) {
     const wn = (p.semaines || []).filter(w => besoinVu(w) && w.besoinLe && w.besoinLe.slice(0, 7) === mk).sort((a, b) => b.besoin - a.besoin)[0];
     return '<div class="kv"><span>' + esc(prod(p.produit)) + '</span><span>' + (m.ouv == null ? t("unknown") : qs(m.ouv)) + " → <b" + (m.clo != null && m.clo <= -0.5 ? ' class="neg"' : "") + ">" + (m.clo == null ? t("unknown") : qs(m.clo)) + "</b> " + U() +
       (m.ent || m.sor ? '<br><span class="muted">' + (m.ent ? "▲ +" + qn(m.ent) : "") + (m.ent && m.sor ? " · " : "") + (m.sor ? "▼ −" + qn(m.sor) : "") + '</span>' : "") +
-      (wn ? '<br><span class="neg">⚠ ' + tf("needMax", qn(wn.besoin) + " " + U(), fmtDM(wn.besoinLe)) + '</span>' : "") + '</span></div>';
+      (wn ? '<br><span class="neg">⚠︎ ' + tf("needMax", qn(wn.besoin) + " " + U(), fmtDM(wn.besoinLe)) + '</span>' : "") + '</span></div>';
   }).join("");
   return rows ? '<div style="padding:6px 6px 2px"><div class="row muted" style="font-size:12px"><span class="grow">' + t("stockMonth") + '</span><span>' + t("opening") + " → " + t("closing") + '</span></div>' + rows + '</div>' : "";
 }
@@ -1101,7 +1295,7 @@ function renderCal() {
       if (ps.length === 1) { const w = semDe(ps[0], du);
         if (w) top = '<div class="metrics"><div><small>' + t("opening") + '</small><b>' + (w.ouv == null ? "—" : qs(w.ouv)) + '</b></div><div><small>' + t("closing") + '</small><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + (w.clo == null ? "—" : (w.approx ? "≈" : "") + qs(w.clo)) + '</b> <span class="muted">' + U() + '</span></div>' +
           '<div><small>' + t("inW") + '</small><b class="' + (w.ent ? "pos" : "") + '">' + (w.ent ? "+" + qn(w.ent) : "—") + '</b></div><div><small>' + t("outW") + '</small><b class="' + (w.sor ? "neg" : "") + '">' + (w.sor ? "−" + qn(w.sor) : "—") + '</b></div></div>' +
-          (besoinVu(w) ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : ""); }
+          (besoinVu(w) ? '<div class="refused">⚠︎ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : ""); }
       else top = ps.map(p => { const w = semDe(p, du); if (!w || (w.clo == null && !w.ent && !w.sor)) return ""; return '<div class="kv"><span>' + esc(prod(p.produit)) + '</span><span>' + (w.ent ? "▲" + qk(w.ent) + " " : "") + (w.sor ? "▼" + qk(w.sor) + " " : "") +
           (w.clo == null ? '<span class="muted">' + t("notInv") + '</span>' : t("endW") + ' <b class="' + (w.clo <= -0.5 ? "neg" : "") + '">' + (w.approx ? "≈" : "") + qs(w.clo) + '</b>') + " " + U() + (besoinVu(w) ? ' <span class="neg">' + tf("needOn", qk(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</span>' : "") + '</span></div>'; }).join("");
       h += '<div class="card"><div class="row wk" data-w="' + du + '"><span class="grow t">' + semTitre(du) + '</span><span class="muted">›</span></div>' + top +
@@ -1176,7 +1370,7 @@ function semaineSheet(du) {
     h += '<div class="card" style="margin-top:10px;background:var(--cell)"><b>' + esc(prod(p.produit)) + '</b><div class="metrics"><div><small>' + t("opening") + '</small><b>' + (w.ouv == null ? "—" : qs(w.ouv)) + '</b></div><div><small>' + t("closing") + '</small><b class="' + (w.clo != null && w.clo <= -0.5 ? "neg" : "") + '">' + (w.clo == null ? "—" : (w.approx ? "≈" : "") + qs(w.clo)) + '</b></div>' +
       '<div><small>' + t("inW") + '</small><b class="' + (w.ent ? "pos" : "") + '">' + (w.ent ? "+" + qn(w.ent) : "—") + '</b></div><div><small>' + t("outW") + '</small><b class="' + (w.sor ? "neg" : "") + '">' + (w.sor ? "−" + qn(w.sor) : "—") + '</b></div></div>' +
       (w.clo == null && !p.inventorie ? '<div class="muted">' + t("notInv") + (w.ent || w.sor ? " · " + t("change") + " " + sgn(w.ent - w.sor) : "") + '</div>' : "") +
-      (besoinVu(w) ? '<div class="refused">⚠ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + "" +
+      (besoinVu(w) ? '<div class="refused">⚠︎ ' + tf("needOn", qn(w.besoin) + " " + U(), fmtDM(w.besoinLe)) + '</div>' : "") + "" +
       (w.ordre || []).map(o => '<div class="note">' + tf("order", fmtDM(o)) + '</div>').join("") + (w.retard ? '<div class="note">' + tf("lateN", w.retard) + '</div>' : "") + (w.approx ? '<div class="muted">' + t("approx") + '</div>' : "") + '</div>';
   });
   if (g.length) h += '<h2>' + t("byCpty") + '</h2><div class="card">' + g.map(whoHtml).join("") + '</div>';
@@ -1239,48 +1433,12 @@ function courbe(tr) {
 // Seulement les cours des historiques de marché d'Atlas (origine « mkt » : westmetall, BCE, fiches de prix), jamais un repère du carnet d'ordres ni
 // le taux de l'onglet Europe : rien de l'Europe sur la fiche Head (règle de l'utilisateur). Fiche d'un Atlas plus ancien (sans ces champs) ou
 // Logistique : rien. Chiffres de la fiche, jamais recalculés ici ; pas de précision inutile (0, 2 ou 4 décimales selon l'ordre de grandeur).
-const mkRows = () => data && data.profil === "head" && Array.isArray(data.marches)
-  ? data.marches.filter(x => x && x.origine === "mkt" && typeof x.v === "number" && isFinite(x.v) && x.v > 0 && !!parseD(x.le)) : [];
 const nfx = (v, d) => Number(v).toLocaleString(lang === "fr" ? "fr-FR" : "en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
-const mkDec = v => Math.abs(v) >= 1000 ? 0 : Math.abs(v) >= 10 ? 2 : 4;
-function mkVal(x) {
-  const n = nfx(x.v, mkDec(x.v)), u = x.unite || "", c = x.devise === "USD" ? "$" : (x.devise || "");
-  if (!c) return n + (u ? " " + u : "");
-  return lang === "fr" ? n + " " + c + u : c === "$" ? "$" + n + u : n + " " + c + u;
-}
-function mkChg(x) {
-  if (typeof x.prec !== "number" || !(x.prec > 0)) return "";
-  const r = Math.round((x.v - x.prec) / x.prec * 1000) / 10;
-  if (r === 0) return '<small class="muted">=</small>';
-  return '<small class="' + (r > 0 ? "pos" : "neg") + '">' + (r > 0 ? "▲ " : "▼ ") + nfx(Math.abs(r), 1) + (lang === "fr" ? " %" : "%") + '</small>';
-}
 const mkDate = s => { const d = parseD(s); return !d ? "" : fmtDM(s) + (d.getFullYear() !== new Date().getFullYear() ? "/" + String(d.getFullYear()).slice(2) : ""); };
 // source courte (comme la page Marchés du PC) : première partie avant « · », sans le code final entre parenthèses ; la feuille la donne en entier
 const mkSrc = s => { let r = String(s || ""); const k = r.indexOf(" · "); if (k > 0) r = r.slice(0, k).trim(); const p = r.lastIndexOf(" ("); if (/\)$/.test(r) && p > 0) r = r.slice(0, p).trim(); return r; };
-const mkRow = (x, full) => '<div class="who mk41"><span class="grow">' + esc(x.nom || x.id) + '<br><span class="muted">' + esc(mkDate(x.le) + (x.src ? " · " + (full ? x.src : mkSrc(x.src)) : "")) + '</span></span>' +
-  '<span class="v" style="text-align:right">' + esc(mkVal(x)) + (mkChg(x) ? '<br>' + mkChg(x) : "") + '</span></div>';
-const mkGroup = g => g === "FX" ? t("mkFx") : g || "";
-// carte : le premier cours de chaque groupe (dans l'ordre de la fiche) ; tous les cours dans une feuille
-function mkHtml() {
-  const xs = mkRows(); if (!xs.length) return "";
-  const seen = new Set(), top = xs.filter(x => { const g = x.groupe || ""; if (seen.has(g)) return false; seen.add(g); return true; });
-  return '<div class="card" id="mk41"><div class="row"><b class="grow">' + esc(t("mkts")) + '</b><span class="muted">' + esc(t("mkLast")) + '</span></div>' + top.map(x => mkRow(x, false)).join("") +
-    (xs.length > top.length ? '<button class="btn light" id="mk41all">' + esc(tf("mkAll", xs.length)) + ' ›</button>' : "") + '</div>';
-}
-function mkSheet() {
-  const xs = mkRows(); if (!xs.length) return; const gs = [];
-  xs.forEach(x => { const g = x.groupe || ""; let e = gs.find(z => z.g === g); if (!e) gs.push(e = { g, xs: [] }); e.xs.push(x); });
-  sheet('<h3>' + esc(t("mkLast")) + '</h3>' + gs.map(e => '<h2>' + esc(mkGroup(e.g)) + '</h2><div class="card">' + e.xs.map(x => mkRow(x, true)).join("") + '</div>').join("") +
-    '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => { bg.querySelector("#ko").onclick = close; });
-}
 const alData = () => data && data.profil === "head" && data.alertes && typeof data.alertes === "object" ? data.alertes : null;
 const alN = (a, k) => { const v = +a[k]; return isFinite(v) && v > 0 ? Math.round(v) : 0; };
-function alHtml() {
-  const a = alData(); if (!a) return "";
-  const n = alN(a, "ouvertes"), b = alN(a, "bloquantes");
-  return '<div class="card" id="al41"><div class="row"><span class="grow"><b class="' + (b > 0 ? "neg" : n > 0 ? "warn" : "") + '">' + esc(n > 0 ? "⚠ " + tf("alOpen", n) : t("alNone")) + '</b>' +
-    (b > 0 ? ' <span class="neg">· ' + esc(tf("alBlock", b)) + '</span>' : "") + '</span><span class="muted" style="white-space:nowrap">' + esc(tf("alTodo", alN(a, "aTraiter"))) + ' ›</span></div></div>';
-}
 function alSheet() {
   const a = alData(); if (!a) return;
   const m = (k, lab, cls) => '<div><small>' + esc(t(lab)) + '</small><b class="' + (alN(a, k) > 0 ? cls : "") + '">' + alN(a, k) + '</b></div>';
@@ -1301,7 +1459,7 @@ function renderTreso() {
            // flux sans montant (prix flottant : achats indexés, swaps sans fixing) dans la fenêtre : comptés à part, jamais dans les totaux (règle du PC)
            (nFl ? '<div class="muted">' + esc(nSw ? tf("floatingSw", nFl, nSw) : tf("floating", nFl)) + '</div>' : "") + (nMq ? '<div class="note">' + esc(tf("noAmt", nMq)) + '</div>' : "") : "") +
     (tr.previsions === false ? '<div class="note">' + t("bankOnly") + '</div>' : "") + (tr.ecarts ? '<div class="refused">' + tf("gaps", tr.ecarts) + '</div>' : "") + (tr.alertes ? '<div class="note">' + tf("warns", tr.alertes) + '</div>' : "") + '</div>';
-  h += alHtml() + mkHtml();   // round 41 (piste F) : alertes ouvertes et derniers cours (fiche Head d'Atlas 41) ; la carte du solde reste la première
+  // mobile v124 : cartes des alertes et des derniers cours retirées d'ici (écran Jour et onglet Marchés : plus de doublon)
   h += '<section class="cash-trend"><h2>'+ui('Évolution du solde','Balance trend')+'</h2>'+courbe(tr)+'</section><h2>' + t("weeks") + '</h2>';
   const weeks = tr.semaines.filter(w => w.du >= iso(addJ(parseD(cur), -7))), visible = isDetailed() || cashExpanded ? weeks : weeks.slice(0, 6);
   h += '<div class="cash-list">' + visible.map(w => '<button class="cash-row" data-tw="' + w.du + '"><span><b>' + semTitre(w.du) + '</b>' + (isDetailed() ? '<small>' + t('inW') + ' ' + amt(w.ent) + '<br>' + t('outW') + ' ' + amt(w.sor) + '</small>' : '') + (w.echus ? '<small class="warn">' + tf('overdue', w.echus) + '</small>' : '') + (w.sansMontant ? '<small>' + tf('noAmt', w.sansMontant) + '</small>' : '') + '</span><span><small>' + t('closing') + '</small><strong class="' + (w.clo != null && w.clo < 0 ? 'neg' : '') + '">' + amt(w.clo) + '</strong>' + (w.financement > 0 ? '<small class="warn">' + t('funding') + ' ' + financement(w) + '</small>' : '') + '</span><span aria-hidden="true">›</span></button>').join('') + '</div>';
@@ -1310,7 +1468,6 @@ function renderTreso() {
   $("#main").innerHTML = h;
   if ($("#cashMore")) $("#cashMore").onclick = () => { cashExpanded = !cashExpanded; render(); };
   $("#main").querySelectorAll("[data-tw]").forEach(b => b.onclick = () => tresoSemaine(b.dataset.tw));
-  const al41 = $("#al41"), mk41 = $("#mk41all"); if (al41) al41.onclick = alSheet; if (mk41) mk41.onclick = mkSheet;
 }
 const srcTxt = o => o.banque ? T[lang].src.bank : (T[lang].src[o.src] || "");
 function opTreso(o) {
@@ -1445,7 +1602,7 @@ async function reduire(file) {
 // appareil photo (capture) ou galerie : champ fichier caché, placé dans la page le temps du choix (iPhone)
 function choisirPhoto(ref, camera, apres) {
   if (ligneBloquee(ref)) return;
-  if (!photoOk()) { toast("⚠ " + t("noPhotoAtlas")); return; }
+  if (!photoOk()) { toast("⚠︎ " + t("noPhotoAtlas")); return; }
   const i = document.createElement("input"); i.type = "file"; i.accept = "image/*"; if (camera) i.setAttribute("capture", "environment");
   i.style.display = "none"; document.body.appendChild(i);
   i.onchange = async () => { const f = i.files && i.files[0]; i.remove(); if (f) { await ajouterPhoto(ref, f); if (apres) apres(); } };
@@ -1455,20 +1612,20 @@ function choisirPhoto(ref, camera, apres) {
 // dans « photos », puis la modification qui la cite, dans « modifs ») ; hors réseau : envoyée au retour du réseau, comme les autres saisies
 async function ajouterPhoto(ref, file) {
   if (ligneBloquee(ref)) return false;
-  if (!data || (!DEMO && (!place || !account || !moi()))) { toast("⚠ " + t("noSheet")); return false; }
-  if (!(data.livraisons || []).some(x => x.ref === ref)) { toast("⚠ " + t("noDeliv")); return false; }
-  if (!photoOk()) { toast("⚠ " + t("noPhotoAtlas")); return false; }   // rien de gardé ni d'envoyé
-  let r; try { r = await reduire(file); } catch (e) { toast("⚠ " + (e && e.cle ? tf(e.cle, e.arg || "") : t("photoErr"))); return false; }
+  if (!data || (!DEMO && (!place || !account || !moi()))) { toast("⚠︎ " + t("noSheet")); return false; }
+  if (!(data.livraisons || []).some(x => x.ref === ref)) { toast("⚠︎ " + t("noDeliv")); return false; }
+  if (!photoOk()) { toast("⚠︎ " + t("noPhotoAtlas")); return false; }   // rien de gardé ni d'envoyé
+  let r; try { r = await reduire(file); } catch (e) { toast("⚠︎ " + (e && e.cle ? tf(e.cle, e.arg || "") : t("photoErr"))); return false; }
   if (DEMO) { toast(t("demoSent")); return true; }
   const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "");
   const fichier = String(ref).replace(/[^A-Za-z0-9_\-]/g, "_") + "_" + stamp + "_" + Math.random().toString(36).slice(2, 8) + ".jpg";
   const name = newName(), cle = photoMem.cle(name);
   let ok = false; try { ok = await photoMem.put(cle, r.blob); } catch (e) { ok = false; }
   // mémoire pleine : combien de photos attendent le réseau, et qu'il faudra reprendre celle-ci (jamais « laissez partir » sans dire quand)
-  if (!ok) { await photoMem.del(cle); const nAtt = us.get("outbox", []).filter(x => x.photo).length; toast("⚠ " + (nAtt ? tf("photoNotKeptW", nAtt) : t("photoNotKept"))); return false; }
+  if (!ok) { await photoMem.del(cle); const nAtt = us.get("outbox", []).filter(x => x.photo).length; toast("⚠︎ " + (nAtt ? tf("photoNotKeptW", nAtt) : t("photoNotKept"))); return false; }
   const etat = { gardee: false };
   try { await send([{ t: "photo", ref, champ: "photo", valeur: fichier, octets: r.blob.size, largeur: r.l, hauteur: r.h }], name, etat, { fichier, cle }); }
-  catch (e) { if (!etat.gardee) { await photoMem.del(cle); toast("⚠ " + (e && e.message)); return false; } }
+  catch (e) { if (!etat.gardee) { await photoMem.del(cle); toast("⚠︎ " + (e && e.message)); return false; } }
   toast(envoyees.has(name) ? t("photoSent") : bloquees(us.get("outbox", [])).has(name) ? t("blocked") : t("photoKept"));
   // correctifs mobqa (08/10) : photo prise depuis une feuille : la carte en dessous est redessinée quand la feuille se ferme (Fermer, fond gris, retour)
   const sb = document.querySelector(".sheet-bg"); if (sb) sb.redessiner = true; else render();
@@ -1491,10 +1648,10 @@ async function ajouterPhoto(ref, file) {
 //     produit, date), à droite trois nœuds : ➜ client direct (sarcelle), entrepôt (toit en dents de scie, stock fin du mois, sorties par lot), et le
 //     VIDE (cadre gris en pointillés, rien dedans) ; une flèche par destination (pleine si directe ou confirmée, en pointillés si proposée, grise en
 //     pointillés vers le vide) ; ventes sans camion en bas (camion rouge en pointillés tourné vers la gauche). Plus de 8 camions : « + n camions ».
-//  3. Remplacements : tuile « Position fin <dernier mois de la plage> » (case de la carte, barre bouge / 🔒) + stock du jour + camions sans client, au
+//  3. Remplacements : tuile « Position fin <dernier mois de la plage> » (case de la carte, barre bouge / ▣) + stock du jour + camions sans client, au
 //     lieu de « Position aujourd'hui » (qui n'était que le swap fixé) ; « À vérifier » avec camions sans client, ventes sans camion, swap
 //     à régler, non couvert juste (swaps à venir) ; « Couverture par contrat » : une barre PAR CONTRAT (swaps à venir, non couvert, swaps en trop) et la
-//     pastille 🔒 des swaps déjà fixés (ne couvrent plus), au lieu d'une jauge par produit qui comptait le swap fixé.
+//     pastille ▣ des swaps déjà fixés (ne couvrent plus), au lieu d'une jauge par produit qui comptait le swap fixé.
 //  Round 28 (piste camions, 08/10, minuit : « sous les camions, « sans client », « direct », « entrepôt → client » : ça sert à rien, la bulle
 //     l'explique déjà » ; « le prix des camions : je ne sais pas si c'est flottant ») : la destination n'est plus écrite sous un camion (elle reste
 //     dans sa feuille) ; à sa place, un BADGE DE PRIX lu dans la fiche (camion.pc, règle CamPrice du PC) : ardoise « fixe 12,34 », violet « indexé
@@ -1545,14 +1702,14 @@ const VT = {
                carte: "Exposé à la fin de chaque mois : ce qui est acheté et pas encore vendu (vert, LONG) ou vendu et pas encore acheté (rouge, SHORT), d'après les allocations achat → vente (proposées ou confirmées). Sous le produit choisi : le stock physique déjà vendu, en attente de livraison (pas une exposition), et l'indexé vendu fixe (risque de prix à part : bleu couvert par swap, orange non couvert). Cadre : la plage choisie. Toucher un mois : la plage devient ce mois ; une case : ses lignes.",
                stock: "Stock en entrepôt mois par mois : début, entrées (vert), sorties (rouge), fin. Même moteur que le calendrier. Bande grise : la plage ; les chiffres dessous vont du début du premier mois à la fin du dernier. Toucher un mois : ses mouvements.",
                parts: "Volume livré chaque mois (achats et ventes) : à prix fixe (ardoise), à prix indexé, fixé plus tard sur la moyenne du mois de cotation (violet), ou sans prix saisi (gris hachuré). Pourcentages : sur la plage.",
-               couv: "Une barre par contrat d'achat indexé : bleu, couvert par des swaps encore à fixer ; orange, la part non couverte ; contour bleu, des swaps en trop. 🔒 : swap déjà fixé, son résultat est acquis, il ne couvre plus aucun prix à venir. Contrats montrés : ceux qui livrent ou fixent dans la plage.",
+               couv: "Une barre par contrat d'achat indexé : bleu, couvert par des swaps encore à fixer ; orange, la part non couverte ; contour bleu, des swaps en trop. ▣ : swap déjà fixé, son résultat est acquis, il ne couvre plus aucun prix à venir. Contrats montrés : ceux qui livrent ou fixent dans la plage.",
                sens: "Gain (▲) ou perte (▼) en dollars si le prix bouge, sur l'exposé à la fin du dernier mois de la plage (acheté pas vendu, vendu pas acheté). L'indexé vendu fixe reste séparé dans la vue détaillée des volumes.",
                cptys: "Volumes encore à recevoir (achats, à gauche) ou à livrer (ventes, à droite) avec chaque contrepartie, sur les mois de la plage (livraisons en retard comprises quand la plage commence ce mois-ci).",
                marche: "Repère marché : dernier fixing saisi dans Atlas (moyenne de l'indice sur son mois de cotation), trait en pointillés. Achat et vente moyens : livraisons à venir à prix fixe, pondérées par les lb ; chaque crochet va du prix au repère, son écart dessus : ▲ gagnant, ▼ perdant. Swaps : prix fixe moyen des swaps non réglés.",
-               swaps: "Mois de cotation (QP) de chaque swap non réglé : son prix se fixe sur la moyenne de l'indice ce mois-là. Bleu plein : à fixer ; bleu hachuré 🔒 : déjà fixé, verrouillé.",
+               swaps: "Mois de cotation (QP) de chaque swap non réglé : son prix se fixe sur la moyenne de l'indice ce mois-là. Bleu plein : à fixer ; bleu hachuré ▣ : déjà fixé, verrouillé.",
                cam: "Ouvrez un mois pour voir les réceptions, leurs destinations et le stock de fin de mois. Touchez une livraison pour consulter ses allocations et l’origine de son prix. Les allocations proposées restent à confirmer. Les destinations se modifient dans Atlas sur le PC." },
         gl: [["LONG", "acheté, pas encore vendu : on perd si le prix baisse"], ["SHORT", "vendu, pas encore acheté : on perd si le prix monte"], ["Stock déjà vendu", "en entrepôt, alloué à une vente : pas une exposition"], ["Indexé vendu fixe", "achat indexé alloué à une vente à prix fixe : risque de prix, à part"], ["Prix fixe", "prix d'un trade connu au contrat"],
-             ["Indexé", "suit un indice, fixé plus tard"], ["Swap", "fixe le prix d'un achat indexé"], ["Verrouillé 🔒", "swap déjà fixé : ne bouge plus"],
+             ["Indexé", "suit un indice, fixé plus tard"], ["Swap", "fixe le prix d'un achat indexé"], ["Verrouillé ▣", "swap déjà fixé : ne bouge plus"],
              ["QP", "mois dont la moyenne fixe le prix"], ["Sans prix", "prix pas encore saisi dans Atlas"], ["▲ / ▼", "gain / perte"],
              ["Plage", "mois choisis : de … à …"], ["Direct", "le fournisseur livre le client, hors stock"], ["*entrepot", "notre entrepôt"],
              ["Sans client", "aucune vente allouée : entrera au stock"], ["Proposé", "allocation à confirmer"], ["MT", "1 MT = 2 204,62 lb"]] },
@@ -1582,14 +1739,14 @@ const VT = {
                carte: "Exposure at the end of each month: what is bought and not yet sold (green, LONG) or sold and not yet bought (red, SHORT), from the purchase → sale allocations (proposed or confirmed). Under the chosen product: the physical stock already sold, awaiting delivery (not an exposure), and index-linked buys sold at a fixed price (price risk, apart: blue hedged by swap, orange not hedged). Frame: the chosen range. Tap a month: the range becomes that month; a cell: its lines.",
                stock: "Stock in the warehouses month by month: start, in (green), out (red), end. Same engine as the calendar. Grey band: the range; the figures below run from the start of its first month to the end of its last. Tap a month: its movements.",
                parts: "Volume delivered each month (purchases and sales): at a fixed price (slate), index-linked, fixed later on the average of the quotation month (violet), or without a price entered (grey hatched). Percentages: over the range.",
-               couv: "One bar per index-linked purchase contract: blue, hedged by swaps still to fix; orange, the part not hedged; blue outline, excess swaps. 🔒: swap already fixed, its result is known, it no longer hedges any future price. Contracts shown: those delivering or fixing in the range.",
+               couv: "One bar per index-linked purchase contract: blue, hedged by swaps still to fix; orange, the part not hedged; blue outline, excess swaps. ▣: swap already fixed, its result is known, it no longer hedges any future price. Contracts shown: those delivering or fixing in the range.",
                sens: "Gain (▲) or loss (▼) in dollars if the price moves, on the exposure at the end of the range's last month (bought not sold, sold not bought). Index-linked buys sold fixed remain separate in the detailed volumes view.",
                cptys: "Volumes still to receive (purchases, left) or to deliver (sales, right) with each counterparty, over the months of the range (late deliveries included when the range starts this month).",
                marche: "Market reference: last fixing entered in Atlas (index average over its quotation month), dotted line. Average buy and sale: upcoming fixed-price deliveries, weighted by lb; each bracket runs from the price to the reference, its gap on it: ▲ winning, ▼ losing. Swaps: average fixed price of unsettled swaps.",
-               swaps: "Quotation month (QP) of each unsettled swap: its price fixes on the index average of that month. Solid blue: to fix; hatched blue 🔒: already fixed, locked.",
+               swaps: "Quotation month (QP) of each unsettled swap: its price fixes on the index average of that month. Solid blue: to fix; hatched blue ▣: already fixed, locked.",
                cam: "Open a month to see its receipts, destinations and month-end stock. Tap a delivery for its allocations and price source. Proposed allocations still need confirmation. Destinations are edited in Atlas on the PC." },
         gl: [["LONG", "bought, not yet sold: we lose if the price falls"], ["SHORT", "sold, not yet bought: we lose if the price rises"], ["Stock already sold", "in the warehouse, allocated to a sale: not an exposure"], ["Index sold fixed", "index-linked buy allocated to a fixed-price sale: price risk, apart"], ["Fixed price", "trade price known in the contract"],
-             ["Index-linked", "follows an index, fixed later"], ["Swap", "fixes the price of an index-linked purchase"], ["Locked 🔒", "swap already fixed: no longer moves"],
+             ["Index-linked", "follows an index, fixed later"], ["Swap", "fixes the price of an index-linked purchase"], ["Locked ▣", "swap already fixed: no longer moves"],
              ["QP", "month whose average fixes the price"], ["No price", "price not entered in Atlas yet"], ["▲ / ▼", "gain / loss"],
              ["Range", "chosen months: from … to …"], ["Direct", "the supplier delivers the customer, outside stock"], ["*entrepot", "our warehouse"],
              ["No customer", "no sale allocated: will go into stock"], ["Proposed", "allocation to confirm"], ["MT", "1 MT = 2,204.62 lb"]] } };
@@ -1628,16 +1785,16 @@ function vPcts(xs) {
   r.map((x, i) => [x - f[i], i]).sort((a, b) => b[0] - a[0]).forEach(z => { if (d > 0 && r[z[1]] > 0) { f[z[1]]++; d--; } });
   return f;
 }
-// barre en deux segments (décisions A et B) : ce qui bouge avec le prix (vert long / rouge short) et la part verrouillée 🔒 (bleu hachuré) ;
-// largeurs proportionnelles aux deux quantités ; « lab » : la ligne de légende sous la barre (bouge … · 🔒 …)
+// barre en deux segments (décisions A et B) : ce qui bouge avec le prix (vert long / rouge short) et la part verrouillée ▣ (bleu hachuré) ;
+// largeurs proportionnelles aux deux quantités ; « lab » : la ligne de légende sous la barre (bouge … · ▣ …)
 function vBarre(b, f, big, lab) {
   const B = vZ(b), F = vZ(f), ab = Math.abs(B), af = Math.abs(F); if (ab + af < 0.5) return "";
   const wb = ab / (ab + af) * 100;
   return '<span class="vst' + (big ? " big" : "") + '" data-b="' + B + '" data-f="' + F + '">' + (ab >= 0.5 ? '<i class="mv ' + (B < 0 ? "s" : "l") + '" style="width:' + wb.toFixed(1) + '%"></i>' : "") +
     (af >= 0.5 ? '<i class="lk" style="width:' + (100 - wb).toFixed(1) + '%"></i>' : "") + '</span>' +
-    (lab === false ? "" : '<span class="vstl"><span class="' + (ab < 0.5 ? "z" : B < 0 ? "v-short" : "v-long") + '">' + esc(vt("bouge")) + ' ' + esc(vq(B)) + '</span>' + (af >= 0.5 ? '<span class="v-lock">🔒 ' + esc(vq(F)) + '</span>' : "") + '</span>');
+    (lab === false ? "" : '<span class="vstl"><span class="' + (ab < 0.5 ? "z" : B < 0 ? "v-short" : "v-long") + '">' + esc(vt("bouge")) + ' ' + esc(vq(B)) + '</span>' + (af >= 0.5 ? '<span class="v-lock">▣ ' + esc(vq(F)) + '</span>' : "") + '</span>');
 }
-// motifs hachurés des graphiques (verrouillé 🔒 : bleu ; sans prix : gris) et pointes des flèches des camions, une seule fois par page
+// motifs hachurés des graphiques (verrouillé ▣ : bleu ; sans prix : gris) et pointes des flèches des camions, une seule fois par page
 const VDEFS = '<svg class="vdefs" width="0" height="0" aria-hidden="true" focusable="false"><defs>' +
   '<pattern id="vpLk" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="pk0" width="6" height="6"/><rect class="pk1" width="3" height="6"/></pattern>' +
   '<pattern id="vpNv" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="pn1" width="2" height="5"/></pattern>' +
@@ -1812,7 +1969,7 @@ function vkReste(t, C) { return vZ(t.reste) + (vkPese(C) ? 0 : (t.vers || []).fi
 function vSansClient(p, pl) { const ms = vCamMoisPlage(p, pl); if (!ms) return null; const C = p.vis && p.vis.camions; let n = 0, q = 0; ms.forEach(m => (m.camions || []).forEach(t => { const v = vkVers(t, C).filter(b => b.dest === "vide"); if (v.length) { n++; q += v.reduce((s, b) => s + vZ(b.q), 0); } })); return { n, q }; }
 function vSansCamion(p, pl) { const ms = vCamMoisPlage(p, pl); if (!ms) return null; let n = 0, q = 0; ms.forEach(m => (m.attentes || []).forEach(a => { n++; q += vZ(a.q); })); return { n, q }; }
 const vCamEnt = p => (p && p.vis && p.vis.camions && p.vis.camions.entrepot) || vt("entrepot");
-// ---------- A · tuile « Position fin <dernier mois de la plage> » (case de la carte, barre bouge / 🔒), stock du jour, camions sans client ----------
+// ---------- A · tuile « Position fin <dernier mois de la plage> » (case de la carte, barre bouge / ▣), stock du jour, camions sans client ----------
 function vTuile(p, e, pl, simple = false) {
   const c = vCarteData(e), r = c.produits.find(x => x.produit === p.produit), tot = p.total || {};
   const sd = pl.tout && tot.sansDate && +tot.sansDate.n > 0 && tot.positionPrix != null;
@@ -1839,8 +1996,8 @@ function vTuile(p, e, pl, simple = false) {
 // ---------- C · ce qui cloche : pastilles sans chiffre (2-3 mots + icône) ; un toucher : l'outil concerné ou les lignes en cause ----------
 // [icône, style, texte, outil où aller (sinon : ses lignes)] ; mois short, stock négatif, camions sans client et ventes sans camion : dans la plage
 const VAL = { court: ["▼", "short", "alCourt", "carte"], stockNeg: ["↓", "short", "alNeg", "stock"], sansClient: ["", "vide", "alSC", "cam"], venteSansCamion: ["", "vsk", "alVSC", "cam"],
-              nonCouvert: ["◐", "nc", "alNC", "couv"], swapsTrop: ["◑", "sw", "alTrop", "couv"], swapARegler: ["🔒", "sw", "alSR", "couv"], prixManquant: ["∅", "nv", "alPM", null],
-              retard: ["⏱", "nv", "alRet", null], sansDate: ["?", "nv", "alSD", null], inventaire: ["∅", "nv", "alInv", "stock"] };
+              nonCouvert: ["◐", "nc", "alNC", "couv"], swapsTrop: ["◑", "sw", "alTrop", "couv"], swapARegler: ["▣", "sw", "alSR", "couv"], prixManquant: ["∅", "nv", "alPM", null],
+              retard: ["◷", "nv", "alRet", null], sansDate: ["?", "nv", "alSD", null], inventaire: ["∅", "nv", "alInv", "stock"] };
 function vAlertesListe(p, pl) {
   const V = p.vis || {}, res = [], ms = (p.mois || []).filter(m => pl.mk.indexOf(m.mois) >= 0);
   const oo = vOuv(p), sh = oo ? pl.mk.filter(k => { const i = oo.c.mois.indexOf(k); return i >= 0 && oo.r.v[i] != null && +oo.r.v[i] <= -0.5 && !(oo.r.conv && oo.r.conv[i]); }).map(k => ({ mois: k }))
@@ -1867,7 +2024,7 @@ function vAlertes(p, pl) {
   return '<section class="attention-list" data-outil="alertes"><h3>'+ui('À vérifier','Needs attention')+'</h3>'+alerts.slice(0,3).map(row).join('')+(alerts.length>3?'<details class="more-alerts"><summary>'+ui('Afficher les autres points','Show other items')+' ('+(alerts.length-3)+')</summary>'+alerts.slice(3).map(row).join('')+'</details>':'')+'</section>';
 }
 // ---------- E · carte de chaleur : produits en lignes × mois en colonnes ; case = position prix fin de mois (couleur = sens, palier = taille dans
-// le produit, barre = ce qui bouge / verrouillé 🔒) ; UN cadre autour des mois de la plage ; colonne « sans date » avec « Tout » ----------
+// le produit, barre = ce qui bouge / verrouillé ▣) ; UN cadre autour des mois de la plage ; colonne « sans date » avec « Tout » ----------
 // round 33 : fiche courante (vE) ; vOuv(p) : la rangée de la carte du produit quand la carte porte la POSITION OUVERTE (carte.ouvert, Atlas du round 33 :
 // exposé = acheté pas vendu / vendu pas acheté) ; null pour une fiche plus ancienne (règle d'avant, inchangée)
 let vE = null;
@@ -1928,7 +2085,7 @@ function vCarte(e, pl) {
   h += '</div>';
   const ramp = s => '<span class="vramp">' + [1, 2, 3, 4, 5].map(k => '<i class="vk ' + s + ' k' + k + '"></i>').join("") + '</span>';
   const leg = '<div class="vleg"><span>' + ramp("l") + '▲ ' + esc(vt("gLong")) + '</span><span>' + ramp("s") + '▼ ' + esc(vt("gShort")) + '</span>' +
-    (oc ? '<span><i class="vsw vend"></i>' + esc(vt("gVendu")) + '</span>' + (anyIdx ? '<span><i class="vsw cv"></i>' + esc(vt("gCouv")) + '</span><span><i class="vsw ncv"></i>' + esc(vt("gNCv")) + '</span>' : "") : '<span><i class="vsw lk"></i>🔒 ' + esc(vt("gVerrou")) + '</span>') +
+    (oc ? '<span><i class="vsw vend"></i>' + esc(vt("gVendu")) + '</span>' + (anyIdx ? '<span><i class="vsw cv"></i>' + esc(vt("gCouv")) + '</span><span><i class="vsw ncv"></i>' + esc(vt("gNCv")) + '</span>' : "") : '<span><i class="vsw lk"></i>▣ ' + esc(vt("gVerrou")) + '</span>') +
     (nul ? '<span><i class="vsw nv"></i>' + esc(vt("gNv")) + '</span>' : "") + '</div>';
   return vCard("carte", "q1", oc ? "carte (v : exposé = acheté pas vendu / vendu pas acheté ; vendu ; idx, idxCouv)" : "carte (v, bouge, fixes : position prix fin de mois)", "" + vScroll("vmapw nl", '<div class="vsc-in">' + h + '</div>') + leg + '<small class="scale-note">' + ui("Intensité relative à chaque produit", "Intensity relative to each product") + '</small>', U());
 }
@@ -2000,7 +2157,7 @@ function vParts(p, pl) {
     (pl.vide ? '<div class="vempty">' + esc(vt("rienPlage")) + '</div>' : '<div class="vval v3">' + vb("fixe", "fixe", vt("fixe"), 0, fx) + vb("indexe", "idx", vt("indexe"), 1, ix) + vb("manque", "nv", vt("sansPrix"), 2, mq) + '</div>'), esc(vPlageTxt(pl)));
 }
 // ---------- C · couverture PAR CONTRAT indexé (vis.couv, règle du PC) : bleu = swaps à venir, orange = non couvert, contour bleu = swaps en trop ;
-// 🔒 hachuré = swaps déjà fixés (ne couvrent plus) ; contrats qui livrent ou fixent dans la plage ----------
+// ▣ hachuré = swaps déjà fixés (ne couvrent plus) ; contrats qui livrent ou fixent dans la plage ----------
 function vCouvLignes(p, pl) {
   const V = p.vis || {}; if (!Array.isArray(V.couv)) return null;
   const inP = mk => mk === "sansDate" ? pl.tout : pl.mk.indexOf(mk) >= 0 || (pl.debut && !pl.vide && mk < pl.m0) || (pl.tout && !!pl.last && mk > pl.last);
@@ -2017,9 +2174,9 @@ function vCouv(e, p, pl) {
     return '<button class="vcv" data-t="couvc" data-c="' + esc(c.trade || "") + '" data-v="' + (pc == null ? "" : pc) + '" data-sw="' + sw + '" data-nc="' + nc + '" data-tr="' + tr + '" data-fx="' + fx + '">' +
       '<span class="vcvh"><b>' + esc(lab) + '</b><em>' + esc(pc == null ? "—" : vpc(pc)) + '</em></span>' +
       '<span class="vcvb">' + (sw >= 0.5 ? '<i class="sw" style="width:' + W(sw) + '"></i>' : "") + (nc >= 0.5 ? '<i class="nc" style="width:' + W(nc) + '"></i>' : "") + (tr >= 0.5 ? '<i class="tr" style="width:' + W(tr) + '"></i>' : "") + '</span>' +
-      '<span class="vcvl"><span>' + esc(vq(av, { nu: true }) + " / " + vq(idx)) + '</span>' + (fx >= 0.5 ? '<span class="vlk">🔒 ' + esc(vq(fx, { nu: true })) + '</span>' : "") + '</span></button>';
+      '<span class="vcvl"><span>' + esc(vq(av, { nu: true }) + " / " + vq(idx)) + '</span>' + (fx >= 0.5 ? '<span class="vlk">▣ ' + esc(vq(fx, { nu: true })) + '</span>' : "") + '</span></button>';
   }).join("");
-  const leg = '<div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("swapsL")) + '</span><span><i class="vsw nc"></i>' + esc(vt("nonCouv")) + '</span><span><i class="vsw tr"></i>' + esc(vt("tropL")) + '</span><span><i class="vsw lk"></i>🔒 ' + esc(vt("fixeL")) + '</span></div>';
+  const leg = '<div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("swapsL")) + '</span><span><i class="vsw nc"></i>' + esc(vt("nonCouv")) + '</span><span><i class="vsw tr"></i>' + esc(vt("tropL")) + '</span><span><i class="vsw lk"></i>▣ ' + esc(vt("fixeL")) + '</span></div>';
   return vCard("couv", "q4", SRC, '<div class="vcvs">' + h + '</div>' + leg);
 }
 // fiche sans vis.couv (Atlas du round 26) : l'ancienne jauge par produit (achats indexés ouverts, tous les swaps)
@@ -2037,7 +2194,7 @@ function vCouvAncien(e) {
   }).join("");
   return vCard("couv", "q4", "couvTotal (indexe, swaps, pctMoteur)", '<div class="vgs">' + h + '</div><div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("swaps")) + '</span><span><i class="vsw nc"></i>' + esc(vt("nonCouv")) + '</span></div>');
 }
-// ---------- B · combien si le prix bouge : la barre de la case du DERNIER mois de la plage (bouge / 🔒), curseur −5…+5 $/lb → ▲ gain / ▼ perte ----------
+// ---------- B · combien si le prix bouge : la barre de la case du DERNIER mois de la plage (bouge / ▣), curseur −5…+5 $/lb → ▲ gain / ▼ perte ----------
 // correctifs mobqa (08/10) : avec « Tout » et des lignes sans date, la position du curseur est celle de la tuile (total de la fiche : fin du dernier mois +
 // sans date), jamais la fin du dernier mois seule (deux positions différentes sur le même écran)
 function vBouge(p, pl) {
@@ -2187,7 +2344,7 @@ function vCamMois(p, m, key, ent, lab) {
       g += vkDest(b, bi, r.t, key, ny, n > 1); ny += vkNH(n > 1) + 4; }); });
   g += E.svg;
   // camions : texte à gauche (fournisseur · produit, badge de prix dessous), camion avec le volume, date dessous
-  rows.forEach(r => { const t = r.t, b1 = (t.fournisseur || "?") + " · " + prod(t.produit || p.produit) + (t.fait ? " ✓" : "") + (t.retard ? " ⏱" : "");
+  rows.forEach(r => { const t = r.t, b1 = (t.fournisseur || "?") + " · " + prod(t.produit || p.produit) + (t.fait ? " ✓" : "") + (t.retard ? " ◷" : "");
     g += '<g class="vkr" data-t="cam" data-k="t" data-m="' + key + '" data-r="' + esc(t.ref) + '" data-v="' + t.q + '"><rect class="hit" x="0" y="' + r.y + '" width="' + VK.AX + '" height="' + r.h + '"/>' +
       vkTxt(0, r.ty + 15, b1, "t1", 126) + vkPx(vkPc(t), 0, r.ty + 20, 126) + '<g class="vkt">' + vkCamion(132, r.ty, vq(t.q, { nu: true })) + '</g>' +
       vkTxt(166, r.ty + 38.5, vkJ(t.jf || t.j, t.auMois), "td", 68, "middle") + '</g>'; });
@@ -2245,7 +2402,7 @@ function vMarche(p) {
   });
   return vCard("marche", "q7", SRC, '<svg class="vsvg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(vt("q7")) + '">' + g + '</svg>', "$/lb");
 }
-// ---------- 9 · quand se fixent mes swaps : mois de cotation (QP) des swaps non réglés ; SEUL outil qui distingue à fixer / verrouillés 🔒 ----------
+// ---------- 9 · quand se fixent mes swaps : mois de cotation (QP) des swaps non réglés ; SEUL outil qui distingue à fixer / verrouillés ▣ ----------
 function vSwaps(p) {
   if (!p.vis) return vCard("swaps", "q9", "vis.swaps (qp, q, connu)", '<div class="vempty">—</div>');
   const sws = p.vis.swaps || []; if (!sws.length) return vCard("swaps", "q9", "vis.swaps (qp, q, connu)", '<div class="vempty">' + esc(vt("aucunSw")) + '</div>');
@@ -2260,7 +2417,7 @@ function vSwaps(p) {
     g += '<rect class="hit" data-t="swapsm" data-m="' + mk + '" data-v="' + (b.a + b.f) + '" x="' + x0.toFixed(1) + '" y="0" width="' + w.toFixed(1) + '" height="' + H + '"/>'; });
   g += '<text x="' + (VG.L - 4) + '" y="' + (T + 8) + '" text-anchor="end">' + esc(vq(mx, { nu: true })) + '</text>' + vAxeMois(mks, B + 13, null);
   return vCard("swaps", "q9", "vis.swaps (qp, q, connu)", '<svg class="vsvg" viewBox="0 0 ' + VG.W + ' ' + H + '" role="img" aria-label="' + esc(vt("q9")) + '">' + g + '</svg>' +
-    '<div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("aFixer")) + '</span><span><i class="vsw lk"></i>🔒 ' + esc(vt("verrous")) + '</span></div>', esc(vq(tot)));
+    '<div class="vleg"><span><i class="vsw swap"></i>' + esc(vt("aFixer")) + '</span><span><i class="vsw lk"></i>▣ ' + esc(vt("verrous")) + '</span></div>', esc(vq(tot)));
 }
 // ---------- tableaux : un toucher sur un chiffre ouvre ses lignes (livraisons, swaps, mouvements, camions), sans texte ----------
 const VC = { L: () => [[vt("thDate"), "l w0"], [vt("thCpty"), "l w1"], [vt("thContrat"), "l w2"], [U(), ""], ["$/lb", "w3"]],
@@ -2275,8 +2432,8 @@ function vRowL(l) {
   const s = l.sens === "vente" ? -1 : 1, px = l.type === "indexe" ? '<span class="vdot idx"></span>' : l.prix != null ? esc(vp(l.prix)) : '<span class="vdot nv"></span>';
   return [esc(l.date ? vDM(l.date) : l.mois ? vMC(l.mois) : "—"), esc(l.cpty || "?"), esc(l.contrat || l.trade || ""), vQc(s * vZ(l.q), s < 0 ? "v-short" : "v-long"), px];
 }
-// swap d'un tableau : point bleu ; « 🔒 » (verrouillé) seulement là où la part verrouillée compte (position, frise des QP, couverture)
-const vRowS = (s, lk) => [esc(s.qp ? vMC(s.qp) : "—"), esc(s.cpty || "?"), esc(s.contrat || ""), vQc(vZ(s.q), "v-swap"), (s.fixe != null ? esc(vp(s.fixe)) + " " : "") + (lk && (s.connu || s.statut === "Fixé") ? "🔒" : '<span class="vdot swap"></span>')];
+// swap d'un tableau : point bleu ; « ▣ » (verrouillé) seulement là où la part verrouillée compte (position, frise des QP, couverture)
+const vRowS = (s, lk) => [esc(s.qp ? vMC(s.qp) : "—"), esc(s.cpty || "?"), esc(s.contrat || ""), vQc(vZ(s.q), "v-swap"), (s.fixe != null ? esc(vp(s.fixe)) + " " : "") + (lk && (s.connu || s.statut === "Fixé") ? "▣" : '<span class="vdot swap"></span>')];
 const vRowM = x => [esc(vDM(x.j)), esc(x.cpty || x.libelle || x.contrat || "?"), vQc(vZ(x.q), x.q < 0 ? "v-short" : "v-long"), '<span class="vdot ' + (x.fait ? "ok" : "prev") + '"></span>'];
 // ligne libellée (début, fin, total, stock du jour) : libellé sur les colonnes avant la quantité, quantité dans sa colonne ; tot : en gras
 const vLab = (lab, val, n, vi, tot) => ({ lab, val, n, vi, tot: !!tot });
@@ -2289,7 +2446,7 @@ function vSheet(titre, val, blocs, note) {
 }
 const vPos = (v, s) => v == null ? esc(vt("inconnu")) : vTag(s || vSens(v)) + " " + esc(s === "equilibre" && Math.abs(v) >= 0.5 ? "≈ 0 " + U() : vq(Math.abs(v)));
 // lignes qui font la position prix fin du mois mk (début = position fin du mois précédent, + achats fixes − ventes fixes + swaps du mois = fin) ;
-// en tête : la position et sa barre (bouge / 🔒), les mêmes que la case de la carte
+// en tête : la position et sa barre (bouge / ▣), les mêmes que la case de la carte
 function vTabPos(p, mk, v, s, b, f) {
   const m = (p.mois || []).find(x => x.mois === mk), rows = [];
   if (m && m.prix && m.prix.debut != null) rows.push(vLab(vt("debutL"), esc(vq(m.prix.debut, { nu: true })), 5, 3));
@@ -2329,7 +2486,7 @@ const vStatut = s => s === "Livraison directe" ? vt("stDirect") : s === "Propos�
 function vSheetCamion(P, t, ent, bi) {
   const V = P.vis || {}, byRef = {}; (V.lignes || []).forEach(l => { byRef[l.ref] = l; });
   const CK = V.camions, tv = vkVers(t, CK), rs = vkReste(t, CK), vs = bi == null ? tv : [tv[bi]].filter(Boolean), ach = byRef[t.ref];
-  // round 28 : prix de l'achat selon camion.pc (fixe : le prix ; swap : 🔒 et le prix des swaps ; indexé : point violet et sa QP ; sans prix : point gris)
+  // round 28 : prix de l'achat selon camion.pc (fixe : le prix ; swap : ▣ et le prix des swaps ; indexé : point violet et sa QP ; sans prix : point gris)
   const pc = t.pc, pxA = pc ? (pc.k === "fixe" ? esc(vp4(pc.px)) : pc.k === "swap" ? '<span class="v-swap">' + esc(pc.px == null ? "" : vp4(pc.px)) + '</span> <span class="vdot swap"></span>' : pc.k === "indexe" ? '<span class="vdot idx"></span>' + (pc.qp ? " " + esc(vMS(pc.qp)) : "") : '<span class="vdot nv"></span>')
     : t.prix === "indexe" ? '<span class="vdot idx"></span>' : t.px != null ? esc(vp(t.px)) : ach && ach.prix != null ? esc(vp(ach.prix)) : '<span class="vdot nv"></span>';
   const rowsA = [[esc(vkJ(t.jf || t.j, t.auMois)), esc(t.fournisseur || "?"), esc(t.contrat || t.trade || ""), vQc(vZ(t.q), "v-long"), pxA]];
@@ -2384,7 +2541,7 @@ function vOuvre(d, e, p) {
     if (s0.ouv != null) rows.push(vLab(vt("debutL"), esc(vq(s0.ouv, { nu: true })), 4, 2)); ms.forEach(m => (m.mouvements || []).forEach(x => rows.push(vRowM(x))));
     if (s1.clo != null) rows.push(vLab(vt("fin"), esc(vq(s1.clo, { nu: true })), 4, 2, true));
     vSheet(prod(P.produit) + " · " + (ms.length === 1 ? vML(ms[0].mois) : vMC(ms[0].mois) + " → " + vMC(ms[ms.length - 1].mois)), s1.clo == null ? esc(vt("stockInc")) : esc(vq(s1.clo)), [{ cols: VC.M(), rows }]); };
-  // couverture d'un contrat : ses livraisons indexées, ses swaps (🔒 : déjà fixé), et le résultat acquis des swaps fixés (échéance, P&L)
+  // couverture d'un contrat : ses livraisons indexées, ses swaps (▣ : déjà fixé), et le résultat acquis des swaps fixés (échéance, P&L)
   const tabCouvC = id => { const c = (V.couv || []).find(x => (x.trade || "") === id); if (!c) return;
     const idx = vZ(c.indexe), av = vZ(c.aVenir), pc = idx >= 0.5 ? Math.round(av / idx * 100) : null;
     const ls = lig.filter(l => l.type === "indexe" && l.trade === c.trade), sw = (V.swaps || []).filter(s => (s.couvre || "") === (c.trade || ""));
@@ -2501,15 +2658,16 @@ function renderExpoAncien() {
 }
 function renderSettings() {
   const box = us.get('outbox', []), orph = ls.get('orphelin.outbox', []);
-  $('#main').innerHTML = '<section class="card"><h2>' + t('appearance') + '</h2><div class="seg" id="theme">' + THEMES.map(x => '<button data-th="' + x + '" class="' + (theme === x ? 'on' : '') + '">' + t(x) + '</button>').join('') + '</div><label for="uiLanguage">' + ui('Langue', 'Language') + '</label><select id="uiLanguage"><option value="fr"' + (lang === 'fr' ? ' selected' : '') + '>Français</option><option value="en"' + (lang === 'en' ? ' selected' : '') + '>English</option></select></section>' +
-    '<section class="card"><h2>' + ui('Compte et synchronisation', 'Account and sync') + '</h2>' + (place ? '<p>' + esc(place.name) + '</p><button class="text-action" id="resetPlace">' + t('reset') + '</button>' : '<p class="muted">' + ui('Aucun dossier sélectionné', 'No folder selected') + '</p>') + htmlBloquees(box) + (orph.length ? '<p class="note">' + tf('orphans', orph.length) + '</p>' : '') + (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t('login') + '</button>' : '') + htmlCompte(box, false) + '</section>' +
+  // mobile v124 : barre rouge du titre ; réglage Apparence retiré (un seul thème : Bloomberg) ; dossiers des cours des deux éditions
+  $('#main').innerHTML = fbar(t('settings'), '') + '<section class="card"><label for="uiLanguage">' + ui('Langue', 'Language') + '</label><select id="uiLanguage"><option value="fr"' + (lang === 'fr' ? ' selected' : '') + '>Français</option><option value="en"' + (lang === 'en' ? ' selected' : '') + '>English</option></select></section>' +
+    '<section class="card"><h2>' + ui('Compte et synchronisation', 'Account and sync') + '</h2>' + (place ? '<p>' + esc(place.name) + '</p><button class="text-action" id="resetPlace">' + t('reset') + '</button>' : '<p class="muted">' + ui('Aucun dossier sélectionné', 'No folder selected') + '</p>') + htmlBloquees(box) + (orph.length ? '<p class="note">' + tf('orphans', orph.length) + '</p>' : '') + (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t('login') + '</button>' : '') + htmlCompte(box, false) + '</section>' + settingsMk() +
     '<details class="fold"><summary>' + ui('Configuration avancée', 'Advanced configuration') + '</summary><label for="cid">' + t('clientId') + '</label><input id="cid" value="' + esc(ls.get('clientId', CONFIG.clientId)) + '" autocapitalize="off"><button class="btn light" id="saveCid">' + ui('Enregistrer la configuration', 'Save configuration') + '</button><label for="lnk">' + t('folderLink') + '</label><input id="lnk" value="' + esc(us.get('folderLink', '')) + '" autocapitalize="off"><button class="btn light" id="saveLnk">' + ui('Utiliser ce dossier', 'Use this folder') + '</button></details><p class="version" id="versionApp">' + esc(tf('version', VERSION_APP)) + '</p>';
   $('#saveCid').onclick = () => { ls.set('clientId', $('#cid').value.trim()); location.reload(); };
   $('#saveLnk').onclick = () => { us.set('folderLink', $('#lnk').value.trim()); changerDossier(); };
   if ($('#resetPlace')) $('#resetPlace').onclick = changerDossier;
   if ($('#relogin')) $('#relogin').onclick = () => { authFailed = null; pca.acquireTokenRedirect({scopes:SCOPES,account}); };
   $('#uiLanguage').onchange = () => { lang = $('#uiLanguage').value; ls.set('lang',lang); render(); };
-  $('#theme').querySelectorAll('button').forEach(b => b.onclick = () => { ls.set('theme',b.dataset.th); appliquerTheme(b.dataset.th); renderSettings(); enhanceUI(); });
+  bindSettingsMk();
   lierSorties();
 }
 // entrées bloquées du compte (point 6) : Réessayer, Copier le texte, Abandonner en deux touches ; jamais retirées d'office ; dans Réglages ET sur
@@ -2643,7 +2801,7 @@ async function submit(bg, close, ch, name) {
   const ok = bg.querySelector("#ok"); if (ok.disabled) return; ok.disabled = true;
   const etat = { gardee: false };
   try { await send(ch, name, etat); }
-  catch (e) { if (!etat.gardee) { ok.disabled = false; toast("⚠ " + (e && e.message)); return; } }   // rien de gardé : la feuille reste ouverte
+  catch (e) { if (!etat.gardee) { ok.disabled = false; toast("⚠︎ " + (e && e.message)); return; } }   // rien de gardé : la feuille reste ouverte
   // message selon l'état de CETTE saisie : « Envoyé » seulement si elle a été retirée de la boîte par un envoi réussi (jamais d'après sa seule
   // absence de la boîte) ; sinon bloquée (403 ou 404 : voir Réglages) ou gardée pour l'envoi automatique ; démo : rien n'est envoyé, et c'est dit
   const box = DEMO ? [] : us.get("outbox", []);
@@ -2668,7 +2826,7 @@ function editOp(ref) {
     '<label>' + t("carrier") + '</label><input id="c" value="' + esc(l.transporteur || "") + '"><label>' + t("comment") + '</label><textarea id="m" rows="2"></textarea>' +
     // round 23 : photos de la livraison (appareil photo ou galerie), envoyées chacune à part, même sur une livraison confirmée ou facturée
     '<label>' + t("photos") + '</label><div class="ph" id="phc">' + esc(phLigne(l)) + '</div>' +
-    (photoOk() ? '<div class="btns"><button class="btn light" id="phCam">📷 ' + t("takePhoto") + '</button><button class="btn light" id="phLib">🖼 ' + t("library") + '</button></div>' : '<div class="note">' + t("noPhotoAtlas") + '</div>') +
+    (photoOk() ? '<div class="btns"><button class="btn light" id="phCam">' + t("takePhoto") + '</button><button class="btn light" id="phLib">' + t("library") + '</button></div>' : '<div class="note">' + t("noPhotoAtlas") + '</div>') +
     '<button class="btn" id="ok">' + t("save") + '</button><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {
       bg.querySelectorAll("#seg button").forEach(b => b.onclick = () => { st = b.dataset.s; bg.querySelectorAll("#seg button").forEach(x => x.classList.toggle("on", x === b)); });
       bg.querySelector("#ko").onclick = close;
@@ -2680,8 +2838,8 @@ function editOp(ref) {
         const ch = [], d = lk ? "" : bg.querySelector("#d").value, q = lk || lv ? NaN : parseFloat(bg.querySelector("#q").value), c = bg.querySelector("#c").value.trim(), m = bg.querySelector("#m").value.trim();
         // correctifs mobqa (08/10) : quantité vide, nulle, négative ou illisible (virgule non lue), ou date effacée d'une livraison datée : la feuille reste
         // ouverte avec le motif, rien n'est envoyé (avant : fermée sans rien dire, et « Livré » partait sans la quantité saisie)
-        if (!lk && !lv && st !== "Annulé" && !(q > 0)) { toast("⚠ " + t("badQty")); return; }
-        if (!lk && !d && l.date) { toast("⚠ " + t("needDate")); return; }
+        if (!lk && !lv && st !== "Annulé" && !(q > 0)) { toast("⚠︎ " + t("badQty")); return; }
+        if (!lk && !d && l.date) { toast("⚠︎ " + t("needDate")); return; }
         if (!lk && st !== l.statut) ch.push({ t: "livraison", ref, champ: "statut", valeur: st, vu });
         // « Livré » sans date choisie sur une livraison connue au mois ou datée du futur : la date du jour est ENVOYÉE (Atlas la poserait lui-même,
         // Mobile.cs, au jour de la reprise) ; envoyée, elle figure dans les valeurs en attente, donc dans l'état vu de l'envoi suivant
@@ -2709,7 +2867,7 @@ function countLot(lot) {
       bg.querySelector("#ko").onclick = close;
       bg.querySelector("#ok").onclick = async () => {
         const q = parseFloat(bg.querySelector("#q").value), d = bg.querySelector("#d").value, m = bg.querySelector("#m").value.trim(), ch = [];
-        if (bg.querySelector("#q").value.trim() !== "" && !(q >= 0)) { toast("⚠ " + t("badCount")); return; }   // correctifs mobqa : jamais ignoré en silence
+        if (bg.querySelector("#q").value.trim() !== "" && !(q >= 0)) { toast("⚠︎ " + t("badCount")); return; }   // correctifs mobqa : jamais ignoré en silence
         // stock affiché au moment du comptage : Atlas refuse le comptage si le stock a bougé depuis (mouvement saisi entre-temps)
         if (!isNaN(q) && q >= 0) ch.push({ t: "inventaire", ref: lot, champ: "compte", valeur: q, date: d, stockVu: l.stock });
         if (m) ch.push({ t: "inventaire", ref: lot, champ: "commentaire", valeur: m });
@@ -2722,8 +2880,11 @@ const phLigne = l => (l.photos ? tf("photoN", l.photos) : "") + (l.photosAttente
 function render() {
   document.body.classList.remove("exposure-screen");
   today = todayIso();
-  header(); if (!data) { if (sansFiche) sansFiche(); enhanceUI(); return; } tabs();
-  ({ cal: renderCal, stock: renderStock, treso: renderTreso, expo: renderExpo, photos: renderPhotos, settings: renderSettings })[tab]();
+  header();
+  // mobile v124 : GRANORE CTRM sans fiche (export téléphone éteint) : Marchés et Réglages
+  if (!data && isGr() && grInfo && !sansFiche) { tabsGr(); (tab === "settings" ? renderSettings : renderMarkets)(); bandeauMaj(); enhanceUI(); return; }
+  if (!data) { if (sansFiche) sansFiche(); enhanceUI(); return; } tabs();
+  ({ home: renderHome, cal: renderCal, stock: renderStock, treso: renderTreso, expo: renderExpo, mkts: renderMarkets, photos: renderPhotos, settings: renderSettings })[tab]();
   bandeauMaj(); enhanceUI();
 }
 // round 23 : mise à jour automatique de la fiche (« que ça se mette à jour côté app ») : au retour au premier plan après 1 min, et toutes les
@@ -2801,7 +2962,7 @@ function echec(e, auBoot) {
   // correctifs mobqa (08/10) : erreur brute du navigateur (TypeError, SyntaxError…) sans clé de texte : « Lecture impossible · ↻ pour réessayer », jamais
   // son message anglais ; le message brut reste dans la console
   const brut = !!e && !e.cle && !e.texte && !e.errorCode && !/^Graph \d/.test(String(e.message || "")) && (e instanceof TypeError || e instanceof SyntaxError || e.name === "AbortError");
-  const motif = () => e && e.texte ? e.texte() : auth ? authMsg(af) + " · " + t("retry") : "⚠ " + (e && e.cle ? t(e.cle) : brut ? t("readErr") : e && e.message), msg = motif();
+  const motif = () => e && e.texte ? e.texte() : auth ? authMsg(af) + " · " + t("retry") : "⚠︎ " + (e && e.cle ? t(e.cle) : brut ? t("readErr") : e && e.message), msg = motif();
   // accès refusé (403, ou 404 du dossier) : la fiche est déjà retirée ; une feuille restée ouverte sur elle est fermée ; si son envoi n'avait
   // pas commencé (bouton Enregistrer actif), rien n'est envoyé et c'est dit ; un envoi en cours (bouton désactivé) donnera son propre message
   // (gardée, bloquée ou envoyée) ; écran Accès refusé
@@ -2836,6 +2997,8 @@ $("#btnLang").onclick = () => { lang = lang === "fr" ? "en" : "fr"; ls.set("lang
 // sans compte actif (connexion, choix du compte, retour arrière après déconnexion) : le démarrage
 $("#btnRefresh").onclick = async () => {
   if (!DEMO && !account) return boot();
+  // mobile v124 : ↻ relit aussi le dossier des cours (liste et fichiers changés)
+  Object.keys(mkMem).forEach(k => delete mkMem[k]); mkStamp = {}; mkErr = null;
   authFailed = null; try { await flush().catch(e => console.warn(e)); await load(); render(); } catch (e) { echec(e, false); } };
 window.addEventListener("online", () => { flush(true).catch(() => {}).then(() => { if (data && tab === "photos" && !document.querySelector(".sheet-bg")) render(); }); });
 // retour au premier plan un autre jour : date du jour, retards et calendrier recalculés (seulement si le jour a changé : une saisie en cours
@@ -2853,7 +3016,7 @@ document.addEventListener("visibilitychange", () => {
 if (!window.ATLAS_ESSAI) setInterval(() => { if (!document.hidden && Date.now() - derniereLecture > 120000) rafraichirSilencieux(); }, 30000);
 window.addEventListener("pageshow", e => { if (!e.persisted) return; if (!DEMO && !account) boot(); else document.dispatchEvent(new Event("visibilitychange")); });
 // page d'essai : l'app est chargée sans démarrer, les essais appellent ses fonctions
-if ("serviceWorker" in navigator && !DEMO && !window.ATLAS_ESSAI) navigator.serviceWorker.register("sw.js").catch(() => {});
+if ("serviceWorker" in navigator && !DEMO && !FIXTURE && !window.ATLAS_ESSAI) navigator.serviceWorker.register("sw.js").catch(() => {});
 
 // Reading level is a per-account preference. Financial values still come from the Atlas sheet.
 const isDetailed = () => us.get('detailed35', false) === true;
@@ -2938,7 +3101,7 @@ function enhanceUI(root) {
   document.body.dataset.reading=isDetailed()?'detailed':'simple';
   root.querySelectorAll('[data-reading-mode]').forEach(b=>b.onclick=()=>{us.set('detailed35',b.dataset.readingMode==='detailed');render();window.scrollTo(0,0);});
   root.querySelectorAll('[data-detail-view]').forEach(b=>b.onclick=()=>{us.set('detailed35',true);expoView=b.dataset.detailView;render();window.scrollTo(0,0);});
-  $('#btnLang').hidden=!!data;
+  $('#btnLang').hidden=!!data||edOk();   // mobile v124 : langue dans Réglages dès qu'il y a une fiche ou la bascule des éditions
   root.querySelectorAll('.seg button,.chips button,.xprods button').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('on'))));
   root.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.classList.contains('on')?'page':'false'));
   root.querySelectorAll('label').forEach(l=>{const n=l.nextElementSibling;if(n&&n.id&&/^(INPUT|TEXTAREA|SELECT)$/.test(n.tagName))l.htmlFor=n.id;});
@@ -2947,6 +3110,655 @@ function enhanceUI(root) {
   root.querySelectorAll('.vsc-arr').forEach(b=>b.removeAttribute('tabindex'));
   root.querySelectorAll('.vsvg [data-t]').forEach(el=>{el.setAttribute('role','button');el.tabIndex=0;el.setAttribute('aria-label',ui('Ouvrir le détail','Open details')+' '+(el.dataset.m||el.dataset.k||''));el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));}};});
   root.querySelectorAll('.vsvg:has([data-t])').forEach(el=>el.setAttribute('role','group'));
+}
+
+
+// ================= Mobile v124 (02/11/2026) : style Bloomberg, deux éditions (Atlas | GRANORE CTRM), écran Jour, courbes des prix =================
+// Demande de l'utilisateur : « change le style en Bloomberg … rajoute les courbes des prix … plus efficient et meilleur ».
+//   · éditions : Atlas (fiche de son dossier Telephone) et GRANORE CTRM (Stark : fiche Stark\Telephone si son export téléphone est allumé ;
+//     sinon les cours seulement) ; dossiers trouvés à partir du dossier de la fiche d'Atlas (même OneDrive), sinon par la recherche ; bascule dans
+//     l'en-tête, seulement pour un compte de direction (fiche Head) ; jamais pour la logistique (aucun prix montré à un prestataire) ;
+//   · courbes : séries des apps elles-mêmes (data\marches, lues par Graph), jamais copiées dans le dépôt ; agri : moyenne pondérée par les tonnes des
+//     bourses turques (méthode du Carnet agri : Crt71, Vw76, Agr76), références FOB officielles à part (jamais dans la moyenne) ; aucun prix
+//     d'analyste ; métaux : LME, COMEX, cobalt (Fastmarkets), BCE ;
+//   · sobriété : seule la liste du dossier des cours (une requête) puis les fichiers changés (empreinte eTag), la fin des historiques seulement
+//     (en-tête Range), résultats gardés sur le téléphone ; un écran ne lit que ce qu'il montre.
+
+// ---------- essai local (fixture) : jamais en ligne ----------
+// adresse locale (localhost) ET paramètre « ?fixture » : Graph imité par le serveur d'essai (hors dépôt), aucune connexion Microsoft
+function fixtureAuth() {
+  account = { homeAccountId: "fixture", username: "fixture@localhost", name: "Essai local" }; comptes = [];
+  return true;
+}
+
+// ---------- textes ----------
+Object.assign(T.fr, {
+  home: "Jour", mkTab: "Marchés", edAtlas: "ATLAS", edGr: "GRANORE", agri: "Agri", metaux: "Métaux",
+  pBLE: "Blé meunier", pMAIS: "Maïs fourrager", pTOURNESOL: "Tournesol à huile",
+  pBLEs: "BLÉ", pMAISs: "MAÏS", pTOURNESOLs: "TOURNESOL",
+  hmAlerts: "Alertes", hmTodo: "À traiter", hmBlk: "Bloquantes", hmDocs: "Pièces", hmMarg: "Marges",
+  hmTreso: "Trésorerie", hmBal: "Solde ce soir", hmLow: "Point bas 26 sem.", hmFund: "Financement",
+  hmWeek: "Livraisons · 7 jours", hmLate: "en retard", hmNone: "Aucune livraison prévue d'ici 7 jours", hmCal: "Calendrier ›",
+  hmPrices: "Cours du jour", hmAllPrices: "Courbes ›", hmData: "Fiche du {0}",
+  mkRead: "Relevé du {0}", mkLoading: "Lecture des cours…", mkNoDir: "Dossier des cours introuvable dans ce OneDrive : coller le lien du dossier data\\marches dans Réglages.",
+  mkNoFile: "Fichier absent du dossier des cours : {0}", mkNone: "Aucun point sur cette période", mkErr: "Lecture des cours impossible",
+  mkVwap: "Bourses TR · VWAP", mkVwapL: "Moyenne pondérée des bourses turques (achat)", mkSes: "{0} séances · {1} bourses",
+  mkPartial: "jour partiel", mkByEx: "Dernier jour par bourse", mkEx: "Bourse", mkDay: "Jour", mkT: "t", mkUsdT: "USD/t",
+  mkNoFx: "change du jour manquant", mkFob: "Références FOB (vente, origine)", mkNoFob: "Aucune référence FOB officielle stockée pour ce produit.",
+  mkSrcAgri: "Séances des bourses turques ≥ 50 t, notre produit seulement (toutes classes), doublons TOBB/site comptés une fois, médiane pondérée ± 3 écarts robustes ; USD/t au cours vendeur TCMB (sinon croisé BCE). Annonces, évaluations, prix sans tonnes et analystes : jamais dans la moyenne.",
+  mkMonitor: "Moniteur", mkLastShort: "Dernier", mkChg: "Var.",
+  grNoExport: "Export téléphone de GRANORE CTRM non activé : trésorerie, alertes et livraisons de GRANORE à compléter (réglage « Telephone » = oui dans GRANORE CTRM). Les cours sont lus directement.",
+  grNoStark: "Dossier de GRANORE CTRM (Stark) introuvable dans ce OneDrive.",
+  mkLinkAtlas: "Lien du dossier des cours d'Atlas (data\\marches)", mkLinkGr: "Lien du dossier des cours de GRANORE CTRM (data\\marches)",
+  mkMoreEx: "{0} autres bourses", foldersFound: "Dossiers trouvés", retry2: "Réessayer", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1A"
+});
+Object.assign(T.en, {
+  home: "Today", mkTab: "Markets", edAtlas: "ATLAS", edGr: "GRANORE", agri: "Agri", metaux: "Metals",
+  pBLE: "Milling wheat", pMAIS: "Feed corn", pTOURNESOL: "Oil sunflower seed",
+  pBLEs: "WHEAT", pMAISs: "CORN", pTOURNESOLs: "SUNFLOWER",
+  hmAlerts: "Alerts", hmTodo: "To do", hmBlk: "Blocking", hmDocs: "Documents", hmMarg: "Margins",
+  hmTreso: "Cash", hmBal: "Balance tonight", hmLow: "Low point 26 wk", hmFund: "Funding",
+  hmWeek: "Deliveries · 7 days", hmLate: "late", hmNone: "No delivery planned within 7 days", hmCal: "Calendar ›",
+  hmPrices: "Prices of the day", hmAllPrices: "Charts ›", hmData: "Sheet of {0}",
+  mkRead: "Fetched {0}", mkLoading: "Reading prices…", mkNoDir: "Price folder not found in this OneDrive: paste the link of the data\\marches folder in Settings.",
+  mkNoFile: "File missing from the price folder: {0}", mkNone: "No point over this period", mkErr: "Prices cannot be read",
+  mkVwap: "TR exchanges · VWAP", mkVwapL: "Turkish exchanges' weighted average (buy)", mkSes: "{0} sessions · {1} exchanges",
+  mkPartial: "partial day", mkByEx: "Last day per exchange", mkEx: "Exchange", mkDay: "Day", mkT: "t", mkUsdT: "USD/t",
+  mkNoFx: "FX of the day missing", mkFob: "FOB references (sell, origin)", mkNoFob: "No official FOB reference stored for this product.",
+  mkSrcAgri: "Turkish exchange sessions ≥ 50 t, our product only (all grades), TOBB/site duplicates counted once, weighted median ± 3 robust deviations; USD/t at the CBRT selling rate (else ECB cross). Ads, assessments, prices without tonnes and analysts: never in the average.",
+  mkMonitor: "Monitor", mkLastShort: "Last", mkChg: "Chg",
+  grNoExport: "GRANORE CTRM phone export not enabled: GRANORE cash, alerts and deliveries to be completed (setting “Telephone” = oui in GRANORE CTRM). Prices are read directly.",
+  grNoStark: "GRANORE CTRM (Stark) folder not found in this OneDrive.",
+  mkLinkAtlas: "Link of Atlas' price folder (data\\marches)", mkLinkGr: "Link of GRANORE CTRM's price folder (data\\marches)",
+  mkMoreEx: "{0} more exchanges", foldersFound: "Folders found", retry2: "Retry", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1Y"
+});
+
+// ---------- édition affichée ----------
+const isGr = () => edition === "granore";
+const placeKey = () => isGr() ? "place.gr" : "place";
+const tabKey = () => isGr() ? "tab.gr" : "tab";
+// bascule offerte à un compte de direction seulement (dernière fiche d'Atlas lue = Head) ; jamais en démo
+const edOk = () => !DEMO && us.get("headOk", false) === true;
+let grInfo = null;   // GRANORE sans fiche : « noExport » (export téléphone éteint) ou « noStark » (dossier introuvable)
+function setEdition(ed) {
+  if (ed === edition || !EDS.includes(ed)) return;
+  edition = ed; us.set("edition", ed); sansFiche = null; grInfo = null; mkErr = null;
+  ouvrir(); render(); window.scrollTo(0, 0);
+  load().then(render, e => echec(e, !data));
+}
+// marque de l'édition : ATLAS (ambre, chasse fixe) ; GRANORE : le mot entier dessiné (GRAN clair, ORE bronze, rose des vents bronze dans le O,
+// jamais l'étoile seule, jamais de plaque : Mrq77)
+const GR_BRONZE = "#896449";
+function brandHtml() {
+  if (!isGr()) return 'ATLAS';
+  return '<svg class="grlogo" viewBox="0 0 132 24" role="img" aria-label="GRANORE CTRM"><text id="grw" x="1" y="19.5" font-family="\'Palatino Linotype\',\'Book Antiqua\',Palatino,\'URW Palladio L\',Georgia,serif" font-size="20" letter-spacing="2.4"><tspan fill="#E8EAF0">GRAN</tspan><tspan fill="' + GR_BRONZE + '">O</tspan><tspan fill="' + GR_BRONZE + '">RE</tspan></text><path id="grstar" fill="' + GR_BRONZE + '" d=""/></svg><span class="brand-ctrm">CTRM</span>';
+}
+// étoile à quatre branches fines centrée dans le O (position mesurée sur la police réellement employée)
+function grStar() {
+  const tx = document.getElementById("grw"), st = document.getElementById("grstar"); if (!tx || !st || !tx.getExtentOfChar) return;
+  try {
+    const b = tx.getExtentOfChar(4), cx = b.x + b.width / 2 - 1.2, cy = 19.5 - 6.9, r = 4.2, k = r * 0.2;
+    st.setAttribute("d", "M" + cx + " " + (cy - r) + "L" + (cx + k) + " " + (cy - k) + "L" + (cx + r) + " " + cy + "L" + (cx + k) + " " + (cy + k) + "L" + cx + " " + (cy + r) + "L" + (cx - k) + " " + (cy + k) + "L" + (cx - r) + " " + cy + "L" + (cx - k) + " " + (cy - k) + "Z");
+  } catch (e) { /* police pas encore prête : étoile absente, le mot reste entier */ }
+}
+function edSwitch() {
+  const box = $("#edsw"); if (!box) return;
+  if (!edOk()) { box.innerHTML = ""; box.hidden = true; return; }
+  box.hidden = false;
+  box.innerHTML = [["atlas", t("edAtlas")], ["granore", t("edGr")]].map(x => '<button data-ed="' + x[0] + '" class="' + (edition === x[0] ? "on" : "") + '" aria-pressed="' + (edition === x[0]) + '">' + x[1] + '</button>').join("");
+  box.querySelectorAll("[data-ed]").forEach(b => b.onclick = () => setEdition(b.dataset.ed));
+}
+// barre rouge d'une page (titre, à droite : date des données)
+const fbar = (title, right) => '<div class="fbar"><h2>' + esc(title) + '</h2><span class="fb-r">' + esc(right || "") + '</span></div>';
+const dtShort = s => { const d = s ? new Date(s) : null; return d && !isNaN(d) ? String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + " " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") : ""; };
+
+// ---------- dossiers des deux éditions dans le OneDrive ----------
+// chemin Graph d'un parent (« /drive/root:/Bureau/Mon%20App ») → « /Bureau/Mon App »
+const gPath = p => { const s = String(p || ""), i = s.indexOf("root:"); if (i < 0) return null; let r = s.slice(i + 5); try { r = decodeURIComponent(r); } catch (e) {} return r; };
+const drivePath = (d, p) => "/drives/" + d + "/root:" + String(p).split("/").map(encodeURIComponent).join("/") + ":";
+async function itemPath(driveId, id) {
+  const it = await (await gfetch("/drives/" + driveId + "/items/" + id + "?$select=id,name,parentReference")).json();
+  const p = it.parentReference && gPath(it.parentReference.path); return p == null ? null : (p === "" ? "" : p) + "/" + it.name;
+}
+const okMiss = e => e && (e.status === 403 || e.status === 404 || e.status === 400);
+// racines : dossier de l'app Atlas déduit du dossier de sa fiche ; GRANORE (…/Stark) à côté ; sinon la recherche du fichier des cours
+async function roots(force) {
+  if (!force) { const c = us.get("roots", null); if (c && c.driveId && (c.atlas != null || c.stark != null)) return c; }
+  const r = { driveId: null, atlas: null, stark: null };
+  const ap = us.get("place", null);
+  if (ap) {
+    try { const p = await itemPath(ap.driveId, ap.folderId), m = p && p.match(/^(.*)\/Telephone\/(Head|Logistique)$/i); if (m) { r.driveId = ap.driveId; r.atlas = m[1]; } }
+    catch (e) { if (!okMiss(e)) throw e; }
+  }
+  if (r.atlas != null) {
+    const par = r.atlas.replace(/\/[^/]*$/, "");
+    try { await gfetch(drivePath(r.driveId, par + "/Stark/data/marches") + "?$select=id"); r.stark = par + "/Stark"; } catch (e) { if (!okMiss(e)) throw e; }
+  }
+  if (r.stark == null) {
+    try {
+      const s = await (await gfetch("/me/drive/root/search(q='agri_physique.tsv')")).json();
+      for (const x of s.value || []) {
+        const ri = x.remoteItem || x; if (x.name !== "agri_physique.tsv" || !ri.parentReference || !ri.parentReference.driveId) continue;
+        const p = await itemPath(ri.parentReference.driveId, ri.id), m = p && p.match(/^(.*)\/data\/marches\/agri_physique\.tsv$/i);
+        if (m) { r.stark = m[1]; if (!r.driveId) r.driveId = ri.parentReference.driveId; break; }
+      }
+    } catch (e) { if (e && (e.errorCode || e.cle === "offline")) throw e; console.warn(e); }   // recherche refusée ou en panne : dossier non trouvé, dit à l'écran
+  }
+  if (r.driveId) us.set("roots", r);
+  return r;
+}
+// dossier des cours d'une édition : lien collé dans Réglages d'abord, sinon <racine>/data/marches
+async function mkDir(ed) {
+  const link = us.get("mkLink." + ed, "");
+  if (link) {
+    const it = await (await gfetch("/shares/" + shareToken(link) + "/driveItem")).json();
+    const did = it.parentReference && it.parentReference.driveId; if (did && it.folder) return { driveId: did, id: it.id };
+  }
+  const r = await roots(false), base = ed === "granore" ? r.stark : r.atlas;
+  if (base == null || !r.driveId) return null;
+  return { driveId: r.driveId, path: base + "/data/marches" };
+}
+// fiche de GRANORE CTRM : Stark\Telephone\Head\atlas_head.json (écrite seulement si son réglage « Telephone » vaut « oui »)
+async function loadGr(h) {
+  const r = await roots(false); if (moi() !== h || !isGr()) return;
+  if (r.stark == null) { place = null; data = null; grInfo = "noStark"; return; }
+  let p = null;
+  try { const it = await (await gfetch(drivePath(r.driveId, r.stark + "/Telephone/Head") + "?$select=id,name")).json(); p = { driveId: r.driveId, folderId: it.id, name: "atlas_head.json" }; }
+  catch (e) { if (!okMiss(e)) throw e; }
+  if (moi() !== h || !isGr()) return;
+  if (!p) { place = null; us.set("place.gr", null); data = null; grInfo = "noExport"; return; }
+  place = p; us.set("place.gr", p); pending = ds.get("pending", {}); refus = ds.get("refus", {});
+  let fiche = null;
+  try { const res = await gfetch("/drives/" + p.driveId + "/items/" + p.folderId + ":/" + encodeURIComponent(p.name) + ":/content", { cache: "no-store" }); fiche = await res.json(); }
+  catch (e) { if (e && e.status === 404) { data = null; grInfo = "noExport"; return; } if (e instanceof SyntaxError) throw Object.assign(new Error(t("badSheet")), { cle: "badSheet" }); throw e; }
+  if (moi() !== h || place !== p) return;
+  data = fiche; grInfo = null; ds.set("cache", { owner: h, dossier: dosId(p), fiche }); derniereLecture = Date.now(); settle();
+}
+
+// ---------- lecture des fichiers de cours (Graph) ----------
+const mkMem = {};          // listes des dossiers de cours (par édition) : { at, dir, files }
+let mkBusy = false, mkErr = null, mkStamp = {};
+async function mkList(ed, force) {
+  const c = mkMem[ed]; if (c && !force && Date.now() - c.at < 90000) return c;
+  const dir = await mkDir(ed); if (!dir) return null;
+  // liste réduite aux champs utiles ; un service qui refuse ce choix de champs (400) : liste complète
+  const base = (dir.id ? "/drives/" + dir.driveId + "/items/" + dir.id : drivePath(dir.driveId, dir.path)) + "/children";
+  const page = async u => { let all = [], next = u; for (let i = 0; next && i < 20; i++) { const j = await (await gfetch(next, { cache: "no-store" })).json(); all = all.concat(j.value || []); next = j["@odata.nextLink"] || null; } return all; };
+  let all;
+  try { all = await page(base + "?$select=id,name,size,eTag,lastModifiedDateTime,file,@microsoft.graph.downloadUrl&$top=200"); }
+  catch (e) { if (!(e && e.status === 400)) throw e; all = await page(base + "?$top=200"); }
+  const files = {}; all.forEach(x => { if (x && x.name && x.file) files[x.name] = x; });
+  return (mkMem[ed] = { at: Date.now(), dir, files, ed });
+}
+// fichier entier, ou sa fin seulement (tail : octets) ; adresse de téléchargement de Graph (sans jeton), sinon /content
+async function mkRead(L, f, tail) {
+  const url = f["@microsoft.graph.downloadUrl"], ranged = !!tail && f.size > tail;
+  const ok = async (r, part) => ({ text: await r.text(), partial: part && r.status === 206 });
+  if (url) {
+    try { const r = await fetch(url, ranged ? { headers: { Range: "bytes=" + (f.size - tail) + "-" }, cache: "no-store" } : { cache: "no-store" }); if (r.ok) return ok(r, ranged); }
+    catch (e) { /* en-tête Range refusé par le navigateur : fichier entier ci-dessous */ }
+    if (ranged) { try { const r = await fetch(url, { cache: "no-store" }); if (r.ok) return ok(r, false); } catch (e) {} }
+  }
+  const r = await gfetch("/drives/" + L.dir.driveId + "/items/" + f.id + "/content", { cache: "no-store" });
+  return ok(r, false);
+}
+// série « date;valeur;source » (du plus ancien au plus récent) ; partial : la première ligne (coupée) est ignorée
+function parseSerie(text, partial) {
+  let ls0 = String(text || "").split(/\r?\n/); if (partial) ls0 = ls0.slice(1);
+  const pts = []; let src = "";
+  for (const l of ls0) {
+    const c = l.split(";"); if (c.length < 2 || !/^\d{4}-\d{2}-\d{2}$/.test(c[0])) continue;
+    const v = parseFloat(c[1]); if (!isFinite(v)) continue;
+    if (pts.length && pts[pts.length - 1][0] === c[0]) pts.pop();
+    pts.push([c[0], v]); src = c.slice(2).join(";").trim() || src;
+  }
+  pts.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
+  return { pts, src };
+}
+const daysBetween = (a, b) => Math.round((parseD(b) - parseD(a)) / 864e5);
+const mkNeed = () => iso(addJ(parseD(todayIso()), -380));   // une année et deux semaines : toutes les périodes proposées
+// une série : gardée sur le téléphone (us « mks.<édition>.<id> ») tant que son fichier ne change pas ; sinon relue par la fin
+async function serLoad(L, id, need) {
+  const f = L.files[id + ".csv"], ck = "mks." + L.ed + "." + id; if (!f) return null;
+  let c = us.get(ck, null);
+  if (c && c.e === f.eTag && c.from <= need) return c;
+  let tail = Math.max(4096, Math.ceil(((c && c.rl) || 40) * (daysBetween(need, todayIso()) + 10) * 1.2));
+  for (let k = 0; k < 4; k++) {
+    const r = await mkRead(L, f, tail >= f.size ? null : tail), s = parseSerie(r.text, r.partial), first = s.pts.length ? s.pts[0][0] : "9999-99-99";
+    if (!r.partial || first <= need || k === 3) {
+      const pts = s.pts.filter(p => p[0] >= need);
+      c = { e: f.eTag, from: r.partial ? first : "0000-00-00", pts, src: s.src, rl: r.text.length / Math.max(1, s.pts.length), m: f.lastModifiedDateTime || "" };
+      us.set(ck, c); return c;
+    }
+    tail *= 3;
+  }
+  return c;
+}
+// prix retirés par l'audit (prix_retires71.tsv : série, date) : jamais montrés
+async function retiredLoad(L) {
+  const f = L.files["prix_retires71.tsv"]; if (!f) return new Set();
+  const ck = "mkr." + L.ed; let c = us.get(ck, null);
+  if (!c || c.e !== f.eTag) { const r = await mkRead(L, f, null); c = { e: f.eTag, k: r.text.split(/\r?\n/).slice(1).map(l => l.split("\t")).filter(x => x.length > 1).map(x => x[0] + "|" + x[1]) }; us.set(ck, c); }
+  return new Set(c.k);
+}
+async function inBatches(xs, n, fn) { for (let i = 0; i < xs.length; i += n) await Promise.all(xs.slice(i, i + n).map(fn)); }
+
+// ---------- catalogue des séries (métadonnées seulement : aucun cours ici) ----------
+// g : groupe ; u : unité ; d : décimales ; band : fourchette basse / haute ; sd : côté (achat vert, vente rouge) pour l'agri
+const MKS = {
+  "CO-STD": { g: "Cobalt", fr: "Cobalt standard · milieu (Fastmarkets)", en: "Cobalt standard grade · mid (Fastmarkets)", u: "USD/lb", d: 2, band: ["CO-STD-LOW", "CO-STD-HIGH"] },
+  "CO-ALLOY": { g: "Cobalt", fr: "Cobalt alliage · milieu (Fastmarkets)", en: "Cobalt alloy grade · mid (Fastmarkets)", u: "USD/lb", d: 2, band: ["CO-ALLOY-LOW", "CO-ALLOY-HIGH"] },
+  "CO-LME": { g: "Cobalt", fr: "Cobalt LME (officiel)", en: "Cobalt LME (official)", u: "USD/lb", d: 2 },
+  "LME-NI": { g: "LME", fr: "Nickel LME · comptant", en: "LME nickel · cash", u: "USD/t", d: 0, alt: "LME-NI-3M" },
+  "LME-CU": { g: "LME", fr: "Cuivre LME · comptant", en: "LME copper · cash", u: "USD/t", d: 0, alt: "LME-CU-3M" },
+  "LME-AL": { g: "LME", fr: "Aluminium LME · comptant", en: "LME aluminium · cash", u: "USD/t", d: 0, alt: "LME-AL-3M" },
+  "LME-ZN": { g: "LME", fr: "Zinc LME · comptant", en: "LME zinc · cash", u: "USD/t", d: 0, alt: "LME-ZN-3M" },
+  "COMEX-CU": { g: "COMEX", fr: "Cuivre COMEX (HG)", en: "COMEX copper (HG)", u: "USD/lb", d: 4 },
+  "EUR-USD": { g: "FX", fr: "EUR/USD (BCE)", en: "EUR/USD (ECB)", u: "", d: 4 },
+  "LME-NI-3M": { fr: "Nickel LME · 3 mois", en: "LME nickel · 3 months", u: "USD/t", d: 0 }, "LME-CU-3M": { fr: "Cuivre LME · 3 mois", en: "LME copper · 3 months", u: "USD/t", d: 0 },
+  "LME-AL-3M": { fr: "Aluminium LME · 3 mois", en: "LME aluminium · 3 months", u: "USD/t", d: 0 }, "LME-ZN-3M": { fr: "Zinc LME · 3 mois", en: "LME zinc · 3 months", u: "USD/t", d: 0 },
+  // agri : références FOB officielles (côté vente, marchés d'origine) ; jamais dans la moyenne des bourses
+  // (blé Ukraine et maïs mer Noire de la Commission : cotations de l'IGC republiées, non officielles, jamais une référence : Cov82.IgcSeries)
+  "MOEX-WHFOB": { fr: "Russie · blé FOB ports profonds (MOEX WHFOB)", en: "Russia · wheat FOB deep-water (MOEX WHFOB)", u: "USD/t", d: 1 },
+  "CE-FOB-ROUEN-BLE": { fr: "France · blé FOB Rouen (Commission)", en: "France · wheat FOB Rouen (Commission)", u: "USD/t", d: 1 },
+  "MOEX-CRFOB": { fr: "Russie · maïs FOB (MOEX CRFOB)", en: "Russia · corn FOB (MOEX CRFOB)", u: "USD/t", d: 1 },
+  "CE-FOB-BORDEAUX-MAIS": { fr: "France · maïs FOB Bordeaux (Commission)", en: "France · corn FOB Bordeaux (Commission)", u: "USD/t", d: 1 }
+};
+const MET_IDS = ["CO-STD", "CO-ALLOY", "CO-LME", "LME-NI", "LME-CU", "LME-AL", "LME-ZN", "COMEX-CU", "EUR-USD"];
+const AG_FOB = { BLE: ["MOEX-WHFOB", "CE-FOB-ROUEN-BLE"], MAIS: ["MOEX-CRFOB", "CE-FOB-BORDEAUX-MAIS"], TOURNESOL: [] };
+const FOB_STYLE = [{ c: "#ff3b4a", dash: "" }, { c: "#ff7a3d", dash: "6 4" }, { c: "#ff9fb0", dash: "2 3" }];
+const mkName = id => { const m = MKS[id]; return m ? (lang === "fr" ? m.fr : m.en) : id; };
+const mkFmt = (v, d) => v == null || !isFinite(v) ? "—" : nfx(v, d);
+
+// ---------- agri : courbe journalière des bourses turques (méthode du Carnet agri de GRANORE CTRM) ----------
+// Réglages de Stark relevés le 02/11/2026 (règles de l'utilisateur, pas des cours) : volume minimum d'une séance 50 t ; fenêtre des bornes de
+// vraisemblance 15 jours, prix hors de [0,65 ; 1/0,65] × la médiane retiré dès 3 prix de référence ; codes TOBB du blé à part : 807 (dur),
+// 831 (hors barème), 824 et 825 (fourrager) ; jour complet : tonnes ≥ 25 % de la médiane des jours de séance précédents.
+const AG = { MIN_T: 50, WIN: 15, RL: 0.65, NREF: 3, K: 3, SCALE: 1.4826, FLOOR: 0.02, MIN_SCREEN: 3, FX_DAYS: 7, PCT: 25, HIST: 10, EX_DAYS: 15,
+             DURUM: ["807"], MORE: { "831": "hors barème", "824": "fourrager", "825": "fourrager" } };
+const AG_PRODS = ["BLE", "MAIS", "TOURNESOL"];
+const TRF = { "Ç": "C", "Ğ": "G", "İ": "I", "Ö": "O", "Ş": "S", "Ü": "U", "ı": "I", "Â": "A", "Î": "I", "Û": "U" };
+const trFold = s => String(s || "").toLocaleUpperCase("tr-TR").replace(/[ÇĞİÖŞÜıÂÎÛ]/g, c => TRF[c]).replace(/\s+/g, " ").trim();
+const geoFold = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/ı/g, "i").replace(/\s+/g, " ").trim();
+const agExKey = ex => { let f = trFold(ex); for (const s of [" TICARET BORSASI", " TB"]) if (f.endsWith(s)) f = f.slice(0, -s.length); return f.trim(); };
+const agTok = (folded, ws) => { const tt = folded.split(/[^A-Z0-9]+/); return ws.some(w => tt.includes(w)); };
+const agCode = key => { const k = String(key || "").split("|"); return k.length > 2 && k[0] === "tobb" ? k[1] : null; };
+function agDurum(p, label, key) { if (p !== "BLE") return false; const t0 = " " + trFold(label) + " "; return ["DURUM", "MAKARNALIK", "MAKARNA"].some(w => t0.includes(w)) || AG.DURUM.includes(agCode(key)); }
+function agSpecial(p, label, key) {
+  if (p !== "BLE") return false; if (agDurum(p, label, key)) return true; const t0 = " " + trFold(label) + " ";
+  return ["YEMLIK", "BAREM DISI", "STANDART DISI", "DUSUK VASIFLI", "DOKERLI"].some(w => t0.includes(w)) || Object.prototype.hasOwnProperty.call(AG.MORE, agCode(key) || "");
+}
+function agGenre(p, label, key) {
+  const t0 = " " + trFold(label) + " ", f = geoFold(label), has = ws => ws.some(w => t0.includes(w)), code = agCode(key), mk = code && AG.MORE[code] ? geoFold(AG.MORE[code]) : "";
+  if (p === "BLE") {
+    if (agDurum(p, label, key) || has(["MAKARNA", "DURUM"]) || /\b(ble dur|durum)\b/.test(f)) return "DUR";
+    if (has(["YEMLIK"]) || /\b(fourrager|feed|fourrage)\b/.test(f) || mk.includes("fourr")) return "FEED";
+    if (has(["BAREM DISI", "STANDART DISI"]) || /hors bareme|hors norme|off-grade/.test(f) || mk.includes("bareme")) return "OFF";
+    if (has(["DUSUK VASIFLI", "DOKERLI"])) return "LOW";
+    return "STD";
+  }
+  if (has(["BAREM DISI", "STANDART DISI"]) || /hors bareme|hors norme|off-grade/.test(f)) return "OFF";
+  if (p === "MAIS") return has(["RUTUBETLI", "NEMLI"]) ? "WET" : has(["DIIB"]) ? "DIIB" : "STD";
+  if (p === "TOURNESOL" && (has(["CEREZLIK"]) || /\b(confiserie|bouche)\b/.test(f))) return "CONF";
+  if (p === "TOURNESOL" && /(^|[^n])oleique|high oleic|\(ho\)/.test(f)) return "HO";
+  return "STD";
+}
+// notre produit (Agr76.NotOurs) : blé meunier toutes classes, maïs fourrager, tournesol à huile
+function agOurs(p, label, key) {
+  const tr = trFold(label), f = geoFold(label), g = agGenre(p, label, key);
+  if (agTok(tr, ["HASARLI", "TOHUMLUK"])) return false;
+  if (p === "BLE") return g === "STD" && !agSpecial(p, label, key) && !agTok(tr, ["SAPI", "KARA", "KARABUGDAY"]) &&
+    !/\b5\s*(e|eme|th|-?го|-?й)?\s*(classe|class|класс)|кормов|фураж|takarmany|stocn|furaj|fourrag|\bfeed\b|ble dur|\bdurum|тверд|makarn/.test(f);
+  if (p === "MAIS") return (g === "STD" || g === "DIIB") && !agTok(tr, ["SLAJ", "SILAJ", "SILAJLIK", "CIN", "PATLAK", "POPCORN", "STANDART", "BAREM"]) &&
+    !/семена|semence|seed|popcorn|pop-corn|ensilage|silage|сорго/.test(f);
+  if (p === "TOURNESOL") return (g === "STD" || g === "HO") && !agTok(tr, ["YEMLIK", "CEREZLIK", "STANDART", "BAREM"]) &&
+    !/кондитер|etkezesi napraforgo|confiserie|confection|семена|semence/.test(f);
+  return false;
+}
+const agTday = d => { const x = parseD(d), w = x.getDay(); return w === 6 ? iso(addJ(x, -1)) : w === 0 ? iso(addJ(x, -2)) : d; };
+const agNear = (a, b) => Math.abs(a - b) <= Math.max(0.5, 0.01 * Math.max(a, b));
+const agSum = l => l.reduce((s, r) => s + r.t, 0);
+// une séance comptée une fois : ligne du site d'une bourse qui répète TOBB (même tonnage ; sinon total du site = total de TOBB) écartée (Ses69.SiteDrop)
+function agDedup(list) {
+  const by = new Map(), drop = new Set();
+  list.forEach(r => { let g = by.get(r.ek); if (!g) by.set(r.ek, g = []); g.push(r); });
+  by.forEach(g => {
+    const pool = g.filter(r => r.tobb); if (!pool.length) return; const rest = [];
+    g.filter(r => !r.tobb).sort((a, b) => b.t - a.t).forEach(s => { const j = pool.findIndex(x => agNear(x.t, s.t)); if (j >= 0) { drop.add(s); pool.splice(j, 1); } else rest.push(s); });
+    if (rest.length && pool.length && agNear(agSum(rest), agSum(pool))) rest.forEach(s => drop.add(s));
+  });
+  return drop.size ? list.filter(r => !drop.has(r)) : list;
+}
+// médiane pondérée (Vw76.WMedian)
+function agWMed(pw) {
+  const l = pw.filter(x => x[1] > 0).sort((a, b) => a[0] - b[0]); if (!l.length) return NaN;
+  const tot = l.reduce((s, x) => s + x[1], 0), half = tot / 2; let cum = 0;
+  for (let i = 0; i < l.length; i++) { cum += l[i][1]; if (Math.abs(cum - half) < 1e-9 * Math.max(1, tot) && i + 1 < l.length) return (l[i][0] + l[i + 1][0]) / 2; if (cum > half) return l[i][0]; }
+  return l[l.length - 1][0];
+}
+const agMedian = v => { v.sort((a, b) => a - b); const n = v.length; return n % 2 ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2; };
+// dernier point d'une série au plus tard le jour d (série triée)
+function lastOn(a, d) { let lo = 0, hi = a.length - 1, r = null; while (lo <= hi) { const m = (lo + hi) >> 1; if (a[m][0] <= d) { r = a[m]; lo = m + 1; } else hi = m - 1; } return r; }
+const agShort = ex => { const s = String(ex || "").trim(), m = s.match(/^(.*?)\s+(TİCARET BORSASI|TICARET BORSASI|Ticaret Borsası)$/i); if (!m) return s;
+  let n = m[1]; if (n === n.toLocaleUpperCase("tr-TR")) n = n.toLocaleLowerCase("tr-TR").replace(/(^|\s)(\S)/g, (x, a, b) => a + b.toLocaleUpperCase("tr-TR")); return n + " TB"; };
+// mauvais produits écartés à la lecture (Ses69.BadWhy, Cov82.BadWhy) : ensilage, paille, sarrasin, abîmé, tournesol fourrager, importé, produits du maïs
+function agBad(p, lv) {
+  const seg = String(lv || "").split("·"), f = " " + trFold(seg.slice(seg.length > 1 ? 1 : 0).join(" ")) + " ";
+  return /\bS[I]?LAJ\b/.test(f) || /\bSAMAN\b|\bSAPI\b/.test(f) || f.includes("KARABUGDAY") || (p === "BLE" && /\(KARA\)|\bBUGDAY KARA\b/.test(f)) || /\bHASARLI\b/.test(f) ||
+    (p === "TOURNESOL" && /\bYEMLIK\b/.test(f)) || /\bITHAL/.test(f) || (p === "MAIS" && ["IRMIG", "IRMIK", "NISASTA", " UNU ", "GLUTEN", "KEPEG", "KEPEK"].some(w => f.includes(w)));
+}
+function agCompute(tsv, exclTsv, fx) {
+  // exclusions par clé du journal agri_exclus69.tsv (règle « cle ») : seulement pour la valeur écartée (moyenne|tonnes|min|max), comme Ses69.Why
+  const excl = new Map(), nums = s => String(s || "").split("|").map(x => x === "" ? null : parseFloat(x));
+  String(exclTsv || "").split(/\r?\n/).forEach((l, i) => { if (!i) return; const c = l.split("\t"); if (c.length >= 9 && c[7] === "cle" && c[0]) excl.set(c[0], nums(c[8])); });
+  const same = (a, b) => a.length === b.length && a.every((x, i) => (x == null) === (b[i] == null) && (x == null || Math.abs(x - b[i]) <= 1e-9 * Math.max(1, Math.abs(x))));
+  const L = String(tsv || "").split(/\r?\n/), H = (L[0] || "").replace(/^﻿/, "").split("\t"), ix = n => H.indexOf(n);
+  const I = { d: ix("date"), p: ix("produit"), n: ix("nature"), lv: ix("niveau"), u: ix("unite"), mn: ix("min"), mx: ix("max"), av: ix("moyenne"), vol: ix("volume_t"), src: ix("source"), key: ix("cle") };
+  if (Object.keys(I).some(k => I[k] < 0)) throw Object.assign(new Error(t("mkErr") + " (agri_physique.tsv)"), { cle: null });
+  const td = todayIso(), num = s => { const v = parseFloat(String(s == null ? "" : s).replace(",", ".")); return isFinite(v) ? v : null; };
+  const recs = { BLE: [], MAIS: [], TOURNESOL: [] };
+  for (let i = 1; i < L.length; i++) {
+    const c = L[i].split("\t"); if (c.length <= I.key || c[I.n] !== "TRX") continue;
+    const p = c[I.p]; if (!recs[p]) continue;
+    const d = c[I.d]; if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || d > td) continue;
+    const k = c[I.u] === "TRY/kg" ? 1 : c[I.u] === "TRY/t" ? 0.001 : 0; if (!k) continue;
+    const av = num(c[I.av]), vol = num(c[I.vol]); if (!(av > 0) || !(vol > 0)) continue;
+    const key = c[I.key] || "", lv = c[I.lv] || "";
+    if (agBad(p, lv) || (excl.has(key) && same(excl.get(key), [av, vol, num(c[I.mn]), num(c[I.mx])]))) continue;
+    const j = lv.indexOf("·"), ex = (j > 0 ? lv.slice(0, j) : c[I.src] || "").trim();
+    recs[p].push({ d, key, lv, ex, ek: agExKey(ex), avg: av * k, t: vol, tobb: key.startsWith("tobb|") });
+  }
+  const fxOn = d => {
+    const s = lastOn(fx.sell, d); if (s && s[1] > 0 && daysBetween(s[0], d) <= AG.FX_DAYS) return { v: s[1], ecb: false };
+    const e = lastOn(fx.eurTry, d), x = lastOn(fx.eurUsd, d);
+    if (e && x && e[1] > 0 && x[1] > 0 && daysBetween(e[0], d) <= AG.FX_DAYS && daysBetween(x[0], d) <= AG.FX_DAYS) return { v: e[1] / x[1], ecb: true };
+    return null;
+  };
+  const out = {};
+  for (const p of AG_PRODS) {
+    const byD = new Map(); recs[p].forEach(r => { let g = byD.get(r.d); if (!g) byD.set(r.d, g = []); g.push(r); });
+    const dates = Array.from(byD.keys()).sort(), all = [];
+    for (const d of dates) { const f = fxOn(d); agDedup(byD.get(d)).forEach(r => all.push(Object.assign({}, r, { D: d, Day: agTday(d), fx: f }))); }
+    // bornes de vraisemblance (Crt71) : séances d'au moins 50 t, tous genres, des 15 jours qui finissent ce jour-là
+    const big = all.filter(s => s.t >= AG.MIN_T).sort((a, b) => a.D < b.D ? -1 : a.D > b.D ? 1 : 0), odd = new Set(); let lo = 0;
+    for (let i = 0; i < big.length;) {
+      const day = big[i].D; let j = i; while (j < big.length && big[j].D === day) j++;
+      while (lo < big.length && daysBetween(big[lo].D, day) > AG.WIN) lo++;
+      const refv = big.slice(lo, j).map(s => s.avg);
+      if (refv.length >= AG.NREF) { const med = agMedian(refv); for (let q = i; q < j; q++) { const s = big[q]; if (s.avg < med * AG.RL || s.avg > med / AG.RL) odd.add(s); } }
+      i = j;
+    }
+    const byDay = new Map(); all.forEach(s => { let g = byDay.get(s.Day); if (!g) byDay.set(s.Day, g = []); g.push(s); });
+    const days = [], names = {};
+    for (const D of Array.from(byDay.keys()).sort()) {
+      let In = byDay.get(D).filter(s => s.t >= AG.MIN_T && !odd.has(s) && agOurs(p, s.lv, s.key));
+      if (!In.length) continue;
+      if (In.length >= AG.MIN_SCREEN) {   // Vw76 : médiane pondérée par les tonnes ± 3 écarts robustes (plancher 2 %)
+        const med = agWMed(In.map(s => [s.avg, s.t])), mad = agWMed(In.map(s => [Math.abs(s.avg - med), s.t])), lim = AG.K * Math.max(AG.SCALE * mad, AG.FLOOR * Math.abs(med));
+        In = In.filter(s => !(Math.abs(s.avg - med) > lim + 1e-12));
+      }
+      const T0 = agSum(In), vw = In.reduce((s, x) => s + x.avg * x.t, 0) / T0, allFx = In.every(s => s.fx && s.fx.v > 0);
+      const usd = allFx ? In.reduce((s, x) => s + x.avg * 1000 / x.fx.v * x.t, 0) / T0 : null;
+      const bx = {}; In.forEach(s => { const b = bx[s.ek] || (bx[s.ek] = { t: 0, u: 0, ok: true }); b.t += s.t; if (s.fx && s.fx.v > 0) b.u += s.avg * 1000 / s.fx.v * s.t; else b.ok = false;
+        if (!names[s.ek] || (names[s.ek] === names[s.ek].toUpperCase() && s.ex !== s.ex.toUpperCase())) names[s.ek] = s.ex; });
+      days.push({ d: D, vw: +vw.toFixed(4), u: usd == null ? null : +usd.toFixed(2), t: Math.round(T0 * 10) / 10, n: In.length, x: Object.keys(bx).length, e: In.some(s => s.fx && s.fx.ecb) ? 1 : 0,
+                  bx: Object.keys(bx).map(k => [k, Math.round(bx[k].t * 10) / 10, bx[k].ok ? +(bx[k].u / bx[k].t).toFixed(2) : null]) });
+    }
+    // jour complet (Suite83) : tonnes ≥ 25 % de la médiane des jours de séance précédents ; sinon le dernier jour
+    let head = days.length - 1;
+    for (let i = days.length - 1; i >= 0; i--) {
+      const hist = days.slice(Math.max(0, i - AG.HIST), i).map(x => x.t).filter(x => x > 0); if (hist.length < 3) break;
+      if (days[i].t >= agMedian(hist) * AG.PCT / 100) { head = i; break; }
+    }
+    // dernier jour de chaque bourse (au plus 15 jours avant le dernier jour du produit)
+    const exLast = [], seen = new Set(), lastD = days.length ? days[days.length - 1].d : null;
+    for (let i = days.length - 1; i >= 0 && lastD && daysBetween(days[i].d, lastD) <= AG.EX_DAYS; i--)
+      days[i].bx.forEach(b => { if (seen.has(b[0])) return; seen.add(b[0]); exLast.push({ n: agShort(names[b[0]] || b[0]), d: days[i].d, t: b[1], u: b[2] }); });
+    exLast.sort((a, b) => b.t - a.t);
+    days.forEach(x => delete x.bx);
+    out[p] = { days, head, exLast };
+  }
+  return out;
+}
+let agRes = null;   // résultat gardé (us « mka ») : { sig, m, res }
+async function agLoad(L, force) {
+  const f = L.files["agri_physique.tsv"]; if (!f) throw Object.assign(new Error(tf("mkNoFile", "agri_physique.tsv")), { cle: null });
+  const need = mkNeed(), fx = { sell: [], eurTry: [], eurUsd: [] }, ids = ["USD-TRY-VTE", "EUR-TRY", "EUR-USD"];
+  const ex = L.files["agri_exclus69.tsv"], sigOf = () => [f.eTag, ex ? ex.eTag : "-"].concat(ids.map(i => L.files[i + ".csv"] ? L.files[i + ".csv"].eTag : "-")).join("|");
+  const sig = "a124|" + sigOf(); agRes = agRes || us.get("mka", null);   // version de la méthode dans l'empreinte : un calcul d'une autre version est refait
+  if (agRes && agRes.sig === sig && !force) return agRes;
+  const ss = {}; await inBatches(ids, 3, async id => { ss[id] = await serLoad(L, id, need); });
+  fx.sell = (ss["USD-TRY-VTE"] || {}).pts || []; fx.eurTry = (ss["EUR-TRY"] || {}).pts || []; fx.eurUsd = (ss["EUR-USD"] || {}).pts || [];
+  const [tsv, exl] = await Promise.all([mkRead(L, f, null), ex ? mkRead(L, ex, null) : Promise.resolve({ text: "" })]);
+  const res = agCompute(tsv.text, exl.text, fx);
+  agRes = { sig, m: f.lastModifiedDateTime || "", res };
+  if (!us.set("mka", agRes)) console.warn("mka non gardé");
+  return agRes;
+}
+
+// ---------- chargement d'un écran de cours ----------
+const mkSideOf = () => isGr() ? us.get("mkSide", "agri") : "metaux";
+async function mkRefresh(force) {
+  const ed = edition, side = mkSideOf(); if (mkBusy || DEMO) return; mkBusy = true; mkErr = null; let changed = false;
+  try {
+    const L = await mkList(ed, force); if (!L) { mkErr = { msg: t("mkNoDir") }; return; }
+    const need = mkNeed(), ret = await retiredLoad(L); mkStamp[ed + side] = Date.now();
+    if (side === "agri") { await agLoad(L, force); await inBatches(AG_FOB[mkProd()] || [], 3, id => serLoad(L, id, need)); }
+    else { const ids = MET_IDS.filter(id => L.files[id + ".csv"]), sel = mkSel(); const extra = [].concat((MKS[sel] || {}).band || []);
+           await inBatches(ids.concat(extra), 4, id => serLoad(L, id, need)); }
+    mkRet[ed] = ret; changed = true;
+  } catch (e) { console.warn(e); mkErr = { msg: (e && e.cle ? t(e.cle) : e && e.status ? t("mkErr") + " (Graph " + e.status + ")" : e && e.message) || t("mkErr") }; }
+  finally { mkBusy = false; if ((changed || mkErr) && edition === ed && (tab === "mkts" || tab === "home") && !document.querySelector(".sheet-bg")) render(); }
+}
+const mkRet = {};
+const serOf = (id, ed) => { const c = us.get("mks." + (ed || edition) + "." + id, null), r = mkRet[ed || edition]; if (!c) return null;
+  return r && r.size ? Object.assign({}, c, { pts: c.pts.filter(p => !r.has(id + "|" + p[0])) }) : c; };
+const mkProd = () => { const p = us.get("mkProd", "BLE"); return AG_PRODS.includes(p) ? p : "BLE"; };
+const mkSel = () => { const s = us.get("mkSel." + edition, "CO-STD"); return MET_IDS.includes(s) ? s : MET_IDS[0]; };
+const mkPer = () => { const p = us.get("mkPer", "3M"); return ["1M", "3M", "6M", "1A"].includes(p) ? p : "3M"; };
+const perFrom = p => { const d = parseD(todayIso()); return iso(p === "1M" ? addJ(d, -31) : p === "3M" ? new Date(d.getFullYear(), d.getMonth() - 3, d.getDate()) : p === "6M" ? new Date(d.getFullYear(), d.getMonth() - 6, d.getDate()) : new Date(d.getFullYear() - 1, d.getMonth(), d.getDate())); };
+const chgHtml = (v, p) => { if (v == null || p == null || !(p !== 0)) return '<span class="muted">—</span>'; const r = (v - p) / Math.abs(p) * 100, a = Math.abs(r) < 0.05;
+  return '<span class="' + (a ? "muted" : r > 0 ? "pos" : "neg") + '">' + (a ? "=" : (r > 0 ? "▲" : "▼") + nfx(Math.abs(r), 1) + "%") + '</span>'; };
+
+// ---------- courbe (SVG dessiné à la largeur réelle, axe des prix à droite, étiquette du dernier cours, réticule au toucher) ----------
+function niceStep(span, n) { const raw = span / Math.max(1, n), p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p; }
+function drawChart(el, spec) {
+  if (!el) return; const W = Math.max(260, el.clientWidth || 340), Hh = el.clientHeight || 236, from = spec.from, to = todayIso();
+  const ser = spec.series.map(s => Object.assign({}, s, { pts: (s.pts || []).filter(p => p[0] >= from && p[1] != null && isFinite(p[1])) })).filter(s => s.pts.length);
+  const band = spec.band ? spec.band.filter(b => b[0] >= from) : [], vol = (spec.vol || []).filter(v => v[0] >= from);
+  if (!ser.length) { el.innerHTML = '<div class="mk-empty">' + esc(t("mkNone")) + '</div>'; el.onpointerdown = null; return; }
+  const all = ser.flatMap(s => s.pts.map(p => p[1])).concat(band.flatMap(b => [b[1], b[2]]));
+  let mn = Math.min(...all), mx = Math.max(...all); if (mx - mn < Math.abs(mx) * 0.004) { mn -= Math.abs(mx) * 0.01 || 1; mx += Math.abs(mx) * 0.01 || 1; }
+  const pad = (mx - mn) * 0.08; mn -= pad; mx += pad;
+  const R = 52, Lp = 4, Tp = 10, Bp = 20, volH = vol.length ? Math.round((Hh - Tp - Bp) * 0.2) : 0, Hp = Hh - Tp - Bp - volH;
+  const t0 = parseD(from).getTime(), t1 = Math.max(parseD(to).getTime(), t0 + 864e5), X = d => Lp + (parseD(d).getTime() - t0) / (t1 - t0) * (W - Lp - R), Y = v => Tp + (mx - v) / (mx - mn) * Hp;
+  const step = niceStep(mx - mn, 4), dec = Math.max(0, Math.min(4, -Math.floor(Math.log10(step) + 1e-9)));
+  let g = '<svg viewBox="0 0 ' + W + ' ' + Hh + '" width="' + W + '" height="' + Hh + '" role="img" aria-label="' + esc(spec.label || "") + '" font-family="ui-monospace,SF Mono,Menlo,Consolas,monospace" font-size="10">';
+  for (let v = Math.ceil(mn / step) * step; v <= mx; v += step) { const y = Y(v).toFixed(1); g += '<line x1="' + Lp + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="#1c232b" stroke-dasharray="2 3"/><text x="' + (W - R + 5) + '" y="' + (+y + 3.5) + '" fill="#8a8a8a">' + esc(nfx(v, dec)) + '</text>'; }
+  // repères de temps : semaines (1M), sinon débuts de mois
+  const ticks = []; const fd = parseD(from), span = (t1 - t0) / 864e5;
+  if (span <= 40) { for (let d = lundi(addJ(fd, 7)); d.getTime() <= t1; d = addJ(d, 7)) ticks.push([iso(d), fmtDM(iso(d))]); }
+  else { const every = span > 200 ? 2 : 1; for (let d = new Date(fd.getFullYear(), fd.getMonth() + 1, 1), i = 0; d.getTime() <= t1; d = new Date(d.getFullYear(), d.getMonth() + 1, 1), i++) if (i % every === 0) ticks.push([iso(d), d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { month: "short" }).replace(".", "") + (d.getMonth() === 0 ? " " + String(d.getFullYear()).slice(2) : "")]); }
+  ticks.forEach(tk => { const x = X(tk[0]); if (x < Lp + 12 || x > W - R - 12) return; g += '<line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="' + Tp + '" y2="' + (Hh - Bp) + '" stroke="#1c232b" stroke-dasharray="2 3"/><text x="' + x.toFixed(1) + '" y="' + (Hh - 6) + '" fill="#8a8a8a" text-anchor="middle">' + esc(tk[1]) + '</text>'; });
+  g += '<line x1="' + Lp + '" x2="' + (W - R) + '" y1="' + (Hh - Bp) + '" y2="' + (Hh - Bp) + '" stroke="#2c343e"/><line x1="' + (W - R) + '" x2="' + (W - R) + '" y1="' + Tp + '" y2="' + (Hh - Bp) + '" stroke="#2c343e"/>';
+  if (vol.length) {   // tonnes du jour : barres en bas (ardoise)
+    const vm = Math.max(...vol.map(v => v[1])), bw = Math.max(1.2, Math.min(6, (W - Lp - R) / Math.max(20, span) * 0.7)), y0 = Hh - Bp;
+    vol.forEach(v => { const h = Math.max(1, v[1] / vm * (volH - 4)); g += '<rect x="' + (X(v[0]) - bw / 2).toFixed(1) + '" y="' + (y0 - h).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="#4a505a"/>'; });
+  }
+  if (band.length > 1) {   // fourchette basse / haute (cobalt) : bande sombre
+    const up = band.map(b => X(b[0]).toFixed(1) + " " + Y(b[2]).toFixed(1)), dn = band.slice().reverse().map(b => X(b[0]).toFixed(1) + " " + Y(b[1]).toFixed(1));
+    g += '<path d="M' + up.join("L") + "L" + dn.join("L") + 'Z" fill="' + (spec.bandColor || "#f0a21e") + '" fill-opacity=".16" stroke="none"/>';
+  }
+  ser.slice().reverse().forEach(s => {
+    const d = s.pts.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+    g += '<path d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="' + (s.w || 1.6) + '"' + (s.dash ? ' stroke-dasharray="' + s.dash + '"' : "") + ' stroke-linejoin="round"/>';
+    if (s.pts.length <= 40 || s.marks) s.pts.forEach(p => { g += '<rect x="' + (X(p[0]) - 1.6).toFixed(1) + '" y="' + (Y(p[1]) - 1.6).toFixed(1) + '" width="3.2" height="3.2" fill="' + s.color + '"/>'; });
+    if (s.hollow) { const p = s.pts[s.pts.length - 1]; g += '<rect x="' + (X(p[0]) - 3).toFixed(1) + '" y="' + (Y(p[1]) - 3).toFixed(1) + '" width="6" height="6" fill="#000" stroke="' + s.color + '" stroke-width="1.4"/>'; }
+  });
+  // étiquettes du dernier cours (à droite), écartées pour ne jamais se chevaucher
+  const tags = ser.filter(s => s.tag !== false).map(s => { const p = s.pts[s.pts.length - 1]; return { y: Y(p[1]), s, v: p[1] }; }).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < tags.length; i++) if (tags[i].y - tags[i - 1].y < 14) tags[i].y = tags[i - 1].y + 14;
+  tags.forEach(tg => { const y = Math.max(Tp + 6, Math.min(Hh - Bp - 6, tg.y)); g += '<rect x="' + (W - R + 1) + '" y="' + (y - 7).toFixed(1) + '" width="' + (R - 1) + '" height="14" fill="' + tg.s.color + '"/><text x="' + (W - R + 4) + '" y="' + (y + 3.5).toFixed(1) + '" fill="#000" font-weight="700">' + esc(nfx(tg.v, tg.s.d == null ? dec : Math.min(tg.s.d, 2))) + '</text>'; });
+  g += '<line id="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + (Hh - Bp) + '" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="3 2" visibility="hidden"/></svg>';
+  el.innerHTML = g;
+  // réticule : date et valeurs du point le plus proche (série principale), lus au-dessus de la courbe
+  const rd = spec.readEl, main = ser[0], xh = el.querySelector("#xh");
+  const show = ev => {
+    const bx = el.getBoundingClientRect(), x = (ev.clientX - bx.left) * W / bx.width; if (x > W - R) return;
+    let best = null; main.pts.forEach(p => { const dx = Math.abs(X(p[0]) - x); if (!best || dx < best.dx) best = { dx, p }; });
+    if (!best) return; const bxp = X(best.p[0]); xh.setAttribute("x1", bxp); xh.setAttribute("x2", bxp); xh.setAttribute("visibility", "visible");
+    if (rd) rd.innerHTML = esc(fmtDM(best.p[0]) + "/" + best.p[0].slice(2, 4)) + " · " + ser.map(s => { const q = lastOn(s.pts, best.p[0]); return q ? '<span style="color:' + s.color + '">' + esc(s.short || "") + " " + esc(nfx(q[1], s.d == null ? dec : s.d)) + (q[0] !== best.p[0] && s !== main ? "*" : "") + '</span>' : ""; }).filter(Boolean).join(" · ") +
+      (spec.volOf ? (v => v ? ' · <span class="muted">' + esc(nf(v[1])) + " t</span>" : "")(vol.find(v => v[0] === best.p[0])) : "");
+  };
+  el.onpointerdown = ev => { show(ev); el.onpointermove = show; };
+  el.onpointerup = el.onpointercancel = el.onpointerleave = () => { el.onpointermove = null; };
+  if (rd && !rd.dataset.keep) rd.innerHTML = "&nbsp;";
+}
+
+// ---------- écran Marchés ----------
+function renderMarkets() {
+  const side = mkSideOf(), per = mkPer(), ed = edition;
+  if (DEMO) { $("#main").innerHTML = fbar(t("mkTab"), "") + '<div class="mk-msg">' + esc(t("demo")) + ' : ' + esc(t("noData")) + '</div>'; return; }   // démo : aucun cours (rien n'est lu)
+  if (side === "agri" && !agRes) agRes = us.get("mka", null);   // dernier calcul gardé : montré tout de suite, relu ensuite
+  let h = fbar(t("mkTab") + (isGr() ? " · GRANORE" : " · ATLAS"), "");
+  if (isGr() && !data && grInfo) h += '<div class="mk-msg">' + esc(t(grInfo === "noStark" ? "grNoStark" : "grNoExport")) + '</div>';
+  if (isGr()) h += '<div class="seg mk-seg" id="mkSide">' + [["agri", t("agri")], ["metaux", t("metaux")]].map(x => '<button data-sd="' + x[0] + '" class="' + (side === x[0] ? "on" : "") + '">' + esc(x[1].toUpperCase()) + '</button>').join("") + '</div>';
+  if (side === "agri") h += agHtml(per); else h += metHtml(per);
+  if (mkErr) h += '<div class="mk-msg err">' + esc(mkErr.msg) + '<br><button class="btn light" id="mkRetry">' + esc(t("retry2")) + '</button></div>';
+  $("#main").innerHTML = h;
+  // date des données : heure d'écriture du fichier lu (relevé de l'app du PC)
+  const fb = $("#main .fbar .fb-r");
+  const stamp = side === "agri" ? (agRes && agRes.m) : (serOf(mkSel()) || {}).m;
+  fb.textContent = mkBusy ? t("mkLoading") : stamp ? tf("mkRead", dtShort(stamp)) : "";
+  if ($("#mkSide")) $("#mkSide").querySelectorAll("[data-sd]").forEach(b => b.onclick = () => { us.set("mkSide", b.dataset.sd); mkErr = null; render(); });
+  $("#main").querySelectorAll("[data-per]").forEach(b => b.onclick = () => { us.set("mkPer", b.dataset.per); render(); });
+  $("#main").querySelectorAll("[data-pr]").forEach(b => b.onclick = () => { us.set("mkProd", b.dataset.pr); render(); mkRefresh(false); });
+  $("#main").querySelectorAll("[data-mk]").forEach(b => b.onclick = () => { us.set("mkSel." + edition, b.dataset.mk); render(); window.scrollTo(0, 0); mkRefresh(false); });
+  if ($("#mkRetry")) $("#mkRetry").onclick = () => { mkErr = null; mkRefresh(true); render(); };
+  if (side === "agri") agDraw(per); else metDraw(per);
+  if (!mkBusy && (!mkStamp[ed + side] || Date.now() - mkStamp[ed + side] > 90000) && !mkErr) { mkRefresh(false).then(() => {}); fb.textContent = t("mkLoading"); }
+}
+const perHtml = per => '<div class="mk-per" role="group">' + ["1M", "3M", "6M", "1A"].map(p => '<button data-per="' + p + '" class="' + (per === p ? "on" : "") + '" aria-pressed="' + (per === p) + '">' + esc(t("per" + p)) + '</button>').join("") + '</div>';
+function metHtml(per) {
+  const sel = mkSel(), m = MKS[sel], s = serOf(sel), pts = s ? s.pts : [], last = pts[pts.length - 1], prev = pts[pts.length - 2], p0 = lastOn(pts, perFrom(per)) || pts[0];
+  let h = '<div class="mk-head"><span class="mk-name">' + esc(mkName(sel)) + '</span>' +
+    (last ? '<span class="mk-last">' + esc(mkFmt(last[1], m.d)) + '<small>' + esc(m.u) + '</small></span><span class="mk-chg">' + chgHtml(last[1], prev && prev[1]) + ' <span class="muted">1J</span> ' + chgHtml(last[1], p0 && p0[1]) + ' <span class="muted">' + esc(t("per" + per)) + '</span></span>' +
+      '<span class="mk-meta">' + esc(mkDate(last[0]) + " · " + mkSrc(s.src)) + '</span>' : '<span class="mk-meta">' + esc(mkBusy || !s ? t("mkLoading") : t("mkNone")) + '</span>') + '</div>';
+  h += perHtml(per) + '<div class="mk-chart" id="mkc"></div><div class="mk-read" id="mkr"></div>';
+  // moniteur : une ligne par série, la choisie en bleu ; toucher : sa courbe
+  h += '<div class="mk-list"><div class="hm-h"><span>' + esc(t("mkMonitor")) + '</span><span>' + esc(t("mkLastShort")) + " · " + esc(t("mkChg")) + '</span></div>' + MET_IDS.map(id => {
+    const c = serOf(id), q = c && c.pts, l = q && q[q.length - 1], pv = q && q[q.length - 2], mm = MKS[id]; if (!c && mkMem[edition] && !mkMem[edition].files[id + ".csv"]) return "";
+    return '<button class="mk-row' + (id === sel ? " on" : "") + '" data-mk="' + id + '"><span class="mk-n">' + esc(mkName(id)) + '<small>' + esc(l ? mkDate(l[0]) + (mm.u ? " · " + mm.u : "") : "—") + '</small></span><span class="mk-v">' + esc(l ? mkFmt(l[1], mm.d) : "—") + '</span><span class="mk-c">' + (l ? chgHtml(l[1], pv && pv[1]) : "") + '</span></button>';
+  }).join("") + '</div>';
+  return h;
+}
+function metDraw(per) {
+  const sel = mkSel(), m = MKS[sel], s = serOf(sel); if (!s) { const el = $("#mkc"); if (el) el.innerHTML = '<div class="mk-empty">' + esc(mkBusy ? t("mkLoading") : t("mkNone")) + '</div>'; return; }
+  const series = [{ pts: s.pts, color: "#f0a21e", d: m.d, short: sel, w: 1.8 }];
+  let band = null; if (m.band) { const lo = serOf(m.band[0]), hi = serOf(m.band[1]); if (lo && hi) band = lo.pts.map(p => { const q = lastOn(hi.pts, p[0]); return q && q[0] === p[0] ? [p[0], p[1], q[1]] : null; }).filter(Boolean); }
+  drawChart($("#mkc"), { series, band, from: perFrom(per), readEl: $("#mkr"), label: mkName(sel) });
+}
+function agHtml(per) {
+  const p = mkProd(), r = agRes && agRes.res && agRes.res[p], days = r ? r.days.filter(x => x.u != null) : [], hd = r && r.days[r.head], prevD = r && r.head > 0 ? r.days.slice(0, r.head).reverse().find(x => x.u != null) : null;
+  const p0 = days.length ? (days.find(x => x.d >= perFrom(per)) || days[0]) : null;
+  let h = '<div class="seg mk-seg" id="mkProd">' + AG_PRODS.map(x => '<button data-pr="' + x + '" class="' + (p === x ? "on" : "") + '">' + esc(t("p" + x + "s")) + '</button>').join("") + '</div>';
+  h += '<div class="mk-head"><span class="mk-name">' + esc(t("p" + p) + " · " + t("mkVwap")) + '</span>' +
+    (hd ? '<span class="mk-last pos">' + esc(hd.u == null ? "—" : nfx(hd.u, 1)) + '<small>USD/t</small></span><span class="mk-chg">' + chgHtml(hd.u, prevD && prevD.u) + ' <span class="muted">1J</span> ' + chgHtml(hd.u, p0 && p0.u) + ' <span class="muted">' + esc(t("per" + per)) + '</span></span>' +
+      '<span class="mk-meta">' + esc(mkDate(hd.d) + " · " + nf(hd.t) + " t · " + tf("mkSes", hd.n, hd.x) + " · " + nfx(hd.vw, 3) + " TRY/kg" + (hd.u == null ? " · " + t("mkNoFx") : "")) + '</span>'
+        : '<span class="mk-meta">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</span>') + '</div>';
+  h += perHtml(per) + '<div class="mk-chart" id="mkc"></div><div class="mk-read" id="mkr"></div>';
+  // légende : bourses TR (achat, vert), références FOB (vente, rouge) : dernier cours, date, source
+  const last = r && r.days.length ? r.days[r.days.length - 1] : null, partial = r && r.head < r.days.length - 1;
+  h += '<div class="mk-leg"><div><i style="background:#36c24a"></i><span>' + esc(t("mkVwapL")) + '</span><b class="pos">' + esc(last && last.u != null ? nfx(last.u, 1) : "—") + '</b>' +
+    (last ? '<small style="grid-column:2 / -1">' + esc(mkDate(last.d) + (partial ? " · " + t("mkPartial") : "") + " · TOBB + " + (lang === "fr" ? "sites des bourses" : "exchange sites")) + '</small>' : "") + '</div>';
+  const fobs = AG_FOB[p] || [];
+  fobs.forEach((id, i) => { const s = serOf(id), l = s && s.pts[s.pts.length - 1], st = FOB_STYLE[i] || FOB_STYLE[0];
+    h += '<div><i class="' + (st.dash ? (st.dash.startsWith("2") ? "dot" : "dash") : "") + '" style="background:' + st.c + ';color:' + st.c + '"></i><span>' + esc(mkName(id)) + '</span><b class="neg">' + esc(l ? nfx(l[1], 1) : "—") + '</b>' +
+      (l ? '<small style="grid-column:2 / -1">' + esc(mkDate(l[0]) + " · " + mkSrc(s.src)) + '</small>' : "") + '</div>'; });
+  if (!fobs.length) h += '<div><i></i><span class="muted">' + esc(t("mkNoFob")) + '</span><b></b></div>';
+  h += '</div>';
+  // dernier jour de chaque bourse : les 10 plus gros volumes, les autres repliés
+  const exRow = x => '<tr><td>' + esc(x.n) + '</td><td>' + esc(fmtDM(x.d)) + '</td><td>' + esc(nf(x.t)) + '</td><td class="pos">' + esc(x.u == null ? "—" : nfx(x.u, 1)) + '</td></tr>';
+  const exHead = '<thead><tr><th>' + esc(t("mkByEx")) + '</th><th>' + esc(t("mkDay")) + '</th><th>t</th><th>USD/t</th></tr></thead>';
+  if (r && r.exLast.length) h += '<table class="mk-tab">' + exHead + '<tbody>' + r.exLast.slice(0, 10).map(exRow).join("") + '</tbody></table>' +
+    (r.exLast.length > 10 ? uiFold(tf("mkMoreEx", r.exLast.length - 10), '<table class="mk-tab">' + exHead + '<tbody>' + r.exLast.slice(10).map(exRow).join("") + '</tbody></table>', "mkex") : "");
+  h += '<p class="mk-src">' + esc(t("mkSrcAgri")) + '</p>';
+  return h;
+}
+function agDraw(per) {
+  const p = mkProd(), r = agRes && agRes.res && agRes.res[p], el = $("#mkc");
+  if (!r) { if (el) el.innerHTML = '<div class="mk-empty">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</div>'; return; }
+  const pts = r.days.filter(x => x.u != null).map(x => [x.d, x.u]), series = [{ pts, color: "#36c24a", d: 1, short: "TR", w: 2, hollow: r.head < r.days.length - 1 }];
+  (AG_FOB[p] || []).forEach((id, i) => { const s = serOf(id), st = FOB_STYLE[i] || FOB_STYLE[0]; if (s && s.pts.length) series.push({ pts: s.pts, color: st.c, dash: st.dash, d: 1, short: id.replace(/^CE-FOB-|^MOEX-/, "").replace(/-BLE$|-MAIS$/, ""), w: 1.4 }); });
+  drawChart(el, { series, vol: r.days.map(x => [x.d, x.t]), volOf: true, from: perFrom(per), readEl: $("#mkr"), label: t("p" + p) });
+}
+
+// ---------- écran Jour (fiche Head) : ce qui demande une action, en un coup d'œil, chaque bloc ouvre son détail ----------
+function quoteRows() {
+  // GRANORE : moyenne des bourses par produit (dernier jour complet) ; Atlas : métaux (courbes lues, sinon derniers cours de la fiche)
+  if (isGr()) {
+    const rs = agRes && agRes.res; if (!rs) return [];
+    return AG_PRODS.map(p => { const r = rs[p], hd = r && r.days[r.head], pv = r && r.head > 0 ? r.days.slice(0, r.head).reverse().find(x => x.u != null) : null;
+      return hd ? { n: t("p" + p), d: hd.d, v: hd.u, pv: pv && pv.u, dec: 1, u: "USD/t", cls: "pos", go: ["agri", p] } : null; }).filter(Boolean);
+  }
+  const fm = Array.isArray(data && data.marches) ? data.marches : [];
+  return ["CO-STD", "LME-NI", "LME-CU", "COMEX-CU"].map(id => {
+    const s = serOf(id), l = s && s.pts[s.pts.length - 1], pv = s && s.pts[s.pts.length - 2], f = fm.find(x => x && x.id === id && typeof x.v === "number");
+    if (l && (!f || l[0] >= f.le)) return { n: mkName(id), d: l[0], v: l[1], pv: pv && pv[1], dec: MKS[id].d, u: MKS[id].u, go: ["metaux", id] };
+    return f ? { n: mkName(id), d: f.le, v: f.v, pv: f.prec, dec: MKS[id].d, u: MKS[id].u, go: ["metaux", id] } : null;
+  }).filter(Boolean);
+}
+function renderHome() {
+  if (!data) { tab = "mkts"; renderMarkets(); return; }
+  const a = alData(), tr = data.tresorerie, g = data.genere ? new Date(data.genere) : null;
+  if (isGr() && !agRes) agRes = us.get("mka", null);
+  let h = fbar(t("home") + " · " + fmtDM(today), g && !isNaN(g) ? tf("hmData", dtShort(data.genere)) : "");
+  if (a) {
+    const n = k => alN(a, k), tile = (lab, v, cls) => '<span class="hm-tile"><small>' + esc(lab) + '</small><b class="' + (v > 0 ? cls : "zero") + '">' + v + '</b></span>';
+    h += '<button class="hm-tiles" id="hmAl" aria-label="' + esc(t("alTitle")) + '">' + tile(t("hmTodo"), n("aTraiter"), n("bloquantes") > 0 ? "neg" : "warn") + tile(t("hmBlk"), n("bloquantes"), "neg") + tile(t("hmDocs"), n("pieces"), "warn") + tile(t("hmMarg"), n("marges"), "warn") + '</button>';
+  }
+  if (tr && Array.isArray(tr.semaines)) {
+    const jt = (tr.jours || []).find(x => x.j === today), cur = iso(lundi(parseD(today))), low = tr.semaines.filter(w => w.du >= cur && w.bas != null).reduce((x, w) => !x || w.bas < x.bas ? w : x, null);
+    h += '<button class="hm-blk" id="hmTr"><div class="hm-h"><span>' + esc(t("hmTreso") + " · " + t("hmBal")) + '</span><span>' + esc(tr.devise || "") + ' ›</span></div><div class="hm-big' + (jt && jt.f <= -0.5 ? " neg" : "") + '">' + esc(amt(jt && jt.f)) + '</div>' +
+      (low ? '<div class="hm-kv"><span>' + esc(t("hmLow")) + '</span><b class="' + (low.bas <= -0.5 ? "neg" : "") + '">' + esc(amtEst(low.bas) + " " + le(low.basLe)) + '</b></div><div class="hm-kv"><span>' + esc(t("hmFund")) + '</span><b class="' + (low.financement > 0 ? "neg" : "") + '">' + esc(financement(low)) + '</b></div>' : "") + '</button>';
+  }
+  // livraisons : en retard d'abord, puis les 7 prochains jours
+  const d7 = iso(addJ(parseD(today), 6)), os = ops().filter(l => l.statut !== "Annulé" && l.statut !== "Réalisé");
+  const late = os.filter(l => l.retard).sort((x, y) => (x.date || "").localeCompare(y.date || "")), wk = os.filter(l => !l.retard && l.date && l.date >= today && l.date <= d7).sort((x, y) => x.date.localeCompare(y.date));
+  const row = l => '<button class="hm-op ' + (l.sens === "achat" ? "in" : "out") + (l.retard ? " late" : "") + '" data-ref="' + esc(l.ref) + '"><span class="hm-d">' + esc(l.date ? fmtDM(l.date) : "—") + '</span><span class="hm-a">' + (l.sens === "achat" ? "▲" : "▼") + '</span><span class="hm-w">' + esc((l.cpty || "?") + " · " + prod(l.produit)) + (l.retard ? ' <span class="warn">' + esc(t("hmLate")) + '</span>' : "") + (l.attente ? ' <span class="pending">' + esc(t("pending")) + '</span>' : "") + '</span><span class="hm-q">' + esc(l.qte == null ? t("unknown") : qn(l.qte) + " " + U()) + '</span></button>';
+  h += '<div class="hm-list"><div class="hm-h"><span>' + esc(t("hmWeek")) + '</span><span>' + (late.length ? '<span class="warn">' + late.length + " " + esc(t("hmLate")) + '</span>' : "") + '</span></div>' +
+    (late.length + wk.length ? late.concat(wk).slice(0, 12).map(row).join("") : '<div class="hm-empty">' + esc(t("hmNone")) + '</div>') + '<button class="hm-more" id="hmCal">' + esc(t("hmCal")) + '</button></div>';
+  const q = quoteRows();
+  h += '<div class="hm-list"><div class="hm-h"><span>' + esc(t("hmPrices")) + '</span><span></span></div>' + (q.length ? q.map((x, i) => '<button class="mk-row" data-q="' + i + '"><span class="mk-n">' + esc(x.n) + '<small>' + esc(mkDate(x.d) + " · " + x.u) + '</small></span><span class="mk-v ' + (x.cls || "") + '">' + esc(mkFmt(x.v, x.dec)) + '</span><span class="mk-c">' + chgHtml(x.v, x.pv) + '</span></button>').join("") : '<div class="hm-empty">—</div>') +
+    '<button class="hm-more" id="hmMk">' + esc(t("hmAllPrices")) + '</button></div>';
+  $("#main").innerHTML = h;
+  if ($("#hmAl")) $("#hmAl").onclick = alSheet;
+  if ($("#hmTr")) $("#hmTr").onclick = () => goTab("treso");
+  $("#hmCal").onclick = () => goTab("cal"); $("#hmMk").onclick = () => goTab("mkts");
+  $("#main").querySelectorAll(".hm-op[data-ref]").forEach(b => b.onclick = () => editOp(b.dataset.ref));
+  $("#main").querySelectorAll("[data-q]").forEach(b => b.onclick = () => { const x = q[+b.dataset.q]; if (x && x.go) { if (isGr()) { us.set("mkSide", x.go[0]); if (x.go[0] === "agri") us.set("mkProd", x.go[1]); } else us.set("mkSel." + edition, x.go[1]); } goTab("mkts"); });
+  // aucun téléchargement ici : derniers cours de la fiche, ou des courbes déjà lues (écran Marchés)
+}
+function goTab(k) { tab = k; us.set(tabKey(), k); selDay = null; render(); window.scrollTo(0, 0); }
+// GRANORE sans fiche : Marchés et Réglages seulement
+function tabsGr() {
+  const list = [["mkts", ICONES.mkts, t("mkTab")], ["settings", ICONES.gear, t("settings")]];
+  if (!list.some(x => x[0] === tab)) tab = "mkts";
+  $("#nav").innerHTML = list.map(x => '<button data-tab="' + x[0] + '" class="' + (x[0] === tab ? "on" : "") + '">' + x[1] + esc(x[2]) + '</button>').join("");
+  $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => goTab(b.dataset.tab));
+}
+// Réglages : dossiers trouvés et liens de secours des dossiers de cours
+function settingsMk() {
+  if (!edOk() && !FIXTURE) return "";
+  const r = us.get("roots", null);
+  return '<section class="card"><h2>' + esc(t("foldersFound")) + '</h2><div class="kv"><span>Atlas</span><span class="mono">' + esc(r && r.atlas != null ? r.atlas || "/" : "—") + '</span></div><div class="kv"><span>GRANORE CTRM</span><span class="mono">' + esc(r && r.stark != null ? r.stark || "/" : "—") + '</span></div>' +
+    '<label for="mkLa">' + esc(t("mkLinkAtlas")) + '</label><input id="mkLa" autocapitalize="off" autocorrect="off" value="' + esc(us.get("mkLink.atlas", "")) + '">' +
+    '<label for="mkLg">' + esc(t("mkLinkGr")) + '</label><input id="mkLg" autocapitalize="off" autocorrect="off" value="' + esc(us.get("mkLink.granore", "")) + '">' +
+    '<button class="btn light" id="mkSave">' + esc(t("save")) + '</button></section>';
+}
+function bindSettingsMk() {
+  const b = $("#mkSave"); if (!b) return;
+  b.onclick = () => { us.set("mkLink.atlas", $("#mkLa").value.trim()); us.set("mkLink.granore", $("#mkLg").value.trim()); us.set("roots", null); Object.keys(mkMem).forEach(k => delete mkMem[k]); mkStamp = {}; mkErr = null; toast(t("save") + " ✓"); };
 }
 
 if (!window.ATLAS_ESSAI) boot();
