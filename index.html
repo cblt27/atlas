@@ -601,6 +601,17 @@ nav button svg { width:21px; height:21px; }
 .mk-msg { padding:10px 12px; border:1px solid var(--line); background:var(--card); color:var(--muted); font-size:13px; margin:0 0 12px; }
 .mk-msg.err { color:var(--out); border-color:var(--out); }
 .mk-msg button { margin-top:8px; }
+/* mobile v131 · round 88 (CASH-EXPO) : couvert / non couvert, camions par mois de prix, trésorerie datée */
+.c88sum{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:4px 0 6px}.c88sum div{background:var(--card);border:1px solid var(--line);padding:6px 7px;min-width:0}.c88sum small{display:block;color:var(--amber);font-size:11px;text-transform:uppercase;letter-spacing:.04em}.c88sum b{display:block;font-family:var(--mono);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.c88sum span{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c88b{color:var(--v-swap)!important}.c88o{color:var(--v-nc)!important}.c88px{font-size:11px;margin-bottom:6px;overflow-wrap:anywhere}
+.c88leg{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:var(--muted);margin-bottom:6px}.c88leg i{display:inline-block;width:10px;height:8px;margin-right:4px;vertical-align:middle}.c88leg .ad{background:var(--v-nv)}.c88leg .cv{background:var(--v-swap)}.c88leg .nc{background:var(--v-nc)}.c88leg .ix{border:1.5px solid var(--v-idx)}.c88leg .sw{background:var(--v-swap-t,#9cc2ff);height:6px}
+.c88head{display:grid;grid-template-columns:52px 1fr 1fr;font-size:11px;color:var(--amber);border-bottom:1px solid var(--line);padding-bottom:3px}.c88head span:last-child{text-align:right}
+.c88row{display:grid;grid-template-columns:52px 1fr 1fr;align-items:end;border-bottom:1px solid var(--line);padding:5px 0 4px;column-gap:4px}.c88row.done{opacity:.62}
+.c88m{grid-row:1/span 3;align-self:stretch;border:0;background:none;color:var(--white);font:600 12px var(--mono);text-align:left;padding:0}
+.c88side{display:flex;flex-wrap:wrap;gap:3px;align-items:flex-end;min-width:0}.c88side.r{justify-content:flex-end}
+.c88t{border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;color:var(--muted);min-height:0}.c88t small{font:10px var(--mono);color:var(--muted)}.c88stk{font:11px var(--mono);color:var(--v-long);border:1px solid var(--v-long);padding:1px 4px}
+.c88bar{grid-column:2/span 2;border:0;background:none;padding:3px 0 0;display:flex;flex-direction:column;gap:2px;text-align:left;color:var(--ink)}.c88track{display:flex;height:7px;background:var(--soft);width:100%}.c88track i{display:block;height:100%}.c88track .cv{background:var(--v-swap)}.c88track .nc{background:var(--v-nc)}.c88track .ov{background:repeating-linear-gradient(90deg,var(--v-swap) 0 3px,transparent 3px 6px)}.c88val{font:11px var(--mono);color:var(--muted)}
+.c88sws{grid-column:2/span 2;display:flex;flex-wrap:wrap;gap:3px;padding-top:3px}.c88s{border:1px solid var(--v-swap);background:var(--fix-t,#0e1f38);color:var(--v-swap);font:10px var(--mono);padding:2px 5px;min-height:0}
 </style>
 </head>
 <body>
@@ -800,7 +811,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "130";
+const VERSION_APP = "131";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -1443,7 +1454,7 @@ function renderStock() {
 // round 25 (corrections) : montant COMPLET au dollar, jamais « k » ni « M » : « 123 456 $ », « −1 234 567 $ » ; en anglais « $123,456 »
 const amt = v => { if (v == null || isNaN(v)) return "—"; const a = Math.abs(v), s = v <= -0.5 ? "−" : "";
   return s + (lang === "en" ? "$" + nf(a) : nf(a) + " $"); };
-const financement = w => w.financement > 0 ? (w.minimal ? "≥ " : "") + amt(w.financement) : w.minimal ? "?" : "—";   // jamais « 0 » seul
+const financement = w => w.financement > 0 ? (w.minimal ? "≥ " : "") + amt(w.financement) : w.minimal ? "≥ " + amt(0) : "—";   // jamais « 0 » seul ; mobile v131 : jamais un « ? » seul (montants inconnus : minimum connu)
 // correctifs mobqa (08/10) : point bas des 26 semaines = une estimation (flux à prix flottant hors totaux) : « ≈ », arrondi au millier de dollars, jamais
 // abrégé (ni « k » ni « M ») ; le montant exact reste dans la feuille de la semaine
 const amtEst = v => v == null || isNaN(v) ? "—" : "≈ " + amt(Math.round(v / 1000) * 1000);
@@ -1478,6 +1489,7 @@ function alSheet() {
     (bg, close) => { bg.querySelector("#ko").onclick = close; });
 }
 function renderTreso() {
+  const t88 = T88(); if (t88) { renderTreso88(t88); return; }   // mobile v131 : fiche d'Atlas 131 et plus (treso88)
   const tr = data.tresorerie;
   if (!tr || !Array.isArray(tr.semaines)) { $("#main").innerHTML = '<div class="card muted">' + t("noTreso") + '</div>'; return; }
   const cur = iso(lundi(parseD(today))), jt = (tr.jours || []).find(x => x.j === today);
@@ -1700,7 +1712,7 @@ async function ajouterPhoto(ref, file) {
 //     les branches (camion.vers) portent déjà client, date et statut. Le changement d'une destination se fait sur le PC (glisser-déposer).
 // Fiche d'un Atlas plus ancien : sans vis.camions, la carte des camions est masquée ; sans vis.couv, l'ancienne jauge ; sans cptys[].mois, toutes
 // périodes ; sans « expo2 » : l'ancien tableau. Mode démo : fiche d'exemple FICTIVE construite ici (vDemo).
-let expoView = "overview", cashExpanded = false, expoFiltersOpen = false;
+let expoView = "cover", cashExpanded = false, expoFiltersOpen = false;
 let expoProd = null, expoDu = null, expoAu = null, expoDelta = 1, expoTip = null, expoGloss = false, expoAller = null, vDemoFiche = null, expoCamOuv = {};
 try { expoDu = ls.get("expoDu", null); expoAu = ls.get("expoAu", null); } catch (e) { expoDu = null; expoAu = null; }
 // correctifs mobqa (08/10) : raccourci touché (« mois », « trim », « 6m », « tout ») gardé tel quel et recalculé sur le mois en cours à chaque affichage ;
@@ -1906,10 +1918,142 @@ function vCoverage37(cs) {
   if(cs==null)return null;
   return cs.reduce((a,c)=>{const q=vZ(c.indexe),sw=Math.max(0,vZ(c.aVenir));a.idx+=q;a.covered+=Math.min(q,sw);a.extra+=Math.max(0,sw-q);a.fixed+=vZ(c.fixe);return a;},{idx:0,covered:0,extra:0,fixed:0});
 }
+// ================= Mobile v131 · round 88 (CASH-EXPO, 02/11/2026) : COUVERT / NON COUVERT et trésorerie datée =================
+// Demande de l'utilisateur : « Exposition et Trésorerie sont mal faites sur l'app : on n'a pas l'info de ce qui est couvert et pas couvert » ;
+// « ça doit être encore plus visuel, genre avec les camions, comme c'était ». Lit les clés « couv88 » et « treso88 » de la fiche Head (Atlas 131 et
+// plus, Cx88json.cs) ; sans elles (fiche plus ancienne), les écrans d'avant restent tels quels. Aucun chiffre recalculé ici : couvert, non couvert,
+// valeur au marché, points bas et échus sont ceux de la fiche ; l'app ne fait que dessiner et lister.
+//   Exposition · onglet « Couverture » (par défaut) : une rangée par MOIS DE PRIX (prix fixe : mois de livraison ; indexé : mois de cotation) ;
+//   à gauche les camions d'achat, à droite les camions de vente, taille selon la quantité ; caisse en trois parts : gris adossé (sans risque de prix),
+//   bleu couvert par swap, orange non couvert ; contour violet = prix indexé ; swaps (pastilles bleues) au mois de leur cotation ; barre de la
+//   rangée : couvert / non couvert et valeur non couverte au marché (prix, date et source dans le résumé). Toucher : le camion, le swap, le mois.
+//   Trésorerie : banque (relevé et son âge, virements sans relevé), deux points bas (échus encaissés aujourd'hui / prudent : sans les entrées
+//   échues) et leur financement, échus listés (échéance d'origine, jours de retard, partie k/n d'une facture partielle), échelle datée (échu,
+//   7 jours, semaines, mois, sans date) entrées et sorties confirmées / prévues avec la contrepartie et la pièce de chaque ligne.
+const C88 = () => data && data.profil === "head" && data.couv88 && Array.isArray(data.couv88.produits) && !data.couv88.erreur ? data.couv88 : null;
+const T88 = () => data && data.profil === "head" && data.treso88 && Array.isArray(data.treso88.tranches) && !data.treso88.erreur ? data.treso88 : null;
+const c88q = (v, o) => vq(v, o || { nu: true });
+const c88Mois = k => k === "stock" ? ui("Stock libre", "Free stock") : k === "fini" ? ui("Cotation finie", "QP over") : k === "sd" ? ui("Sans date", "Undated") : vMC(k);
+const C88W = { ff: ["adossé : achat fixe → vente fixe", "matched: fixed buy → fixed sale"], ii: ["adossé : indexé → vente indexée, même QP", "matched: index buy → index sale, same QP"],
+  iiqp: ["indexé vendu indexé, QP différents", "index sold on index, other QP"], isf: ["acheté indexé, vendu fixe", "bought on index, sold fixed"], fsi: ["acheté fixe, vendu indexé", "bought fixed, sold on index"],
+  fl: ["achat fixe non vendu", "fixed buy not sold"], il: ["achat indexé non vendu", "index buy not sold"], fs: ["vente fixe sans achat", "fixed sale without purchase"],
+  is: ["vente indexée sans achat (à analyser)", "index sale without purchase (to analyse)"], stock: ["stock libre", "free stock"] };
+const c88w = w => C88W[w] ? ui(C88W[w][0], C88W[w][1]) : w;
+const c88sens = v => v >= 0.5 ? ui("long", "long") : v <= -0.5 ? ui("short", "short") : ui("à plat", "flat");
+// camion : caisse en trois parts (adossé, couvert, non couvert), cabine verte (achat) ou rouge (vente), contour violet si indexé, pointillés sans prix
+function c88Truck(v, maxQ, buy, ref) {
+  const q = Math.max(0, +v.q || 0), r = Math.sqrt(q / Math.max(maxQ, 1)), w = Math.round(24 + 30 * r), h = Math.round(w * 0.46), bw = w * 0.68, cw = w - bw - 1.5, bh = h * 0.72;
+  const ad = Math.max(0, +v.ad || 0), cv = Math.max(0, +v.cv || 0), nc = Math.max(0, +v.nc || 0), tot = Math.max(q, ad + cv + nc, 1);
+  let x = buy ? 0 : cw + 1.5, s = "";
+  const seg = (part, col) => { if (part <= 0) return; const sw = bw * part / tot; s += '<rect x="' + x.toFixed(1) + '" y="0" width="' + sw.toFixed(1) + '" height="' + bh.toFixed(1) + '" fill="' + col + '"/>'; x += sw; };
+  seg(ad, "var(--v-nv)"); seg(cv, "var(--v-swap)"); seg(nc, "var(--v-nc)");
+  const bx = buy ? 0 : cw + 1.5, cx = buy ? bw + 1.5 : 0, stroke = v.fx ? "var(--v-fixe)" : "var(--v-idx)";
+  s += '<rect x="' + bx.toFixed(1) + '" y="0" width="' + bw.toFixed(1) + '" height="' + bh.toFixed(1) + '" fill="none" stroke="' + stroke + '" stroke-width="1.2"' + (v.np ? ' stroke-dasharray="3 2"' : "") + '/>';
+  s += '<rect x="' + cx.toFixed(1) + '" y="' + (bh * 0.3).toFixed(1) + '" width="' + cw.toFixed(1) + '" height="' + (bh * 0.7).toFixed(1) + '" fill="' + (buy ? "var(--v-long)" : "var(--v-short)") + '"/>';
+  s += '<circle cx="' + (w * 0.2).toFixed(1) + '" cy="' + (h - 2.4).toFixed(1) + '" r="2.2" fill="var(--muted)"/><circle cx="' + (w * 0.8).toFixed(1) + '" cy="' + (h - 2.4).toFixed(1) + '" r="2.2" fill="var(--muted)"/>';
+  return '<button class="c88t" data-c88v="' + ref + '" aria-label="' + esc((buy ? ui("Achat ", "Purchase ") : ui("Vente ", "Sale ")) + (v.c || "") + " · " + c88q(v.q, {}) ) + '"><svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + " " + h + '" aria-hidden="true">' + s + '</svg><small>' + esc(c88q(v.q)) + '</small></button>';
+}
+function c88Board(prodName) {
+  const e = C88(); const p = e && e.produits.find(z => z.produit === prodName);
+  if (!p) return '<div class="card muted">' + ui("Aucune livraison ouverte ni swap pour ce produit.", "No open delivery or swap for this product.") + '</div>';
+  const rows = p.mois.filter(m => (m.vol || []).length || (m.sw || []).length || Math.abs(+m.expo || 0) >= 0.5);
+  const maxQ = Math.max(1, ...rows.flatMap(m => (m.vol || []).map(v => +v.q || 0)));
+  const maxE = Math.max(1, ...rows.map(m => Math.max(Math.abs(+m.expo || 0), Math.abs(+m.swaps || 0))));
+  const px = p.prix, nc = +p.nonCouvert || 0;
+  let h = '<div class="c88sum"><div><small>' + ui("Exposition nette", "Net exposure") + '</small><b class="' + (p.expo <= -0.5 ? "neg" : "") + '">' + esc(c88q(p.expo, { signe: true, nu: true })) + '</b><span>' + esc(U() + " · " + c88sens(p.expo)) + '</span></div>' +
+    '<div><small>' + ui("Couvert", "Hedged") + '</small><b class="c88b">' + esc(c88q(p.couvert)) + '</b><span>' + (p.pct == null ? "—" : esc(p.pct + " %")) + '</span></div>' +
+    '<div><small>' + ui("Non couvert", "Unhedged") + '</small><b class="c88o">' + esc(c88q(nc, { signe: true, nu: true })) + '</b><span>' + (p.valeur == null ? (Math.abs(nc) >= 0.5 ? ui("valeur : à compléter", "value: to complete") : "—") : esc(amtEst(p.valeur))) + '</span></div></div>';
+  h += '<div class="c88px muted">' + (px ? esc(ui("Prix ", "Price ") + vp(px.usdLb) + " $/lb · " + fmtDM(px.date) + " · " + (px.repere ? ui("repère : ", "reference: ") : "") + mkSrc(px.source)) : ui("Prix de marché : à compléter (aucune série ni repère)", "Market price: to complete (no series or reference)")) + '</div>';
+  h += '<div class="c88leg"><span><i class="ad"></i>' + ui("adossé", "matched") + '</span><span><i class="cv"></i>' + ui("couvert", "hedged") + '</span><span><i class="nc"></i>' + ui("non couvert", "unhedged") + '</span><span><i class="ix"></i>' + ui("indexé", "index") + '</span><span><i class="sw"></i>swap</span></div>';
+  h += '<div class="c88head"><span></span><span>' + ui("Achats →", "Purchases →") + '</span><span>' + ui("← Ventes", "← Sales") + '</span></div>';
+  rows.forEach(m => {
+    const mi = p.mois.indexOf(m), buys = (m.vol || []).map((v, i) => [v, i]).filter(z => z[0].a), sells = (m.vol || []).map((v, i) => [v, i]).filter(z => !z[0].a);
+    const E = Math.abs(+m.expo || 0), C = +m.couvert || 0, Uc = Math.abs(+m.nonCouvert || 0), O = +m.sur || 0, sc = 100 / maxE;
+    h += '<div class="c88row' + (m.k === "fini" ? " done" : "") + '"><button class="c88m" data-c88m="' + mi + '">' + esc(c88Mois(m.k)) + '</button>' +
+      '<div class="c88side">' + buys.map(z => c88Truck(z[0], maxQ, true, mi + "." + z[1])).join("") + (m.stock ? '<button class="c88t" data-c88m="' + mi + '"><span class="c88stk">' + esc(ui("stock ", "stock ") + c88q(m.stock)) + '</span></button>' : "") + '</div>' +
+      '<div class="c88side r">' + sells.map(z => c88Truck(z[0], maxQ, false, mi + "." + z[1])).join("") + '</div>';
+    h += '<button class="c88bar" data-c88m="' + mi + '"><span class="c88track">' + (C ? '<i class="cv" style="width:' + (C * sc).toFixed(1) + '%"></i>' : "") + (Uc >= 0.5 ? '<i class="nc" style="width:' + (Uc * sc).toFixed(1) + '%"></i>' : "") + (O >= 0.5 ? '<i class="ov" style="width:' + (O * sc).toFixed(1) + '%"></i>' : "") + '</span>' +
+      '<span class="c88val">' + (m.k === "fini" ? esc(ui("prix acquis", "price set")) : E < 0.5 ? esc(ui("sans risque de prix", "no price risk")) : esc((Uc >= 0.5 ? ui("non couvert ", "unhedged ") + c88q(m.nonCouvert, { signe: true }) + (m.valeur != null ? " · " + amtEst(m.valeur) : "") : ui("couvert ", "hedged ") + (m.pct == null ? "" : m.pct + " %")))) + '</span></button>';
+    if ((m.sw || []).length) h += '<div class="c88sws">' + m.sw.map((s, i) => '<button class="c88s" data-c88s="' + mi + "." + i + '">SWAP ' + esc((s.fixe != null ? vp(s.fixe) + " · " : "") + c88q(s.q) + " · " + (s.cp || "")) + '</button>').join("") + '</div>';
+    h += '</div>';
+  });
+  return h;
+}
+function c88Bind(root, prodName) {
+  const e = C88(); const p = e && e.produits.find(z => z.produit === prodName); if (!p) return;
+  const row = (l, v, c) => '<div class="row"><span class="grow muted">' + esc(l) + '</span><b class="' + (c || "") + '">' + esc(v) + '</b></div>';
+  root.querySelectorAll("[data-c88v]").forEach(b => b.onclick = () => {
+    const [mi, vi] = b.dataset.c88v.split(".").map(Number), m = p.mois[mi], v = m.vol[vi];
+    sheet('<h3>' + esc((v.a ? ui("Achat ", "Purchase ") : ui("Vente ", "Sale ")) + (v.c || "")) + '</h3><div class="card">' + row(ui("Livraison", "Delivery"), v.l) + row("Trade", v.t) + row(ui("Quantité", "Quantity"), c88q(v.q, {})) +
+      row(ui("Prix", "Price"), v.fx ? ui("fixe", "fixed") + (v.np ? " · " + ui("prix à saisir", "price to enter") : "") : ui("indexé · QP ", "index · QP ") + (v.qp ? vMC(v.qp) : "?")) + row(ui("Mois de livraison", "Delivery month"), v.d ? vMC(v.d) : ui("sans date", "undated")) +
+      row(ui("Adossé", "Matched"), c88q(v.ad, {})) + row(ui("Couvert (swap)", "Hedged (swap)"), c88q(v.cv, {}), "c88b") + row(ui("Non couvert", "Unhedged"), c88q(v.nc, {}), +v.nc >= 0.5 ? "c88o" : "") + '</div><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {});
+  });
+  root.querySelectorAll("[data-c88s]").forEach(b => b.onclick = () => {
+    const [mi, si] = b.dataset.c88s.split(".").map(Number), s = p.mois[mi].sw[si];
+    sheet('<h3>Swap ' + esc(s.c) + '</h3><div class="card">' + row(ui("Contrepartie", "Counterparty"), s.cp || "") + row(ui("Notionnel", "Notional"), c88q(s.q, {}) + (s.s > 0 ? ui(" · on reçoit l'indice, on paie le fixe", " · receive index, pay fixed") : "")) +
+      row(ui("Mois de cotation (QP)", "Quotation month (QP)"), s.qp ? vMC(s.qp) : ui("à compléter", "to complete")) + row(ui("Prix fixe", "Fixed price"), s.fixe != null ? vp(s.fixe) + " $/lb" : ui("à compléter", "to complete")) + row(ui("Couvre", "Hedges"), s.couvre || "—") +
+      row(ui("Part qui couvre une livraison du même QP", "Part hedging a delivery of the same QP"), c88q(s.cv, {}), "c88b") + row(ui("Statut", "Status"), s.statut + (s.reglement ? " · " + ui("règlement ", "settlement ") + fmtDM(s.reglement) : "")) + '</div><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {});
+  });
+  root.querySelectorAll("[data-c88m]").forEach(b => b.onclick = () => {
+    const m = p.mois[+b.dataset.c88m];
+    const legs = (m.legs || []).map(l => '<div class="who"><span class="a ' + (l.s > 0 ? "in" : l.s < 0 ? "out" : "") + '">' + (l.s > 0 ? "▲" : l.s < 0 ? "▼" : "=") + '</span><span class="grow">' + esc(l.c || "") + ' <span class="muted">· ' + esc([l.l, l.t, c88w(l.w), l.pl ? "→ " + l.pl : ""].filter(Boolean).join(" · ")) + '</span></span><span class="v">' + esc(c88q(l.s * l.q, { signe: true })) + (l.cv >= 0.5 ? '<br><small class="c88b">' + esc(ui("couvert ", "hedged ") + c88q(l.cv)) + '</small>' : "") + '</span></div>').join("");
+    const sws = (m.sw || []).map(s => '<div class="who"><span class="a">◆</span><span class="grow">Swap ' + esc(s.c + " · " + (s.cp || "")) + ' <span class="muted">· QP ' + esc(s.qp ? vMC(s.qp) : "?") + '</span></span><span class="v">' + esc(c88q(s.s * s.q, { signe: true })) + '</span></div>').join("");
+    sheet('<h3>' + esc(prod(p.produit) + " · " + c88Mois(m.k)) + '</h3><div class="metrics"><div><small>' + ui("Exposition", "Exposure") + '</small><b>' + esc(c88q(m.expo, { signe: true })) + '</b></div><div><small>Swaps</small><b>' + esc(c88q(m.swaps, { signe: true })) + '</b></div>' +
+      '<div><small>' + ui("Couvert", "Hedged") + '</small><b class="c88b">' + esc(c88q(m.couvert)) + '</b></div><div><small>' + ui("Non couvert", "Unhedged") + '</small><b class="c88o">' + esc(c88q(m.nonCouvert, { signe: true })) + '</b></div>' +
+      '<div><small>' + ui("Sur-couverture", "Over-hedge") + '</small><b>' + esc(c88q(m.sur)) + '</b></div><div><small>' + ui("Valeur non couverte", "Unhedged value") + '</small><b>' + (m.k === "fini" ? esc(ui("prix acquis", "price set")) : m.valeur == null ? esc(Math.abs(+m.nonCouvert || 0) >= 0.5 ? ui("à compléter", "to complete") : "—") : esc(amtEst(m.valeur))) + '</b></div></div>' +
+      '<div class="muted">' + esc(ui("Physique : achats fixe ", "Physical: buys fixed ") + c88q(m.achFixe) + ui(" · indexé ", " · index ") + c88q(m.achIdx) + ui(" · ventes fixe ", " · sales fixed ") + c88q(m.venFixe) + ui(" · indexé ", " · index ") + c88q(m.venIdx) + (m.stock ? ui(" · stock ", " · stock ") + c88q(m.stock) : "") + ui(" · net ", " · net ") + c88q(m.net, { signe: true }) + " " + U()) + '</div>' +
+      (legs || sws ? '<div class="card">' + legs + sws + '</div>' : "") + '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {});
+  });
+}
+
+// ---------- trésorerie (treso88) ----------
+const t88Lib = (tr, b) => b.type === "echu" ? ui("Échu (avant aujourd'hui)", "Overdue (before today)") : b.type === "sansDate" ? ui("Sans date (à dater)", "Undated (to date)") :
+  b.type === "jour" ? (b.du === tr.jour ? ui("Aujourd'hui", "Today") + " · " + fmtDM(b.du) : fmtJ(b.du)) : b.type === "semaine" ? ui("Semaine ", "Week ") + fmtDM(b.du) + " → " + fmtDM(b.au) : vML(b.du.slice(0, 7)) + (b.du.slice(8) !== "01" ? " (" + ui("dès le ", "from ") + fmtDM(b.du) + ")" : "");
+function t88Op(o) {
+  const kind = o.conf ? ui("confirmé", "confirmed") : ui("prévision", "forecast");
+  return '<div class="who"><span class="a ' + (o.sens > 0 ? "in" : o.sens < 0 ? "out" : "") + '">' + (o.sens > 0 ? "▲" : o.sens < 0 ? "▼" : "◆") + '</span><span class="grow">' + esc(o.cpty || "?") +
+    ' <span class="muted">· ' + esc([o.ref, o.partie ? ui("partie ", "part ") + o.partie : "", o.ech ? ui("éch. ", "due ") + fmtDM(o.ech) : ui("sans date", "undated"), kind, o.est ? ui("date estimée", "estimated date") : ""].filter(Boolean).join(" · ")) + '</span>' +
+    (o.retard > 0 ? ' <span class="chip late">' + esc(o.retard + ui(" j de retard", " d late")) + '</span>' : "") + '</span><span class="v ' + (o.m == null ? "warn" : o.sens > 0 ? "pos" : o.sens < 0 ? "neg" : "muted") + '">' +
+    (o.m == null ? esc(o.manque ? ui("prix à saisir", "price to enter") : o.regle || ui("sans montant", "no amount")) : amt(Math.abs(o.m))) + '</span></div>';
+}
+function renderTreso88(tr) {
+  const ops = tr.ops || [], echus = (tr.echus || []).map(i => ops[i]), conf = (tr.aConfirmer || []).map(i => ops[i]), sm = (tr.sansMontant || []).map(i => ops[i]), sd = (tr.sansDate || []).map(i => ops[i]);
+  const sumS = (l, s) => l.filter(o => o.sens === s && o.m != null).reduce((a, o) => a + Math.abs(o.m), 0);
+  let h = readingHead(t("treso")) + '<div class="cash-focus"><div class="muted">' + esc(ui("Banque estimée aujourd'hui", "Estimated bank today") + " · " + (tr.devise || "")) + '</div><div class="big' + (tr.depart <= -0.5 ? " neg" : "") + '">' + (tr.connu ? amt(tr.depart) : esc(ui("à compléter", "to complete"))) + '</div>';
+  (tr.comptes || []).forEach(c => {
+    h += '<div class="muted">' + esc(c.compte + " · " + c.devise + " · " + (c.releve ? ui("relevé du ", "statement of ") + fmtD(c.releve) + " " + amt(c.solde) : ui("sans relevé daté", "no dated statement"))) + '</div>' +
+      (c.age != null && c.age > 7 ? '<div class="note">' + esc(ui("Relevé de " + c.age + " jours : la banque réelle peut différer", "Statement " + c.age + " days old: the real bank may differ")) + '</div>' : "") +
+      (c.nApres ? '<div class="muted">' + esc(c.nApres + ui(" mouvement(s) vus en banque depuis : ", " movement(s) seen at the bank since: ") + amt(c.apres)) + '</div>' : "") +
+      (c.nNonVerifie ? '<div class="muted">' + esc(c.nNonVerifie + ui(" opération(s) sans relevé (avis de virement…) : ", " operation(s) without statement (wire advice…): ") + amt(c.nonVerifie)) + '</div>' : "");
+  });
+  const fin = (v, minimal) => v > 0.5 ? amt(v) : "—";
+  h += '<div class="metrics" style="margin-top:8px"><div><small>' + esc(ui("Point bas · échus encaissés aujourd'hui", "Lowest · overdue collected today")) + '</small><b class="' + (tr.bas <= -0.5 ? "neg" : "") + '">' + amtEst(tr.bas) + '</b> <span class="muted">' + le(tr.basLe) + '</span><br><span class="muted">' + esc(ui("financement ", "funding ")) + fin(tr.financement) + '</span></div>' +
+    '<div><small>' + esc(ui("Point bas prudent · sans les entrées échues", "Prudent lowest · without overdue inflows")) + '</small><b class="' + (tr.basPrudent <= -0.5 ? "neg" : "") + '">' + amtEst(tr.basPrudent) + '</b> <span class="muted">' + le(tr.basPrudentLe) + '</span><br><span class="muted">' + esc(ui("financement ", "funding ")) + fin(tr.financementPrudent) + '</span></div></div>' +
+    '<div class="muted">' + esc(ui("Ligne de financement : ", "Credit line: ") + (tr.ligne != null ? amt(tr.ligne) : ui("à compléter (Réglages d'Atlas)", "to complete (Atlas settings)")) + (tr.coussin > 0 ? ui(" · coussin ", " · cushion ") + amt(tr.coussin) : "")) + '</div>' +
+    (sm.length ? '<button class="text-action" id="t88sm">' + esc(sm.length + ui(" flux sans montant (prix flottant, swap selon fixing, prix à saisir) : hors totaux", " flows without amount (floating price, swap per fixing, price to enter): not in totals")) + '</button>' : "") + '</div>';
+  if (echus.length || conf.length) h += '<h2>' + esc(ui("Échus", "Overdue")) + '</h2><div class="card"><div class="muted">' + esc(ui("à encaisser ", "to collect ") + amt(sumS(echus, 1)) + ui(" · à payer ", " · to pay ") + amt(sumS(echus, -1))) + '</div>' + echus.map(t88Op).join("") +
+    (conf.length ? '<div class="muted" style="margin-top:6px">' + esc(ui("Livraisons passées à confirmer (comptées aujourd'hui)", "Past deliveries to confirm (counted today)")) + '</div>' + conf.map(t88Op).join("") : "") + '</div>';
+  h += '<h2>' + esc(ui("Échelle datée", "Dated ladder")) + '</h2><div class="cash-list">' + tr.tranches.map((b, i) => '<button class="cash-row" data-t88="' + i + '"><span><b>' + esc(t88Lib(tr, b)) + '</b><small>' +
+    esc("▲ " + amt(b.entConf) + (b.entPrev ? " + " + ui("prév. ", "fc. ") + amt(b.entPrev) : "") + "  ▼ " + amt(b.sorConf) + (b.sorPrev ? " + " + ui("prév. ", "fc. ") + amt(b.sorPrev) : "")) + '</small>' + (b.sansMontant ? '<small class="warn">' + esc(b.sansMontant + ui(" sans montant", " without amount")) + '</small>' : "") + '</span>' +
+    '<span><small>' + esc(b.type === "sansDate" ? ui("hors échelle", "off ladder") : ui("Clôture", "Closing")) + '</small><strong class="' + (b.clo != null && b.clo <= -0.5 ? "neg" : "") + '">' + (b.clo == null ? "—" : amt(b.clo)) + '</strong>' + (b.cloPrudent != null ? '<small class="' + (b.cloPrudent <= -0.5 ? "neg" : "muted") + '">' + esc(ui("prudent ", "prudent ")) + amt(b.cloPrudent) + '</small>' : "") + '</span></button>').join("") + '</div>';
+  if (sd.length === 0) h += '<div class="muted">' + esc(ui("Aucun flux sans date.", "No undated flow.")) + '</div>';
+  if ((tr.devises || []).length) h += '<div class="muted">' + esc(ui("Soldes par devise (jamais additionnés) : ", "Balances by currency (never added): ") + tr.devises.map(d => d.devise + " " + amt(d.estime)).join(" · ")) + '</div>';
+  if (data.tresorerie && Array.isArray(data.tresorerie.jours)) h += '<section class="cash-trend"><h2>' + ui("Évolution du solde", "Balance trend") + '</h2>' + courbe(data.tresorerie) + '</section>';
+  $("#main").innerHTML = h;
+  $("#main").querySelectorAll("[data-t88]").forEach(b => b.onclick = () => {
+    const bk = tr.tranches[+b.dataset.t88], os = (bk.ops || []).map(i => ops[i]);
+    sheet('<h3>' + esc(t88Lib(tr, bk)) + '</h3><div class="metrics"><div><small>' + esc(ui("Entrées confirmées", "Confirmed inflows")) + '</small><b class="pos">' + amt(bk.entConf) + '</b></div><div><small>' + esc(ui("Entrées prévues", "Forecast inflows")) + '</small><b>' + amt(bk.entPrev) + '</b></div>' +
+      '<div><small>' + esc(ui("Sorties confirmées", "Confirmed outflows")) + '</small><b class="neg">' + amt(bk.sorConf) + '</b></div><div><small>' + esc(ui("Sorties prévues", "Forecast outflows")) + '</small><b>' + amt(bk.sorPrev) + '</b></div></div>' +
+      (os.length ? '<div class="card">' + os.map(t88Op).join("") + '</div>' : '<div class="muted">' + esc(ui("Aucun flux.", "No flow.")) + '</div>') + '<button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {});
+  });
+  if ($("#t88sm")) $("#t88sm").onclick = () => sheet('<h3>' + esc(ui("Flux sans montant", "Flows without amount")) + '</h3><div class="card">' + sm.map(t88Op).join("") + '</div><button class="btn light" id="ko">' + t("cancel") + '</button>', (bg, close) => {});
+}
+
 let expoFocus37=null;
 function renderExpo() {
   const e=data.expo2&&data.expo2.produits&&data.expo2.produits.length?data.expo2:DEMO&&data.profil==='head'?(vDemoFiche||(vDemoFiche=vDemo())):null;
   vE=e;if(!e){renderExpoAncien();return;}
+  const ev88=expoView==='cover'&&!C88();if(ev88)expoView='overview';   // mobile v131 : onglet Couverture seulement avec une fiche d'Atlas 131 et plus (couv88) ; le choix est rendu après (fiche plus récente lue ensuite)
   document.body.classList.add('exposure-screen');
   const p=expoChoix(e),all=(p.mois||[]).length?p.mois.map(m=>m.mois):vCarteData(e).mois;
   if(!all.includes(expoFocus37)&&expoFocus37!=='*')expoFocus37=all.find(m=>m>=today.slice(0,7))||all[0]||null;
@@ -1921,11 +2065,12 @@ function renderExpo() {
   const tool=(key,label)=>'<button data-expo-tool="'+key+'">'+esc(label)+' <span aria-hidden="true">↗</span></button>';
   let h=VDEFS+'<div class="expo-top"><h2>'+t('expo')+'</h2></div>';
   h+='<div class="expo-selectors"><select id="expoProduct" aria-label="'+ui('Produit','Product')+'">'+e.produits.map(z=>'<option value="'+esc(z.produit)+'"'+(z.produit===p.produit?' selected':'')+'>'+esc(prod(z.produit))+'</option>').join('')+'</select>'+unitSelect('expoUnit')+'<button data-expo-tool="alertes" class="expo-alert">'+ui('Alertes','Checks')+' <b>'+(p.vis?alerts.length:'—')+'</b></button></div>';
-  h+='<div class="workspace-tabs">'+[['overview',ui('Volumes','Volumes')],['flows',ui('Livraisons','Deliveries')],['prices',ui('Prix & couverture','Prices & hedges')]].map(z=>'<button data-view="'+z[0]+'" aria-pressed="'+(expoView===z[0])+'" class="'+(expoView===z[0]?'on':'')+'">'+z[1]+'</button>').join('')+'</div>';
+  h+='<div class="workspace-tabs"'+(C88()?' style="grid-template-columns:1.2fr 1fr 1fr 1.3fr"':'')+'>'+(C88()?[['cover',ui('Couverture','Hedging')]]:[]).concat([['overview',ui('Volumes','Volumes')],['flows',ui('Livraisons','Deliveries')],['prices',ui('Prix & couverture','Prices & hedges')]]).map(z=>'<button data-view="'+z[0]+'" aria-pressed="'+(expoView===z[0])+'" class="'+(expoView===z[0]?'on':'')+'">'+z[1]+'</button>').join('')+'</div>';
   const index=all.indexOf(expoFocus37);
-  h+='<div class="expo-month"><button id="expoPrev" aria-label="'+ui('Mois précédent','Previous month')+'"'+(index<=0?' disabled':'')+'>‹</button><select id="expoMonth" aria-label="'+ui('Mois de l’exposition','Exposure month')+'">'+all.map(m=>'<option value="'+m+'"'+(expoFocus37===m?' selected':'')+'>'+esc(vML(m))+'</option>').join('')+'<option value="*"'+(expoFocus37==='*'?' selected':'')+'>'+ui('Tout · sans date inclus','All · including undated')+'</option></select><button id="expoNext" aria-label="'+ui('Mois suivant','Next month')+'"'+(index<0||index>=all.length-1?' disabled':'')+'>›</button><button class="expo-help-icon" data-expo-tool="aide" aria-label="'+ui('Comprendre les chiffres','Understand the figures')+'">?</button></div>';
+  h+='<div class="expo-month"'+(expoView==='cover'?' style="display:none"':'')+'><button id="expoPrev" aria-label="'+ui('Mois précédent','Previous month')+'"'+(index<=0?' disabled':'')+'>‹</button><select id="expoMonth" aria-label="'+ui('Mois de l’exposition','Exposure month')+'">'+all.map(m=>'<option value="'+m+'"'+(expoFocus37===m?' selected':'')+'>'+esc(vML(m))+'</option>').join('')+'<option value="*"'+(expoFocus37==='*'?' selected':'')+'>'+ui('Tout · sans date inclus','All · including undated')+'</option></select><button id="expoNext" aria-label="'+ui('Mois suivant','Next month')+'"'+(index<0||index>=all.length-1?' disabled':'')+'>›</button><button class="expo-help-icon" data-expo-tool="aide" aria-label="'+ui('Comprendre les chiffres','Understand the figures')+'">?</button></div>';
   h+='<section class="expo-board">';
-  if(expoView==='overview') {
+  if(expoView==='cover') { h+=c88Board(p.produit); }
+  else if(expoView==='overview') {
     const value=x?(x.cv?0:x.v):null;
     h+='<button class="expo-hero"'+(x?vPositionAttrs(p,x):' disabled')+'><span>'+ui(open?'Exposé en fin de période':'Position de prix en fin de période',open?'Exposure at period end':'Price position at period end')+'</span><strong class="'+(value<0?'negative':'')+'">'+esc(quantity(value))+' <small>'+U()+'</small></strong><span class="expo-direction">'+esc(value==null?ui('Donnée indisponible','Data unavailable'):x.cv?ui('≈ Équilibre · conversion','≈ Balanced · conversion'):open?(value<-.5?ui('Vendu sans achat','Sold without purchase'):value>.5?ui('Acheté sans vente','Bought without sale'):ui('Équilibré','Balanced')):vSens(value))+' <span aria-hidden="true">↗</span></span></button>';
     const allrows=vPositionRows(p,e,{...pl,mk:all,tout:false}),start=Math.max(0,Math.min(Math.floor(Math.max(0,index)/6)*6,Math.max(0,allrows.length-6))),visible=allrows.slice(start,start+6),max=Math.max(1,...visible.map(z=>Math.abs(z.cv?0:+z.v||0)));
@@ -1952,6 +2097,8 @@ function renderExpo() {
   M.querySelectorAll('[data-expo-month]').forEach(b=>b.onclick=()=>change(b.dataset.expoMonth));
   M.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{expoView=b.dataset.view;render();});
   bindExpo37(M,e,p,pl);
+  if(expoView==='cover')c88Bind(M,p.produit);
+  if(ev88)expoView='cover';
   if(expoAller){const key=expoAller;expoAller=null;openExpo37(key,e,p,pl);}
 }
 function bindExpo37(root,e,p,pl,close) {
