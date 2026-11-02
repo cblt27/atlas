@@ -436,7 +436,7 @@ body.exposure-screen{height:100dvh;display:flex;flex-direction:column}
 .expo-cover{flex-direction:row;justify-content:center;text-align:left;gap:14px}.expo-cover .expo-ring{flex:none}.expo-cover>span:last-child{max-width:170px;min-width:0}.expo-cover small{overflow-wrap:anywhere}.exposure-screen .workspace-tabs{width:100%;grid-template-columns:1fr 1fr 1.65fr}.exposure-screen .workspace-tabs button{min-width:0;white-space:normal;overflow:visible}.expo-selectors select{color:var(--ink)}
 .expo-month .expo-help-icon{min-width:28px;width:28px;font-size:14px;color:var(--muted)}
 
-/* ================= Mobile v124 · style Bloomberg (thème Bloomberg d'Atlas et de GRANORE CTRM : Theme41, Theme47, Chrome48) =================
+/* ================= Mobile v124 · style Bloomberg (thème Bloomberg d'Atlas : Theme41, Theme47, Chrome48) =================
    Fond noir ; libellés et titres en ambre, données en blanc, chiffres en chasse fixe ; barre rouge des fonctions (titre de la page) ; onglets ardoise
    à texte clair, l'onglet choisi en bleu à texte blanc ; boutons gris à texte blanc, action principale bleue ; champ modifiable = pavé ambre à texte
    noir ; angles droits, aucune ombre de décor ; achat / entrée en vert, vente / sortie en rouge. Un seul thème (le réglage Apparence est retiré). */
@@ -459,17 +459,12 @@ body { font-size:15px; line-height:1.4; }
 /* chiffres : chasse fixe, alignés */
 .big, .q, .quantity, .v, .metrics b, .kv span:last-child, td, .position-number, .cash-row strong, .trend-row strong, .stock-now strong, .day .m,
 .route-head strong, .route-destination strong, .attention-row>b, .expo-hero>strong, .vpl b, .mono, .num { font-family:var(--mono); font-variant-numeric:tabular-nums; letter-spacing:0; }
-/* en-tête : marque de l'édition, bascule Atlas | GRANORE, actualiser */
+/* en-tête : marque ATLAS, langue, actualiser */
 header { background:#000; color:var(--ink); border-bottom:1px solid var(--line); gap:8px; padding:calc(env(safe-area-inset-top) + 6px) var(--gut) 6px; min-height:52px; }
 header .hl { min-width:0; }
 header h1, header h1.brand { margin:0; font-size:15px; line-height:1.1; font-weight:700; letter-spacing:.14em; color:var(--amber); font-family:var(--mono); white-space:nowrap; overflow:hidden; }
 header .sub { font-size:11px; color:var(--muted); font-family:var(--mono); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
 header button { min-width:44px; min-height:40px; background:var(--btn); border:1px solid var(--btn-line); color:#fff; font-size:16px; padding:4px 8px; }
-.brand .grlogo { display:block; height:21px; width:auto; }
-.brand .brand-ctrm { font-size:9px; letter-spacing:.32em; color:var(--muted); font-weight:400; display:block; margin-top:1px; }
-.edsw { display:flex; flex:none; gap:1px; background:#000; }
-.edsw button { min-width:0; min-height:40px; padding:4px 8px; font:700 11px/1 var(--mono); letter-spacing:.06em; background:var(--tab); color:var(--tab-ink); border:0; }
-.edsw button.on { background:var(--tab-on); color:#fff; }
 /* barre rouge des fonctions : titre de la page, sur toute la largeur */
 main { padding-top:10px; }
 .fbar, .reading-head { display:flex; align-items:center; gap:8px; justify-content:space-between; background:var(--bar); color:#fff; margin:-10px calc(-1 * var(--gut)) 12px;
@@ -539,7 +534,7 @@ nav button svg { width:21px; height:21px; }
 .curve path { stroke:var(--amber); }
 .version { color:var(--dim); font-family:var(--mono); }
 .fold>summary { color:var(--amber); text-transform:uppercase; letter-spacing:.05em; font-size:12px; }
-@media (max-width:360px) { html:root, html:root[data-theme] { --gut:10px; } .edsw button { padding:4px 6px; font-size:10px; } }
+@media (max-width:360px) { html:root, html:root[data-theme] { --gut:10px; } }
 
 /* ---------- écran Jour ---------- */
 .hm-tiles { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; width:100%; padding:0; border:1px solid var(--line); background:var(--line); margin:0 0 12px; font:inherit; color:inherit; text-align:left; cursor:pointer; }
@@ -611,7 +606,6 @@ nav button svg { width:21px; height:21px; }
 <body>
 <header>
   <div class="grow hl"><h1 id="title" class="brand">ATLAS</h1><div class="sub" id="sub"></div></div>
-  <div class="edsw" id="edsw" role="group" aria-label="Édition" hidden></div>
   <button id="btnLang" aria-label="Langue">EN</button>
   <button id="btnRefresh" aria-label="Actualiser">↻</button>
 </header>
@@ -761,6 +755,21 @@ function migrer() {
   const v = ls.get("outbox", null), ok = !(Array.isArray(v) && v.length) || ls.set("orphelin.outbox", [].concat(ls.get("orphelin.outbox", []) || [], v));
   ["cache", "place", "pending", "refus", "outbox", "folderLink", "tab"].forEach(k => { if (k !== "outbox" || ok) ls.del(k); });
 }
+// mobile v130 : l'app ne lit plus que le dossier d'Atlas ; ce que les versions 124 à 126 gardaient sur le téléphone pour la seconde édition est
+// effacé : édition choisie, dossier et onglet de cette édition (« place.gr », « tab.gr »), sa fiche, ses attentes et ses refus (espace de son
+// dossier), ses cours et liens (« mks.<édition>. », « mkr. », « mkSel. », « mkLink. » d'une autre édition qu'« atlas »), le calcul et les réglages
+// des courbes agri (« mka », « mkcfg », « mkSide », « mkProd ») et les racines trouvées (« roots », recalculées) ; à chaque démarrage (sans effet
+// après le premier) ; jamais la boîte d'envoi, la fiche ni les cours d'Atlas
+function menage130() {
+  try {
+    const ks = []; for (let i = 0; i < localStorage.length; i++) ks.push(localStorage.key(i) || "");
+    const dos = [];
+    ks.forEach(k => { const m = /^atlas\.u\.(.+)\.place\.gr$/.exec(k); if (!m) return;
+      try { const p = JSON.parse(localStorage.getItem(k)); if (p && p.driveId && p.folderId) dos.push("atlas.u." + m[1] + ".d." + dosId(p) + "."); } catch (e) {} });
+    const old = /^atlas\.u\..+\.(edition|place\.gr|tab\.gr|mka|mkcfg|mkSide|mkProd|roots)$/, autre = /^atlas\.u\..+\.(mks|mkr|mkSel|mkLink)\.(?!atlas(\.|$))/;
+    ks.forEach(k => { if (old.test(k) || autre.test(k) || dos.some(p => k.startsWith(p))) localStorage.removeItem(k); });
+  } catch (e) { console.warn(e); }
+}
 let lang = ls.get("lang", (navigator.language || "fr").startsWith("fr") ? "fr" : "en");
 const t = k => (T[lang][k] != null ? T[lang][k] : k);
 const tf = (k, ...a) => a.reduce((s, v, i) => s.split("{" + i + "}").join(v), t(k));   // texte avec {0}, {1}…
@@ -791,7 +800,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "126";
+const VERSION_APP = "130";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -815,12 +824,8 @@ let sansFiche = null;
 const envoyees = new Set();
 // espace du compte actif : son dossier, son onglet, et la fiche, les attentes et les refus de CE dossier ; la fiche n'est montrée que si elle
 // appartient à ce compte et à ce dossier (point 3)
-// mobile v124 : édition affichée (Atlas | GRANORE CTRM) gardée par compte ; chaque édition a son dossier, son onglet et sa fiche
-const EDS = ["atlas", "granore"];
-let edition = "atlas";
 function ouvrir() {
-  edition = EDS.includes(us.get("edition", "atlas")) && (us.get("edition", "atlas") === "atlas" || edOk()) ? us.get("edition", "atlas") : "atlas";
-  place = us.get(placeKey(), null); tab = us.get(tabKey(), isGr() ? "mkts" : "home");
+  place = us.get("place", null); tab = us.get("tab", "home");
   const c = ds.get("cache", null);
   data = c && place && c.owner === moi() && c.dossier === dosId(place) ? c.fiche : null;
   pending = ds.get("pending", {}); refus = ds.get("refus", {});
@@ -919,11 +924,10 @@ async function findPlace() {
   try {
     for (const n of names) {
       const s = await (await gfetch("/me/drive/root/search(q='" + n + "')")).json();
-      // mobile v124 : la fiche de GRANORE CTRM (…/Stark/Telephone/…) n'est jamais prise pour celle d'Atlas (chemin vérifié à la découverte)
+      // mobile v130 : une fiche du même nom exportée par une autre app du PC n'est jamais prise pour celle d'Atlas (autreApp)
       const its = (s.value || []).filter(x => x.name === n).map(x => x.remoteItem || x).filter(ri => ri.parentReference && ri.parentReference.driveId);
       for (const ri of its) {
-        let p = null; try { p = await itemPath(ri.parentReference.driveId, ri.id); } catch (e) { if (e && (e.errorCode || e.cle === "offline")) throw e; }
-        if (p && /\/Stark\/Telephone\//i.test(p)) continue;
+        if (await autreApp(ri.parentReference.driveId, ri.id)) continue;
         return { driveId: ri.parentReference.driveId, folderId: ri.parentReference.id, fileId: ri.id, name: n };
       }
     }
@@ -940,6 +944,15 @@ async function findPlace() {
   }
   return null;
 }
+// mobile v130 : fiche trouvée par la recherche : celle d'une autre app du PC si le dossier de son app (…/Telephone/Head ou Logistique) a un
+// dossier data lisible SANS le fichier de données d'Atlas (data/atlas_donnees.xml) ; dossier de l'app hors de portée (dossier Telephone partagé
+// seul) : rien à vérifier, la fiche est prise
+async function autreApp(driveId, id) {
+  let p = null; try { p = await itemPath(driveId, id); } catch (e) { if (e && (e.errorCode || e.cle === "offline")) throw e; }
+  const m = p && p.match(/^(.*)\/Telephone\/(Head|Logistique)\/[^/]+$/i); if (!m) return false;
+  try { await gfetch(drivePath(driveId, m[1] + "/data") + "?$select=id"); } catch (e) { if (okMiss(e)) return false; throw e; }
+  try { await gfetch(drivePath(driveId, m[1] + "/data/atlas_donnees.xml") + "?$select=id"); return false; } catch (e) { if (okMiss(e)) return true; throw e; }
+}
 // écran du lien : aussi les sorties du compte (entrées bloquées, Se déconnecter, Utiliser un autre compte) ; redessiné par render()
 function linkScreen() {
   data = null; sansFiche = linkScreen; $("#nav").innerHTML = "";
@@ -951,7 +964,7 @@ function linkScreen() {
   lierSorties();
 }
 // autre dossier, même compte : la fiche de l'ancien dossier est effacée ; ses attentes et ses refus restent rangés sous lui (retrouvés au retour)
-function changerDossier() { if (!DEMO) { ds.del("cache"); data = null; } us.set(placeKey(), null); if (!isGr()) us.set("roots", null); place = null; pending = {}; refus = {}; authFailed = null; boot(); }
+function changerDossier() { if (!DEMO) { ds.del("cache"); data = null; } us.set("place", null); us.set("roots", null); place = null; pending = {}; refus = {}; authFailed = null; boot(); }
 // entrées de la boîte bloquées : refusées par OneDrive (403 ou 404) à l'envoi, et celles qui attendent derrière elles dans le même dossier
 // (ordre gardé par dossier) ; jamais retirées d'office
 function bloquees(box) { const s = new Set(), d = new Set(); box.forEach(e => { const f = dosId(e); if (e.bloque || d.has(f)) { s.add(e.name); d.add(f); } }); return s; }
@@ -1003,7 +1016,6 @@ async function lireDemo(url) {
 async function load() {
   if (DEMO) { data = await lireDemo(ls.get("demoFile", "demo_head.json") + "?t=" + Date.now()); derniereLecture = Date.now(); settle(); return; }
   const h = moi();
-  if (isGr()) { await loadGr(h); return; }   // mobile v124 : GRANORE CTRM (fiche de Stark si son export est allumé ; cours toujours)
   if (!place) {
     $("#main").innerHTML = '<div class="center muted">' + t("searching") + '</div>';
     const p = await findPlace(); if (moi() !== h) return;
@@ -1018,7 +1030,7 @@ async function load() {
   let fiche; try { fiche = await r.json(); } catch (e) { throw Object.assign(new Error(t("badSheet")), { cle: "badSheet", cause: e }); }
   if (moi() !== h || place !== p) return;   // compte ou dossier changé pendant la lecture : rien n'est rangé
   data = fiche; ds.set("cache", { owner: h, dossier: dosId(p), fiche }); derniereLecture = Date.now();
-  us.set("headOk", !!fiche && fiche.profil === "head");   // mobile v124 : bascule des éditions et cours : direction seulement
+  us.set("headOk", !!fiche && fiche.profil === "head");   // mobile v124 : cours (dossier des cours dans Réglages) : direction seulement
   settle();
 }
 // nom du fichier d'une modification : fixé à l'ouverture de la feuille (un nouvel essai réécrit le même fichier, jamais un second)
@@ -1116,13 +1128,11 @@ function tabs() {
   $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => goTab(b.dataset.tab));
 }
 function header() {
-  $("#title").innerHTML = brandHtml(); grStar();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(grStar).catch(() => {});
+  $("#title").textContent = "ATLAS";
   const g = data && data.genere ? new Date(data.genere) : null;   // heure UTC (suffixe Z) : affichée à l'heure du téléphone
-  const prof = data ? (data.profil === "head" ? (lang === "fr" ? "Direction" : "Management") : (lang === "fr" ? "Logistique" : "Logistics")) : isGr() && grInfo ? (lang === "fr" ? "Cours" : "Prices") : "";
+  const prof = data ? (data.profil === "head" ? (lang === "fr" ? "Direction" : "Management") : (lang === "fr" ? "Logistique" : "Logistics")) : "";
   $("#sub").textContent = [prof, g && !isNaN(g) ? dtShort(data.genere) : "", DEMO ? t("demo") : "", FIXTURE ? "essai local" : ""].filter(Boolean).join(" · ");
   $("#btnLang").textContent = lang === "fr" ? "EN" : "FR";
-  edSwitch();
 }
 // livraison telle que le téléphone la voit : valeurs de la fiche, recouvertes par les modifications envoyées pas encore reprises, sauf celles
 // d'une entrée bloquée : la carte dit alors « bloquée », jamais « en attente » (amendement a) ; round 23 : photos rangées par Atlas (fiche) et
@@ -2679,7 +2689,7 @@ function renderExpoAncien() {
 }
 function renderSettings() {
   const box = us.get('outbox', []), orph = ls.get('orphelin.outbox', []);
-  // mobile v124 : barre rouge du titre ; réglage Apparence retiré (un seul thème : Bloomberg) ; dossiers des cours des deux éditions
+  // mobile v124 : barre rouge du titre ; réglage Apparence retiré (un seul thème : Bloomberg) ; dossier des cours d'Atlas
   $('#main').innerHTML = fbar(t('settings'), '') + '<section class="card"><label for="uiLanguage">' + ui('Langue', 'Language') + '</label><select id="uiLanguage"><option value="fr"' + (lang === 'fr' ? ' selected' : '') + '>Français</option><option value="en"' + (lang === 'en' ? ' selected' : '') + '>English</option></select></section>' +
     '<section class="card"><h2>' + ui('Compte et synchronisation', 'Account and sync') + '</h2>' + (place ? '<p>' + esc(place.name) + '</p><button class="text-action" id="resetPlace">' + t('reset') + '</button>' : '<p class="muted">' + ui('Aucun dossier sélectionné', 'No folder selected') + '</p>') + htmlBloquees(box) + (orph.length ? '<p class="note">' + tf('orphans', orph.length) + '</p>' : '') + (authFailed && pca ? '<p class="refused">' + esc(authText()) + '</p><button class="btn" id="relogin">' + t('login') + '</button>' : '') + htmlCompte(box, false) + '</section>' + settingsMk() +
     '<details class="fold"><summary>' + ui('Configuration avancée', 'Advanced configuration') + '</summary><label for="cid">' + t('clientId') + '</label><input id="cid" value="' + esc(ls.get('clientId', CONFIG.clientId)) + '" autocapitalize="off"><button class="btn light" id="saveCid">' + ui('Enregistrer la configuration', 'Save configuration') + '</button><label for="lnk">' + t('folderLink') + '</label><input id="lnk" value="' + esc(us.get('folderLink', '')) + '" autocapitalize="off"><button class="btn light" id="saveLnk">' + ui('Utiliser ce dossier', 'Use this folder') + '</button></details><p class="version" id="versionApp">' + esc(tf('version', VERSION_APP)) + '</p>';
@@ -2903,8 +2913,6 @@ function render() {
   document.body.classList.remove("exposure-screen");
   today = todayIso();
   header();
-  // mobile v124 : GRANORE CTRM sans fiche (export téléphone éteint) : Marchés et Réglages
-  if (!data && isGr() && grInfo && !sansFiche) { tabsGr(); (tab === "settings" ? renderSettings : renderMarkets)(); bandeauMaj(); enhanceUI(); return; }
   if (!data) { if (sansFiche) sansFiche(); enhanceUI(); return; } tabs();
   ({ home: renderHome, cal: renderCal, stock: renderStock, treso: renderTreso, expo: renderExpo, mkts: renderMarkets, photos: renderPhotos, settings: renderSettings })[tab]();
   bandeauMaj(); enhanceUI();
@@ -2953,7 +2961,7 @@ const authText = () => authMsg(authFailed);
 async function boot() {
   sansFiche = null; header();
   try {
-    migrer();
+    migrer(); menage130();
     if (!DEMO) {
       const ok = await initAuth();
       if (ok && !account && comptes.length > 1) { choixCompte(); return; }
@@ -3123,7 +3131,7 @@ function enhanceUI(root) {
   document.body.dataset.reading=isDetailed()?'detailed':'simple';
   root.querySelectorAll('[data-reading-mode]').forEach(b=>b.onclick=()=>{us.set('detailed35',b.dataset.readingMode==='detailed');render();window.scrollTo(0,0);});
   root.querySelectorAll('[data-detail-view]').forEach(b=>b.onclick=()=>{us.set('detailed35',true);expoView=b.dataset.detailView;render();window.scrollTo(0,0);});
-  $('#btnLang').hidden=!!data||edOk();   // mobile v124 : langue dans Réglages dès qu'il y a une fiche ou la bascule des éditions
+  $('#btnLang').hidden=!!data;   // langue dans Réglages dès qu'il y a une fiche
   root.querySelectorAll('.seg button,.chips button,.xprods button').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('on'))));
   root.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.classList.contains('on')?'page':'false'));
   root.querySelectorAll('label').forEach(l=>{const n=l.nextElementSibling;if(n&&n.id&&/^(INPUT|TEXTAREA|SELECT)$/.test(n.tagName))l.htmlFor=n.id;});
@@ -3135,16 +3143,14 @@ function enhanceUI(root) {
 }
 
 
-// ================= Mobile v124 (02/11/2026) : style Bloomberg, deux éditions (Atlas | GRANORE CTRM), écran Jour, courbes des prix =================
+// ================= Mobile v124 (02/11/2026) : style Bloomberg, écran Jour, courbes des prix =================
 // Demande de l'utilisateur : « change le style en Bloomberg … rajoute les courbes des prix … plus efficient et meilleur ».
-//   · éditions : Atlas (fiche de son dossier Telephone) et GRANORE CTRM (Stark : fiche Stark\Telephone si son export téléphone est allumé ;
-//     sinon les cours seulement) ; dossiers trouvés à partir du dossier de la fiche d'Atlas (même OneDrive), sinon par la recherche ; bascule dans
-//     l'en-tête, seulement pour un compte de direction (fiche Head) ; jamais pour la logistique (aucun prix montré à un prestataire) ;
-//   · courbes : séries des apps elles-mêmes (data\marches, lues par Graph), jamais copiées dans le dépôt ; agri : moyenne pondérée par les tonnes des
-//     bourses turques (méthode du Carnet agri : Crt71, Vw76, Agr76), références FOB officielles à part (jamais dans la moyenne) ; aucun prix
-//     d'analyste ; métaux : LME, COMEX, cobalt (Fastmarkets), BCE ;
+//   · courbes : séries d'Atlas (data\marches, lues par Graph), jamais copiées dans le dépôt ; métaux : LME, COMEX, cobalt (Fastmarkets), BCE ;
+//     direction seulement (fiche Head) ; jamais pour la logistique (aucun prix montré à un prestataire) ;
 //   · sobriété : seule la liste du dossier des cours (une requête) puis les fichiers changés (empreinte eTag), la fin des historiques seulement
 //     (en-tête Range), résultats gardés sur le téléphone ; un écran ne lit que ce qu'il montre.
+// mobile v130 (02/11/2026) : l'app ne montre qu'Atlas : plus de seconde édition, aucun autre dossier cherché ni lu (racine = dossier de la fiche
+// d'Atlas, ou lien collé dans Réglages) ; ce que les versions 124 à 126 gardaient pour la seconde édition est effacé du téléphone (menage130).
 
 // ---------- essai local (fixture) : jamais en ligne ----------
 // adresse locale (localhost) ET paramètre « ?fixture » : Graph imité par le serveur d'essai (hors dépôt), aucune connexion Microsoft
@@ -3155,88 +3161,35 @@ function fixtureAuth() {
 
 // ---------- textes ----------
 Object.assign(T.fr, {
-  home: "Jour", mkTab: "Marchés", edAtlas: "ATLAS", edGr: "GRANORE", agri: "Agri", metaux: "Métaux",
-  pBLE: "Blé meunier", pMAIS: "Maïs fourrager", pTOURNESOL: "Tournesol à huile",
-  pBLEs: "BLÉ", pMAISs: "MAÏS", pTOURNESOLs: "TOURNESOL",
+  home: "Jour", mkTab: "Marchés",
   hmAlerts: "Alertes", hmTodo: "À traiter", hmBlk: "Bloquantes", hmDocs: "Pièces", hmMarg: "Marges",
   hmTreso: "Trésorerie", hmBal: "Solde ce soir", hmLow: "Point bas 26 sem.", hmFund: "Financement",
   hmWeek: "Livraisons · 7 jours", hmLate: "en retard", hmNone: "Aucune livraison prévue d'ici 7 jours", hmCal: "Calendrier ›",
   hmPrices: "Cours du jour", hmAllPrices: "Courbes ›", hmData: "Fiche du {0}",
   mkRead: "Relevé du {0}", mkLoading: "Lecture des cours…", mkNoDir: "Dossier des cours introuvable dans ce OneDrive : coller le lien du dossier data\\marches dans Réglages.",
   mkNoFile: "Fichier absent du dossier des cours : {0}", mkNone: "Aucun point sur cette période", mkErr: "Lecture des cours impossible",
-  mkVwap: "Bourses TR · VWAP", mkVwapL: "Moyenne pondérée des bourses turques (achat)", mkSes: "{0} séances · {1} bourses",
-  mkPartial: "jour partiel", mkByEx: "Dernier jour par bourse", mkEx: "Bourse", mkDay: "Jour", mkT: "t", mkUsdT: "USD/t",
-  mkNoFx: "change du jour manquant", mkFob: "Références FOB (vente, origine)", mkNoFob: "Aucune référence FOB officielle stockée pour ce produit.",
-  mkSrcAgri: "Courbe ACHAT et bandes : méthode du Carnet agri de GRANORE CTRM (séances des bourses turques ≥ {0} t, notre produit seulement, doublons TOBB/site comptés une fois, chaque jour médiane pondérée ± 3 écarts robustes ; USD/t au cours vendeur TCMB, sinon croisé BCE). Annonces, évaluations, prix sans tonnes et analystes : jamais dans la moyenne.",
-  mkDest: "Destination TR (achat)", mkDestS: "destination TR", mkDestL: "Bande Destination TR · VWAP robuste", mkDestM: "VWAP robuste {0} j de bourse · {1} → {2} · {3} t · {4} séances", mkStale: "ancien", mkTurib: "Bande TÜRİB ELÜS (dernier jour complet)", mkTuribMin: "moins de 250 t : pas de bande", mkComplete: "jour partiel sauté", mkCfgOld: "Réglages de GRANORE CTRM non relus : derniers lus sur ce téléphone.", mkCfgDef: "Réglages de GRANORE CTRM non lus : valeurs relevées le 02/11/2026.",
   mkMonitor: "Moniteur", mkLastShort: "Dernier", mkChg: "Var.",
-  grNoExport: "Export téléphone de GRANORE CTRM non activé : trésorerie, alertes et livraisons de GRANORE à compléter (réglage « Telephone » = oui dans GRANORE CTRM). Les cours sont lus directement.",
-  grNoStark: "Dossier de GRANORE CTRM (Stark) introuvable dans ce OneDrive.",
-  mkLinkAtlas: "Lien du dossier des cours d'Atlas (data\\marches)", mkLinkGr: "Lien du dossier des cours de GRANORE CTRM (data\\marches)",
-  mkMoreEx: "{0} autres bourses", foldersFound: "Dossiers trouvés", retry2: "Réessayer", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1A"
+  mkLinkAtlas: "Lien du dossier des cours d'Atlas (data\\marches)",
+  foldersFound: "Dossier des cours", retry2: "Réessayer", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1A"
 });
 Object.assign(T.en, {
-  home: "Today", mkTab: "Markets", edAtlas: "ATLAS", edGr: "GRANORE", agri: "Agri", metaux: "Metals",
-  pBLE: "Milling wheat", pMAIS: "Feed corn", pTOURNESOL: "Oil sunflower seed",
-  pBLEs: "WHEAT", pMAISs: "CORN", pTOURNESOLs: "SUNFLOWER",
+  home: "Today", mkTab: "Markets",
   hmAlerts: "Alerts", hmTodo: "To do", hmBlk: "Blocking", hmDocs: "Documents", hmMarg: "Margins",
   hmTreso: "Cash", hmBal: "Balance tonight", hmLow: "Low point 26 wk", hmFund: "Funding",
   hmWeek: "Deliveries · 7 days", hmLate: "late", hmNone: "No delivery planned within 7 days", hmCal: "Calendar ›",
   hmPrices: "Prices of the day", hmAllPrices: "Charts ›", hmData: "Sheet of {0}",
   mkRead: "Fetched {0}", mkLoading: "Reading prices…", mkNoDir: "Price folder not found in this OneDrive: paste the link of the data\\marches folder in Settings.",
   mkNoFile: "File missing from the price folder: {0}", mkNone: "No point over this period", mkErr: "Prices cannot be read",
-  mkVwap: "TR exchanges · VWAP", mkVwapL: "Turkish exchanges' weighted average (buy)", mkSes: "{0} sessions · {1} exchanges",
-  mkPartial: "partial day", mkByEx: "Last day per exchange", mkEx: "Exchange", mkDay: "Day", mkT: "t", mkUsdT: "USD/t",
-  mkNoFx: "FX of the day missing", mkFob: "FOB references (sell, origin)", mkNoFob: "No official FOB reference stored for this product.",
-  mkSrcAgri: "BUY curve and bands: GRANORE CTRM agri book method (Turkish exchange sessions ≥ {0} t, our product only, TOBB/site duplicates counted once, each day weighted median ± 3 robust deviations; USD/t at the CBRT selling rate, else ECB cross). Ads, assessments, prices without tonnes and analysts: never in the average.",
-  mkDest: "Destination TR (buy)", mkDestS: "destination TR", mkDestL: "Destination TR band · robust VWAP", mkDestM: "robust VWAP {0} trading days · {1} → {2} · {3} t · {4} sessions", mkStale: "old", mkTurib: "TÜRİB ELÜS band (last complete day)", mkTuribMin: "below 250 t: no band", mkComplete: "partial day skipped", mkCfgOld: "GRANORE CTRM settings not re-read: last ones read on this phone.", mkCfgDef: "GRANORE CTRM settings not read: values of 02/11/2026.",
   mkMonitor: "Monitor", mkLastShort: "Last", mkChg: "Chg",
-  grNoExport: "GRANORE CTRM phone export not enabled: GRANORE cash, alerts and deliveries to be completed (setting “Telephone” = oui in GRANORE CTRM). Prices are read directly.",
-  grNoStark: "GRANORE CTRM (Stark) folder not found in this OneDrive.",
-  mkLinkAtlas: "Link of Atlas' price folder (data\\marches)", mkLinkGr: "Link of GRANORE CTRM's price folder (data\\marches)",
-  mkMoreEx: "{0} more exchanges", foldersFound: "Folders found", retry2: "Retry", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1Y"
+  mkLinkAtlas: "Link of Atlas' price folder (data\\marches)",
+  foldersFound: "Price folder", retry2: "Retry", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1Y"
 });
 
-// ---------- édition affichée ----------
-const isGr = () => edition === "granore";
-const placeKey = () => isGr() ? "place.gr" : "place";
-const tabKey = () => isGr() ? "tab.gr" : "tab";
-// bascule offerte à un compte de direction seulement (dernière fiche d'Atlas lue = Head) ; jamais en démo
-const edOk = () => !DEMO && us.get("headOk", false) === true;
-let grInfo = null;   // GRANORE sans fiche : « noExport » (export téléphone éteint) ou « noStark » (dossier introuvable)
-function setEdition(ed) {
-  if (ed === edition || !EDS.includes(ed)) return;
-  edition = ed; us.set("edition", ed); sansFiche = null; grInfo = null; mkErr = null;
-  ouvrir(); render(); window.scrollTo(0, 0);
-  load().then(render, e => echec(e, !data));
-}
-// marque de l'édition : ATLAS (ambre, chasse fixe) ; GRANORE : le mot entier dessiné (GRAN clair, ORE bronze, rose des vents bronze dans le O,
-// jamais l'étoile seule, jamais de plaque : Mrq77)
-const GR_BRONZE = "#896449";
-function brandHtml() {
-  if (!isGr()) return 'ATLAS';
-  return '<svg class="grlogo" viewBox="0 0 132 24" role="img" aria-label="GRANORE CTRM"><text id="grw" x="1" y="19.5" font-family="\'Palatino Linotype\',\'Book Antiqua\',Palatino,\'URW Palladio L\',Georgia,serif" font-size="20" letter-spacing="2.4"><tspan fill="#E8EAF0">GRAN</tspan><tspan fill="' + GR_BRONZE + '">O</tspan><tspan fill="' + GR_BRONZE + '">RE</tspan></text><path id="grstar" fill="' + GR_BRONZE + '" d=""/></svg><span class="brand-ctrm">CTRM</span>';
-}
-// étoile à quatre branches fines centrée dans le O (position mesurée sur la police réellement employée)
-function grStar() {
-  const tx = document.getElementById("grw"), st = document.getElementById("grstar"); if (!tx || !st || !tx.getExtentOfChar) return;
-  try {
-    const b = tx.getExtentOfChar(4), cx = b.x + b.width / 2 - 1.2, cy = 19.5 - 6.9, r = 4.2, k = r * 0.2;
-    st.setAttribute("d", "M" + cx + " " + (cy - r) + "L" + (cx + k) + " " + (cy - k) + "L" + (cx + r) + " " + cy + "L" + (cx + k) + " " + (cy + k) + "L" + cx + " " + (cy + r) + "L" + (cx - k) + " " + (cy + k) + "L" + (cx - r) + " " + cy + "L" + (cx - k) + " " + (cy - k) + "Z");
-  } catch (e) { /* police pas encore prête : étoile absente, le mot reste entier */ }
-}
-function edSwitch() {
-  const box = $("#edsw"); if (!box) return;
-  if (!edOk()) { box.innerHTML = ""; box.hidden = true; return; }
-  box.hidden = false;
-  box.innerHTML = [["atlas", t("edAtlas")], ["granore", t("edGr")]].map(x => '<button data-ed="' + x[0] + '" class="' + (edition === x[0] ? "on" : "") + '" aria-pressed="' + (edition === x[0]) + '">' + x[1] + '</button>').join("");
-  box.querySelectorAll("[data-ed]").forEach(b => b.onclick = () => setEdition(b.dataset.ed));
-}
 // barre rouge d'une page (titre, à droite : date des données)
 const fbar = (title, right) => '<div class="fbar"><h2>' + esc(title) + '</h2><span class="fb-r">' + esc(right || "") + '</span></div>';
 const dtShort = s => { const d = s ? new Date(s) : null; return d && !isNaN(d) ? String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + " " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") : ""; };
 
-// ---------- dossiers des deux éditions dans le OneDrive ----------
+// ---------- dossier d'Atlas dans le OneDrive ----------
 // chemin Graph d'un parent (« /drive/root:/Bureau/Mon%20App ») → « /Bureau/Mon App »
 const gPath = p => { const s = String(p || ""), i = s.indexOf("root:"); if (i < 0) return null; let r = s.slice(i + 5); try { r = decodeURIComponent(r); } catch (e) {} return r; };
 const drivePath = (d, p) => "/drives/" + d + "/root:" + String(p).split("/").map(encodeURIComponent).join("/") + ":";
@@ -3245,66 +3198,36 @@ async function itemPath(driveId, id) {
   const p = it.parentReference && gPath(it.parentReference.path); return p == null ? null : (p === "" ? "" : p) + "/" + it.name;
 }
 const okMiss = e => e && (e.status === 403 || e.status === 404 || e.status === 400);
-// racines : dossier de l'app Atlas déduit du dossier de sa fiche ; GRANORE (…/Stark) à côté ; sinon la recherche du fichier des cours
+// racine : dossier de l'app Atlas déduit du dossier de sa fiche (…/Telephone/Head ou Logistique) ; aucun autre dossier n'est cherché
 async function roots(force) {
-  if (!force) { const c = us.get("roots", null); if (c && c.driveId && (c.atlas != null || c.stark != null)) return c; }
-  const r = { driveId: null, atlas: null, stark: null };
+  if (!force) { const c = us.get("roots", null); if (c && c.driveId && c.atlas != null) return c; }
+  const r = { driveId: null, atlas: null };
   const ap = us.get("place", null);
   if (ap) {
     try { const p = await itemPath(ap.driveId, ap.folderId), m = p && p.match(/^(.*)\/Telephone\/(Head|Logistique)$/i); if (m) { r.driveId = ap.driveId; r.atlas = m[1]; } }
     catch (e) { if (!okMiss(e)) throw e; }
   }
-  if (r.atlas != null) {
-    const par = r.atlas.replace(/\/[^/]*$/, "");
-    try { await gfetch(drivePath(r.driveId, par + "/Stark/data/marches") + "?$select=id"); r.stark = par + "/Stark"; } catch (e) { if (!okMiss(e)) throw e; }
-  }
-  if (r.stark == null) {
-    try {
-      const s = await (await gfetch("/me/drive/root/search(q='agri_physique.tsv')")).json();
-      for (const x of s.value || []) {
-        const ri = x.remoteItem || x; if (x.name !== "agri_physique.tsv" || !ri.parentReference || !ri.parentReference.driveId) continue;
-        const p = await itemPath(ri.parentReference.driveId, ri.id), m = p && p.match(/^(.*)\/data\/marches\/agri_physique\.tsv$/i);
-        if (m) { r.stark = m[1]; if (!r.driveId) r.driveId = ri.parentReference.driveId; break; }
-      }
-    } catch (e) { if (e && (e.errorCode || e.cle === "offline")) throw e; console.warn(e); }   // recherche refusée ou en panne : dossier non trouvé, dit à l'écran
-  }
   if (r.driveId) us.set("roots", r);
   return r;
 }
-// dossier des cours d'une édition : lien collé dans Réglages d'abord, sinon <racine>/data/marches
-async function mkDir(ed) {
-  const link = us.get("mkLink." + ed, "");
+// dossier des cours : lien collé dans Réglages d'abord, sinon <racine d'Atlas>/data/marches
+async function mkDir() {
+  const link = us.get("mkLink.atlas", "");
   if (link) {
     const it = await (await gfetch("/shares/" + shareToken(link) + "/driveItem")).json();
     const did = it.parentReference && it.parentReference.driveId; if (did && it.folder) return { driveId: did, id: it.id };
   }
-  const r = await roots(false), base = ed === "granore" ? r.stark : r.atlas;
-  if (base == null || !r.driveId) return null;
-  return { driveId: r.driveId, path: base + "/data/marches" };
-}
-// fiche de GRANORE CTRM : Stark\Telephone\Head\atlas_head.json (écrite seulement si son réglage « Telephone » vaut « oui »)
-async function loadGr(h) {
-  const r = await roots(false); if (moi() !== h || !isGr()) return;
-  if (r.stark == null) { place = null; data = null; grInfo = "noStark"; return; }
-  let p = null;
-  try { const it = await (await gfetch(drivePath(r.driveId, r.stark + "/Telephone/Head") + "?$select=id,name")).json(); p = { driveId: r.driveId, folderId: it.id, name: "atlas_head.json" }; }
-  catch (e) { if (!okMiss(e)) throw e; }
-  if (moi() !== h || !isGr()) return;
-  if (!p) { place = null; us.set("place.gr", null); data = null; grInfo = "noExport"; return; }
-  place = p; us.set("place.gr", p); pending = ds.get("pending", {}); refus = ds.get("refus", {});
-  let fiche = null;
-  try { const res = await gfetch("/drives/" + p.driveId + "/items/" + p.folderId + ":/" + encodeURIComponent(p.name) + ":/content", { cache: "no-store" }); fiche = await res.json(); }
-  catch (e) { if (e && e.status === 404) { data = null; grInfo = "noExport"; return; } if (e instanceof SyntaxError) throw Object.assign(new Error(t("badSheet")), { cle: "badSheet" }); throw e; }
-  if (moi() !== h || place !== p) return;
-  data = fiche; grInfo = null; ds.set("cache", { owner: h, dossier: dosId(p), fiche }); derniereLecture = Date.now(); settle();
+  const r = await roots(false);
+  if (r.atlas == null || !r.driveId) return null;
+  return { driveId: r.driveId, path: r.atlas + "/data/marches" };
 }
 
 // ---------- lecture des fichiers de cours (Graph) ----------
-const mkMem = {};          // listes des dossiers de cours (par édition) : { at, dir, files }
+const mkMem = {};          // liste du dossier des cours : { at, dir, files }
 let mkBusy = false, mkErr = null, mkStamp = {};
 async function mkList(ed, force) {
   const c = mkMem[ed]; if (c && !force && Date.now() - c.at < 90000) return c;
-  const dir = await mkDir(ed); if (!dir) return null;
+  const dir = await mkDir(); if (!dir) return null;
   // liste réduite aux champs utiles ; un service qui refuse ce choix de champs (400) : liste complète
   const base = (dir.id ? "/drives/" + dir.driveId + "/items/" + dir.id : drivePath(dir.driveId, dir.path)) + "/children";
   const page = async u => { let all = [], next = u; for (let i = 0; next && i < 20; i++) { const j = await (await gfetch(next, { cache: "no-store" })).json(); all = all.concat(j.value || []); next = j["@odata.nextLink"] || null; } return all; };
@@ -3341,7 +3264,7 @@ function parseSerie(text, partial) {
 }
 const daysBetween = (a, b) => Math.round((parseD(b) - parseD(a)) / 864e5);
 const mkNeed = () => iso(addJ(parseD(todayIso()), -380));   // une année et deux semaines : toutes les périodes proposées
-// une série : gardée sur le téléphone (us « mks.<édition>.<id> ») tant que son fichier ne change pas ; sinon relue par la fin
+// une série : gardée sur le téléphone (us « mks.atlas.<id> ») tant que son fichier ne change pas ; sinon relue par la fin
 async function serLoad(L, id, need) {
   const f = L.files[id + ".csv"], ck = "mks." + L.ed + "." + id; if (!f) return null;
   let c = us.get(ck, null);
@@ -3368,7 +3291,7 @@ async function retiredLoad(L) {
 async function inBatches(xs, n, fn) { for (let i = 0; i < xs.length; i += n) await Promise.all(xs.slice(i, i + n).map(fn)); }
 
 // ---------- catalogue des séries (métadonnées seulement : aucun cours ici) ----------
-// g : groupe ; u : unité ; d : décimales ; band : fourchette basse / haute ; sd : côté (achat vert, vente rouge) pour l'agri
+// g : groupe ; u : unité ; d : décimales ; band : fourchette basse / haute
 const MKS = {
   "CO-STD": { g: "Cobalt", fr: "Cobalt standard · milieu (Fastmarkets)", en: "Cobalt standard grade · mid (Fastmarkets)", u: "USD/lb", d: 2, band: ["CO-STD-LOW", "CO-STD-HIGH"] },
   "CO-ALLOY": { g: "Cobalt", fr: "Cobalt alliage · milieu (Fastmarkets)", en: "Cobalt alloy grade · mid (Fastmarkets)", u: "USD/lb", d: 2, band: ["CO-ALLOY-LOW", "CO-ALLOY-HIGH"] },
@@ -3380,295 +3303,31 @@ const MKS = {
   "COMEX-CU": { g: "COMEX", fr: "Cuivre COMEX (HG)", en: "COMEX copper (HG)", u: "USD/lb", d: 4 },
   "EUR-USD": { g: "FX", fr: "EUR/USD (BCE)", en: "EUR/USD (ECB)", u: "", d: 4 },
   "LME-NI-3M": { fr: "Nickel LME · 3 mois", en: "LME nickel · 3 months", u: "USD/t", d: 0 }, "LME-CU-3M": { fr: "Cuivre LME · 3 mois", en: "LME copper · 3 months", u: "USD/t", d: 0 },
-  "LME-AL-3M": { fr: "Aluminium LME · 3 mois", en: "LME aluminium · 3 months", u: "USD/t", d: 0 }, "LME-ZN-3M": { fr: "Zinc LME · 3 mois", en: "LME zinc · 3 months", u: "USD/t", d: 0 },
-  // agri : références FOB officielles (côté vente, marchés d'origine) ; jamais dans la moyenne des bourses
-  // (blé Ukraine et maïs mer Noire de la Commission : cotations de l'IGC republiées, non officielles, jamais une référence : Cov82.IgcSeries)
-  "MOEX-WHFOB": { fr: "Russie · blé FOB ports profonds (MOEX WHFOB)", en: "Russia · wheat FOB deep-water (MOEX WHFOB)", u: "USD/t", d: 1 },
-  "CE-FOB-ROUEN-BLE": { fr: "France · blé FOB Rouen (Commission)", en: "France · wheat FOB Rouen (Commission)", u: "USD/t", d: 1 },
-  "MOEX-CRFOB": { fr: "Russie · maïs FOB (MOEX CRFOB)", en: "Russia · corn FOB (MOEX CRFOB)", u: "USD/t", d: 1 },
-  "CE-FOB-BORDEAUX-MAIS": { fr: "France · maïs FOB Bordeaux (Commission)", en: "France · corn FOB Bordeaux (Commission)", u: "USD/t", d: 1 }
+  "LME-AL-3M": { fr: "Aluminium LME · 3 mois", en: "LME aluminium · 3 months", u: "USD/t", d: 0 }, "LME-ZN-3M": { fr: "Zinc LME · 3 mois", en: "LME zinc · 3 months", u: "USD/t", d: 0 }
 };
 const MET_IDS = ["CO-STD", "CO-ALLOY", "CO-LME", "LME-NI", "LME-CU", "LME-AL", "LME-ZN", "COMEX-CU", "EUR-USD"];
-const AG_FOB = { BLE: ["MOEX-WHFOB", "CE-FOB-ROUEN-BLE"], MAIS: ["MOEX-CRFOB", "CE-FOB-BORDEAUX-MAIS"], TOURNESOL: [] };
-const FOB_STYLE = [{ c: "#ff3b4a", dash: "" }, { c: "#ff7a3d", dash: "6 4" }, { c: "#ff9fb0", dash: "2 3" }];
 const mkName = id => { const m = MKS[id]; return m ? (lang === "fr" ? m.fr : m.en) : id; };
 const mkFmt = (v, d) => v == null || !isFinite(v) ? "—" : nfx(v, d);
 
-// ---------- agri : courbe ACHAT journalière et bandes ACHAT du DOM (méthode du Carnet agri de GRANORE CTRM : Crt71, Vw76, Agr76, Bands66) ----------
-// Comparée jour par jour au PC le 02/11/2026 (sortie de diagnostic du PC sur une copie des données, 19/10 → 30/10, trois produits) : égale.
-// Seuils lus dans les réglages de GRANORE CTRM (data\stark_donnees.xml, tables Settings et AgriParams), comme le PC : relus au plus toutes les
-// 6 heures ou sur ↻ ; fichier illisible : les derniers lus, sinon les valeurs relevées le 02/11/2026 (dit à l'écran). Constantes du code du PC :
-// écart robuste (Vw76 : 3 × max(1,4826 × MAD, 2 %), au moins 3 séances), change à 7 jours au plus (Ech70.FxDays), TÜRİB au moins 250 t
-// (Bands66.MinTonnes), fraîcheur 2 jours ouvrés (Bands66.ExDays), au moins 3 jours d'historique pour le jour complet (Suite83.MinHist).
-const AGK = { K: 3, SCALE: 1.4826, FLOOR: 0.02, MIN_SCREEN: 3, FX_DAYS: 7, EX_DAYS: 15, TURIB_MIN_T: 250, FRESH_BD: 2, MIN_HIST: 3 };
-const AG_DEF = { minT: 50, win: 15, pubAge: 14, rl: 0.65, nref: 3, durum: ["807"], more: { "831": "hors barème", "824": "fourrager", "825": "fourrager" }, pct: 25, wmin: 5, wmax: 15, src: "def" };
-let AG = AG_DEF;   // réglages du calcul en cours (agCompute)
-const AG_KEYS = { minT: "Bourses turques : volume minimum d'une séance (t)", win: "Bourses turques : âge maximum des transactions (jours)", pubAge: "Carnet : âge maximal des prix publics (jours)",
-  durum: "Bourses turques : blé dur (makarnalık) avec le blé (codes TOBB ana/alt ; vide : écarté)", more: "Bourses turques : autres codes TOBB du blé (ana/alt=marque ; …)",
-  pct: "Carnet agri : bande des bourses, jour complet à partir de (% du volume quotidien médian ; vide : dernier jour)", wmin: "Carnet agri : fenêtre minimale (jours de bourse)", wmax: "Carnet agri : fenêtre maximale (jours)" };
-// lecture des réglages (mêmes règles de validité que Ses69, Ech70, Suite83, Zone60 et AgriParams du PC) ; rien d'autre n'est gardé du fichier
-function agCfgParse(xml) {
-  const un = s => String(s || "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
-  const set = {}, prm = {};
-  String(xml || "").replace(/<Settings>\s*<Key>([^<]*)<\/Key>\s*(?:<Value>([^<]*)<\/Value>)?/g, (m, k, v) => { k = un(k); if (!(k in set)) set[k] = un(v); return ""; });
-  String(xml || "").replace(/<AgriParams>\s*<Key>([^<]*)<\/Key>\s*(?:<Value>([^<]*)<\/Value>)?/g, (m, k, v) => { k = un(k); if (!(k in prm)) prm[k] = v == null ? null : un(v); return ""; });
-  if (!Object.keys(set).length) return null;
-  const num = s => { const v = parseFloat(String(s == null ? "" : s).trim().replace(",", ".")); return isFinite(v) ? v : null; };
-  const g = k => num(set[AG_KEYS[k]]), c = { src: "xml" };
-  const mt = g("minT"); c.minT = mt != null && mt >= 0 ? mt : 0;                                   // Ses69.MinT (vide : 0 dans Crt71)
-  const ma = g("win"); c.win = ma != null && ma >= 1 && ma <= 60 ? Math.floor(ma) : 15;             // Ses69.Window = MaxAge, sinon 15
-  const pa = g("pubAge"); c.pubAge = pa != null && pa >= 0 ? Math.floor(pa) : 14;                   // Zone60.MaxAge
-  const pc = g("pct"); c.pct = pc != null && pc > 0 && pc < 100 ? pc : 0;                           // Suite83.Pct (0 : dernier jour)
-  const wn = g("wmin"); c.wmin = wn != null && wn >= 1 && wn <= 60 ? Math.round(wn) : null;        // Ech70.Wmin (vide : fenêtre maximale partout)
-  const wx = g("wmax"); c.wmax = Math.max(wx != null && wx >= 1 && wx <= 60 ? Math.round(wx) : c.win, c.wmin || 1);   // Ech70.Wmax
-  c.durum = String(set[AG_KEYS.durum] || "").split(/\s*[;,]\s*/).map(x => x.trim().match(/^(\d+)\s*\/\s*(\d+)$/)).filter(Boolean).map(m => m[2]);
-  c.more = {}; String(set[AG_KEYS.more] || "").split(/\s*;\s*/).forEach(x => { const m = x.trim().match(/^(\d+)\s*\/\s*(\d+)\s*=\s*(.+)$/); if (m) c.more[m[2]] = m[3].trim(); });
-  const rl = num(prm["CARNET.LEGIT.ROUGE.BAS"]), nr = num(prm["CARNET.LEGIT.REFS"]);              // AgriParams (ligne absente : valeur du 02/11)
-  c.rl = rl != null ? rl : AG_DEF.rl; c.nref = nr != null ? nr : AG_DEF.nref;
-  return c;
-}
-const AG_PRODS = ["BLE", "MAIS", "TOURNESOL"];
-const TRF = { "Ç": "C", "Ğ": "G", "İ": "I", "Ö": "O", "Ş": "S", "Ü": "U", "ı": "I", "Â": "A", "Î": "I", "Û": "U" };
-const trFold = s => String(s || "").toLocaleUpperCase("tr-TR").replace(/[ÇĞİÖŞÜıÂÎÛ]/g, c => TRF[c]).replace(/\s+/g, " ").trim();
-const geoFold = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/ı/g, "i").replace(/\s+/g, " ").trim();
-const agExKey = ex => { let f = trFold(ex); for (const s of [" TICARET BORSASI", " TB"]) if (f.endsWith(s)) f = f.slice(0, -s.length); return f.trim(); };
-const agTok = (folded, ws) => { const tt = folded.split(/[^A-Z0-9]+/); return ws.some(w => tt.includes(w)); };
-const agCode = key => { const k = String(key || "").split("|"); return k.length > 2 && k[0] === "tobb" ? k[1] : null; };
-function agDurum(p, label, key) { if (p !== "BLE") return false; const t0 = " " + trFold(label) + " "; return ["DURUM", "MAKARNALIK", "MAKARNA"].some(w => t0.includes(w)) || AG.durum.includes(agCode(key)); }
-function agSpecial(p, label, key) {
-  if (p !== "BLE") return false; if (agDurum(p, label, key)) return true; const t0 = " " + trFold(label) + " ";
-  return ["YEMLIK", "BAREM DISI", "STANDART DISI", "DUSUK VASIFLI", "DOKERLI"].some(w => t0.includes(w)) || Object.prototype.hasOwnProperty.call(AG.more, agCode(key) || "");
-}
-function agGenre(p, label, key) {
-  const t0 = " " + trFold(label) + " ", f = geoFold(label), has = ws => ws.some(w => t0.includes(w)), code = agCode(key), mk = code && AG.more[code] ? geoFold(AG.more[code]) : "";
-  if (p === "BLE") {
-    if (agDurum(p, label, key) || has(["MAKARNA", "DURUM"]) || /\b(ble dur|durum)\b/.test(f)) return "DUR";
-    if (has(["YEMLIK"]) || /\b(fourrager|feed|fourrage)\b/.test(f) || mk.includes("fourr")) return "FEED";
-    if (has(["BAREM DISI", "STANDART DISI"]) || /hors bareme|hors norme|off-grade/.test(f) || mk.includes("bareme")) return "OFF";
-    if (has(["DUSUK VASIFLI", "DOKERLI"])) return "LOW";
-    return "STD";
-  }
-  if (has(["BAREM DISI", "STANDART DISI"]) || /hors bareme|hors norme|off-grade/.test(f)) return "OFF";
-  if (p === "MAIS") return has(["RUTUBETLI", "NEMLI"]) ? "WET" : has(["DIIB"]) ? "DIIB" : "STD";
-  if (p === "TOURNESOL" && (has(["CEREZLIK"]) || /\b(confiserie|bouche)\b/.test(f))) return "CONF";
-  if (p === "TOURNESOL" && /(^|[^n])oleique|high oleic|\(ho\)/.test(f)) return "HO";
-  return "STD";
-}
-// notre produit (Agr76.NotOurs) : blé meunier toutes classes, maïs fourrager, tournesol à huile
-function agOurs(p, label, key) {
-  const tr = trFold(label), f = geoFold(label), g = agGenre(p, label, key);
-  if (agTok(tr, ["HASARLI", "TOHUMLUK"])) return false;
-  if (p === "BLE") return g === "STD" && !agSpecial(p, label, key) && !agTok(tr, ["SAPI", "KARA", "KARABUGDAY"]) &&
-    !/\b5\s*(e|eme|th|-?го|-?й)?\s*(classe|class|класс)|кормов|фураж|takarmany|stocn|furaj|fourrag|\bfeed\b|ble dur|\bdurum|тверд|makarn/.test(f);
-  if (p === "MAIS") return (g === "STD" || g === "DIIB") && !agTok(tr, ["SLAJ", "SILAJ", "SILAJLIK", "CIN", "PATLAK", "POPCORN", "STANDART", "BAREM"]) &&
-    !/семена|semence|seed|popcorn|pop-corn|ensilage|silage|сорго/.test(f);
-  if (p === "TOURNESOL") return (g === "STD" || g === "HO") && !agTok(tr, ["YEMLIK", "CEREZLIK", "STANDART", "BAREM"]) &&
-    !/кондитер|etkezesi napraforgo|confiserie|confection|семена|semence/.test(f);
-  return false;
-}
-const agTday = d => { const x = parseD(d), w = x.getDay(); return w === 6 ? iso(addJ(x, -1)) : w === 0 ? iso(addJ(x, -2)) : d; };
-const agNear = (a, b) => Math.abs(a - b) <= Math.max(0.5, 0.01 * Math.max(a, b));
-const agSum = l => l.reduce((s, r) => s + r.t, 0);
-// jours ouvrés de a (exclu) à b (inclus) : Q41.BusinessDays
-const agBizDays = (a, b) => { let n = 0; for (let d = addJ(parseD(a), 1); iso(d) <= b; d = addJ(d, 1)) if (d.getDay() !== 0 && d.getDay() !== 6) n++; return n; };
-// une séance comptée une fois : ligne du site d'une bourse qui répète TOBB (même tonnage ; sinon total du site = total de TOBB) écartée (Ses69.SiteDrop)
-function agDedup(list) {
-  const by = new Map(), drop = new Set();
-  list.forEach(r => { let g = by.get(r.ek); if (!g) by.set(r.ek, g = []); g.push(r); });
-  by.forEach(g => {
-    const pool = g.filter(r => r.tobb); if (!pool.length) return; const rest = [];
-    g.filter(r => !r.tobb).sort((a, b) => b.t - a.t).forEach(s => { const j = pool.findIndex(x => agNear(x.t, s.t)); if (j >= 0) { drop.add(s); pool.splice(j, 1); } else rest.push(s); });
-    if (rest.length && pool.length && agNear(agSum(rest), agSum(pool))) rest.forEach(s => drop.add(s));
-  });
-  return drop.size ? list.filter(r => !drop.has(r)) : list;
-}
-// médiane pondérée (Vw76.WMedian)
-function agWMed(pw) {
-  const l = pw.filter(x => x[1] > 0).sort((a, b) => a[0] - b[0]); if (!l.length) return NaN;
-  const tot = l.reduce((s, x) => s + x[1], 0), half = tot / 2; let cum = 0;
-  for (let i = 0; i < l.length; i++) { cum += l[i][1]; if (Math.abs(cum - half) < 1e-9 * Math.max(1, tot) && i + 1 < l.length) return (l[i][0] + l[i + 1][0]) / 2; if (cum > half) return l[i][0]; }
-  return l[l.length - 1][0];
-}
-const agMedian = v => { v.sort((a, b) => a - b); const n = v.length; return n % 2 ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2; };
 // dernier point d'une série au plus tard le jour d (série triée)
 function lastOn(a, d) { let lo = 0, hi = a.length - 1, r = null; while (lo <= hi) { const m = (lo + hi) >> 1; if (a[m][0] <= d) { r = a[m]; lo = m + 1; } else hi = m - 1; } return r; }
-const agShort = ex => { const s = String(ex || "").trim(), m = s.match(/^(.*?)\s+(TİCARET BORSASI|TICARET BORSASI|Ticaret Borsası)$/i); if (!m) return s;
-  let n = m[1]; if (n === n.toLocaleUpperCase("tr-TR")) n = n.toLocaleLowerCase("tr-TR").replace(/(^|\s)(\S)/g, (x, a, b) => a + b.toLocaleUpperCase("tr-TR")); return n + " TB"; };
-// mauvais produits écartés à la lecture (Ses69.BadWhy, Cov82.BadWhy) : ensilage, paille, sarrasin, abîmé, tournesol fourrager, importé, produits du maïs
-function agBad(p, lv) {
-  const seg = String(lv || "").split("·"), f = " " + trFold(seg.slice(seg.length > 1 ? 1 : 0).join(" ")) + " ";
-  return /\bS[I]?LAJ\b/.test(f) || /\bSAMAN\b|\bSAPI\b/.test(f) || f.includes("KARABUGDAY") || (p === "BLE" && /\(KARA\)|\bBUGDAY KARA\b/.test(f)) || /\bHASARLI\b/.test(f) ||
-    (p === "TOURNESOL" && /\bYEMLIK\b/.test(f)) || /\bITHAL/.test(f) || (p === "MAIS" && ["IRMIG", "IRMIK", "NISASTA", " UNU ", "GLUTEN", "KEPEG", "KEPEK"].some(w => f.includes(w)));
-}
-// courbe ACHAT (Crt71.Build + Vw76.Day71) et ce qu'il faut aux bandes : activité (Ech70.ActOf), TÜRİB par jour (Bands66.Vwap)
-function agCompute(tsv, exclTsv, fx, cfg) {
-  AG = cfg || AG_DEF;
-  // exclusions par clé du journal agri_exclus69.tsv (règle « cle ») : seulement pour la valeur écartée (moyenne|tonnes|min|max), comme Ses69.Why
-  const excl = new Map(), nums = s => String(s || "").split("|").map(x => x === "" ? null : parseFloat(x));
-  String(exclTsv || "").split(/\r?\n/).forEach((l, i) => { if (!i) return; const c = l.split("\t"); if (c.length >= 9 && c[7] === "cle" && c[0]) excl.set(c[0], nums(c[8])); });
-  const same = (a, b) => a.length === b.length && a.every((x, i) => (x == null) === (b[i] == null) && (x == null || Math.abs(x - b[i]) <= 1e-9 * Math.max(1, Math.abs(x))));
-  const L = String(tsv || "").split(/\r?\n/), H = (L[0] || "").replace(/^﻿/, "").split("\t"), ix = n => H.indexOf(n);
-  const I = { d: ix("date"), p: ix("produit"), n: ix("nature"), lv: ix("niveau"), u: ix("unite"), mn: ix("min"), mx: ix("max"), av: ix("moyenne"), vol: ix("volume_t"), src: ix("source"), key: ix("cle") };
-  if (Object.keys(I).some(k => I[k] < 0)) throw Object.assign(new Error(t("mkErr") + " (agri_physique.tsv)"), { cle: null });
-  const td = todayIso(), num = s => { const v = parseFloat(String(s == null ? "" : s).replace(",", ".")); return isFinite(v) ? v : null; };
-  const recs = { BLE: [], MAIS: [], TOURNESOL: [] };
-  for (let i = 1; i < L.length; i++) {
-    const c = L[i].split("\t"); if (c.length < H.length || c[I.n] !== "TRX") continue;
-    const p = c[I.p]; if (!recs[p]) continue;
-    const d = c[I.d]; if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || d > td) continue;
-    const k = c[I.u] === "TRY/kg" ? 1 : c[I.u] === "TRY/t" ? 0.001 : 0; if (!k) continue;
-    const av = num(c[I.av]), vol = num(c[I.vol]); if (!(av > 0) || !(vol > 0)) continue;
-    const key = c[I.key] || "", lv = c[I.lv] || "";
-    if (agBad(p, lv) || (excl.has(key) && same(excl.get(key), [av, vol, num(c[I.mn]), num(c[I.mx])]))) continue;
-    const j = lv.indexOf("·"), ex = (j > 0 ? lv.slice(0, j) : c[I.src] || "").trim();
-    recs[p].push({ d, key, lv, ex, ek: agExKey(ex), avg: av * k, t: vol, tobb: key.startsWith("tobb|"), turib: key.startsWith("tr61|turib|") });
-  }
-  const sellOn = d => { const s = lastOn(fx.sell, d); return s && s[1] > 0 && daysBetween(s[0], d) <= AGK.FX_DAYS ? s[1] : null; };   // Ech70.SellAtOrBefore
-  const fxOn = d => {   // Crt71.Fx : TCMB vendeur, sinon croisé BCE (EUR/TRY ÷ EUR/USD), chacun au plus 7 jours avant
-    const s = sellOn(d); if (s) return { v: s, ecb: false };
-    const e = lastOn(fx.eurTry, d), x = lastOn(fx.eurUsd, d);
-    if (e && x && e[1] > 0 && x[1] > 0 && daysBetween(e[0], d) <= AGK.FX_DAYS && daysBetween(x[0], d) <= AGK.FX_DAYS) return { v: e[1] / x[1], ecb: true };
-    return null;
-  };
-  const out = {};
-  for (const p of AG_PRODS) {
-    const byD = new Map(); recs[p].forEach(r => { let g = byD.get(r.d); if (!g) byD.set(r.d, g = []); g.push(r); });
-    const dates = Array.from(byD.keys()).sort(), all = [], tu = [];
-    for (const d of dates) {
-      const f = fxOn(d), l = agDedup(byD.get(d));
-      l.forEach(r => all.push(Object.assign({}, r, { D: d, Day: agTday(d), fx: f })));
-      // TÜRİB (Bands66.Vwap, turib) : toutes ses lignes du jour (blé à part écarté), cours TCMB vendeur seulement
-      const tl = l.filter(r => r.turib && !agSpecial(p, r.lv, r.key));
-      if (tl.length) { const T = agSum(tl), kg = tl.reduce((s, r) => s + r.avg * r.t, 0) / T, sv = sellOn(d); tu.push([d, Math.round(T * 1000) / 1000, +kg.toFixed(6), sv ? +(kg * 1000 / sv).toFixed(4) : null]); }
-    }
-    // bornes de vraisemblance (Crt71) : séances d'au moins le volume minimum, tous genres, des « âge maximum » jours qui finissent ce jour-là
-    const big = all.filter(s => s.t >= AG.minT).sort((a, b) => a.D < b.D ? -1 : a.D > b.D ? 1 : 0), odd = new Set(); let lo = 0;
-    if (AG.rl > 0 && AG.rl < 1 && AG.nref != null)
-      for (let i = 0; i < big.length;) {
-        const day = big[i].D; let j = i; while (j < big.length && big[j].D === day) j++;
-        while (lo < big.length && daysBetween(big[lo].D, day) > AG.win) lo++;
-        const refv = big.slice(lo, j).map(s => s.avg);
-        if (refv.length >= AG.nref) { const med = agMedian(refv); for (let q = i; q < j; q++) { const s = big[q]; if (s.avg < med * AG.rl || s.avg > med / AG.rl) odd.add(s); } }
-        i = j;
-      }
-    const byDay = new Map(); all.forEach(s => { let g = byDay.get(s.Day); if (!g) byDay.set(s.Day, g = []); g.push(s); });
-    const days = [], names = {}, act = new Map();
-    for (const D of Array.from(byDay.keys()).sort()) {
-      let In = byDay.get(D).filter(s => s.t >= AG.minT && !odd.has(s) && agOurs(p, s.lv, s.key));
-      if (!In.length) continue;
-      // activité du côté acheteurs (Ech70.ActOf) : séances de l'échelle, date réelle de chaque séance et son jour de bourse
-      In.forEach(s => { const a = act.get(s.D) || [s.D, s.Day, 0]; a[2] += s.t; act.set(s.D, a); });
-      if (In.length >= AGK.MIN_SCREEN) {   // Vw76 : médiane pondérée par les tonnes ± 3 écarts robustes (plancher 2 %)
-        const med = agWMed(In.map(s => [s.avg, s.t])), mad = agWMed(In.map(s => [Math.abs(s.avg - med), s.t])), lim = AGK.K * Math.max(AGK.SCALE * mad, AGK.FLOOR * Math.abs(med));
-        In = In.filter(s => !(Math.abs(s.avg - med) > lim + 1e-12));
-      }
-      const T0 = agSum(In), vw = In.reduce((s, x) => s + x.avg * x.t, 0) / T0, withFx = In.filter(s => s.fx && s.fx.v > 0);
-      const su = withFx.reduce((s, x) => s + x.avg * 1000 / x.fx.v * x.t, 0), tf = agSum(withFx), usd = withFx.length === In.length ? su / T0 : null;
-      const bx = {}; In.forEach(s => { const b = bx[s.ek] || (bx[s.ek] = { t: 0, u: 0, ok: true }); b.t += s.t; if (s.fx && s.fx.v > 0) b.u += s.avg * 1000 / s.fx.v * s.t; else b.ok = false;
-        if (!names[s.ek] || (names[s.ek] === names[s.ek].toUpperCase() && s.ex !== s.ex.toUpperCase())) names[s.ek] = s.ex; });
-      days.push({ d: D, vw: +vw.toFixed(4), u: usd == null ? null : +usd.toFixed(2), t: Math.round(T0 * 1000) / 1000, n: In.length, x: Object.keys(bx).length, e: In.some(s => s.fx && s.fx.ecb) ? 1 : 0,
-                  su: +su.toFixed(3), tf: Math.round(tf * 1000) / 1000, bx: Object.keys(bx).map(k => [k, Math.round(bx[k].t * 10) / 10, bx[k].ok ? +(bx[k].u / bx[k].t).toFixed(2) : null]) });
-    }
-    // dernier jour de chaque bourse (au plus 15 jours avant le dernier jour du produit)
-    const exLast = [], seen = new Set(), lastD = days.length ? days[days.length - 1].d : null;
-    for (let i = days.length - 1; i >= 0 && lastD && daysBetween(days[i].d, lastD) <= AGK.EX_DAYS; i--)
-      days[i].bx.forEach(b => { if (seen.has(b[0])) return; seen.add(b[0]); exLast.push({ n: agShort(names[b[0]] || b[0]), d: days[i].d, t: b[1], u: b[2] }); });
-    exLast.sort((a, b) => b.t - a.t);
-    days.forEach(x => delete x.bx);
-    out[p] = { days, exLast, tu, act: Array.from(act.values()).sort((a, b) => a[0] < b[0] ? -1 : 1).map(a => [a[0], a[1], Math.round(a[2] * 1000) / 1000]) };
-  }
-  return out;
-}
-// fenêtre de liquidité du côté acheteurs au jour asOf (Vw76.WindowOf → Ech70.Acts, Measure, WindowOf) : tonnes par jour de bourse de chaque produit
-// sur les « max(âge des séances, âge des prix publics) » derniers jours ; le plus actif : fenêtre minimale ; sans activité : maximale
-function agWin(res, p, asOf, cfg) {
-  if (!cfg || cfg.wmin == null) return cfg ? cfg.wmax : AG_DEF.wmax;
-  const from = iso(addJ(parseD(asOf), -Math.max(cfg.win, cfg.pubAge))), m = {};
-  AG_PRODS.forEach(q => { const rows = ((res[q] || {}).act || []).filter(a => a[0] >= from && a[0] <= asOf), days = new Set(rows.map(a => a[1]));
-    m[q] = days.size ? rows.reduce((s, a) => s + a[2], 0) / days.size : 0; });
-  const vals = AG_PRODS.map(q => m[q]), mx = Math.max(...vals), active = vals.filter(v => v > 0).length;
-  if (active <= 1 || !(m[p] > 0)) return cfg.wmax;
-  const w = Math.round(cfg.wmin + (cfg.wmax - cfg.wmin) * (1 - Math.max(0, Math.min(1, m[p] / mx))));
-  return Math.max(cfg.wmin, Math.min(cfg.wmax, w));
-}
-// bande « Destination TR · transactions » (Vw76.Destination) : VWAP de toutes les séances gardées des w derniers jours de bourse au plus tard asOf
-function agBand(r, asOf, w) {
-  const ds = (r ? r.days : []).filter(d => d.d <= asOf), sel = ds.slice(Math.max(0, ds.length - w)); if (!sel.length) return null;
-  const tf = sel.reduce((s, d) => s + (d.tf || 0), 0), su = sel.reduce((s, d) => s + (d.su || 0), 0), to = sel[sel.length - 1].d;
-  return { u: tf > 0 ? su / tf : null, t: sel.reduce((s, d) => s + d.t, 0), n: sel.reduce((s, d) => s + d.n, 0), days: sel.length, from: sel[0].d, to, fresh: agBizDays(to, asOf) <= AGK.FRESH_BD };
-}
-// bande TÜRİB (Bands66.Vwap, turib) : dernier jour complet (Suite83.CompleteDay), au moins 250 t, cours TCMB vendeur
-function agTurib(r, asOf, w, cfg) {
-  const ds = (r ? r.tu : []).filter(x => x[0] <= asOf).sort((a, b) => a[0] < b[0] ? 1 : -1); if (!ds.length) return null;
-  let pick = ds[0];
-  if (cfg && cfg.pct > 0) {
-    const ww = Math.max(AGK.MIN_HIST, w);
-    for (let i = 0; i < ds.length; i++) {
-      const hist = ds.slice(i + 1, i + 1 + ww).map(x => x[1]).filter(x => x > 0); if (hist.length < AGK.MIN_HIST) break;
-      if (ds[i][1] >= agMedian(hist) * cfg.pct / 100) { pick = ds[i]; break; }
-    }
-  }
-  return { d: pick[0], t: pick[1], kg: pick[2], u: pick[3], valid: pick[1] >= AGK.TURIB_MIN_T, fresh: agBizDays(pick[0], asOf) <= AGK.FRESH_BD, skipped: pick !== ds[0] };
-}
-let agRes = null;   // résultat gardé (us « mka ») : { sig, m, res, cfg }
-// réglages de GRANORE CTRM (dossier data, parent du dossier des cours) : relus si plus vieux que 6 h (ou ↻) et si le fichier a changé
-async function agCfgLoad(L, force) {
-  let c = us.get("mkcfg", null);
-  if (c && !force && Date.now() - c.at < 6 * 3600e3) return c.cfg;
-  try {
-    const dir = L.dir, mi = await (await gfetch((dir.id ? "/drives/" + dir.driveId + "/items/" + dir.id : drivePath(dir.driveId, dir.path)) + "?$select=id,parentReference")).json();
-    const pid = mi.parentReference && mi.parentReference.id; if (!pid) throw new Error("data ?");
-    const fi = await (await gfetch("/drives/" + dir.driveId + "/items/" + pid + ":/stark_donnees.xml?$select=id,name,size,eTag,lastModifiedDateTime,@microsoft.graph.downloadUrl")).json();
-    if (c && c.e === fi.eTag && c.cfg && c.cfg.src === "xml") { c.at = Date.now(); us.set("mkcfg", c); return c.cfg; }
-    const cfg = agCfgParse((await mkRead(L, fi, null)).text); if (!cfg) throw new Error("Settings ?");
-    c = { e: fi.eTag, at: Date.now(), cfg }; us.set("mkcfg", c); return cfg;
-  } catch (e) {
-    if (e && (e.errorCode || e.cle === "offline")) throw e; console.warn(e);
-    return c && c.cfg ? Object.assign({}, c.cfg, { src: "old" }) : Object.assign({}, AG_DEF);
-  }
-}
-async function agLoad(L, force) {
-  const f = L.files["agri_physique.tsv"]; if (!f) throw Object.assign(new Error(tf("mkNoFile", "agri_physique.tsv")), { cle: null });
-  const need = mkNeed(), fx = { sell: [], eurTry: [], eurUsd: [] }, ids = ["USD-TRY-VTE", "EUR-TRY", "EUR-USD"];
-  const cfg = await agCfgLoad(L, force), cs = JSON.stringify([cfg.minT, cfg.win, cfg.pubAge, cfg.rl, cfg.nref, cfg.durum, cfg.more, cfg.pct, cfg.wmin, cfg.wmax]);
-  const ex = L.files["agri_exclus69.tsv"], sig = ["a124b", cs, f.eTag, ex ? ex.eTag : "-"].concat(ids.map(i => L.files[i + ".csv"] ? L.files[i + ".csv"].eTag : "-")).join("|");
-  agRes = agRes || us.get("mka", null);   // version de la méthode et réglages dans l'empreinte : un autre calcul est refait
-  if (agRes && agRes.sig === sig && !force) { agRes.cfg = cfg; return agRes; }
-  const ss = {}; await inBatches(ids, 3, async id => { ss[id] = await serLoad(L, id, need); });
-  fx.sell = (ss["USD-TRY-VTE"] || {}).pts || []; fx.eurTry = (ss["EUR-TRY"] || {}).pts || []; fx.eurUsd = (ss["EUR-USD"] || {}).pts || [];
-  const [tsv, exl] = await Promise.all([mkRead(L, f, null), ex ? mkRead(L, ex, null) : Promise.resolve({ text: "" })]);
-  const res = agCompute(tsv.text, exl.text, fx, cfg);
-  agRes = { sig, m: f.lastModifiedDateTime || "", res, cfg };
-  if (!us.set("mka", agRes)) console.warn("mka non gardé");
-  return agRes;
-}
-// bandes ACHAT au jour asOf (DOM du PC) et celles du jour de bourse précédent (variation)
-function agBands(p, asOf) {
-  const R = agRes && agRes.res, r = R && R[p], cfg = (agRes && agRes.cfg) || AG_DEF; if (!r) return null;
-  const w = agWin(R, p, asOf, cfg), b = agBand(r, asOf, w), tr = agTurib(r, asOf, w, cfg);
-  let prev = null; if (b) { const pd = r.days.filter(d => d.d < b.to).pop(); if (pd) { const w2 = agWin(R, p, pd.d, cfg); prev = agBand(r, pd.d, w2); } }
-  return { w, b, prev, tr, cfg };
-}
 
 // ---------- chargement d'un écran de cours ----------
-const mkSideOf = () => isGr() ? us.get("mkSide", "agri") : "metaux";
 async function mkRefresh(force) {
-  const ed = edition, side = mkSideOf(); if (mkBusy || DEMO) return; mkBusy = true; mkErr = null; let changed = false;
+  const ed = "atlas"; if (mkBusy || DEMO) return; mkBusy = true; mkErr = null; let changed = false;
   try {
     const L = await mkList(ed, force); if (!L) { mkErr = { msg: t("mkNoDir") }; return; }
-    const need = mkNeed(), ret = await retiredLoad(L); mkStamp[ed + side] = Date.now();
-    if (side === "agri") { await agLoad(L, force); await inBatches(AG_FOB[mkProd()] || [], 3, id => serLoad(L, id, need)); }
-    else { const ids = MET_IDS.filter(id => L.files[id + ".csv"]), sel = mkSel(); const extra = [].concat((MKS[sel] || {}).band || []);
-           await inBatches(ids.concat(extra), 4, id => serLoad(L, id, need)); }
+    const need = mkNeed(), ret = await retiredLoad(L); mkStamp[ed] = Date.now();
+    const ids = MET_IDS.filter(id => L.files[id + ".csv"]), sel = mkSel(), extra = [].concat((MKS[sel] || {}).band || []);
+    await inBatches(ids.concat(extra), 4, id => serLoad(L, id, need));
     mkRet[ed] = ret; changed = true;
   } catch (e) { console.warn(e); mkErr = { msg: (e && e.cle ? t(e.cle) : e && e.status ? t("mkErr") + " (Graph " + e.status + ")" : e && e.message) || t("mkErr") }; }
-  finally { mkBusy = false; if ((changed || mkErr) && edition === ed && (tab === "mkts" || tab === "home") && !document.querySelector(".sheet-bg")) render(); }
+  finally { mkBusy = false; if ((changed || mkErr) && (tab === "mkts" || tab === "home") && !document.querySelector(".sheet-bg")) render(); }
 }
 const mkRet = {};
-const serOf = (id, ed) => { const c = us.get("mks." + (ed || edition) + "." + id, null), r = mkRet[ed || edition]; if (!c) return null;
+const serOf = (id, ed) => { const c = us.get("mks." + (ed || "atlas") + "." + id, null), r = mkRet[ed || "atlas"]; if (!c) return null;
   return r && r.size ? Object.assign({}, c, { pts: c.pts.filter(p => !r.has(id + "|" + p[0])) }) : c; };
-const mkProd = () => { const p = us.get("mkProd", "BLE"); return AG_PRODS.includes(p) ? p : "BLE"; };
-const mkSel = () => { const s = us.get("mkSel." + edition, "CO-STD"); return MET_IDS.includes(s) ? s : MET_IDS[0]; };
+const mkSel = () => { const s = us.get("mkSel.atlas", "CO-STD"); return MET_IDS.includes(s) ? s : MET_IDS[0]; };
 const mkPer = () => { const p = us.get("mkPer", "3M"); return ["1M", "3M", "6M", "1A"].includes(p) ? p : "3M"; };
 const perFrom = p => { const d = parseD(todayIso()); return iso(p === "1M" ? addJ(d, -31) : p === "3M" ? new Date(d.getFullYear(), d.getMonth() - 3, d.getDate()) : p === "6M" ? new Date(d.getFullYear(), d.getMonth() - 6, d.getDate()) : new Date(d.getFullYear() - 1, d.getMonth(), d.getDate())); };
 const chgHtml = (v, p) => { if (v == null || p == null || !(p !== 0)) return '<span class="muted">—</span>'; const r = (v - p) / Math.abs(p) * 100, a = Math.abs(r) < 0.05;
@@ -3731,26 +3390,19 @@ function drawChart(el, spec) {
 
 // ---------- écran Marchés ----------
 function renderMarkets() {
-  const side = mkSideOf(), per = mkPer(), ed = edition;
+  const per = mkPer(), ed = "atlas";
   if (DEMO) { $("#main").innerHTML = fbar(t("mkTab"), "") + '<div class="mk-msg">' + esc(t("demo")) + ' : ' + esc(t("noData")) + '</div>'; return; }   // démo : aucun cours (rien n'est lu)
-  if (side === "agri" && !agRes) agRes = us.get("mka", null);   // dernier calcul gardé : montré tout de suite, relu ensuite
-  let h = fbar(t("mkTab") + (isGr() ? " · GRANORE" : " · ATLAS"), "");
-  if (isGr() && !data && grInfo) h += '<div class="mk-msg">' + esc(t(grInfo === "noStark" ? "grNoStark" : "grNoExport")) + '</div>';
-  if (isGr()) h += '<div class="seg mk-seg" id="mkSide">' + [["agri", t("agri")], ["metaux", t("metaux")]].map(x => '<button data-sd="' + x[0] + '" class="' + (side === x[0] ? "on" : "") + '">' + esc(x[1].toUpperCase()) + '</button>').join("") + '</div>';
-  if (side === "agri") h += agHtml(per); else h += metHtml(per);
+  let h = fbar(t("mkTab") + " · ATLAS", "") + metHtml(per);
   if (mkErr) h += '<div class="mk-msg err">' + esc(mkErr.msg) + '<br><button class="btn light" id="mkRetry">' + esc(t("retry2")) + '</button></div>';
   $("#main").innerHTML = h;
   // date des données : heure d'écriture du fichier lu (relevé de l'app du PC)
-  const fb = $("#main .fbar .fb-r");
-  const stamp = side === "agri" ? (agRes && agRes.m) : (serOf(mkSel()) || {}).m;
+  const fb = $("#main .fbar .fb-r"), stamp = (serOf(mkSel()) || {}).m;
   fb.textContent = mkBusy ? t("mkLoading") : stamp ? tf("mkRead", dtShort(stamp)) : "";
-  if ($("#mkSide")) $("#mkSide").querySelectorAll("[data-sd]").forEach(b => b.onclick = () => { us.set("mkSide", b.dataset.sd); mkErr = null; render(); });
   $("#main").querySelectorAll("[data-per]").forEach(b => b.onclick = () => { us.set("mkPer", b.dataset.per); render(); });
-  $("#main").querySelectorAll("[data-pr]").forEach(b => b.onclick = () => { us.set("mkProd", b.dataset.pr); render(); mkRefresh(false); });
-  $("#main").querySelectorAll("[data-mk]").forEach(b => b.onclick = () => { us.set("mkSel." + edition, b.dataset.mk); render(); window.scrollTo(0, 0); mkRefresh(false); });
+  $("#main").querySelectorAll("[data-mk]").forEach(b => b.onclick = () => { us.set("mkSel.atlas", b.dataset.mk); render(); window.scrollTo(0, 0); mkRefresh(false); });
   if ($("#mkRetry")) $("#mkRetry").onclick = () => { mkErr = null; mkRefresh(true); render(); };
-  if (side === "agri") agDraw(per); else metDraw(per);
-  if (!mkBusy && (!mkStamp[ed + side] || Date.now() - mkStamp[ed + side] > 90000) && !mkErr) { mkRefresh(false).then(() => {}); fb.textContent = t("mkLoading"); }
+  metDraw(per);
+  if (!mkBusy && (!mkStamp[ed] || Date.now() - mkStamp[ed] > 90000) && !mkErr) { mkRefresh(false).then(() => {}); fb.textContent = t("mkLoading"); }
 }
 const perHtml = per => '<div class="mk-per" role="group">' + ["1M", "3M", "6M", "1A"].map(p => '<button data-per="' + p + '" class="' + (per === p ? "on" : "") + '" aria-pressed="' + (per === p) + '">' + esc(t("per" + p)) + '</button>').join("") + '</div>';
 function metHtml(per) {
@@ -3761,7 +3413,7 @@ function metHtml(per) {
   h += perHtml(per) + '<div class="mk-chart" id="mkc"></div><div class="mk-read" id="mkr"></div>';
   // moniteur : une ligne par série, la choisie en bleu ; toucher : sa courbe
   h += '<div class="mk-list"><div class="hm-h"><span>' + esc(t("mkMonitor")) + '</span><span>' + esc(t("mkLastShort")) + " · " + esc(t("mkChg")) + '</span></div>' + MET_IDS.map(id => {
-    const c = serOf(id), q = c && c.pts, l = q && q[q.length - 1], pv = q && q[q.length - 2], mm = MKS[id]; if (!c && mkMem[edition] && !mkMem[edition].files[id + ".csv"]) return "";
+    const c = serOf(id), q = c && c.pts, l = q && q[q.length - 1], pv = q && q[q.length - 2], mm = MKS[id]; if (!c && mkMem.atlas && !mkMem.atlas.files[id + ".csv"]) return "";
     return '<button class="mk-row' + (id === sel ? " on" : "") + '" data-mk="' + id + '"><span class="mk-n">' + esc(mkName(id)) + '<small>' + esc(l ? mkDate(l[0]) + (mm.u ? " · " + mm.u : "") : "—") + '</small></span><span class="mk-v">' + esc(l ? mkFmt(l[1], mm.d) : "—") + '</span><span class="mk-c">' + (l ? chgHtml(l[1], pv && pv[1]) : "") + '</span></button>';
   }).join("") + '</div>';
   return h;
@@ -3772,54 +3424,9 @@ function metDraw(per) {
   let band = null; if (m.band) { const lo = serOf(m.band[0]), hi = serOf(m.band[1]); if (lo && hi) band = lo.pts.map(p => { const q = lastOn(hi.pts, p[0]); return q && q[0] === p[0] ? [p[0], p[1], q[1]] : null; }).filter(Boolean); }
   drawChart($("#mkc"), { series, band, from: perFrom(per), readEl: $("#mkr"), label: mkName(sel) });
 }
-function agHtml(per) {
-  const p = mkProd(), r = agRes && agRes.res && agRes.res[p], asOf = todayIso(), B = r ? agBands(p, asOf) : null, b = B && B.b;
-  let h = '<div class="seg mk-seg" id="mkProd">' + AG_PRODS.map(x => '<button data-pr="' + x + '" class="' + (p === x ? "on" : "") + '">' + esc(t("p" + x + "s")) + '</button>').join("") + '</div>';
-  // en tête : la bande « Destination TR » du DOM du PC (VWAP robuste sur la fenêtre de liquidité), variation sur la bande du jour de bourse précédent
-  h += '<div class="mk-head"><span class="mk-name">' + esc(t("p" + p) + " · " + t("mkDest")) + '</span>' +
-    (b && b.u != null ? '<span class="mk-last pos">' + esc(nfx(b.u, 1)) + '<small>USD/t</small></span><span class="mk-chg">' + chgHtml(b.u, B.prev && B.prev.u) + ' <span class="muted">1J</span>' + (b.fresh ? "" : ' <span class="warn">' + esc(t("mkStale")) + '</span>') + '</span>' +
-      '<span class="mk-meta">' + esc(tf("mkDestM", B.w, fmtDM(b.from), fmtDM(b.to), nf(b.t), b.n)) + '</span>'
-      : '<span class="mk-meta">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</span>') + '</div>';
-  h += perHtml(per) + '<div class="mk-chart" id="mkc"></div><div class="mk-read" id="mkr"></div>';
-  // légende : courbe ACHAT (vert), bandes ACHAT du DOM (jaune), références FOB (vente, rouge) : dernier cours, date, source
-  const last = r && r.days.length ? r.days[r.days.length - 1] : null, tr = B && B.tr;
-  h += '<div class="mk-leg"><div><i style="background:#36c24a"></i><span>' + esc(t("mkVwapL")) + '</span><b class="pos">' + esc(last && last.u != null ? nfx(last.u, 1) : "—") + '</b>' +
-    (last ? '<small style="grid-column:2 / -1">' + esc(mkDate(last.d) + " · " + nf(last.t) + " t · " + tf("mkSes", last.n, last.x) + " · " + nfx(last.vw, 3) + " TRY/kg") + '</small>' : "") + '</div>';
-  if (b) h += '<div><i class="dash" style="background:#ffc940;color:#ffc940"></i><span>' + esc(t("mkDestL")) + '</span><b style="color:#ffc940">' + esc(b.u == null ? "—" : nfx(b.u, 1)) + '</b><small style="grid-column:2 / -1">' + esc(tf("mkDestM", B.w, fmtDM(b.from), fmtDM(b.to), nf(b.t), b.n)) + '</small></div>';
-  if (tr) h += '<div><i class="dot" style="background:#ffc940;color:#ffc940"></i><span>' + esc(t("mkTurib")) + '</span><b style="color:#ffc940">' + esc(tr.valid && tr.u != null ? nfx(tr.u, 1) : "—") + '</b><small style="grid-column:2 / -1">' +
-    esc(mkDate(tr.d) + " · " + nf(tr.t) + " t" + (tr.valid ? "" : " · " + t("mkTuribMin")) + (tr.u == null ? " · " + t("mkNoFx") : "") + (tr.fresh ? "" : " · " + t("mkStale")) + (tr.skipped ? " · " + t("mkComplete") : "")) + '</small></div>';
-  const fobs = AG_FOB[p] || [];
-  fobs.forEach((id, i) => { const s = serOf(id), l = s && s.pts[s.pts.length - 1], st = FOB_STYLE[i] || FOB_STYLE[0];
-    h += '<div><i class="' + (st.dash ? (st.dash.startsWith("2") ? "dot" : "dash") : "") + '" style="background:' + st.c + ';color:' + st.c + '"></i><span>' + esc(mkName(id)) + '</span><b class="neg">' + esc(l ? nfx(l[1], 1) : "—") + '</b>' +
-      (l ? '<small style="grid-column:2 / -1">' + esc(mkDate(l[0]) + " · " + mkSrc(s.src)) + '</small>' : "") + '</div>'; });
-  if (!fobs.length) h += '<div><i></i><span class="muted">' + esc(t("mkNoFob")) + '</span><b></b></div>';
-  h += '</div>';
-  // dernier jour de chaque bourse : les 10 plus gros volumes, les autres repliés
-  const exRow = x => '<tr><td>' + esc(x.n) + '</td><td>' + esc(fmtDM(x.d)) + '</td><td>' + esc(nf(x.t)) + '</td><td class="pos">' + esc(x.u == null ? "—" : nfx(x.u, 1)) + '</td></tr>';
-  const exHead = '<thead><tr><th>' + esc(t("mkByEx")) + '</th><th>' + esc(t("mkDay")) + '</th><th>t</th><th>USD/t</th></tr></thead>';
-  if (r && r.exLast.length) h += '<table class="mk-tab">' + exHead + '<tbody>' + r.exLast.slice(0, 10).map(exRow).join("") + '</tbody></table>' +
-    (r.exLast.length > 10 ? uiFold(tf("mkMoreEx", r.exLast.length - 10), '<table class="mk-tab">' + exHead + '<tbody>' + r.exLast.slice(10).map(exRow).join("") + '</tbody></table>', "mkex") : "");
-  const cfg = agRes && agRes.cfg;
-  h += '<p class="mk-src">' + esc(tf("mkSrcAgri", cfg ? nf(cfg.minT) : "—")) + (cfg && cfg.src !== "xml" ? '<br><span class="warn">' + esc(t(cfg.src === "old" ? "mkCfgOld" : "mkCfgDef")) + '</span>' : "") + '</p>';
-  return h;
-}
-function agDraw(per) {
-  const p = mkProd(), r = agRes && agRes.res && agRes.res[p], el = $("#mkc");
-  if (!r) { if (el) el.innerHTML = '<div class="mk-empty">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</div>'; return; }
-  const pts = r.days.filter(x => x.u != null).map(x => [x.d, x.u]), series = [{ pts, color: "#36c24a", d: 1, short: "TR", w: 2 }];
-  const B = agBands(p, todayIso()); if (B && B.b && B.b.u != null) series.push({ pts: [[B.b.from, B.b.u], [todayIso(), B.b.u]], color: "#ffc940", dash: "6 3", d: 1, short: "DEST", w: 1.4, marks: false });
-  (AG_FOB[p] || []).forEach((id, i) => { const s = serOf(id), st = FOB_STYLE[i] || FOB_STYLE[0]; if (s && s.pts.length) series.push({ pts: s.pts, color: st.c, dash: st.dash, d: 1, short: id.replace(/^CE-FOB-|^MOEX-/, "").replace(/-BLE$|-MAIS$/, ""), w: 1.4 }); });
-  drawChart(el, { series, vol: r.days.map(x => [x.d, x.t]), volOf: true, from: perFrom(per), readEl: $("#mkr"), label: t("p" + p) });
-}
-
 // ---------- écran Jour (fiche Head) : ce qui demande une action, en un coup d'œil, chaque bloc ouvre son détail ----------
 function quoteRows() {
-  // GRANORE : bande « Destination TR » du DOM par produit ; Atlas : métaux (courbes lues, sinon derniers cours de la fiche)
-  if (isGr()) {
-    const rs = agRes && agRes.res; if (!rs) return [];
-    return AG_PRODS.map(p => { const B = agBands(p, todayIso()), b = B && B.b;
-      return b && b.u != null ? { n: t("p" + p) + " · " + t("mkDestS"), d: b.to, v: b.u, pv: B.prev && B.prev.u, dec: 1, u: "USD/t", cls: "pos", go: ["agri", p] } : null; }).filter(Boolean);
-  }
+  // métaux : courbes lues, sinon derniers cours de la fiche
   const fm = Array.isArray(data && data.marches) ? data.marches : [];
   return ["CO-STD", "LME-NI", "LME-CU", "COMEX-CU"].map(id => {
     const s = serOf(id), l = s && s.pts[s.pts.length - 1], pv = s && s.pts[s.pts.length - 2], f = fm.find(x => x && x.id === id && typeof x.v === "number");
@@ -3830,7 +3437,6 @@ function quoteRows() {
 function renderHome() {
   if (!data) { tab = "mkts"; renderMarkets(); return; }
   const a = alData(), tr = data.tresorerie, g = data.genere ? new Date(data.genere) : null;
-  if (isGr() && !agRes) agRes = us.get("mka", null);
   let h = fbar(t("home") + " · " + fmtDM(today), g && !isNaN(g) ? tf("hmData", dtShort(data.genere)) : "");
   if (a) {
     const n = k => alN(a, k), tile = (lab, v, cls) => '<span class="hm-tile"><small>' + esc(lab) + '</small><b class="' + (v > 0 ? cls : "zero") + '">' + v + '</b></span>';
@@ -3855,29 +3461,21 @@ function renderHome() {
   if ($("#hmTr")) $("#hmTr").onclick = () => goTab("treso");
   $("#hmCal").onclick = () => goTab("cal"); $("#hmMk").onclick = () => goTab("mkts");
   $("#main").querySelectorAll(".hm-op[data-ref]").forEach(b => b.onclick = () => editOp(b.dataset.ref));
-  $("#main").querySelectorAll("[data-q]").forEach(b => b.onclick = () => { const x = q[+b.dataset.q]; if (x && x.go) { if (isGr()) { us.set("mkSide", x.go[0]); if (x.go[0] === "agri") us.set("mkProd", x.go[1]); } else us.set("mkSel." + edition, x.go[1]); } goTab("mkts"); });
+  $("#main").querySelectorAll("[data-q]").forEach(b => b.onclick = () => { const x = q[+b.dataset.q]; if (x && x.go) us.set("mkSel.atlas", x.go[1]); goTab("mkts"); });
   // aucun téléchargement ici : derniers cours de la fiche, ou des courbes déjà lues (écran Marchés)
 }
-function goTab(k) { tab = k; us.set(tabKey(), k); selDay = null; render(); window.scrollTo(0, 0); }
-// GRANORE sans fiche : Marchés et Réglages seulement
-function tabsGr() {
-  const list = [["mkts", ICONES.mkts, t("mkTab")], ["settings", ICONES.gear, t("settings")]];
-  if (!list.some(x => x[0] === tab)) tab = "mkts";
-  $("#nav").innerHTML = list.map(x => '<button data-tab="' + x[0] + '" class="' + (x[0] === tab ? "on" : "") + '">' + x[1] + esc(x[2]) + '</button>').join("");
-  $("#nav").querySelectorAll("button").forEach(b => b.onclick = () => goTab(b.dataset.tab));
-}
-// Réglages : dossiers trouvés et liens de secours des dossiers de cours
+function goTab(k) { tab = k; us.set("tab", k); selDay = null; render(); window.scrollTo(0, 0); }
+// Réglages (direction) : dossier des cours trouvé et lien de secours
 function settingsMk() {
-  if (!edOk() && !FIXTURE) return "";
+  if ((DEMO || us.get("headOk", false) !== true) && !FIXTURE) return "";
   const r = us.get("roots", null);
-  return '<section class="card"><h2>' + esc(t("foldersFound")) + '</h2><div class="kv"><span>Atlas</span><span class="mono">' + esc(r && r.atlas != null ? r.atlas || "/" : "—") + '</span></div><div class="kv"><span>GRANORE CTRM</span><span class="mono">' + esc(r && r.stark != null ? r.stark || "/" : "—") + '</span></div>' +
+  return '<section class="card"><h2>' + esc(t("foldersFound")) + '</h2><div class="kv"><span>Atlas</span><span class="mono">' + esc(r && r.atlas != null ? r.atlas || "/" : "—") + '</span></div>' +
     '<label for="mkLa">' + esc(t("mkLinkAtlas")) + '</label><input id="mkLa" autocapitalize="off" autocorrect="off" value="' + esc(us.get("mkLink.atlas", "")) + '">' +
-    '<label for="mkLg">' + esc(t("mkLinkGr")) + '</label><input id="mkLg" autocapitalize="off" autocorrect="off" value="' + esc(us.get("mkLink.granore", "")) + '">' +
     '<button class="btn light" id="mkSave">' + esc(t("save")) + '</button></section>';
 }
 function bindSettingsMk() {
   const b = $("#mkSave"); if (!b) return;
-  b.onclick = () => { us.set("mkLink.atlas", $("#mkLa").value.trim()); us.set("mkLink.granore", $("#mkLg").value.trim()); us.set("roots", null); Object.keys(mkMem).forEach(k => delete mkMem[k]); mkStamp = {}; mkErr = null; toast(t("save") + " ✓"); };
+  b.onclick = () => { us.set("mkLink.atlas", $("#mkLa").value.trim()); us.set("roots", null); Object.keys(mkMem).forEach(k => delete mkMem[k]); mkStamp = {}; mkErr = null; toast(t("save") + " ✓"); };
 }
 
 if (!window.ATLAS_ESSAI) boot();
