@@ -787,7 +787,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "124";
+const VERSION_APP = "124b";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -3145,7 +3145,8 @@ Object.assign(T.fr, {
   mkVwap: "Bourses TR · VWAP", mkVwapL: "Moyenne pondérée des bourses turques (achat)", mkSes: "{0} séances · {1} bourses",
   mkPartial: "jour partiel", mkByEx: "Dernier jour par bourse", mkEx: "Bourse", mkDay: "Jour", mkT: "t", mkUsdT: "USD/t",
   mkNoFx: "change du jour manquant", mkFob: "Références FOB (vente, origine)", mkNoFob: "Aucune référence FOB officielle stockée pour ce produit.",
-  mkSrcAgri: "Séances des bourses turques ≥ 50 t, notre produit seulement (toutes classes), doublons TOBB/site comptés une fois, médiane pondérée ± 3 écarts robustes ; USD/t au cours vendeur TCMB (sinon croisé BCE). Annonces, évaluations, prix sans tonnes et analystes : jamais dans la moyenne.",
+  mkSrcAgri: "Courbe ACHAT et bandes : méthode du Carnet agri de GRANORE CTRM (séances des bourses turques ≥ {0} t, notre produit seulement, doublons TOBB/site comptés une fois, chaque jour médiane pondérée ± 3 écarts robustes ; USD/t au cours vendeur TCMB, sinon croisé BCE). Annonces, évaluations, prix sans tonnes et analystes : jamais dans la moyenne.",
+  mkDest: "Destination TR (achat)", mkDestS: "destination TR", mkDestL: "Bande Destination TR · VWAP robuste", mkDestM: "VWAP robuste {0} j de bourse · {1} → {2} · {3} t · {4} séances", mkStale: "ancien", mkTurib: "Bande TÜRİB ELÜS (dernier jour complet)", mkTuribMin: "moins de 250 t : pas de bande", mkComplete: "jour partiel sauté", mkCfgOld: "Réglages de GRANORE CTRM non relus : derniers lus sur ce téléphone.", mkCfgDef: "Réglages de GRANORE CTRM non lus : valeurs relevées le 02/11/2026.",
   mkMonitor: "Moniteur", mkLastShort: "Dernier", mkChg: "Var.",
   grNoExport: "Export téléphone de GRANORE CTRM non activé : trésorerie, alertes et livraisons de GRANORE à compléter (réglage « Telephone » = oui dans GRANORE CTRM). Les cours sont lus directement.",
   grNoStark: "Dossier de GRANORE CTRM (Stark) introuvable dans ce OneDrive.",
@@ -3165,7 +3166,8 @@ Object.assign(T.en, {
   mkVwap: "TR exchanges · VWAP", mkVwapL: "Turkish exchanges' weighted average (buy)", mkSes: "{0} sessions · {1} exchanges",
   mkPartial: "partial day", mkByEx: "Last day per exchange", mkEx: "Exchange", mkDay: "Day", mkT: "t", mkUsdT: "USD/t",
   mkNoFx: "FX of the day missing", mkFob: "FOB references (sell, origin)", mkNoFob: "No official FOB reference stored for this product.",
-  mkSrcAgri: "Turkish exchange sessions ≥ 50 t, our product only (all grades), TOBB/site duplicates counted once, weighted median ± 3 robust deviations; USD/t at the CBRT selling rate (else ECB cross). Ads, assessments, prices without tonnes and analysts: never in the average.",
+  mkSrcAgri: "BUY curve and bands: GRANORE CTRM agri book method (Turkish exchange sessions ≥ {0} t, our product only, TOBB/site duplicates counted once, each day weighted median ± 3 robust deviations; USD/t at the CBRT selling rate, else ECB cross). Ads, assessments, prices without tonnes and analysts: never in the average.",
+  mkDest: "Destination TR (buy)", mkDestS: "destination TR", mkDestL: "Destination TR band · robust VWAP", mkDestM: "robust VWAP {0} trading days · {1} → {2} · {3} t · {4} sessions", mkStale: "old", mkTurib: "TÜRİB ELÜS band (last complete day)", mkTuribMin: "below 250 t: no band", mkComplete: "partial day skipped", mkCfgOld: "GRANORE CTRM settings not re-read: last ones read on this phone.", mkCfgDef: "GRANORE CTRM settings not read: values of 02/11/2026.",
   mkMonitor: "Monitor", mkLastShort: "Last", mkChg: "Chg",
   grNoExport: "GRANORE CTRM phone export not enabled: GRANORE cash, alerts and deliveries to be completed (setting “Telephone” = oui in GRANORE CTRM). Prices are read directly.",
   grNoStark: "GRANORE CTRM (Stark) folder not found in this OneDrive.",
@@ -3370,12 +3372,39 @@ const FOB_STYLE = [{ c: "#ff3b4a", dash: "" }, { c: "#ff7a3d", dash: "6 4" }, { 
 const mkName = id => { const m = MKS[id]; return m ? (lang === "fr" ? m.fr : m.en) : id; };
 const mkFmt = (v, d) => v == null || !isFinite(v) ? "—" : nfx(v, d);
 
-// ---------- agri : courbe journalière des bourses turques (méthode du Carnet agri de GRANORE CTRM) ----------
-// Réglages de Stark relevés le 02/11/2026 (règles de l'utilisateur, pas des cours) : volume minimum d'une séance 50 t ; fenêtre des bornes de
-// vraisemblance 15 jours, prix hors de [0,65 ; 1/0,65] × la médiane retiré dès 3 prix de référence ; codes TOBB du blé à part : 807 (dur),
-// 831 (hors barème), 824 et 825 (fourrager) ; jour complet : tonnes ≥ 25 % de la médiane des jours de séance précédents.
-const AG = { MIN_T: 50, WIN: 15, RL: 0.65, NREF: 3, K: 3, SCALE: 1.4826, FLOOR: 0.02, MIN_SCREEN: 3, FX_DAYS: 7, PCT: 25, HIST: 10, EX_DAYS: 15,
-             DURUM: ["807"], MORE: { "831": "hors barème", "824": "fourrager", "825": "fourrager" } };
+// ---------- agri : courbe ACHAT journalière et bandes ACHAT du DOM (méthode du Carnet agri de GRANORE CTRM : Crt71, Vw76, Agr76, Bands66) ----------
+// Comparée jour par jour au PC le 02/11/2026 (sortie de diagnostic du PC sur une copie des données, 19/10 → 30/10, trois produits) : égale.
+// Seuils lus dans les réglages de GRANORE CTRM (data\stark_donnees.xml, tables Settings et AgriParams), comme le PC : relus au plus toutes les
+// 6 heures ou sur ↻ ; fichier illisible : les derniers lus, sinon les valeurs relevées le 02/11/2026 (dit à l'écran). Constantes du code du PC :
+// écart robuste (Vw76 : 3 × max(1,4826 × MAD, 2 %), au moins 3 séances), change à 7 jours au plus (Ech70.FxDays), TÜRİB au moins 250 t
+// (Bands66.MinTonnes), fraîcheur 2 jours ouvrés (Bands66.ExDays), au moins 3 jours d'historique pour le jour complet (Suite83.MinHist).
+const AGK = { K: 3, SCALE: 1.4826, FLOOR: 0.02, MIN_SCREEN: 3, FX_DAYS: 7, EX_DAYS: 15, TURIB_MIN_T: 250, FRESH_BD: 2, MIN_HIST: 3 };
+const AG_DEF = { minT: 50, win: 15, pubAge: 14, rl: 0.65, nref: 3, durum: ["807"], more: { "831": "hors barème", "824": "fourrager", "825": "fourrager" }, pct: 25, wmin: 5, wmax: 15, src: "def" };
+let AG = AG_DEF;   // réglages du calcul en cours (agCompute)
+const AG_KEYS = { minT: "Bourses turques : volume minimum d'une séance (t)", win: "Bourses turques : âge maximum des transactions (jours)", pubAge: "Carnet : âge maximal des prix publics (jours)",
+  durum: "Bourses turques : blé dur (makarnalık) avec le blé (codes TOBB ana/alt ; vide : écarté)", more: "Bourses turques : autres codes TOBB du blé (ana/alt=marque ; …)",
+  pct: "Carnet agri : bande des bourses, jour complet à partir de (% du volume quotidien médian ; vide : dernier jour)", wmin: "Carnet agri : fenêtre minimale (jours de bourse)", wmax: "Carnet agri : fenêtre maximale (jours)" };
+// lecture des réglages (mêmes règles de validité que Ses69, Ech70, Suite83, Zone60 et AgriParams du PC) ; rien d'autre n'est gardé du fichier
+function agCfgParse(xml) {
+  const un = s => String(s || "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+  const set = {}, prm = {};
+  String(xml || "").replace(/<Settings>\s*<Key>([^<]*)<\/Key>\s*(?:<Value>([^<]*)<\/Value>)?/g, (m, k, v) => { k = un(k); if (!(k in set)) set[k] = un(v); return ""; });
+  String(xml || "").replace(/<AgriParams>\s*<Key>([^<]*)<\/Key>\s*(?:<Value>([^<]*)<\/Value>)?/g, (m, k, v) => { k = un(k); if (!(k in prm)) prm[k] = v == null ? null : un(v); return ""; });
+  if (!Object.keys(set).length) return null;
+  const num = s => { const v = parseFloat(String(s == null ? "" : s).trim().replace(",", ".")); return isFinite(v) ? v : null; };
+  const g = k => num(set[AG_KEYS[k]]), c = { src: "xml" };
+  const mt = g("minT"); c.minT = mt != null && mt >= 0 ? mt : 0;                                   // Ses69.MinT (vide : 0 dans Crt71)
+  const ma = g("win"); c.win = ma != null && ma >= 1 && ma <= 60 ? Math.floor(ma) : 15;             // Ses69.Window = MaxAge, sinon 15
+  const pa = g("pubAge"); c.pubAge = pa != null && pa >= 0 ? Math.floor(pa) : 14;                   // Zone60.MaxAge
+  const pc = g("pct"); c.pct = pc != null && pc > 0 && pc < 100 ? pc : 0;                           // Suite83.Pct (0 : dernier jour)
+  const wn = g("wmin"); c.wmin = wn != null && wn >= 1 && wn <= 60 ? Math.round(wn) : null;        // Ech70.Wmin (vide : fenêtre maximale partout)
+  const wx = g("wmax"); c.wmax = Math.max(wx != null && wx >= 1 && wx <= 60 ? Math.round(wx) : c.win, c.wmin || 1);   // Ech70.Wmax
+  c.durum = String(set[AG_KEYS.durum] || "").split(/\s*[;,]\s*/).map(x => x.trim().match(/^(\d+)\s*\/\s*(\d+)$/)).filter(Boolean).map(m => m[2]);
+  c.more = {}; String(set[AG_KEYS.more] || "").split(/\s*;\s*/).forEach(x => { const m = x.trim().match(/^(\d+)\s*\/\s*(\d+)\s*=\s*(.+)$/); if (m) c.more[m[2]] = m[3].trim(); });
+  const rl = num(prm["CARNET.LEGIT.ROUGE.BAS"]), nr = num(prm["CARNET.LEGIT.REFS"]);              // AgriParams (ligne absente : valeur du 02/11)
+  c.rl = rl != null ? rl : AG_DEF.rl; c.nref = nr != null ? nr : AG_DEF.nref;
+  return c;
+}
 const AG_PRODS = ["BLE", "MAIS", "TOURNESOL"];
 const TRF = { "Ç": "C", "Ğ": "G", "İ": "I", "Ö": "O", "Ş": "S", "Ü": "U", "ı": "I", "Â": "A", "Î": "I", "Û": "U" };
 const trFold = s => String(s || "").toLocaleUpperCase("tr-TR").replace(/[ÇĞİÖŞÜıÂÎÛ]/g, c => TRF[c]).replace(/\s+/g, " ").trim();
@@ -3383,13 +3412,13 @@ const geoFold = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").to
 const agExKey = ex => { let f = trFold(ex); for (const s of [" TICARET BORSASI", " TB"]) if (f.endsWith(s)) f = f.slice(0, -s.length); return f.trim(); };
 const agTok = (folded, ws) => { const tt = folded.split(/[^A-Z0-9]+/); return ws.some(w => tt.includes(w)); };
 const agCode = key => { const k = String(key || "").split("|"); return k.length > 2 && k[0] === "tobb" ? k[1] : null; };
-function agDurum(p, label, key) { if (p !== "BLE") return false; const t0 = " " + trFold(label) + " "; return ["DURUM", "MAKARNALIK", "MAKARNA"].some(w => t0.includes(w)) || AG.DURUM.includes(agCode(key)); }
+function agDurum(p, label, key) { if (p !== "BLE") return false; const t0 = " " + trFold(label) + " "; return ["DURUM", "MAKARNALIK", "MAKARNA"].some(w => t0.includes(w)) || AG.durum.includes(agCode(key)); }
 function agSpecial(p, label, key) {
   if (p !== "BLE") return false; if (agDurum(p, label, key)) return true; const t0 = " " + trFold(label) + " ";
-  return ["YEMLIK", "BAREM DISI", "STANDART DISI", "DUSUK VASIFLI", "DOKERLI"].some(w => t0.includes(w)) || Object.prototype.hasOwnProperty.call(AG.MORE, agCode(key) || "");
+  return ["YEMLIK", "BAREM DISI", "STANDART DISI", "DUSUK VASIFLI", "DOKERLI"].some(w => t0.includes(w)) || Object.prototype.hasOwnProperty.call(AG.more, agCode(key) || "");
 }
 function agGenre(p, label, key) {
-  const t0 = " " + trFold(label) + " ", f = geoFold(label), has = ws => ws.some(w => t0.includes(w)), code = agCode(key), mk = code && AG.MORE[code] ? geoFold(AG.MORE[code]) : "";
+  const t0 = " " + trFold(label) + " ", f = geoFold(label), has = ws => ws.some(w => t0.includes(w)), code = agCode(key), mk = code && AG.more[code] ? geoFold(AG.more[code]) : "";
   if (p === "BLE") {
     if (agDurum(p, label, key) || has(["MAKARNA", "DURUM"]) || /\b(ble dur|durum)\b/.test(f)) return "DUR";
     if (has(["YEMLIK"]) || /\b(fourrager|feed|fourrage)\b/.test(f) || mk.includes("fourr")) return "FEED";
@@ -3418,6 +3447,8 @@ function agOurs(p, label, key) {
 const agTday = d => { const x = parseD(d), w = x.getDay(); return w === 6 ? iso(addJ(x, -1)) : w === 0 ? iso(addJ(x, -2)) : d; };
 const agNear = (a, b) => Math.abs(a - b) <= Math.max(0.5, 0.01 * Math.max(a, b));
 const agSum = l => l.reduce((s, r) => s + r.t, 0);
+// jours ouvrés de a (exclu) à b (inclus) : Q41.BusinessDays
+const agBizDays = (a, b) => { let n = 0; for (let d = addJ(parseD(a), 1); iso(d) <= b; d = addJ(d, 1)) if (d.getDay() !== 0 && d.getDay() !== 6) n++; return n; };
 // une séance comptée une fois : ligne du site d'une bourse qui répète TOBB (même tonnage ; sinon total du site = total de TOBB) écartée (Ses69.SiteDrop)
 function agDedup(list) {
   const by = new Map(), drop = new Set();
@@ -3447,7 +3478,9 @@ function agBad(p, lv) {
   return /\bS[I]?LAJ\b/.test(f) || /\bSAMAN\b|\bSAPI\b/.test(f) || f.includes("KARABUGDAY") || (p === "BLE" && /\(KARA\)|\bBUGDAY KARA\b/.test(f)) || /\bHASARLI\b/.test(f) ||
     (p === "TOURNESOL" && /\bYEMLIK\b/.test(f)) || /\bITHAL/.test(f) || (p === "MAIS" && ["IRMIG", "IRMIK", "NISASTA", " UNU ", "GLUTEN", "KEPEG", "KEPEK"].some(w => f.includes(w)));
 }
-function agCompute(tsv, exclTsv, fx) {
+// courbe ACHAT (Crt71.Build + Vw76.Day71) et ce qu'il faut aux bandes : activité (Ech70.ActOf), TÜRİB par jour (Bands66.Vwap)
+function agCompute(tsv, exclTsv, fx, cfg) {
+  AG = cfg || AG_DEF;
   // exclusions par clé du journal agri_exclus69.tsv (règle « cle ») : seulement pour la valeur écartée (moyenne|tonnes|min|max), comme Ses69.Why
   const excl = new Map(), nums = s => String(s || "").split("|").map(x => x === "" ? null : parseFloat(x));
   String(exclTsv || "").split(/\r?\n/).forEach((l, i) => { if (!i) return; const c = l.split("\t"); if (c.length >= 9 && c[7] === "cle" && c[0]) excl.set(c[0], nums(c[8])); });
@@ -3458,7 +3491,7 @@ function agCompute(tsv, exclTsv, fx) {
   const td = todayIso(), num = s => { const v = parseFloat(String(s == null ? "" : s).replace(",", ".")); return isFinite(v) ? v : null; };
   const recs = { BLE: [], MAIS: [], TOURNESOL: [] };
   for (let i = 1; i < L.length; i++) {
-    const c = L[i].split("\t"); if (c.length <= I.key || c[I.n] !== "TRX") continue;
+    const c = L[i].split("\t"); if (c.length < H.length || c[I.n] !== "TRX") continue;
     const p = c[I.p]; if (!recs[p]) continue;
     const d = c[I.d]; if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || d > td) continue;
     const k = c[I.u] === "TRY/kg" ? 1 : c[I.u] === "TRY/t" ? 0.001 : 0; if (!k) continue;
@@ -3466,74 +3499,133 @@ function agCompute(tsv, exclTsv, fx) {
     const key = c[I.key] || "", lv = c[I.lv] || "";
     if (agBad(p, lv) || (excl.has(key) && same(excl.get(key), [av, vol, num(c[I.mn]), num(c[I.mx])]))) continue;
     const j = lv.indexOf("·"), ex = (j > 0 ? lv.slice(0, j) : c[I.src] || "").trim();
-    recs[p].push({ d, key, lv, ex, ek: agExKey(ex), avg: av * k, t: vol, tobb: key.startsWith("tobb|") });
+    recs[p].push({ d, key, lv, ex, ek: agExKey(ex), avg: av * k, t: vol, tobb: key.startsWith("tobb|"), turib: key.startsWith("tr61|turib|") });
   }
-  const fxOn = d => {
-    const s = lastOn(fx.sell, d); if (s && s[1] > 0 && daysBetween(s[0], d) <= AG.FX_DAYS) return { v: s[1], ecb: false };
+  const sellOn = d => { const s = lastOn(fx.sell, d); return s && s[1] > 0 && daysBetween(s[0], d) <= AGK.FX_DAYS ? s[1] : null; };   // Ech70.SellAtOrBefore
+  const fxOn = d => {   // Crt71.Fx : TCMB vendeur, sinon croisé BCE (EUR/TRY ÷ EUR/USD), chacun au plus 7 jours avant
+    const s = sellOn(d); if (s) return { v: s, ecb: false };
     const e = lastOn(fx.eurTry, d), x = lastOn(fx.eurUsd, d);
-    if (e && x && e[1] > 0 && x[1] > 0 && daysBetween(e[0], d) <= AG.FX_DAYS && daysBetween(x[0], d) <= AG.FX_DAYS) return { v: e[1] / x[1], ecb: true };
+    if (e && x && e[1] > 0 && x[1] > 0 && daysBetween(e[0], d) <= AGK.FX_DAYS && daysBetween(x[0], d) <= AGK.FX_DAYS) return { v: e[1] / x[1], ecb: true };
     return null;
   };
   const out = {};
   for (const p of AG_PRODS) {
     const byD = new Map(); recs[p].forEach(r => { let g = byD.get(r.d); if (!g) byD.set(r.d, g = []); g.push(r); });
-    const dates = Array.from(byD.keys()).sort(), all = [];
-    for (const d of dates) { const f = fxOn(d); agDedup(byD.get(d)).forEach(r => all.push(Object.assign({}, r, { D: d, Day: agTday(d), fx: f }))); }
-    // bornes de vraisemblance (Crt71) : séances d'au moins 50 t, tous genres, des 15 jours qui finissent ce jour-là
-    const big = all.filter(s => s.t >= AG.MIN_T).sort((a, b) => a.D < b.D ? -1 : a.D > b.D ? 1 : 0), odd = new Set(); let lo = 0;
-    for (let i = 0; i < big.length;) {
-      const day = big[i].D; let j = i; while (j < big.length && big[j].D === day) j++;
-      while (lo < big.length && daysBetween(big[lo].D, day) > AG.WIN) lo++;
-      const refv = big.slice(lo, j).map(s => s.avg);
-      if (refv.length >= AG.NREF) { const med = agMedian(refv); for (let q = i; q < j; q++) { const s = big[q]; if (s.avg < med * AG.RL || s.avg > med / AG.RL) odd.add(s); } }
-      i = j;
+    const dates = Array.from(byD.keys()).sort(), all = [], tu = [];
+    for (const d of dates) {
+      const f = fxOn(d), l = agDedup(byD.get(d));
+      l.forEach(r => all.push(Object.assign({}, r, { D: d, Day: agTday(d), fx: f })));
+      // TÜRİB (Bands66.Vwap, turib) : toutes ses lignes du jour (blé à part écarté), cours TCMB vendeur seulement
+      const tl = l.filter(r => r.turib && !agSpecial(p, r.lv, r.key));
+      if (tl.length) { const T = agSum(tl), kg = tl.reduce((s, r) => s + r.avg * r.t, 0) / T, sv = sellOn(d); tu.push([d, Math.round(T * 1000) / 1000, +kg.toFixed(6), sv ? +(kg * 1000 / sv).toFixed(4) : null]); }
     }
+    // bornes de vraisemblance (Crt71) : séances d'au moins le volume minimum, tous genres, des « âge maximum » jours qui finissent ce jour-là
+    const big = all.filter(s => s.t >= AG.minT).sort((a, b) => a.D < b.D ? -1 : a.D > b.D ? 1 : 0), odd = new Set(); let lo = 0;
+    if (AG.rl > 0 && AG.rl < 1 && AG.nref != null)
+      for (let i = 0; i < big.length;) {
+        const day = big[i].D; let j = i; while (j < big.length && big[j].D === day) j++;
+        while (lo < big.length && daysBetween(big[lo].D, day) > AG.win) lo++;
+        const refv = big.slice(lo, j).map(s => s.avg);
+        if (refv.length >= AG.nref) { const med = agMedian(refv); for (let q = i; q < j; q++) { const s = big[q]; if (s.avg < med * AG.rl || s.avg > med / AG.rl) odd.add(s); } }
+        i = j;
+      }
     const byDay = new Map(); all.forEach(s => { let g = byDay.get(s.Day); if (!g) byDay.set(s.Day, g = []); g.push(s); });
-    const days = [], names = {};
+    const days = [], names = {}, act = new Map();
     for (const D of Array.from(byDay.keys()).sort()) {
-      let In = byDay.get(D).filter(s => s.t >= AG.MIN_T && !odd.has(s) && agOurs(p, s.lv, s.key));
+      let In = byDay.get(D).filter(s => s.t >= AG.minT && !odd.has(s) && agOurs(p, s.lv, s.key));
       if (!In.length) continue;
-      if (In.length >= AG.MIN_SCREEN) {   // Vw76 : médiane pondérée par les tonnes ± 3 écarts robustes (plancher 2 %)
-        const med = agWMed(In.map(s => [s.avg, s.t])), mad = agWMed(In.map(s => [Math.abs(s.avg - med), s.t])), lim = AG.K * Math.max(AG.SCALE * mad, AG.FLOOR * Math.abs(med));
+      // activité du côté acheteurs (Ech70.ActOf) : séances de l'échelle, date réelle de chaque séance et son jour de bourse
+      In.forEach(s => { const a = act.get(s.D) || [s.D, s.Day, 0]; a[2] += s.t; act.set(s.D, a); });
+      if (In.length >= AGK.MIN_SCREEN) {   // Vw76 : médiane pondérée par les tonnes ± 3 écarts robustes (plancher 2 %)
+        const med = agWMed(In.map(s => [s.avg, s.t])), mad = agWMed(In.map(s => [Math.abs(s.avg - med), s.t])), lim = AGK.K * Math.max(AGK.SCALE * mad, AGK.FLOOR * Math.abs(med));
         In = In.filter(s => !(Math.abs(s.avg - med) > lim + 1e-12));
       }
-      const T0 = agSum(In), vw = In.reduce((s, x) => s + x.avg * x.t, 0) / T0, allFx = In.every(s => s.fx && s.fx.v > 0);
-      const usd = allFx ? In.reduce((s, x) => s + x.avg * 1000 / x.fx.v * x.t, 0) / T0 : null;
+      const T0 = agSum(In), vw = In.reduce((s, x) => s + x.avg * x.t, 0) / T0, withFx = In.filter(s => s.fx && s.fx.v > 0);
+      const su = withFx.reduce((s, x) => s + x.avg * 1000 / x.fx.v * x.t, 0), tf = agSum(withFx), usd = withFx.length === In.length ? su / T0 : null;
       const bx = {}; In.forEach(s => { const b = bx[s.ek] || (bx[s.ek] = { t: 0, u: 0, ok: true }); b.t += s.t; if (s.fx && s.fx.v > 0) b.u += s.avg * 1000 / s.fx.v * s.t; else b.ok = false;
         if (!names[s.ek] || (names[s.ek] === names[s.ek].toUpperCase() && s.ex !== s.ex.toUpperCase())) names[s.ek] = s.ex; });
-      days.push({ d: D, vw: +vw.toFixed(4), u: usd == null ? null : +usd.toFixed(2), t: Math.round(T0 * 10) / 10, n: In.length, x: Object.keys(bx).length, e: In.some(s => s.fx && s.fx.ecb) ? 1 : 0,
-                  bx: Object.keys(bx).map(k => [k, Math.round(bx[k].t * 10) / 10, bx[k].ok ? +(bx[k].u / bx[k].t).toFixed(2) : null]) });
-    }
-    // jour complet (Suite83) : tonnes ≥ 25 % de la médiane des jours de séance précédents ; sinon le dernier jour
-    let head = days.length - 1;
-    for (let i = days.length - 1; i >= 0; i--) {
-      const hist = days.slice(Math.max(0, i - AG.HIST), i).map(x => x.t).filter(x => x > 0); if (hist.length < 3) break;
-      if (days[i].t >= agMedian(hist) * AG.PCT / 100) { head = i; break; }
+      days.push({ d: D, vw: +vw.toFixed(4), u: usd == null ? null : +usd.toFixed(2), t: Math.round(T0 * 1000) / 1000, n: In.length, x: Object.keys(bx).length, e: In.some(s => s.fx && s.fx.ecb) ? 1 : 0,
+                  su: +su.toFixed(3), tf: Math.round(tf * 1000) / 1000, bx: Object.keys(bx).map(k => [k, Math.round(bx[k].t * 10) / 10, bx[k].ok ? +(bx[k].u / bx[k].t).toFixed(2) : null]) });
     }
     // dernier jour de chaque bourse (au plus 15 jours avant le dernier jour du produit)
     const exLast = [], seen = new Set(), lastD = days.length ? days[days.length - 1].d : null;
-    for (let i = days.length - 1; i >= 0 && lastD && daysBetween(days[i].d, lastD) <= AG.EX_DAYS; i--)
+    for (let i = days.length - 1; i >= 0 && lastD && daysBetween(days[i].d, lastD) <= AGK.EX_DAYS; i--)
       days[i].bx.forEach(b => { if (seen.has(b[0])) return; seen.add(b[0]); exLast.push({ n: agShort(names[b[0]] || b[0]), d: days[i].d, t: b[1], u: b[2] }); });
     exLast.sort((a, b) => b.t - a.t);
     days.forEach(x => delete x.bx);
-    out[p] = { days, head, exLast };
+    out[p] = { days, exLast, tu, act: Array.from(act.values()).sort((a, b) => a[0] < b[0] ? -1 : 1).map(a => [a[0], a[1], Math.round(a[2] * 1000) / 1000]) };
   }
   return out;
 }
-let agRes = null;   // résultat gardé (us « mka ») : { sig, m, res }
+// fenêtre de liquidité du côté acheteurs au jour asOf (Vw76.WindowOf → Ech70.Acts, Measure, WindowOf) : tonnes par jour de bourse de chaque produit
+// sur les « max(âge des séances, âge des prix publics) » derniers jours ; le plus actif : fenêtre minimale ; sans activité : maximale
+function agWin(res, p, asOf, cfg) {
+  if (!cfg || cfg.wmin == null) return cfg ? cfg.wmax : AG_DEF.wmax;
+  const from = iso(addJ(parseD(asOf), -Math.max(cfg.win, cfg.pubAge))), m = {};
+  AG_PRODS.forEach(q => { const rows = ((res[q] || {}).act || []).filter(a => a[0] >= from && a[0] <= asOf), days = new Set(rows.map(a => a[1]));
+    m[q] = days.size ? rows.reduce((s, a) => s + a[2], 0) / days.size : 0; });
+  const vals = AG_PRODS.map(q => m[q]), mx = Math.max(...vals), active = vals.filter(v => v > 0).length;
+  if (active <= 1 || !(m[p] > 0)) return cfg.wmax;
+  const w = Math.round(cfg.wmin + (cfg.wmax - cfg.wmin) * (1 - Math.max(0, Math.min(1, m[p] / mx))));
+  return Math.max(cfg.wmin, Math.min(cfg.wmax, w));
+}
+// bande « Destination TR · transactions » (Vw76.Destination) : VWAP de toutes les séances gardées des w derniers jours de bourse au plus tard asOf
+function agBand(r, asOf, w) {
+  const ds = (r ? r.days : []).filter(d => d.d <= asOf), sel = ds.slice(Math.max(0, ds.length - w)); if (!sel.length) return null;
+  const tf = sel.reduce((s, d) => s + (d.tf || 0), 0), su = sel.reduce((s, d) => s + (d.su || 0), 0), to = sel[sel.length - 1].d;
+  return { u: tf > 0 ? su / tf : null, t: sel.reduce((s, d) => s + d.t, 0), n: sel.reduce((s, d) => s + d.n, 0), days: sel.length, from: sel[0].d, to, fresh: agBizDays(to, asOf) <= AGK.FRESH_BD };
+}
+// bande TÜRİB (Bands66.Vwap, turib) : dernier jour complet (Suite83.CompleteDay), au moins 250 t, cours TCMB vendeur
+function agTurib(r, asOf, w, cfg) {
+  const ds = (r ? r.tu : []).filter(x => x[0] <= asOf).sort((a, b) => a[0] < b[0] ? 1 : -1); if (!ds.length) return null;
+  let pick = ds[0];
+  if (cfg && cfg.pct > 0) {
+    const ww = Math.max(AGK.MIN_HIST, w);
+    for (let i = 0; i < ds.length; i++) {
+      const hist = ds.slice(i + 1, i + 1 + ww).map(x => x[1]).filter(x => x > 0); if (hist.length < AGK.MIN_HIST) break;
+      if (ds[i][1] >= agMedian(hist) * cfg.pct / 100) { pick = ds[i]; break; }
+    }
+  }
+  return { d: pick[0], t: pick[1], kg: pick[2], u: pick[3], valid: pick[1] >= AGK.TURIB_MIN_T, fresh: agBizDays(pick[0], asOf) <= AGK.FRESH_BD, skipped: pick !== ds[0] };
+}
+let agRes = null;   // résultat gardé (us « mka ») : { sig, m, res, cfg }
+// réglages de GRANORE CTRM (dossier data, parent du dossier des cours) : relus si plus vieux que 6 h (ou ↻) et si le fichier a changé
+async function agCfgLoad(L, force) {
+  let c = us.get("mkcfg", null);
+  if (c && !force && Date.now() - c.at < 6 * 3600e3) return c.cfg;
+  try {
+    const dir = L.dir, mi = await (await gfetch((dir.id ? "/drives/" + dir.driveId + "/items/" + dir.id : drivePath(dir.driveId, dir.path)) + "?$select=id,parentReference")).json();
+    const pid = mi.parentReference && mi.parentReference.id; if (!pid) throw new Error("data ?");
+    const fi = await (await gfetch("/drives/" + dir.driveId + "/items/" + pid + ":/stark_donnees.xml?$select=id,name,size,eTag,lastModifiedDateTime,@microsoft.graph.downloadUrl")).json();
+    if (c && c.e === fi.eTag && c.cfg && c.cfg.src === "xml") { c.at = Date.now(); us.set("mkcfg", c); return c.cfg; }
+    const cfg = agCfgParse((await mkRead(L, fi, null)).text); if (!cfg) throw new Error("Settings ?");
+    c = { e: fi.eTag, at: Date.now(), cfg }; us.set("mkcfg", c); return cfg;
+  } catch (e) {
+    if (e && (e.errorCode || e.cle === "offline")) throw e; console.warn(e);
+    return c && c.cfg ? Object.assign({}, c.cfg, { src: "old" }) : Object.assign({}, AG_DEF);
+  }
+}
 async function agLoad(L, force) {
   const f = L.files["agri_physique.tsv"]; if (!f) throw Object.assign(new Error(tf("mkNoFile", "agri_physique.tsv")), { cle: null });
   const need = mkNeed(), fx = { sell: [], eurTry: [], eurUsd: [] }, ids = ["USD-TRY-VTE", "EUR-TRY", "EUR-USD"];
-  const ex = L.files["agri_exclus69.tsv"], sigOf = () => [f.eTag, ex ? ex.eTag : "-"].concat(ids.map(i => L.files[i + ".csv"] ? L.files[i + ".csv"].eTag : "-")).join("|");
-  const sig = "a124|" + sigOf(); agRes = agRes || us.get("mka", null);   // version de la méthode dans l'empreinte : un calcul d'une autre version est refait
-  if (agRes && agRes.sig === sig && !force) return agRes;
+  const cfg = await agCfgLoad(L, force), cs = JSON.stringify([cfg.minT, cfg.win, cfg.pubAge, cfg.rl, cfg.nref, cfg.durum, cfg.more, cfg.pct, cfg.wmin, cfg.wmax]);
+  const ex = L.files["agri_exclus69.tsv"], sig = ["a124b", cs, f.eTag, ex ? ex.eTag : "-"].concat(ids.map(i => L.files[i + ".csv"] ? L.files[i + ".csv"].eTag : "-")).join("|");
+  agRes = agRes || us.get("mka", null);   // version de la méthode et réglages dans l'empreinte : un autre calcul est refait
+  if (agRes && agRes.sig === sig && !force) { agRes.cfg = cfg; return agRes; }
   const ss = {}; await inBatches(ids, 3, async id => { ss[id] = await serLoad(L, id, need); });
   fx.sell = (ss["USD-TRY-VTE"] || {}).pts || []; fx.eurTry = (ss["EUR-TRY"] || {}).pts || []; fx.eurUsd = (ss["EUR-USD"] || {}).pts || [];
   const [tsv, exl] = await Promise.all([mkRead(L, f, null), ex ? mkRead(L, ex, null) : Promise.resolve({ text: "" })]);
-  const res = agCompute(tsv.text, exl.text, fx);
-  agRes = { sig, m: f.lastModifiedDateTime || "", res };
+  const res = agCompute(tsv.text, exl.text, fx, cfg);
+  agRes = { sig, m: f.lastModifiedDateTime || "", res, cfg };
   if (!us.set("mka", agRes)) console.warn("mka non gardé");
   return agRes;
+}
+// bandes ACHAT au jour asOf (DOM du PC) et celles du jour de bourse précédent (variation)
+function agBands(p, asOf) {
+  const R = agRes && agRes.res, r = R && R[p], cfg = (agRes && agRes.cfg) || AG_DEF; if (!r) return null;
+  const w = agWin(R, p, asOf, cfg), b = agBand(r, asOf, w), tr = agTurib(r, asOf, w, cfg);
+  let prev = null; if (b) { const pd = r.days.filter(d => d.d < b.to).pop(); if (pd) { const w2 = agWin(R, p, pd.d, cfg); prev = agBand(r, pd.d, w2); } }
+  return { w, b, prev, tr, cfg };
 }
 
 // ---------- chargement d'un écran de cours ----------
@@ -3659,18 +3751,21 @@ function metDraw(per) {
   drawChart($("#mkc"), { series, band, from: perFrom(per), readEl: $("#mkr"), label: mkName(sel) });
 }
 function agHtml(per) {
-  const p = mkProd(), r = agRes && agRes.res && agRes.res[p], days = r ? r.days.filter(x => x.u != null) : [], hd = r && r.days[r.head], prevD = r && r.head > 0 ? r.days.slice(0, r.head).reverse().find(x => x.u != null) : null;
-  const p0 = days.length ? (days.find(x => x.d >= perFrom(per)) || days[0]) : null;
+  const p = mkProd(), r = agRes && agRes.res && agRes.res[p], asOf = todayIso(), B = r ? agBands(p, asOf) : null, b = B && B.b;
   let h = '<div class="seg mk-seg" id="mkProd">' + AG_PRODS.map(x => '<button data-pr="' + x + '" class="' + (p === x ? "on" : "") + '">' + esc(t("p" + x + "s")) + '</button>').join("") + '</div>';
-  h += '<div class="mk-head"><span class="mk-name">' + esc(t("p" + p) + " · " + t("mkVwap")) + '</span>' +
-    (hd ? '<span class="mk-last pos">' + esc(hd.u == null ? "—" : nfx(hd.u, 1)) + '<small>USD/t</small></span><span class="mk-chg">' + chgHtml(hd.u, prevD && prevD.u) + ' <span class="muted">1J</span> ' + chgHtml(hd.u, p0 && p0.u) + ' <span class="muted">' + esc(t("per" + per)) + '</span></span>' +
-      '<span class="mk-meta">' + esc(mkDate(hd.d) + " · " + nf(hd.t) + " t · " + tf("mkSes", hd.n, hd.x) + " · " + nfx(hd.vw, 3) + " TRY/kg" + (hd.u == null ? " · " + t("mkNoFx") : "")) + '</span>'
-        : '<span class="mk-meta">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</span>') + '</div>';
+  // en tête : la bande « Destination TR » du DOM du PC (VWAP robuste sur la fenêtre de liquidité), variation sur la bande du jour de bourse précédent
+  h += '<div class="mk-head"><span class="mk-name">' + esc(t("p" + p) + " · " + t("mkDest")) + '</span>' +
+    (b && b.u != null ? '<span class="mk-last pos">' + esc(nfx(b.u, 1)) + '<small>USD/t</small></span><span class="mk-chg">' + chgHtml(b.u, B.prev && B.prev.u) + ' <span class="muted">1J</span>' + (b.fresh ? "" : ' <span class="warn">' + esc(t("mkStale")) + '</span>') + '</span>' +
+      '<span class="mk-meta">' + esc(tf("mkDestM", B.w, fmtDM(b.from), fmtDM(b.to), nf(b.t), b.n)) + '</span>'
+      : '<span class="mk-meta">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</span>') + '</div>';
   h += perHtml(per) + '<div class="mk-chart" id="mkc"></div><div class="mk-read" id="mkr"></div>';
-  // légende : bourses TR (achat, vert), références FOB (vente, rouge) : dernier cours, date, source
-  const last = r && r.days.length ? r.days[r.days.length - 1] : null, partial = r && r.head < r.days.length - 1;
+  // légende : courbe ACHAT (vert), bandes ACHAT du DOM (jaune), références FOB (vente, rouge) : dernier cours, date, source
+  const last = r && r.days.length ? r.days[r.days.length - 1] : null, tr = B && B.tr;
   h += '<div class="mk-leg"><div><i style="background:#36c24a"></i><span>' + esc(t("mkVwapL")) + '</span><b class="pos">' + esc(last && last.u != null ? nfx(last.u, 1) : "—") + '</b>' +
-    (last ? '<small style="grid-column:2 / -1">' + esc(mkDate(last.d) + (partial ? " · " + t("mkPartial") : "") + " · TOBB + " + (lang === "fr" ? "sites des bourses" : "exchange sites")) + '</small>' : "") + '</div>';
+    (last ? '<small style="grid-column:2 / -1">' + esc(mkDate(last.d) + " · " + nf(last.t) + " t · " + tf("mkSes", last.n, last.x) + " · " + nfx(last.vw, 3) + " TRY/kg") + '</small>' : "") + '</div>';
+  if (b) h += '<div><i class="dash" style="background:#ffc940;color:#ffc940"></i><span>' + esc(t("mkDestL")) + '</span><b style="color:#ffc940">' + esc(b.u == null ? "—" : nfx(b.u, 1)) + '</b><small style="grid-column:2 / -1">' + esc(tf("mkDestM", B.w, fmtDM(b.from), fmtDM(b.to), nf(b.t), b.n)) + '</small></div>';
+  if (tr) h += '<div><i class="dot" style="background:#ffc940;color:#ffc940"></i><span>' + esc(t("mkTurib")) + '</span><b style="color:#ffc940">' + esc(tr.valid && tr.u != null ? nfx(tr.u, 1) : "—") + '</b><small style="grid-column:2 / -1">' +
+    esc(mkDate(tr.d) + " · " + nf(tr.t) + " t" + (tr.valid ? "" : " · " + t("mkTuribMin")) + (tr.u == null ? " · " + t("mkNoFx") : "") + (tr.fresh ? "" : " · " + t("mkStale")) + (tr.skipped ? " · " + t("mkComplete") : "")) + '</small></div>';
   const fobs = AG_FOB[p] || [];
   fobs.forEach((id, i) => { const s = serOf(id), l = s && s.pts[s.pts.length - 1], st = FOB_STYLE[i] || FOB_STYLE[0];
     h += '<div><i class="' + (st.dash ? (st.dash.startsWith("2") ? "dot" : "dash") : "") + '" style="background:' + st.c + ';color:' + st.c + '"></i><span>' + esc(mkName(id)) + '</span><b class="neg">' + esc(l ? nfx(l[1], 1) : "—") + '</b>' +
@@ -3682,24 +3777,26 @@ function agHtml(per) {
   const exHead = '<thead><tr><th>' + esc(t("mkByEx")) + '</th><th>' + esc(t("mkDay")) + '</th><th>t</th><th>USD/t</th></tr></thead>';
   if (r && r.exLast.length) h += '<table class="mk-tab">' + exHead + '<tbody>' + r.exLast.slice(0, 10).map(exRow).join("") + '</tbody></table>' +
     (r.exLast.length > 10 ? uiFold(tf("mkMoreEx", r.exLast.length - 10), '<table class="mk-tab">' + exHead + '<tbody>' + r.exLast.slice(10).map(exRow).join("") + '</tbody></table>', "mkex") : "");
-  h += '<p class="mk-src">' + esc(t("mkSrcAgri")) + '</p>';
+  const cfg = agRes && agRes.cfg;
+  h += '<p class="mk-src">' + esc(tf("mkSrcAgri", cfg ? nf(cfg.minT) : "—")) + (cfg && cfg.src !== "xml" ? '<br><span class="warn">' + esc(t(cfg.src === "old" ? "mkCfgOld" : "mkCfgDef")) + '</span>' : "") + '</p>';
   return h;
 }
 function agDraw(per) {
   const p = mkProd(), r = agRes && agRes.res && agRes.res[p], el = $("#mkc");
   if (!r) { if (el) el.innerHTML = '<div class="mk-empty">' + esc(mkBusy || !agRes ? t("mkLoading") : t("mkNone")) + '</div>'; return; }
-  const pts = r.days.filter(x => x.u != null).map(x => [x.d, x.u]), series = [{ pts, color: "#36c24a", d: 1, short: "TR", w: 2, hollow: r.head < r.days.length - 1 }];
+  const pts = r.days.filter(x => x.u != null).map(x => [x.d, x.u]), series = [{ pts, color: "#36c24a", d: 1, short: "TR", w: 2 }];
+  const B = agBands(p, todayIso()); if (B && B.b && B.b.u != null) series.push({ pts: [[B.b.from, B.b.u], [todayIso(), B.b.u]], color: "#ffc940", dash: "6 3", d: 1, short: "DEST", w: 1.4, marks: false });
   (AG_FOB[p] || []).forEach((id, i) => { const s = serOf(id), st = FOB_STYLE[i] || FOB_STYLE[0]; if (s && s.pts.length) series.push({ pts: s.pts, color: st.c, dash: st.dash, d: 1, short: id.replace(/^CE-FOB-|^MOEX-/, "").replace(/-BLE$|-MAIS$/, ""), w: 1.4 }); });
   drawChart(el, { series, vol: r.days.map(x => [x.d, x.t]), volOf: true, from: perFrom(per), readEl: $("#mkr"), label: t("p" + p) });
 }
 
 // ---------- écran Jour (fiche Head) : ce qui demande une action, en un coup d'œil, chaque bloc ouvre son détail ----------
 function quoteRows() {
-  // GRANORE : moyenne des bourses par produit (dernier jour complet) ; Atlas : métaux (courbes lues, sinon derniers cours de la fiche)
+  // GRANORE : bande « Destination TR » du DOM par produit ; Atlas : métaux (courbes lues, sinon derniers cours de la fiche)
   if (isGr()) {
     const rs = agRes && agRes.res; if (!rs) return [];
-    return AG_PRODS.map(p => { const r = rs[p], hd = r && r.days[r.head], pv = r && r.head > 0 ? r.days.slice(0, r.head).reverse().find(x => x.u != null) : null;
-      return hd ? { n: t("p" + p), d: hd.d, v: hd.u, pv: pv && pv.u, dec: 1, u: "USD/t", cls: "pos", go: ["agri", p] } : null; }).filter(Boolean);
+    return AG_PRODS.map(p => { const B = agBands(p, todayIso()), b = B && B.b;
+      return b && b.u != null ? { n: t("p" + p) + " · " + t("mkDestS"), d: b.to, v: b.u, pv: B.prev && B.prev.u, dec: 1, u: "USD/t", cls: "pos", go: ["agri", p] } : null; }).filter(Boolean);
   }
   const fm = Array.isArray(data && data.marches) ? data.marches : [];
   return ["CO-STD", "LME-NI", "LME-CU", "COMEX-CU"].map(id => {
