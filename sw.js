@@ -8,7 +8,8 @@
 // mobile v126 (02/11) : livraison en parties (k/n, restes), livraison ouverte jamais verrouillée
 // mobile v130 (02/11) : une seule app, Atlas (seconde édition retirée) ; nouveau nom de cache : l'ancienne page gardée est effacée à l'activation
 // v130 (2) : à l'activation, seuls les anciens caches d'Atlas (« atlas-… ») sont effacés : une autre app publiée sur le même site garde le sien
-const C = "atlas-131", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+// mobile v132 (08/11) : plein écran iPhone (zones sûres) et 100 améliorations du round 103 ; nouveau nom de cache
+const C = "atlas-132", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // bibliothèque Microsoft (MSAL) : adresse à version fixe (contenu immuable, empreinte contrôlée par la page) gardée ici pour l'ouverture hors connexion
 const MSAL = "https://cdn.jsdelivr.net/npm/@azure/msal-browser@4.30.0/lib/msal-browser.min.js";
