@@ -9,11 +9,15 @@
 // mobile v130 (02/11) : une seule app, Atlas (seconde édition retirée) ; nouveau nom de cache : l'ancienne page gardée est effacée à l'activation
 // v130 (2) : à l'activation, seuls les anciens caches d'Atlas (« atlas-… ») sont effacés : une autre app publiée sur le même site garde le sien
 // mobile v132 (08/11) : plein écran iPhone (zones sûres) et 100 améliorations du round 103 ; nouveau nom de cache
-const C = "atlas-132", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+// mobile v133 (09/11) : design sobre (rounds 104 et 105 : 315 améliorations, Apparence, icônes, écrans de lancement) ; nouveau nom de cache
+const C = "atlas-133", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
+// round 105 (piste h) : écrans de lancement de l'iPhone (~9 Ko chacun) : gardés pour l'ouverture hors connexion, chacun à part (un fichier
+// absent ne fait jamais échouer l'installation ni une mise à jour)
+const LANC = ["splash/splash-375x812.png", "splash/splash-390x844.png", "splash/splash-393x852.png", "splash/splash-402x874.png", "splash/splash-414x896-2x.png", "splash/splash-414x896.png", "splash/splash-420x912.png", "splash/splash-428x926.png", "splash/splash-430x932.png", "splash/splash-440x956.png", "splash/splash-375x667-2x.png"].map(f => new URL(f, location).href);
 // bibliothèque Microsoft (MSAL) : adresse à version fixe (contenu immuable, empreinte contrôlée par la page) gardée ici pour l'ouverture hors connexion
 const MSAL = "https://cdn.jsdelivr.net/npm/@azure/msal-browser@4.30.0/lib/msal-browser.min.js";
-self.addEventListener("install", e => e.waitUntil(caches.open(C).then(c => c.addAll(APP.map(u => new Request(u, { cache: "reload" }))).then(() => c.add(new Request(MSAL, { mode: "cors" })).catch(() => {}))).then(() => self.skipWaiting())));
+self.addEventListener("install", e => e.waitUntil(caches.open(C).then(c => c.addAll(APP.map(u => new Request(u, { cache: "reload" }))).then(() => Promise.all([c.add(new Request(MSAL, { mode: "cors" })).catch(() => {})].concat(LANC.map(u => c.add(new Request(u, { cache: "reload" })).catch(() => {})))))).then(() => self.skipWaiting())));
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("atlas-") && k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
@@ -24,7 +28,7 @@ self.addEventListener("fetch", e => {
   const u = new URL(e.request.url);
   if (u.origin !== location.origin) return;   // Microsoft et OneDrive : toujours en direct
   const cle = u.origin + u.pathname;
-  if (!APP.includes(cle)) return;             // tout autre fichier du site (fiche d'exemple de la démo…) : en direct, jamais gardé
+  if (!APP.includes(cle) && !LANC.includes(cle)) return;             // tout autre fichier du site (fiche d'exemple de la démo…) : en direct, jamais gardé
   e.respondWith(fetch(cle, { cache: "no-cache" }).then(r => {
     if (r.ok) { const k = r.clone(); caches.open(C).then(c => c.put(cle, k)); return r; }
     return caches.match(cle).then(m => m || r);   // erreur du serveur : la copie gardée, sinon l'erreur
