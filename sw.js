@@ -11,7 +11,8 @@
 // mobile v132 (08/11) : plein écran iPhone (zones sûres) et 100 améliorations du round 103 ; nouveau nom de cache
 // mobile v133 (09/11) : design sobre (rounds 104 et 105 : 315 améliorations, Apparence, icônes, écrans de lancement) ; nouveau nom de cache
 // mobile v134 (09/11) : refonte critique (round 106 : architecture, Outils, système visuel) ; nouveau nom de cache
-const C = "atlas-134", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+// mobile v135 (09/11) : âge de la fiche en jours ouvrés (décision de l utilisateur) ; nouveau nom de cache
+const C = "atlas-135", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // round 105 (piste h) : écrans de lancement de l'iPhone (~9 Ko chacun) : gardés pour l'ouverture hors connexion, chacun à part (un fichier
 // absent ne fait jamais échouer l'installation ni une mise à jour)

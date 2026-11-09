@@ -3759,7 +3759,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "134";
+const VERSION_APP = "135";
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -12663,7 +12663,9 @@ function devFiche107t(F, toutes) {
 function grp107t() { return head103f() ? G106O : [["phys", ["Physique", "Physical"], ["poids", "tolerance", "charge"]], ["dates", ["Dates", "Dates"], ["echeance", "ecart"]]]; }
 /* t107 · En-tête (D084) : une fiche d'un jour (la veille au soir, un lundi matin) en pastille grise ; ambre à partir de 2 j. Même seuil
    d'apparition (ficheAge103a), même texte : seule la couleur change */
-function ficheGrise107t() { const n = data && typeof ficheAge103a === "function" ? ficheAge103a() : 0, p = document.querySelector("#sub .hw104a"); if (p) p.classList.toggle("gr107t", n === 1); }
+function ficheGrise107t() { const n = data && typeof ficheAge103a === "function" ? ficheAge103a() : 0, p = document.querySelector("#sub .hw104a"); if (p) p.classList.toggle("gr107t", n > 0 && joursOuvres107u() <= 1); }
+/* décision du 09/11 : jours ouvrés (lun.-ven.) écoulés depuis le jour de la fiche jusqu'à aujourd'hui */
+function joursOuvres107u() { const j = typeof ficheJour103a === "function" ? ficheJour103a() : null; if (!j || j >= today) return 0; let n = 0; const f = parseD(today); for (let d = addJ(parseD(j), 1); d <= f; d = addJ(d, 1)) { const w = d.getDay(); if (w !== 0 && w !== 6) n++; } return n; }
 if (typeof header === "function" && !header.t107) { const h0 = header; header = Object.assign(function () { const r = h0.apply(this, arguments); try { ficheGrise107t(); } catch (e) { console.warn(e); } return r; }, { t107: true }); }
 if (!window.ATLAS_ESSAI) boot();
 </script>
