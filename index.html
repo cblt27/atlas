@@ -5079,7 +5079,7 @@ html[data-pc153c] :is(button, [tabindex], summary):focus-visible { outline:2px s
 html[data-pc153c] nav { background:#000 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; border-top:1px solid var(--line) !important; }
 html[data-pc153c] nav button { color:#B8B8B8 !important; font-weight:500; }
 html[data-pc153c] nav button.on { color:var(--pc-amber153c) !important; box-shadow:inset 0 2px 0 var(--pc-amber153c); font-weight:600; }
-html[data-pc153c] nav .g153c, html[data-pc153c] nav .br153c, html[data-pc153c] nav button.x153c { display:none; }
+nav .g153c, nav .br153c, nav button.x153c { display:none; }   /* menu à gauche du style PC seulement (ordinateur) */
 /* feuilles, messages : panneau sombre fileté, message en bas : barre d'état noire à texte ambre (comme le PC) */
 html[data-pc153c] .sheet { background:#0A0A0A !important; border-top:1px solid var(--line2) !important; }
 html[data-pc153c] .toast { background:#000 !important; color:var(--pc-amber153c) !important; border:1px solid var(--pc-amber153c) !important; -webkit-backdrop-filter:none; backdrop-filter:none; }
@@ -5100,8 +5100,10 @@ html[data-pc153c] .mk-chart svg rect[fill="#0a84ff"] + text { fill:#000 !importa
 /* texte atténué lisible : « · » et notes au gris du PC (#8A8A8A, 6,1:1) */
 html[data-pc153c] .sp107s { color:#8A8A8A !important; }
 /* cibles tactiles (téléphone, tablette) : segments et puces à 44 px de haut (avant : 24 à 28 px) */
-@media (max-width:1099px) {
-  html[data-pc153c] :is(.seg, .reading-switch) > button, html[data-pc153c] .chips button, html[data-pc153c] .workspace-tabs button { min-height:44px !important; }
+@media (max-width:1099px) {   /* tous les thèmes : les cibles de 24 à 40 px de la v136 passent à 44 px */
+  #main :is(.seg, .reading-switch) > button, #main .chips button, #main .workspace-tabs button { min-height:44px !important; min-width:44px; }
+  #main :is(.pk106p button, #expoMonth, .r106p, .dc108v, select, input:not([type=checkbox]):not([type=radio])) { min-height:44px !important; }
+  header button { min-height:44px !important; }
 }
 /* tablette et iPhone en paysage : toute la largeur (avant : colonne de 760 px au milieu) */
 @media (min-width:700px) and (max-width:1099px) {
@@ -5123,7 +5125,7 @@ html[data-pc153c] .sp107s { color:#8A8A8A !important; }
   html[data-pc153c] header { padding-left:calc(208px + 20px) !important; }
   html[data-pc153c] main, html[data-pc153c] main:is(:has(> .jr105j), :has(> .sp105j), :has(> .tz104c > .panes104c)) { margin-left:208px !important; margin-right:0 !important; max-width:1500px !important; padding-bottom:40px !important; }
   html[data-pc153c] main { --gx153c:28px; }
-  html[data-pc153c] :is(.seg, .reading-switch) > button, html[data-pc153c] .chips button { min-height:32px; }
+  html[data-pc153c] :is(.seg, .reading-switch) > button, html[data-pc153c] .chips button, html[data-pc153c] #main .pk106p button { min-height:32px !important; }
   html[data-pc153c] .toast { bottom:24px !important; }
 }
 /* round 153 · piste C : classes de nombres en chasse fixe, états choisis bleus du PC, aujourd'hui ambre (sélecteurs relevés dans cette feuille) */
@@ -5131,6 +5133,12 @@ html[data-pc153c] #main :is(.kv span:last-child, .who .v, .vpl b, .vstl, .vo h3 
 html[data-pc153c] :is(.chips button.on, .bars .b, .vq.on, .vi.on, .vmap .vh.on span, .trend-bar, .spark-space i, .workspace-tabs button.on, .ptr104f.pret104f, .ap104f-pv .pa b, .f103b button.on, .agenda-controls .chips button.on, .lp104c, .cl104c i.p, .mt104c i, .sp105i.b > i.e, .sp105i > i.d, .sbd105i, #btnReg106l.on .av106l, .cc106m .pm106m.on, .pa106n, .pk106p button.on, .kc108v > i.e, .kt108v > i.b, .kv108v > i, .zg108w > i, .cr108w.kb > .ct > i, .kp108w .ka108w small > i, .wl108w-l i.b, .ps108x .lg108x i.cl, .ps108x .pb106p > button[aria-pressed=true] > em, .ps108x .kb108x.t, .ps108x .cl109c > i, .kc109a > i.kb, .kb109a i.c0, .vc109b > i, .cvk109b .pu108w, .lg109b i.ls, .lg109b i.kb) { background-color:var(--pc-tabon153c) !important; color:#fff !important; }
 html[data-pc153c] :is(.btn, .majapp, .maj104a .go104a) { background-color:var(--pc-key153c) !important; color:#fff !important; }
 html[data-pc153c] :is(.day.today .n, .g104b .day.today .n, .cal106m .g106m .day.today .n, .fc108v.t .fn108v, .fc109a.t .fn109a) { background-color:var(--pc-amber153c) !important; color:#000 !important; }
+/* round 153 · piste C : thèmes Sombre et Clair (au choix) : petits textes blancs sur le bleu iOS #0A84FF à 3,65:1 → bleu #0A6CD9 (4,6:1) ;
+   thème Clair : bleu des liens #007AFF à 3,6:1 → #0062CC (5,3:1) ; « Ancienne » orange à 4,4:1 → #A82B00 ; vert plus foncé */
+html[data-theme="dark"]:not([data-pc153c]):not([data-ac104f]) :is(.chips button.on, .day.today .n, .btn, .majapp, .bars .b, .vq.on, .vi.on, .vmap .vh.on span, .trend-bar, .spark-space i, .workspace-tabs button.on, .ptr104f.pret104f, .ap104f-pv .pa b, .maj104a .go104a, .g104b .day.today .n, .f103b button.on, .agenda-controls .chips button.on, .lp104c, .cl104c i.p, .mt104c i, .sp105i.b > i.e, .sp105i > i.d, .sbd105i, #btnReg106l.on .av106l, .cc106m .pm106m.on, .cal106m .g106m .day.today .n, .pa106n, .pk106p button.on, .fc108v.t .fn108v, .kc108v > i.e, .kt108v > i.b, .kv108v > i, .zg108w > i, .cr108w.kb > .ct > i, .kp108w .ka108w small > i, .wl108w-l i.b, .ps108x .lg108x i.cl, .ps108x .pb106p > button[aria-pressed=true] > em, .ps108x .kb108x.t, .ps108x .cl109c > i, .kc109a > i.kb, .kb109a i.c0, .fc109a.t .fn109a, .vc109b > i, .cvk109b .pu108w, .lg109b i.ls, .lg109b i.kb) { background-color:#0A6CD9 !important; }
+html:root[data-theme="light"][data-th104f]:not([data-ac104f]):not([data-pc153c]) { --primary:#0062CC; --key:#0062CC; --tab-on:#0062CC; }
+html[data-theme="light"] em.pl106l.a { color:#A82B00 !important; }
+html:root[data-theme="light"][data-th104f]:not([data-pc153c]) { --in:#1E7A34; --amber:#A82B00; } html[data-theme="light"] .sp107s { color:#6C6C70 !important; }   /* vert iOS clair #248A3D à 4,4:1 sur blanc → 5,3:1 */
 /* ================= round 153 · piste C : page Modèles 3D (galerie et modèle en grand) : panneaux du PC (Q3d108ui : vignettes fond #080A0E,
    filet #2C3440, barre ambre de 3 px à gauche, #966412 si « à compléter », nom blanc, « pourquoi » gris ; bulle sombre au bord ambre) ================= */
 .mv153c { margin:0 0 12px; }
@@ -5152,7 +5160,7 @@ html[data-pc153c] :is(.day.today .n, .g104b .day.today .n, .cal106m .g106m .day.
 .ch153c::-webkit-scrollbar { display:none; }
 .ch153c button { flex:none; min-height:44px; padding:0 12px; border:0; background:#383B42; color:#F2F2F2; font:inherit; font-size:14px; white-space:nowrap; border-radius:2px; }
 .ch153c button.on { background:#1565A8; color:#fff; font-weight:600; }
-.ch153c button.nr153c { color:#C9A25A; }
+.ch153c button.nr153c { color:#C9A25A; } .ch153c button.on.nr153c { color:#fff; }
 .mh153c h3 { margin:0; font-size:16px; font-weight:600; color:var(--ink); }
 .mh153c p { margin:2px 0 0; font-size:13px; line-height:1.35; }
 .wy153c { color:#F0A21E; } .dt153c { color:var(--muted); } .fl153c { color:#F0A21E; }
@@ -5161,7 +5169,7 @@ html[data-pc153c] :is(.day.today .n, .g104b .day.today .n, .cal106m .g106m .day.
 .kp153c > div { background:#0A0A0A; padding:7px 10px; min-width:0; }
 .kp153c small { display:block; color:#F0A21E; font-size:11px; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .kp153c b { display:block; font:600 17px/1.25 ui-monospace,"SF Mono",Menlo,"Cascadia Mono",Consolas,monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.kp153c span { display:block; color:#B8B8B8; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kp153c span { display:block; color:var(--muted); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .kp153c .km153c b { color:#FFC940 !important; }
 .vw153c { position:relative; margin:0 calc(-1 * var(--gx153c, 12px) + 2px); }
 .cv153c { display:block; width:100%; height:420px; background:#000; touch-action:none; -webkit-user-select:none; user-select:none; cursor:grab; box-shadow:inset 0 0 0 1px #2C3440; }
@@ -5179,9 +5187,11 @@ html[data-theme="light"] .tu153c > b, html[data-theme="light"] .mh153c h3 { colo
 html[data-theme="light"] .tu153c > small { color:#6c6c70; }
 html[data-theme="light"] .th153c, html[data-theme="light"] .cv153c, html[data-theme="light"] .mq153c { background:#FAFBFD; }
 html[data-theme="light"] .kp153c > div, html[data-theme="light"] .em153c { background:#fff; }
-html[data-theme="light"] .gh153c, html[data-theme="light"] .wy153c, html[data-theme="light"] .fl153c, html[data-theme="light"] .kp153c small { color:#A66200; }
+html[data-theme="light"] .gh153c, html[data-theme="light"] .wy153c, html[data-theme="light"] .fl153c, html[data-theme="light"] .kp153c small { color:#8A5200; }
 html[data-theme="light"] .bul153c { background:rgba(255,255,255,.97); color:#1C222C; border-color:#A66200; }
-@media (orientation:landscape) and (max-height:520px) { .mh153c p.dt153c, .ac153c > span { display:none; } .kp153c { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
+/* iPhone en paysage : la vue 3D d'abord (bascule, chiffres clés, « pourquoi » et date repliés ; le titre sur une ligne) */
+@media (orientation:landscape) and (max-height:520px) { .m3d153c:has(.cv153c) .mv153c, .mh153c p, .kp153c, .ac153c > span { display:none; }
+  .mh153c h3 { font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .bk153c { margin-bottom:6px; } }
 </style>
 </head>
 <body>
@@ -16583,7 +16593,7 @@ const M3D153C = (() => {
     const bx = cam.Sa >= 0 ? 1 : -1, by = cam.Ca >= 0 ? 1 : -1, fy = -by, fx = -bx, c0 = cam.P(0, 0, -zr), dX = dir(c0, cam.P(0, fy, -zr)), dY = dir(c0, cam.P(fx, 0, -zr));
     let maxX = 0, maxY = 0;
     (tk.y || []).forEach(t => { const tx = t[1]; if (!tx) return; const w = ink.W(tx, !sc.ylab) + gap, rr = outAt(cam.P(fx, n.ny(t[0]), -zr), dY, w, h, 0);
-      if (!sc.ylab && !free(rr)) return; placed.push(rr); maxY = Math.max(maxY, w); ink.T(tx, !sc.ylab, pal.axis, rr, "c"); });
+      if ((!sc.ylab || ink.N) && !free(rr)) return; placed.push(rr); maxY = Math.max(maxY, w); ink.T(tx, !sc.ylab, pal.axis, rr, "c"); });   /* téléphone (vue étroite) : catégories qui se chevauchent omises */
     (tk.x || []).forEach(t => { const tx = t[1]; if (!tx) return; const w = ink.W(tx, true) + gap, rr = outAt(cam.P(n.nx(t[0]), fy, -zr), dX, w, h, 0);
       if (!free(rr)) return; placed.push(rr); maxX = Math.max(maxX, w); ink.T(tx, true, pal.axis, rr, "c"); });
     const lc = [[-1, -1], [-1, 1], [1, -1], [1, 1]].sort((a, b) => cam.P(a[0], a[1], 0)[0] - cam.P(b[0], b[1], 0)[0])[0];
@@ -16638,7 +16648,7 @@ const M3D153C = (() => {
     g.fillStyle = pal.bg; g.fillRect(0, 0, cw, ch);
     const sc = mo.scene; if (!sc) return null;
     const k = 1, thumb = !!opt.thumb, fNum = "11px " + FONT, fTxt = "12px " + FONT;
-    const ink = { K: k, H: 16, W: (t, num) => { g.font = num ? fNum : fTxt; return Math.ceil(g.measureText(t || "").width); },
+    const ink = { K: k, H: 16, N: cw < 560, W: (t, num) => { g.font = num ? fNum : fTxt; return Math.ceil(g.measureText(t || "").width); },
       T: (t, num, col, rr, al) => { g.font = num ? fNum : fTxt; g.fillStyle = col; g.textBaseline = "middle"; g.textAlign = al === "r" ? "right" : al === "l" ? "left" : "center";
         g.fillText(t || "", al === "r" ? rr.x + rr.w : al === "l" ? rr.x : rr.x + rr.w / 2, rr.y + rr.h / 2); } };
     if (thumb) { const fr = geometry(g, { x: 0, y: 0, w: cw, h: ch }, { x: 6, y: 4, w: Math.max(10, cw - 12), h: Math.max(10, ch - 8) }, sc, v, k, false, M); return fr; }
@@ -16705,6 +16715,9 @@ function galerie153c(h, list) {
   prochain153c(pas);
   if (galY153c) { const y = galY153c; galY153c = 0; prochain153c(() => window.scrollTo(0, y)); }
 }
+/* couleur d'un chiffre clé : celle du PC ; thème clair : l'équivalent lisible sur blanc (vert 28,140,76 et rouge 200,54,54 de la palette claire du PC) */
+const coulK153c = c => { c = /^#[0-9A-F]{6}$/i.test(c || "") ? c.toUpperCase() : "#E6E6E6"; if (document.documentElement.getAttribute("data-theme") !== "light") return c;
+  return ({ "#E6E6E6": "var(--ink)", "#36C24A": "#1C8C4C", "#FF3B4A": "#C83636", "#F0A21E": "#8A5200", "#FFC940": "#8A5200" })[c] || "var(--ink)"; };
 const tf0153c = (fr, en, n) => ui(fr, en).replace("{0}", n);
 function modele153c(h, mo, list) {
   const sc = mo.scene, k4 = (mo.kpis || []).slice(0, 4), tactile = window.matchMedia && window.matchMedia("(pointer:coarse)").matches;
@@ -16712,7 +16725,7 @@ function modele153c(h, mo, list) {
     list.map(x => '<button type="button" data-m="' + esc(x.id) + '" class="' + (x.id === mo.id ? "on" : "") + (x.pret ? "" : " nr153c") + '" aria-pressed="' + (x.id === mo.id) + '">' + esc(x.nom || x.id) + '</button>').join("") + '</div></div>';
   h += '<div class="mh153c"><h3>' + esc(mo.titre || mo.nom || mo.id) + '</h3><p class="wy153c">' + esc(mo.pourquoi || "") + '</p><p class="dt153c">' + esc(mo.dateTxt || "") + '</p>' +
     (mo.drapeaux || []).map(f => '<p class="fl153c">' + esc(f) + '</p>').join("") + '</div>';
-  if (k4.length) h += '<div class="kp153c">' + k4.map(x => '<div' + (x.m ? ' class="km153c"' : "") + '><small>' + esc(x.l || "") + '</small><b style="color:' + esc(/^#[0-9A-F]{6}$/i.test(x.c || "") ? x.c : "#E6E6E6") + '">' + esc(x.v || "") + '</b><span>' + esc(x.s || "") + '</span></div>').join("") + '</div>';
+  if (k4.length) h += '<div class="kp153c">' + k4.map(x => '<div' + (x.m ? ' class="km153c"' : "") + '><small>' + esc(x.l || "") + '</small><b style="color:' + esc(coulK153c(x.c)) + '">' + esc(x.v || "") + '</b><span>' + esc(x.s || "") + '</span></div>').join("") + '</div>';
   if (!mo.pret || !sc) h += '<p class="em153c nr153c">' + esc((mo.manque || [])[0] || ui("à compléter", "to complete")) + '</p>';
   else h += '<div class="vw153c"><canvas class="cv153c" role="img" aria-label="' + esc(mo.titre || mo.nom || "") + '"></canvas><div class="bul153c" hidden></div></div>' +
     '<div class="ac153c"><span>' + esc(tactile ? ui("Glisser : tourner · deux doigts : zoom · toucher : valeur · double toucher : vue initiale", "Drag: rotate · two fingers: zoom · tap: value · double tap: reset view")
@@ -16726,7 +16739,7 @@ function modele153c(h, mo, list) {
 }
 function taille153c(cv) {
   const w = cv.parentElement.clientWidth, H = window.innerHeight || 700, pays = (window.innerWidth || 0) > H && H < 520;
-  const hh = pays ? Math.max(220, H - 96) : w >= 1000 ? Math.min(680, Math.max(360, H - 260)) : Math.max(280, Math.min(Math.round(w * 1.05), H - 230));
+  const hh = pays ? Math.max(220, H - 110) : w >= 1000 ? Math.min(680, Math.max(360, H - 260)) : Math.max(280, Math.min(Math.round(w * 1.05), H - 230));
   cv.style.height = hh + "px";
 }
 function gestes153c(mo) {
