@@ -15,7 +15,8 @@
 // mobile v136 (09/11) : Jour, Trésorerie, Positions visuels ; date selon le fuseau du téléphone ; plein écran en paysage ; nouveau nom de cache
 // mobile v137 (23/11) : style de l'appli PC par défaut et modèles 3D du PC (round 153, piste C) ; nouveau nom de cache
 // mobile v138 (23/11) : courbes et page Marchés du PC, texte au minimum (round 153, piste C, suite) ; nouveau nom de cache
-const C = "atlas-138", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+// mobile v139 (23/11) : toutes les courbes au rendu du PC, audit « terminal » (round 153, piste C, suite 2) ; nouveau nom de cache
+const C = "atlas-139", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // round 105 (piste h) : écrans de lancement de l'iPhone (~9 Ko chacun) : gardés pour l'ouverture hors connexion, chacun à part (un fichier
 // absent ne fait jamais échouer l'installation ni une mise à jour)

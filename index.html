@@ -5254,6 +5254,69 @@ html[data-pc153c] #main svg :is(line, path)[stroke="rgba(255,255,255,.07)"] { st
 html[data-pc153c] #main svg [stroke="rgba(255,255,255,.18)"] { stroke:#2C3440 !important; }
 html[data-pc153c] #main :is(.mk-chart, .cv108w .curve, .curve) { background:#0A0A0A; }
 html[data-pc153c] #main svg [fill="#3a3a3c"] { fill:#2C3440 !important; }
+/* round 153 (suite 2) : courbes du PC en petit format (Jour, Trésorerie) ; barres au style des barres du PC (pleines, angles droits, vert / rouge / bleu du
+   PC, quadrillage blanc 44/255, graduations en chasse fixe) ; Positions : colonnes de 44 px au moins, défilement de côté */
+.bbm153c { display:block; width:100%; height:150px; background:#000; }
+.bbm153c.bbt153c { height:230px; } .bbm153c canvas { display:block; width:100%; height:100%; touch-action:pan-y; cursor:crosshair; }
+html[data-pc153c] #main .kw109a.cv109a { padding-left:0; padding-right:0; }
+#main .pb106p { overflow-x:auto; overflow-y:hidden; touch-action:pan-x pan-y; scrollbar-width:none; }
+#main .pb106p::-webkit-scrollbar { display:none; }
+#main .pb106p > button { flex:1 0 44px !important; min-width:44px !important; }
+html[data-pc153c] #main .pb106p span { border-bottom:1px solid #2C3440; }
+html[data-pc153c] #main .pb106p span i { border-radius:0 !important; width:70%; max-width:26px; opacity:.8; background:#36C24A; }
+html[data-pc153c] #main .pb106p span i.n { background:#FF3B4A; } html[data-pc153c] #main .pb106p span i.u { background:none; border-color:#6E6E6E; }
+html[data-pc153c] #main .pb106p :is([aria-pressed=true], .cu) i { opacity:1; outline:1px solid #F0A21E; outline-offset:1px; }
+html[data-pc153c] #main .pb106p :is(small, em) { font-family:"Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#CDD2DA; }
+html[data-pc153c] #main .gy108x i { border-color:rgba(255,255,255,.1725) !important; } html[data-pc153c] #main .gy108x b { font-family:"Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#DEE2E8; font-weight:400; }
+html[data-pc153c] .cz109a rect { rx:0; ry:0; }
+html[data-pc153c] .cz109a .gr { stroke:rgba(255,255,255,.1725); } html[data-pc153c] .cz109a .z0 { stroke:#D9A02A; stroke-opacity:1; stroke-dasharray:3 1; }
+html[data-pc153c] .cz109a .m.t { fill:#1460BE; } html[data-pc153c] .cz109a .m.b { fill:#1A7CDA; } html[data-pc153c] .cz109a .m.z { fill:#969CA6; }
+html[data-pc153c] .cz109a .m.q { stroke:#E6F2FF; } html[data-pc153c] .cz109a :is(.m.t, .m.b).neg { fill:#FF3B4A; }
+#main .cd108x.dfl153c { scrollbar-width:none; } #main .cd108x.dfl153c::-webkit-scrollbar { display:none; }
+/* ================= round 153 (suite 2) · piste C : AUDIT « ce qui ne fait pas terminal » (T:\r153\c\PAS_BLOOMBERG.md), corrections du style PC =================
+   Références : l'appli PC (STYLE_PC.md, code Bbg) et des photos publiées du terminal (Wikimedia Commons, mesurées au pixel dans PAS_BLOOMBERG.md) : fond
+   noir, texte ambre et blanc, bleu des titres et sélections, rouge et vert des variations, aucune icône décorative, aucun arrondi, aucune ombre, densité. */
+/* icônes : le terminal n'en a pas ; flèches de sens en signes ▲ ▼ ◇ (comme le tableau de bord du PC), chevrons, ronds, icônes d'outils et de menu retirés */
+html[data-pc153c] :is(#main, .sheet) :is(.row-chevron, .chev104b, .ch106p, .rd106l, .tl106o .ic106o, .hn109a > svg, .vd106l > svg, .lk106l svg, .chev104e) { display:none !important; }
+html[data-pc153c] :is(#main, .sheet) .dir104b { background:none !important; width:16px !important; border-radius:0 !important; font-size:13px !important; }
+html[data-pc153c] :is(#main, .sheet) .dir104b > svg { display:none !important; }
+html[data-pc153c] :is(#main, .sheet) .in .dir104b::before { content:"▲"; } html[data-pc153c] :is(#main, .sheet) .out .dir104b::before { content:"▼"; }
+html[data-pc153c] :is(#main, .sheet) .dir .dir104b::before { content:"◇"; }
+html[data-pc153c] :is(#main, .sheet) .tr106l > svg, html[data-pc153c] #main button > svg.ic105h:last-child:not(:only-child) { display:none !important; }
+/* barre des onglets du téléphone : libellés seuls, en capitales (touches du terminal) ; menu à gauche de l'ordinateur : sans icônes (comme le menu du PC) */
+html[data-pc153c] nav button svg { display:none !important; }
+html[data-pc153c] nav button { font-size:12px !important; justify-content:center !important; padding-left:2px !important; padding-right:2px !important; }
+@media (min-width:1100px) { html[data-pc153c] nav button { text-transform:none; letter-spacing:0; font-size:14px !important; justify-content:flex-start !important; } }
+/* en-tête : boutons texte du PC (« OUTILS ») au lieu des icônes */
+html[data-pc153c] header :is(#btnRech105j, #btnOutils103f, #btnReg106l) svg, html[data-pc153c] header #btnReg106l .av106l { display:none !important; }
+html[data-pc153c] header :is(#btnRech105j, #btnOutils103f, #btnReg106l)::after { content:attr(data-l153c); font:600 11px/1 -apple-system,"Segoe UI",Arial,sans-serif; letter-spacing:.04em; color:#F2F2F2; }
+html[data-pc153c] header :is(#btnRech105j, #btnOutils103f, #btnReg106l) { padding:0 8px !important; }
+/* arrondis restants : pastilles, marqueurs, interrupteurs (case carrée du PC), badges */
+html[data-pc153c] :is(#main, header, nav, .sheet) :is(i, s, em, small, b, span)::before, html[data-pc153c] :is(#main, header, nav, .sheet) :is(i, s, em, small, b, span)::after { border-radius:0 !important; }
+html[data-pc153c] :is(#main, header, nav, .sheet) :is(i, s) { border-radius:0 !important; }
+html[data-pc153c] [role="switch"], html[data-pc153c] [role="switch"]::after, html[data-pc153c] [role="switch"]::before { border-radius:2px !important; }
+html[data-pc153c] .nb103a { border-radius:0 !important; box-shadow:none !important; }
+/* ombres : aucune (la grille des chiffres 3D prend un filet) */
+html[data-pc153c] :is(#main, header, nav, .sheet, .toast) * { box-shadow:none !important; text-shadow:none !important; }
+html[data-pc153c] .kp153c { outline:1px solid #2C343E; }
+html[data-pc153c] .tb153c .rw153c.sel::before { box-shadow:none; }
+/* pastilles d'état : texte coloré sans fond (le PC écrit « late », « en retard » en couleur, sans bulle) */
+html[data-pc153c] :is(#main, .sheet) :is(.pl106l, .pl106m, .pl106p, .pas104e, .hw104a, .chip.late) { background:none !important; padding-left:0 !important; padding-right:0 !important; }
+/* animations : aucune (le terminal change d'écran sans mouvement) */
+html[data-pc153c] *, html[data-pc153c] *::before, html[data-pc153c] *::after { transition:none !important; animation-duration:0s !important; animation-iteration-count:1 !important; }
+/* densité du PC : sections, cartes et états vides moins aérés */
+html:root[data-pc153c] { --sec105k:12px; --sec-b105k:6px; --inset105k:10px; }
+html[data-pc153c] #main :is(.sc106l, section.inf104b, section.ph106m, .acc106o, .rz106o) { margin-top:12px !important; }
+html[data-pc153c] #main .vd106l { padding:10px 12px !important; }
+html[data-pc153c] #main .card { padding:10px 12px !important; margin-bottom:8px !important; }
+/* couleur d'action : sans objet dans le style PC (les couleurs sont celles du PC) */
+html[data-pc153c] .sheet :is(.ap104f-ac, .ap104f-l:has(+ .ap104f-ac)) { display:none !important; }
+/* chiffres repérés au dessin (classe n153c) : chasse fixe du PC */
+html[data-pc153c] .n153c { font-family:"Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace !important; letter-spacing:0 !important; }
+/* audit, 2e passe : icônes qui accompagnent un texte (état, alerte, filtre) retirées ; feuilles moins aérées */
+html[data-pc153c] :is(#main, .sheet) :is(.sn106l, .it108x, .ip109c, .si108w, .ai106m, .pm106m) > svg { display:none !important; }
+html[data-pc153c] .sheet { padding-top:14px !important; } html[data-pc153c] .sheet :is(.acc106o, .rz106o) { margin-top:12px !important; }
+html[data-theme="dark"] .vs109b { color:#8A8A8A !important; } html[data-theme="light"] .pl106l.g { color:#55555A !important; }   /* contrastes ≥ 4,5:1 (Sombre, Clair) */
 </style>
 </head>
 <body>
@@ -5457,7 +5520,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "138";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) */
+const VERSION_APP = "139";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) ; toutes les courbes du PC, audit terminal (v139) */
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -8238,7 +8301,7 @@ function drawChart(el, spec) {
   const R = 52, Lp = 4, Tp = 10, Bp = 20, volH = vol.length ? Math.round((Hh - Tp - Bp) * 0.2) : 0, Hp = Hh - Tp - Bp - volH;
   const t0 = parseD(from).getTime(), t1 = Math.max(parseD(to).getTime(), t0 + 864e5), X = d => Lp + (parseD(d).getTime() - t0) / (t1 - t0) * (W - Lp - R), Y = v => Tp + (mx - v) / (mx - mn) * Hp;
   const step = niceStep(mx - mn, 4), dec = Math.max(0, Math.min(4, -Math.floor(Math.log10(step) + 1e-9)));
-  let g = '<svg viewBox="0 0 ' + W + ' ' + Hh + '" width="' + W + '" height="' + Hh + '" role="img" aria-label="' + esc(spec.label || "") + '" font-family="-apple-system,SF Pro Text,Helvetica Neue,Arial,sans-serif" font-size="10.5">';
+  let g = '<svg viewBox="0 0 ' + W + ' ' + Hh + '" width="' + W + '" height="' + Hh + '" role="img" aria-label="' + esc(spec.label || "") + '" font-family="-apple-system,SF Pro Text,Helvetica Neue,Arial,sans-serif" font-size="11">';
   for (let v = Math.ceil(mn / step) * step; v <= mx; v += step) { const y = Y(v).toFixed(1); g += '<line x1="' + Lp + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="rgba(255,255,255,.07)"/><text x="' + (W - R + 6) + '" y="' + (+y + 3.5) + '" fill="#8e8e93">' + esc(nfx(v, dec)) + '</text>'; }
   // repères de temps : semaines (1M), sinon débuts de mois
   const ticks = []; const fd = parseD(from), span = (t1 - t0) / 864e5;
@@ -16971,7 +17034,7 @@ const BBG153 = (() => {
     st.from = t0; st.to = t1; st.trd = trd;
     // rangées d'en-tête (au plus 36 % de la hauteur)
     const r1 = 26, r2 = 19, r3 = 21, rr = 23;
-    let s1 = true, s2 = !!main, s3 = !!(spec.title || (spec.functions || []).length), sR = true;
+    const rw = spec.rows !== false; let s1 = rw, s2 = rw && !!main, s3 = rw && !!(spec.title || (spec.functions || []).length), sR = rw;   /* petit format : sans rangées d'en-tête */
     const hdr = () => (s1 ? r1 : 0) + (s2 ? r2 : 0) + (s3 ? r3 : 0) + (sR ? rr : 0);
     if (hdr() > Hh * 0.36) s2 = false; if (hdr() > Hh * 0.36) s3 = false; if (hdr() > Hh * 0.36) sR = false; if (hdr() > Hh * 0.36) s1 = false;
     let y = 0, last = 0, first = 0, chg = 0, dcm = 2;
@@ -17131,17 +17194,19 @@ const BBG153 = (() => {
     return L.map(l => l[0]).join("\n");
   }
   // une courbe dans un élément : canvas, réticule au doigt et à la souris, périodes et cases de fonction au toucher
-  function monter(host, spec, onRange, onFn) {
+  function monter(host, spec, onRange, onFn, onTap) {
     host.innerHTML = '<canvas class="bb153c" role="img" aria-label="' + esc(spec.title || spec.ticker || "") + '"></canvas>';
     const cv = host.firstChild; let st = null, on = false;
     const draw = () => { try { st = render(cv, spec); } catch (e) { console.warn(e); } };
     draw();
     const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
     const hit = (L, p) => L.find(t => p[0] >= t[0].x && p[0] <= t[0].x + t[0].w && p[1] >= t[0].y && p[1] <= t[0].y + t[0].h);
-    cv.addEventListener("pointerdown", e => { const p = pos(e); if (st && st.plot && p[1] >= st.plot.y) { on = true; st.tip = overlay(cv, st, p[0], p[1]); } });
+    let d0 = null;
+    cv.addEventListener("pointerdown", e => { const p = pos(e); d0 = [p[0], p[1], Date.now()]; if (st && st.plot && p[1] >= st.plot.y) { on = true; st.tip = overlay(cv, st, p[0], p[1]); } });
     cv.addEventListener("pointermove", e => { if (!st) return; const p = pos(e); if (on || e.pointerType === "mouse") st.tip = overlay(cv, st, p[0], p[1]); });
     cv.addEventListener("pointerup", e => { on = false; if (!st) return; const p = pos(e), r = hit(st.ranges, p), f = hit(st.fns, p);
-      if (r && onRange) { onRange(r[1]); return; } if (f && onFn) onFn(f[1]); });
+      if (r && onRange) { onRange(r[1]); return; } if (f && onFn) { onFn(f[1]); return; }
+      if (onTap && d0 && Math.hypot(p[0] - d0[0], p[1] - d0[1]) < 6 && Date.now() - d0[2] < 350) onTap(); });
     cv.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && st) overlay(cv, st, null, null); });
     const ro = window.ResizeObserver ? new ResizeObserver(() => { if (!document.body.contains(cv)) { ro.disconnect(); return; } draw(); }) : null; if (ro) ro.observe(host);
     return { st: () => st, cv, survol: (x, y) => st ? (st.tip = overlay(cv, st, x, y)) : null };
@@ -17220,6 +17285,55 @@ function coursPC153c(id, dans) {
     return; }
   rm(); }; }
 
+/* round 153 js c (suite 2) */
+/* ---------- round 153 (suite 2) : TOUTES les courbes de l'appli au rendu du PC (BbgChart porté, BBG153), en petit format ----------
+   Demande (23/11) : « les courbes etc. comme dans le Marchés » vaut pour toute l'appli : Jour (banque → point bas) et Trésorerie (solde projeté)
+   prennent la courbe du PC : montagne bleue, trait clair, axe des prix à droite, étiquette à encoche du dernier point, zéro en pointillés ambre, dates en
+   bas, réticule et bulle au doigt ; petit format : sans les rangées d'en-tête ni la légende (aucun texte en plus). Un toucher bref garde l'action d'avant. */
+const BBM153C = {};
+const mio153c = v => BBG153.num(v / 1e6, Math.abs(v) >= 1e7 ? 1 : 2) + "M";
+function hoteBbm153c(k, spec, tap, cls) { BBM153C[k] = { spec: Object.assign({ rows: false, legend: false }, spec), tap }; return '<div class="bbm153c ' + (cls || "") + '" data-bbm153c="' + k + '"></div>'; }
+function monterBbm153c() {
+  if (!pcMode153c()) return;
+  document.querySelectorAll("#main [data-bbm153c]").forEach(h => { if (h.bb153c) return; const r = BBM153C[h.dataset.bbm153c]; if (!r) return; h.bb153c = 1; BBG153.monter(h, r.spec, null, null, r.tap); });
+}
+if (typeof FIN105G !== "undefined") FIN105G.push(monterBbm153c);
+/* Jour : banque estimée puis solde jour par jour jusqu'au point bas (cheminJour109a) ; prudent en ambre (deuxième couleur des séries du PC) */
+{ const c0 = cheminJour109a; cheminJour109a = function () {
+  const h = c0.apply(this, arguments); if (!h || !pcMode153c()) return h; const m = cheminJour109a.m; if (!m || !m.P) return h;
+  const A = m.P.map(x => [x.j || today, x.v]).filter(x => x[1] != null), B = m.P.map(x => [x.j || today, x.p]).filter(x => x[1] != null);
+  return hoteBbm153c("jour", { series: [{ name: ui("Attendu", "Expected"), color: "#E6F2FF", area: true, pts: A }].concat(B.length > 1 ? [{ name: ui("Prudent", "Prudent"), color: "#F0A21E", pts: B }] : []),
+    range: "Max", reference: 0, referenceLabel: "", fmt: mio153c }, () => { if (typeof ouvrirTuile106l === "function") ouvrirTuile106l("bas"); }, "bbj153c");
+}; }
+/* Trésorerie : solde projeté jour par jour (courbe106n) */
+{ const c0 = courbe106n; courbe106n = function (J, t8) {
+  if (!pcMode153c()) return c0.apply(this, arguments);
+  const pts = (J && J.jours || []).filter(x => x && x.j && x.f != null && isFinite(x.f)).map(x => [x.j, +x.f]); if (pts.length < 2) return "";
+  return hoteBbm153c("treso" + pts.length, { series: [{ name: ui("Solde", "Balance"), color: "#E6F2FF", area: true, pts }], range: "Max", reference: 0, referenceLabel: "", fmt: mio153c }, null, "bbt153c");
+}; }
+/* round 153 (suite 2) : Positions : colonnes des graphiques par mois de 44 px au moins (cibles du doigt) ; trop de mois pour la largeur : le graphique
+   défile de côté (axe compris), ouvert sur le mois choisi ; aucun changement des chiffres */
+function colonnes153c() {
+  document.querySelectorAll("#main .dv108x").forEach(dv => { const cs = dv.querySelector(".cs108x"), n = cs ? cs.children.length : 0; if (!n) return;
+    const gy = parseFloat(getComputedStyle(dv).getPropertyValue("--gy")) || 0, cd = dv.parentElement;
+    if (dv.k153c !== n) { dv.style.minWidth = ""; dv.k153c = n; }
+    if ((dv.clientWidth - gy) / n >= 44) return;
+    dv.style.minWidth = Math.ceil(n * 46 + gy) + "px"; dv.style.touchAction = "pan-x pan-y"; if (cd) { cd.style.overflowX = "auto"; cd.style.overflowY = "hidden"; cd.classList.add("dfl153c"); }
+    const cu = cs.querySelector(".cu, [aria-pressed=true]"); if (cd && cu && !cd.v153c) { cd.v153c = 1; cd.scrollLeft = Math.max(0, cu.offsetLeft - cd.clientWidth / 2 + 22); } });
+}
+if (typeof FIN105G !== "undefined") FIN105G.push(colonnes153c);
+window.addEventListener("resize", () => { try { colonnes153c(); } catch (e) {} }, { passive: true });
+/* round 153 (suite 2) : style PC : chiffres en chasse fixe (classe n153c posée au dessin de la page et à l'ouverture d'une feuille), boutons de l'en-tête en texte */
+const NUM153C = /^[\s+−\-–=▲▼≈~$€£%.,:/()\dxkKMlbt×·]*$/;
+function terminal153c() {
+  if (!pcMode153c()) return;
+  const H = { btnRech105j: ui("RECH.", "SEARCH"), btnOutils103f: ui("OUTILS", "TOOLS"), btnReg106l: ui("RÉGL.", "SET.") };
+  Object.keys(H).forEach(id => { const b = document.getElementById(id); if (b && b.dataset.l153c !== H[id]) b.dataset.l153c = H[id]; });
+  document.querySelectorAll("#main *, .sheet *").forEach(el => { if (el.classList.contains("n153c") || el instanceof SVGElement) return; let t = ""; for (let c = el.firstChild; c; c = c.nextSibling) if (c.nodeType === 3) t += c.textContent; t = t.trim();
+    if (t && /\d[^\d]*\d/.test(t) && NUM153C.test(t)) el.classList.add("n153c"); });
+}
+if (typeof FIN105G !== "undefined") FIN105G.push(terminal153c);
+try { new MutationObserver(rs => { if (rs.some(r => Array.from(r.addedNodes).some(n => n.nodeType === 1 && n.classList && n.classList.contains("sheet-bg")))) setTimeout(terminal153c, 0); }).observe(document.body, { childList: true }); } catch (e) {}
 if (!window.ATLAS_ESSAI) boot();
 </script>
 </body>
