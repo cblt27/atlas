@@ -5378,14 +5378,14 @@ html[data-pc153c] .bbm153c { height:100px; }
 /* Positions : intitulés de section au-dessus de listes évidentes retirés ; anneaux par produit retirés (répètent l'exposition visuelle) ;
    « Plus » en cases de fonction ambre du PC, sur deux rangées au plus */
 html[data-pc153c] #main .gd108x > .sc108x > h3.h106p, html[data-pc153c] #main .sc108x:has(.ri108x) { display:none !important; }
-html[data-pc153c] #main :has(> [data-expo-tool]) { display:flex !important; flex-wrap:wrap; gap:4px; padding:0 !important; background:none !important; outline:0 !important; }
-html[data-pc153c] #main [data-expo-tool] { flex:0 0 auto !important; width:auto !important; min-height:32px !important; padding:0 10px !important; margin:0 !important; background:#F0A21E !important; color:#000 !important; border:0 !important; }
-html[data-pc153c] #main [data-expo-tool] :is(svg, i, small, .ch106p) { display:none !important; } html[data-pc153c] #main [data-expo-tool] :is(b, span) { color:#000 !important; font:600 12px Tahoma,"Segoe UI",-apple-system,Arial,sans-serif !important; }
-html[data-pc153c] #main [data-expo-tool]::before, html[data-pc153c] #main [data-expo-tool]::after { display:none !important; }
+html[data-pc153c] #main .pl109c { display:flex !important; flex-wrap:wrap; gap:4px; padding:0 !important; background:none !important; outline:0 !important; }
+html[data-pc153c] #main .pl109c [data-expo-tool] { flex:0 0 auto !important; width:auto !important; min-height:32px !important; padding:0 10px !important; margin:0 !important; background:#F0A21E !important; color:#000 !important; border:0 !important; }
+html[data-pc153c] #main .pl109c [data-expo-tool] :is(svg, i, small, .ch106p) { display:none !important; } html[data-pc153c] #main .pl109c [data-expo-tool] :is(b, span) { color:#000 !important; font:600 12px Tahoma,"Segoe UI",-apple-system,Arial,sans-serif !important; }
+html[data-pc153c] #main .pl109c [data-expo-tool]::before, html[data-pc153c] #main .pl109c [data-expo-tool]::after { display:none !important; }
 /* Jour : la section des cours répète Marchés (même tableau, mêmes chiffres) : retirée du Jour, l'onglet Marchés la garde */
 html[data-pc153c] #main [data-sec106l="px"] { display:none !important; }
 /* v140 : corrections du banc (débordements, paysage, texte agrandi) */
-html[data-pc153c] #main .st106l .lk106l { margin-right:0 !important; padding-right:0 !important; }
+html[data-pc153c] #main .st106l .lk106l { margin:-4px 0 !important; min-height:32px !important; padding:0 8px !important; }   /* v141 : « Tout » ni collé au bord droit ni posé sur la carte suivante */
 html[data-pc153c] #agl103b .wk106m { margin-top:2px !important; }
 html[data-pc153c] #agl103b > section.agenda-day { content-visibility:visible !important; }   /* jours compacts : tous rendus (pas de hauteur réservée qui recouvre) */
 @media (orientation:landscape) and (max-height:520px) { html[data-pc153c] #main .segw104c .seg > button { min-height:44px !important; min-width:max-content !important; padding:0 10px !important; } html[data-pc153c] #main .tz104c .hx108w { padding-top:38px !important; } }
@@ -5410,29 +5410,58 @@ html[data-pc153c] #main .st106l { justify-content:flex-end !important; min-heigh
 html[data-pc153c] #main :is(.agenda-day, .lv106m, .op104b, .li106q, .gl106m) .u104e { display:none !important; }
 /* Positions : le héros et le graphique par mois sont remplacés par l'exposition visuelle (xp153c) */
 html[data-pc153c] #main :is(.hd108x, .cd108x.pw108x) { display:none !important; }
-/* exposition visuelle */
-.xp153c { margin:0 0 8px; }
-.xh153c { display:flex; align-items:baseline; gap:6px; padding:2px 0 4px; }
-.xh153c span { color:#F0A21E; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
-.xh153c b { font:700 20px/1 "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; } .xh153c b.up { color:#36C24A; } .xh153c b.dn { color:#FF3B4A; }
-.xh153c i { font-style:normal; color:#B8B8B8; font-size:12px; }
-.xg153c { overflow-x:auto; scrollbar-width:none; scroll-snap-type:x mandatory; scroll-padding-left:66px; }
-.xg153c::-webkit-scrollbar { display:none; }
-.xr153c { display:grid; grid-template-columns:66px repeat(var(--n), var(--cw, 42px)); width:max-content; }
-.xl153c { position:sticky; left:0; z-index:1; background:#000;
-  display:flex; align-items:center; font-size:12px; color:#E6E6E6; white-space:nowrap; overflow:hidden; border-right:1px solid #2C3440; }
-.xm153c > span:not(.xl153c) { display:flex; flex-direction:column; align-items:center; justify-content:center; height:30px; scroll-snap-align:start; font:11px/13px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#CDD2DA; border-bottom:1px solid #2C3440; white-space:nowrap; }
-.xm153c > span > b { font-weight:600; } .xm153c > span > i { font-style:normal; color:#969CA6; min-height:13px; } .xm153c > span.cu > i { color:#000; }
-.xm153c > span.cu { color:#000; background:#F0A21E; font-weight:700; }
-.xc153c { position:relative; height:66px; border-left:1px solid #12151B; }
-.xc153c::before { content:""; position:absolute; left:0; right:0; top:50%; border-top:1px solid #2C3440; }
-.xc153c.cu { background:rgba(240,162,30,.10); }
-.xc153c .b { position:absolute; left:9px; right:9px; display:block; } .xc153c.lo .b { bottom:50%; background:#36C24A; } .xc153c.sh .b { top:50%; background:#FF3B4A; }
-.xc153c .b .h { position:absolute; left:0; right:0; display:block; background:repeating-linear-gradient(135deg, rgba(0,0,0,.6) 0 2px, transparent 2px 5px); }
-.xc153c.lo .b .h { bottom:0; } .xc153c.sh .b .h { top:0; }
-.xc153c .b em { background:#000; padding:0 1px; position:absolute; left:50%; transform:translateX(-50%); font:11px/12px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; white-space:nowrap; font-style:normal; }
-.xc153c.lo .b em { bottom:100%; margin-bottom:1px; } .xc153c.sh .b em { top:100%; margin-top:1px; }
-.xr153c:not(.xm153c) + .xr153c { border-top:1px solid #12151B; }
+/* ================= v141 : Positions sur la fiche réelle ================= */
+/* exposition (couv88) : une ligne par case de la fiche (Stock, Fini, mois de prix, Sans date), un produit par colonne ; pied Total, Couvert,
+   Non couvert (quantité, puis valeur en $), Prix (et son âge en ambre) ; barre : part couverte en bleu, reste vert (long) ou rouge (court),
+   à l'échelle de chaque produit (jamais deux métaux sur une même échelle) */
+.xp153c.x141 { margin:0 0 8px; }
+.x141 .xh141 { display:flex; align-items:baseline; gap:6px; padding:2px 0 4px; font-size:11px; }
+.x141 .xh141 > span { color:#F0A21E; font-weight:600; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; }
+.x141 .xh141 > b { font:700 18px/1 "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; white-space:nowrap; }
+.x141 .xh141 > i { margin-left:auto; display:flex; gap:8px; font-style:normal; color:#969CA6; white-space:nowrap; }
+.x141 .xh141 > i > u { text-decoration:none; }
+.x141 .xh141 > i > u::before { content:""; display:inline-block; width:8px; height:8px; margin-right:3px; vertical-align:-1px; background:#1460BE; }
+.x141 .xh141 > i > u.lo::before { background:#1F6B2C; } .x141 .xh141 > i > u.sh::before { background:#8C1D25; }
+.x141 table { width:100%; table-layout:fixed; border-collapse:collapse; font:11px/15px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; }
+.x141 col.l { width:54px; }
+.x141 th { padding:0 3px; font:600 11px/16px Tahoma,"Segoe UI",-apple-system,Arial,sans-serif; color:#CDD2DA; text-align:right; white-space:nowrap; overflow:hidden; }
+.x141 thead th { color:#F0A21E; border-bottom:1px solid #2C3440; cursor:pointer; }
+.x141 thead th.on { color:#000; background:#F0A21E; }
+.x141 :is(tbody, tfoot) th { text-align:left; font-weight:400; }
+.x141 tbody tr.cu > th { color:#F0A21E; font-weight:700; }
+.x141 tbody tr.fi > * { color:#969CA6; }
+.x141 td { position:relative; height:15px; padding:0 3px; text-align:right; white-space:nowrap; border-left:1px solid #12151B; }
+.x141 tbody td { cursor:pointer; }
+.x141 td > i { position:absolute; left:1px; top:2px; bottom:2px; display:block; }
+.x141 td.lo > i { background:#1F6B2C; } .x141 td.sh > i { background:#8C1D25; }
+.x141 td > i > s { position:absolute; left:0; top:0; bottom:0; display:block; background:#1460BE; text-decoration:none; }
+.x141 td > b { position:relative; font-weight:400; }
+.x141 td.z > b { color:#7A818C; }
+.x141 tbody tr + tr > * { border-top:1px solid #12151B; }
+.x141 tfoot tr:first-child > * { border-top:1px solid #2C3440; }
+.x141 tfoot td { font-weight:600; vertical-align:top; }
+.x141 tfoot td.up { color:#36C24A; } .x141 tfoot td.dn { color:#FF3B4A; } .x141 tfoot td.m { color:#969CA6; font-weight:400; }
+.x141 tfoot td > small { display:block; font-size:11px; line-height:13px; color:#CDD2DA; font-weight:400; }
+.x141 tfoot td > em { display:block; font-style:normal; font-size:11px; line-height:13px; color:#F0A21E; font-weight:600; }
+html[data-pc153c] #main .x141 th { text-transform:none !important; letter-spacing:0 !important; color:#CDD2DA !important; }
+html[data-pc153c] #main .x141 thead th { color:#F0A21E !important; } html[data-pc153c] #main .x141 thead th.on { color:#000 !important; }
+html[data-pc153c] #main .x141 tbody tr.cu > th { color:#F0A21E !important; } html[data-pc153c] #main .x141 tbody tr.fi > * { color:#969CA6 !important; }
+@media (max-width:360px) { .x141 col.l { width:56px; } .x141 th, .x141 td { padding:0 2px; } }
+/* graphiques par mois : étiquettes de mois qui se toucheraient : tues (le mois courant, les cases sans date et les années d'abord) */
+.ps108x em.o141 { visibility:hidden; }
+.ps108x .cs108x > button > em { transform:translateX(var(--dx, 0px)); }
+html[data-pc153c] #main .ps108x .dv108x .cs108x > button > em { position:absolute; left:50%; top:calc(var(--ph) + 15px); margin:0; transform:translateX(calc(-50% + var(--dx, 0px))); text-align:center; }
+html[data-pc153c] #main .r106p .l106p > b:has(> .pl106p) { white-space:normal !important; overflow:visible !important; text-overflow:clip !important; }
+/* Positions : le contexte d'une carte (période, contrat) quand l'intitulé de section est retiré ; pastilles d'icône vides retirées ;
+   anneaux par produit retirés (le pied de l'exposition donne la part couverte) ; l'objet du chiffre de Position (physique) écrit */
+.cx141 { display:none; }
+html[data-pc153c] #main .cx141 { display:block; margin:0; padding:3px 8px 1px; font-size:11px; line-height:14px; color:#F0A21E; }
+html[data-pc153c] #main .it108x, html[data-pc153c] #main .sc108x:has(.ap109c), html[data-pc153c] #main .ec109c { display:none !important; }
+html[data-pc153c] #main .hp108x .hx106p > small { display:block !important; color:#F0A21E; font-size:11px; }
+/* À vérifier sans pictogramme : libellé et état sur une seule ligne, sans colonne vide à gauche */
+html[data-pc153c] #main .ps108x .av106p .r106p { grid-template-columns:minmax(0,1fr) auto; column-gap:8px; }
+html[data-pc153c] #main .ps108x .av106p .r106p > .l106p > b { grid-column:1; grid-row:1; white-space:normal; } html[data-pc153c] #main .ps108x .av106p .r106p > .v106p { grid-column:2; grid-row:1; }
+html[data-pc153c] #main .ps108x .av106p .r106p > .dt106p { display:none !important; }
 </style>
 </head>
 <body>
@@ -5636,7 +5665,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "140";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) ; toutes les courbes du PC, audit terminal (v139) ; densité du terminal, exposition visuelle (v140) */
+const VERSION_APP = "141";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) ; toutes les courbes du PC, audit terminal (v139) ; densité du terminal, exposition visuelle (v140) ; Positions vérifiée sur une fiche réelle (v141) */
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -6939,6 +6968,7 @@ function openExpo37(key,e,p,pl) {
   const build={positions:()=>vDetailedPositions(p,e,pl),carte:()=>vCarte(e,pl),cam:()=>vCamions(p,pl),stock:()=>vStock(p,pl),cptys:()=>vCptys(p,pl),couv:()=>vCouv(e,p,pl),sens:()=>vSensib(p,pl),parts:()=>vParts(p,pl),marche:()=>vMarche(p),swaps:()=>vSwaps(p),alertes:()=>vAlertes(p,pl),aide:()=>VT[lang].gl.map(z=>'<p><b>'+esc(z[0]==='*entrepot'?vCamEnt(p):z[0])+'</b> · '+esc(z[1])+'</p>').join('')};
   Object.assign(build,{sanscli103d:()=>vListe103d(p,pl,'cli'),sanscam103d:()=>vListe103d(p,pl,'cam')});titles.sanscli103d=ui('Camions sans client','Trucks without customer');titles.sanscam103d=ui('Ventes sans camion','Sales without truck');   /* round 103 : listes des tuiles */
   build.retard103d=()=>vRetard103d(p,pl);titles.retard103d=ui('Réceptions en retard','Late receipts');   /* round 103 : réceptions en retard */
+  if(key==='sens'){const C=C88(),cp=C&&C.produits.find(z=>z.produit===p.produit);if(cp&&sens108x(cp)){pageSens109c(cp);return;}}   /* v141 : simulateur sur le non couvert de la fiche (couv88), plus sur la position physique */
   if(!build[key])return;
   /* round 107 : D047 : page poussée (‹ Positions) au standard des pages de la Trésorerie : un seul titre, la portée en sous-titre, la carte de l'outil sans
      second titre ni « i » (pagePos107r) ; mêmes contenus, mêmes touchers */
@@ -13546,7 +13576,7 @@ function ix106p(p, pl) {
   const sc = ui("contrats de ", "contracts of ") + plageL107r(pl), T = ui("Achats indexés", "Index-linked purchases");   /* round 107 : D046 : « contrats de novembre 2026 » */
   if (!cs.length) return h106p(T, sc) + cd106p(row106p({ t: esc(vt((p.vis.couv || []).length ? "rienPlage" : "aucunIdx")) }));
   const tot = vCoverage37(cs), pc = tot.idx >= .5 ? Math.round(100 * tot.covered / tot.idx) : null, nc = tot.idx - tot.covered;
-  let r = '<button type="button" class="r106p ix106p" data-expo-tool="couv"><span class="l106p"><b>' + esc(vq(tot.covered, { nu: true }) + " / " + vq(tot.idx)) + '</b>' + barreIx109c(tot.covered, tot.idx, pc) + '<small>' +   /* round 109 : E032 */
+  let r = '<p class="cx141">' + esc(ui("Indexés · ", "Indexed · ") + plageL107r(pl) + " · " + (cs.length === 1 ? (cs[0].contrat || cs[0].trade || "?") : cs.length + ui(" contrats", " contracts"))) + '</p>' + '<button type="button" class="r106p ix106p" data-expo-tool="couv"><span class="l106p"><b>' + esc(vq(tot.covered, { nu: true }) + " / " + vq(tot.idx)) + '</b>' + barreIx109c(tot.covered, tot.idx, pc) + '<small>' +   /* round 109 : E032 */
     esc(ui("couverts par swaps · ", "hedged by swaps · ") + cs.map(c => (c.cpty || "?") + " " + (c.contrat || c.trade || "")).join(", ")) + '</small></span><i class="ch106p" aria-hidden="true">›</i></button>';
   r += row106p({ attrs: ' data-expo-tool="couv"', dot: nc >= .5 ? "w" : "g", t: esc(ui("Non couvert", "Unhedged")), s: esc(cs.length === 1 ? ui("contrat ", "contract ") + (cs[0].contrat || cs[0].trade || "?") + ui(" · ensemble du contrat", " · whole contract") : cs.length + ui(" contrats · ensemble des contrats", " contracts · whole contracts")), v: esc(vq(nc)) });   /* round 107 : D004 : portée du contrat, pas d'un mois */
   if (tot.extra >= .5) r += row106p({ attrs: ' data-expo-tool="couv"', dot: "w", t: esc(ui("Swaps en trop", "Excess swaps")), v: esc(vq(tot.extra)) });
@@ -13619,7 +13649,7 @@ function posHero106p(p, x, open, mx, suite) {
   const et = v == null ? [ui("Donnée indisponible", "Data unavailable"), ""] : x.cv ? [ui("≈ Équilibré · conversion", "≈ Balanced · conversion"), ""] : open ? (v < -.5 ? [ui("Vendu sans achat", "Sold without purchase"), "r"] : v > .5 ? [ui("Acheté sans vente", "Bought without sale"), "g"] : [ui("Équilibré", "Balanced"), ""]) :
     (v < -.5 ? ["Short", "r"] : v > .5 ? ["Long", "g"] : [ui("À plat", "Flat"), ""]);
   /* round 107 : D045 : le héros touchable est une carte, son chevron dans la carte (plus de « › » isolé contre le bord de l'écran) */
-  return '<div class="cd106p hc107r hp108x' + (v == null || (x && x.cv) || Math.abs(v) < .5 ? "" : v < 0 ? " so" : " lo") + '"><button type="button" class="hx106p"' + (x ? vPositionAttrs(p, x) : " disabled") + '><small>' + esc((open ? ui("Exposition · ", "Exposure · ") : ui("Position de prix · ", "Price position · ")) + fin) + '</small><span class="hv106p"><b class="num">' +
+  return '<div class="cd106p hc107r hp108x' + (v == null || (x && x.cv) || Math.abs(v) < .5 ? "" : v < 0 ? " so" : " lo") + '"><button type="button" class="hx106p"' + (x ? vPositionAttrs(p, x) : " disabled") + '><small>' + esc((open ? ui("Physique · ", "Physical · ") : ui("Position de prix · ", "Price position · ")) + fin) + '</small><span class="hv106p"><b class="num">' +
     esc(v == null ? vt("inconnu") : x.cv ? "≈ 0" : vq(Math.abs(v), { nu: true })) + '</b>' + un106p(U()) + pl106p(et[0], et[1]) + '</span>' + jauge108x(v, mx, open, x && x.cv) + (x ? '<i class="ch106p" aria-hidden="true">›</i>' : "") + '</button>' + (suite || "") + '</div>';   /* round 109 : E039 : la fin du mois suivant en sous-ligne */
 }
 /* round 106 p : js 15 */
@@ -15498,7 +15528,7 @@ function profil108x(p, rows) {
     if (E != null && E >= .5) up = Math.max(up, t); else if (E != null && E <= -.5) dn = Math.max(dn, t); return { m, i, E, C, N }; });
   const vide = up + dn < .5, u = vide ? 0 : 86 / (up + dn), Z = vide ? 50 : 7 + up * u, tait = pas108x(R.map(r => r.m.k), cm);
   const T = vide ? [] : grad108x(-dn, up, 2).filter(v => Math.abs(v) > 1e-9 && Math.abs(v * u) >= 9);
-  const gy = '<div class="gy108x" aria-hidden="true">' + T.map(v => '<i style="top:' + f(Z - v * u) + '"><b>' + esc(c88q(v, { signe: true, nu: true })) + '</b></i>').join("") + '<i class="z" style="top:' + f(Z) + '"><b>0</b></i></div>';
+  const gy = '<div class="gy108x" aria-hidden="true">' + T.map(v => '<i style="top:' + f(Z - v * u) + '"><b>' + esc(pcMode153c() ? kq141(v) : c88q(v, { signe: true, nu: true })) + '</b></i>').join("") + '<i class="z" style="top:' + f(Z) + '"><b>0</b></i></div>';
   const cols = R.map((r, j) => { const { m, i, E, C, N } = r, ax = axe108x(m.k, dt(m.k) && (j === 0 || !dt(R[j - 1].m.k))), sw = (m.sw || []).length;
     let g = "";
     if (E == null) g = '<i class="u" style="top:' + f(Math.max(2, Z - 16)) + ';height:32%"></i><b class="q">—</b>';
@@ -17437,8 +17467,8 @@ if (typeof FIN105G !== "undefined") FIN105G.push(monterBbm153c);
 function colonnes153c() {
   document.querySelectorAll("#main .dv108x").forEach(dv => { const cs = dv.querySelector(".cs108x"), n = cs ? cs.children.length : 0; if (!n) return;
     const gy = parseFloat(getComputedStyle(dv).getPropertyValue("--gy")) || 0, cd = dv.parentElement;
-    if (dv.k153c !== n) { dv.style.minWidth = ""; dv.k153c = n; }
-    if ((dv.clientWidth - gy) / n >= 44) return;
+    dv.style.minWidth = ""; dv.k153c = n;
+    if ((dv.clientWidth - gy) / n >= 12) { if (cd && cd.classList.contains("dfl153c")) { cd.style.overflowX = ""; cd.style.overflowY = ""; cd.classList.remove("dfl153c"); cd.scrollLeft = 0; } dv.style.touchAction = ""; etiquettes141(dv); return; }   /* v141 : tous les mois dans la largeur, axe des valeurs visible */
     dv.style.minWidth = Math.ceil(n * 46 + gy) + "px"; dv.style.touchAction = "pan-x pan-y"; if (cd) { cd.style.overflowX = "auto"; cd.style.overflowY = "hidden"; cd.classList.add("dfl153c"); }
     const cu = cs.querySelector(".cu, [aria-pressed=true]"); if (cd && cu && !cd.v153c) { cd.v153c = 1; cd.scrollLeft = Math.max(0, cu.offsetLeft - cd.clientWidth / 2 + 22); } });
 }
@@ -17456,51 +17486,81 @@ function terminal153c() {
 if (typeof FIN105G !== "undefined") FIN105G.push(terminal153c);
 try { new MutationObserver(rs => { if (rs.some(r => Array.from(r.addedNodes).some(n => n.nodeType === 1 && n.classList && n.classList.contains("sheet-bg")))) setTimeout(terminal153c, 0); }).observe(document.body, { childList: true }); } catch (e) {}
 /* round 153 js c (suite 3, v140) */
-/* ---------- round 153 (suite 3) · v140 : EXPOSITION visuelle (Positions, style PC) ----------
-   Retour de l'utilisateur (23/11) : « l'exposure est illogique, on ne comprend pas pour quelle période, quel truc, ça devrait être visuel ». Lecture d'un
-   coup d'œil, sans phrase : net en tête avec l'unité ; axe des mois écrit en clair (« nov. 26 … juin 27 ») ; un produit par ligne ; barre au-dessus du
-   zéro = long (acheté non vendu, vert), en dessous = court (vendu non acheté, rouge) ; part couverte (swaps) hachurée ; quantité au bout de la barre ;
-   mois courant marqué en ambre. Chiffres : ceux de l'exposition du PC (data.couv88 = Cx88Json.Expo(Cx88.Build()), mêmes cellules que la page
-   Exposition du PC, vérifiées par --r153c) : seulement le non alloué (achats non vendus, ventes non achetées), jamais ce qui est déjà adossé. */
-const kq153c = v => { const a = Math.abs(v); return (v < 0 ? "−" : "") + (a >= 1e6 ? BBG153.num(a / 1e6, 1) + "M" : a >= 1e3 ? BBG153.num(a / 1e3, a >= 1e4 ? 0 : 1) + "k" : BBG153.num(a, 0)); };
+/* ---------- v141 : EXPOSITION sur la fiche réelle (Positions, style PC) ----------
+   Retour de l'utilisateur (23/11) : « dans Positions il y a plein d'erreurs… il manque plein de data ». Les cases de la page Exposition du PC
+   (data.couv88 = Cx88Json.Expo(Cx88.Build())) telles quelles : une ligne par case de la fiche (Stock, Fini, chaque mois de prix, Sans date), un
+   produit par colonne : la période se lit dans la structure, sans phrase. Pied : Total (somme de la fiche, hors cotation finie), part couverte,
+   non couvert (quantité, puis sa valeur en $ de la fiche), prix qui le valorise et son âge (ambre au-delà de 7 jours). Aucun total qui additionne
+   des métaux en lb : le seul total de tête est en $ (somme des valeurs de la fiche, « ≈ » si un prix est un repère). Produit à plat : « 0 » dans
+   ses cases et « à plat » au pied, jamais une colonne vide. Toucher une case : la page du mois (Couverture) ; un produit : ce produit. */
+const AGE141 = 7;
+const ordre141 = k => k === "stock" ? 0 : k === "fini" ? 1 : k === "sd" ? 3 : 2;
+const ligne141 = k => k === "stock" ? ui("Stock", "Stock") : k === "fini" ? ui("Fini", "Done") : k === "sd" ? ui("S. date", "Undated") : vMC(k);
+/* graduation compacte d'un axe (« −50k »), dans l'unité choisie */
+const kq141 = v => { const q = unite === "MT" ? v / vLB() : v, a = Math.abs(q), s = q <= -1e-9 ? "−" : q >= 1e-9 ? "+" : "";
+  return s + (a >= 1e6 ? nfx(a / 1e6, 1) + "M" : a >= 1e3 ? nfx(a / 1e3, a >= 1e4 ? 0 : 1) + "k" : nfx(a, a >= 10 || Number.isInteger(a) ? 0 : 1)); };
 function expoPC153c() {
   if (!pcMode153c() || tab !== "expo" || !data) return; const M = document.getElementById("main"); if (!M || M.querySelector(".xp153c")) return;
-  const C = data.couv88, P = C && Array.isArray(C.produits) ? C.produits.filter(p => p && Array.isArray(p.mois)) : [];
-  const lbMT = C && +C.lbParMT > 0 ? +C.lbParMT : 2204.62, mt = typeof U === "function" && /MT|t$/.test(String(U())), cv = v => mt ? v / lbMT : v, unit = mt ? "MT" : "lb";
-  const ks = Array.from(new Set([].concat(...P.map(p => p.mois.map(m => m.k))))).filter(k => /^\d{4}-\d{2}$/.test(k)).sort();
-  let h = '<div class="xp153c">';
-  if (!P.length || !ks.length) { h += '<p class="em153c">' + esc(ui("Exposition absente de la fiche", "No exposure in the sheet")) + '</p></div>'; }
+  if (M.querySelector('.ps106p[data-v106p="pnl"]')) return;   /* P&L : la marge, pas l'exposition */
+  const C = data.couv88, P = C && Array.isArray(C.produits) && !C.erreur ? C.produits.filter(p => p && Array.isArray(p.mois)) : [];
+  const ks = Array.from(new Set([].concat(...P.map(p => p.mois.map(m => m.k))))).filter(k => k != null).sort((a, b) => ordre141(a) - ordre141(b) || (a < b ? -1 : a > b ? 1 : 0));
+  const on = M.querySelector(".pk106p button.on"), sel = on ? on.dataset.pp106p : expoProd;
+  let h = '<div class="xp153c x141">';
+  if (!P.length || !ks.length) h += '<p class="em153c">' + esc(ui("Exposition absente de la fiche", "No exposure in the sheet")) + '</p>';
   else {
-    const tot = P.reduce((s, p) => s + p.mois.filter(m => /^\d{4}-\d{2}$/.test(m.k)).reduce((a, m) => a + (+m.expo || 0), 0), 0), cur = today.slice(0, 7);
-    let mx = 1; P.forEach(p => p.mois.forEach(m => { if (/^\d{4}-\d{2}$/.test(m.k)) mx = Math.max(mx, Math.abs(+m.expo || 0)); }));
-    const MC = lang === "fr" ? ["jan", "fév", "mar", "avr", "mai", "jun", "jul", "aoû", "sep", "oct", "nov", "déc"] : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const mois = k => { const d = parseD(k + "-01"); return MC[d.getMonth()] + " " + String(d.getFullYear()).slice(2); };
-    const tete = k => { const d = parseD(k + "-01"); return '<b>' + MC[d.getMonth()] + '</b><i>' + (d.getMonth() === 0 || k === ks[0] ? String(d.getFullYear()).slice(2) : "") + '</i>'; };
-    h += '<div class="xh153c"><span>' + esc(ui("Net", "Net")) + '</span><b class="n153c ' + (tot > 0.5 ? "up" : tot < -0.5 ? "dn" : "") + '">' + esc((tot > 0 ? "+" : "") + BBG153.num(cv(tot), 0)) + '</b><i>' + unit + '</i></div>';
-    h += '<div class="xg153c" style="--n:' + ks.length + '"><div class="xr153c xm153c"><span class="xl153c"></span>' + ks.map(k => '<span class="' + (k === cur ? "cu" : "") + '">' + tete(k) + '</span>').join("") + '</div>';
-    P.forEach(p => {
-      const by = {}; p.mois.forEach(m => { by[m.k] = m; });
-      h += '<div class="xr153c"><span class="xl153c">' + esc(prod(p.produit)) + '</span>' + ks.map(k => {
-        const m = by[k], v = m ? +m.expo || 0 : 0, c = m ? Math.min(Math.abs(v), Math.max(0, +m.couvert || 0)) : 0, hp = Math.max(2, Math.abs(v) / mx * 30), hc = Math.abs(v) > 0 ? c / Math.abs(v) * 100 : 0;
-        if (Math.abs(v) < 0.5) return '<span class="xc153c' + (k === cur ? " cu" : "") + '"><i class="z"></i></span>';
-        return '<span class="xc153c ' + (v > 0 ? "lo" : "sh") + (k === cur ? " cu" : "") + '" title="' + esc(mois(k) + " · " + BBG153.num(cv(v), 0) + " " + unit + (c ? " · " + ui("couvert ", "hedged ") + BBG153.num(cv(c), 0) : "")) + '">' +
-          '<i class="b" style="height:' + hp.toFixed(1) + '%"><i class="h" style="height:' + hc.toFixed(1) + '%"></i><em class="n153c">' + esc(kq153c(cv(v))) + '</em></i></span>';
-      }).join("") + '</div>';
+    const cur = today.slice(0, 7), fin = v => v != null && v !== "" && isFinite(+v), q = v => vq(+v || 0, { nu: true });
+    const val = P.filter(p => fin(p.valeur)), tv = val.reduce((s, p) => s + Math.abs(+p.valeur), 0), est = val.some(p => p.prix && p.prix.repere);
+    h += '<div class="xh141"><span>' + esc(ui("Non couv.", "Unhedged")) + '</span><b class="n153c">' + esc(val.length ? mt106p(tv, est) : "—") + '</b><i aria-hidden="true"><u>' + esc(ui("couv.", "hedged")) +
+      '</u><u class="lo">long</u><u class="sh">' + esc(ui("court", "short")) + '</u></i></div>';
+    h += '<table><colgroup><col class="l">' + P.map(() => '<col>').join("") + '</colgroup><thead><tr><th></th>' +
+      P.map(p => '<th data-pp141="' + esc(p.produit) + '" class="' + (p.produit === sel ? "on" : "") + '">' + esc(prod(p.produit)) + '</th>').join("") + '</tr></thead><tbody>';
+    const mx = P.map(p => Math.max(1, ...p.mois.map(m => Math.abs(+m.expo || 0))));
+    ks.forEach(k => {
+      h += '<tr' + (k === cur ? ' class="cu"' : k === "fini" ? ' class="fi"' : "") + '><th>' + esc(ligne141(k)) + '</th>' + P.map((p, j) => {
+        const i = p.mois.findIndex(m => m.k === k), m = i >= 0 ? p.mois[i] : null; if (!m) return '<td></td>';
+        const v = +m.expo || 0, a = Math.abs(v), c = Math.min(a, Math.max(0, +m.couvert || 0)), at = ' data-c141="' + j + '|' + i + '"';
+        if (a < .5) return '<td class="z"' + at + '><b>0</b></td>';
+        return '<td class="' + (v > 0 ? "lo" : "sh") + '"' + at + '><i style="width:' + (a / mx[j] * 97).toFixed(1) + '%"><s style="width:' + (c / a * 100).toFixed(1) + '%"></s></i><b>' + esc(q(v)) + '</b></td>';
+      }).join("") + '</tr>';
     });
-    h += '</div></div>';
+    const plat = p => Math.abs(+p.expo || 0) < .5 && Math.abs(+p.nonCouvert || 0) < .5 && !fin(p.pct);
+    const prix = p => { const x = p.prix, n = x && x.usdLb != null ? age106p(x.date) : null; if (!x || x.usdLb == null) return '<td class="m">—</td>';
+      return '<td>' + esc((x.repere ? "≈ " : "") + (Math.abs(+x.usdLb) >= 1000 ? nfx(+x.usdLb, 0) : vp(x.usdLb))) + (n != null && n > AGE141 ? '<em>' + esc(n + ui(" j", " d")) + '</em>' : "") + '</td>'; };
+    h += '</tbody><tfoot><tr><th>' + esc(ui("Total", "Total")) + '</th>' + P.map(p => { const v = +p.expo || 0; return '<td class="' + (v >= .5 ? "up" : v <= -.5 ? "dn" : "") + '">' + esc(q(v)) + '</td>'; }).join("") + '</tr>' +
+      '<tr><th>' + esc(ui("Couvert", "Hedged")) + '</th>' + P.map(p => plat(p) ? '<td class="m">' + esc(ui("à plat", "flat")) + '</td>' : '<td>' + esc(pct105i(p.pct)) + '</td>').join("") + '</tr>' +
+      '<tr><th>' + esc(ui("Non couv.", "Unhedged")) + '</th>' + P.map(p => '<td>' + esc(q(p.nonCouvert)) + '<small>' + esc(fin(p.valeur) ? mt106p(+p.valeur) : "—") + '</small></td>').join("") + '</tr>' +
+      '<tr><th>' + esc(ui("Prix", "Price")) + '</th>' + P.map(prix).join("") + '</tr></tfoot></table>';
   }
+  h += '</div>';
   const ti = M.querySelector(".pt106p, h2.page-title"); const row = ti ? (ti.classList.contains("pt106p") ? ti : ti.parentElement) : null;
   const x = document.createElement("div"); x.innerHTML = h; const el = x.firstChild;
   if (row && row.parentElement && row !== M) row.parentElement.insertBefore(el, row.nextSibling); else M.insertBefore(el, M.firstChild);
-  colonnesXp153c(el);
-}
-/* colonnes des mois : un nombre entier de mois tient dans la largeur (aucun mois coupé au bord), défilement mois par mois, mois courant en premier à l'ouverture */
-function colonnesXp153c(el) {
-  const g = el && el.querySelector(".xg153c"); if (!g) return; const W = g.clientWidth, nv = Math.max(3, Math.floor((W - 66) / 42)), cw = (W - 66) / nv;
-  g.style.setProperty("--cw", cw.toFixed(2) + "px"); const cu = g.querySelector(".xm153c .cu"); if (cu) g.scrollLeft = Math.max(0, cu.offsetLeft - 66);
+  el.addEventListener("click", ev => {
+    const t = ev.target.closest("[data-pp141], [data-c141]"); if (!t) return;
+    if (t.dataset.pp141) { expoProd = t.dataset.pp141; render(); return; }
+    const z = t.dataset.c141.split("|").map(Number), p = P[z[0]]; if (!p) return;
+    expoProd = p.produit; expoView = "cover"; render();
+    const b = document.querySelector('#main [data-c88m="' + z[1] + '"]'); if (b) b.click();
+  });
 }
 if (typeof FIN105G !== "undefined") FIN105G.push(expoPC153c);
-window.addEventListener("resize", () => { try { colonnesXp153c(document.querySelector("#main .xp153c")); } catch (e) {} }, { passive: true });
+/* étiquettes de mois d'un graphique par mois sans défilement : gardées dans la carte, jamais l'une sur l'autre ; priorité au mois courant, aux
+   cases sans date (stock, fini, sans date) et aux années ; les autres se taisent si la place manque */
+function etiquettes141(dv) {
+  const ems = Array.from(dv.querySelectorAll(".cs108x > button > em")); if (!ems.length) return;
+  ems.forEach(e => { e.classList.remove("o", "o141"); e.style.removeProperty("--dx"); });
+  const lim = dv.getBoundingClientRect(), R = ems.map(e => { const r = e.getBoundingClientRect(); let dx = 0; if (r.left < lim.left) dx = lim.left - r.left; else if (r.right > lim.right) dx = lim.right - r.right;
+    if (dx) e.style.setProperty("--dx", dx.toFixed(1) + "px"); return { l: r.left + dx, r: r.right + dx }; });
+  const pr = i => { const e = ems[i]; return e.parentElement.classList.contains("cu") ? 0 : e.classList.contains("nd") ? 1 : e.querySelector("u") ? 2 : 3; };
+  const ord = ems.map((e, i) => i).sort((a, b) => pr(a) - pr(b) || a - b), pris = [];
+  ord.forEach(i => { const r = R[i]; if (pris.some(k => r.l < k.r + 4 && r.r > k.l - 4)) ems[i].classList.add("o141"); else pris.push(r); });
+}
+/* les pastilles d'état (âge d'un prix, retard) d'une sous-ligne retirée de l'écran restent visibles : posées après le libellé de la rangée */
+function pastilles141() {
+  document.querySelectorAll("#main .r106p .l106p > small .pl106p").forEach(e => { const sm = e.closest("small"), b = sm && sm.parentElement.querySelector(":scope > b");
+    if (b && getComputedStyle(sm).display === "none") b.append(" ", e); });
+}
+if (typeof FIN105G !== "undefined") FIN105G.push(pastilles141);
 if (!window.ATLAS_ESSAI) boot();
 </script>
 </body>

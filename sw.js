@@ -17,7 +17,8 @@
 // mobile v138 (23/11) : courbes et page Marchés du PC, texte au minimum (round 153, piste C, suite) ; nouveau nom de cache
 // mobile v139 (23/11) : toutes les courbes au rendu du PC, audit « terminal » (round 153, piste C, suite 2) ; nouveau nom de cache
 // mobile v140 (23/11) : densité du terminal, exposition visuelle, texte réduit (round 153, piste C, suite 3) ; nouveau nom de cache
-const C = "atlas-140", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+// mobile v141 (23/11) : Positions vérifiée sur une fiche réelle (exposition par case de la fiche, axes, cartes, prix) ; nouveau nom de cache
+const C = "atlas-141", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // round 105 (piste h) : écrans de lancement de l'iPhone (~9 Ko chacun) : gardés pour l'ouverture hors connexion, chacun à part (un fichier
 // absent ne fait jamais échouer l'installation ni une mise à jour)
