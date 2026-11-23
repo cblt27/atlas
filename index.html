@@ -5317,6 +5317,17 @@ html[data-pc153c] .n153c { font-family:"Cascadia Mono",Consolas,ui-monospace,"SF
 html[data-pc153c] :is(#main, .sheet) :is(.sn106l, .it108x, .ip109c, .si108w, .ai106m, .pm106m) > svg { display:none !important; }
 html[data-pc153c] .sheet { padding-top:14px !important; } html[data-pc153c] .sheet :is(.acc106o, .rz106o) { margin-top:12px !important; }
 html[data-theme="dark"] .vs109b { color:#8A8A8A !important; } html[data-theme="light"] .pl106l.g { color:#55555A !important; }   /* contrastes ≥ 4,5:1 (Sombre, Clair) */
+/* barre du bas (téléphone, tablette), style PC : cinq touches égales séparées d'un filet, libellés courts en capitales, onglet actif ambre */
+nav .lc153c { display:none; }
+@media (max-width:1099px) {
+  html[data-pc153c] nav { gap:0 !important; padding-left:max(0px, var(--sa-l, 0px)) !important; padding-right:max(0px, var(--sa-r, 0px)) !important; }
+  html[data-pc153c] nav button[data-c153c] { flex:1 1 0 !important; min-width:0 !important; min-height:44px; padding:0 !important; position:relative; border-left:1px solid #2C3440 !important; }
+  html[data-pc153c] nav button[data-c153c]:first-of-type { border-left:0 !important; }
+  html[data-pc153c] nav button[data-c153c] .ln153c { display:none; }
+  html[data-pc153c] nav button[data-c153c] .lc153c { display:inline; font:600 12px/1 -apple-system,"Segoe UI",Arial,sans-serif; letter-spacing:.02em; white-space:nowrap; }
+  html[data-pc153c] nav button[data-c153c] .nb103a { position:absolute !important; top:3px; right:3px; margin:0 !important; font-size:11px !important; }
+}
+@media (max-width:340px) { html[data-pc153c] nav button[data-c153c] .lc153c { font-size:11px; letter-spacing:0; } }
 </style>
 </head>
 <body>
@@ -16929,6 +16940,11 @@ tabs = function () {
   const G = { home: ui("Pilotage", "Overview"), today: ui("Logistique", "Logistics"), cal: data.profil === "head" ? ui("Logistique", "Logistics") : null, treso: ui("Finance", "Finance"), expo: ui("Trading", "Trading"), mkts: ui("Marchés", "Markets"), stock: null, photos: null, settings: ui("Réglages", "Settings") };
   if (data.profil !== "head") G.cal = nav.querySelector('button[data-tab="today"]') ? null : ui("Logistique", "Logistics");
   if (!nav.querySelector(".br153c")) { const b = document.createElement("div"); b.className = "br153c"; b.textContent = "ATLAS"; nav.insertBefore(b, nav.firstChild); }
+  const CT = { home: ui("JOUR", "DAY"), cal: data.profil === "head" ? ui("LIVR.", "DELIV.") : ui("CAL.", "CAL."), treso: ui("TRÉSO", "CASH"), expo: ui("POS.", "POS."), mkts: ui("MARCHÉS", "MARKETS"),
+    today: ui("AUJ.", "TODAY"), stock: ui("STOCK", "STOCK"), photos: ui("PHOTOS", "PHOTOS"), settings: ui("RÉGL.", "SET.") };   /* barre du bas, style PC : touches courtes */
+  nav.querySelectorAll("button[data-tab]").forEach(b => { const c = CT[b.dataset.tab]; if (!c) return; b.dataset.c153c = c; let ln = b.querySelector(".ln153c"), lc = b.querySelector(".lc153c");
+    if (!ln) { const tn = Array.from(b.childNodes).find(n => n.nodeType === 3 && n.textContent.trim()); if (!tn) return; ln = document.createElement("span"); ln.className = "ln153c"; tn.replaceWith(ln); ln.appendChild(tn); }
+    if (!lc) { lc = document.createElement("span"); lc.className = "lc153c"; lc.setAttribute("aria-hidden", "true"); ln.after(lc); } if (lc.textContent !== c) lc.textContent = c; });
   nav.querySelectorAll(".g153c").forEach(x => x.remove());
   nav.querySelectorAll("button[data-tab]").forEach(b => { const g = G[b.dataset.tab]; if (g) { const d = document.createElement("div"); d.className = "g153c"; d.textContent = g; nav.insertBefore(d, b); } });
   let x = nav.querySelector("button.x153c");
