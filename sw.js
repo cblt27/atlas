@@ -13,7 +13,8 @@
 // mobile v134 (09/11) : refonte critique (round 106 : architecture, Outils, système visuel) ; nouveau nom de cache
 // mobile v135 (09/11) : âge de la fiche en jours ouvrés (décision de l utilisateur) ; nouveau nom de cache
 // mobile v136 (09/11) : Jour, Trésorerie, Positions visuels ; date selon le fuseau du téléphone ; plein écran en paysage ; nouveau nom de cache
-const C = "atlas-136", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
+// mobile v137 (23/11) : style de l'appli PC par défaut et modèles 3D du PC (round 153, piste C) ; nouveau nom de cache
+const C = "atlas-137", FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 const APP = FILES.map(f => new URL(f, location).href);
 // round 105 (piste h) : écrans de lancement de l'iPhone (~9 Ko chacun) : gardés pour l'ouverture hors connexion, chacun à part (un fichier
 // absent ne fait jamais échouer l'installation ni une mise à jour)

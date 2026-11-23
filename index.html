@@ -20,9 +20,12 @@
 function apparence104f() { try { var a = JSON.parse(localStorage.getItem("atlas.apparence104f") || "null"); return a && typeof a === "object" && !Array.isArray(a) ? a : {}; } catch (e) { return {}; } }
 function appliquerApparence104f(th) {
   var a = apparence104f(), h = document.documentElement, V = { tx: ["s", "l", "xl"], de: ["compact"], ac: ["indigo", "violet", "graphite"], an: ["off"] }, k, m, clair;
-  th = th === "dark" || th === "light" || th === "auto" ? th : a.th === "light" || a.th === "auto" ? a.th : "dark";
+  /* round 153 : piste C · « pc » (style de l'appli Atlas du PC, thème Bloomberg) est le défaut ; Sombre (iOS), Clair et Auto restent au choix ; le
+     défaut n'étant jamais gardé, un téléphone resté sur l'ancien défaut (Sombre) passe au style PC, un choix Clair ou Auto est gardé */
+  th = th === "pc" || th === "dark" || th === "light" || th === "auto" ? th : a.th === "light" || a.th === "auto" || a.th === "dark" ? a.th : "pc";
   clair = th === "light" || (th === "auto" && !!window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches);
   h.setAttribute("data-theme", clair ? "light" : "dark"); h.setAttribute("data-th104f", th);
+  if (th === "pc") h.setAttribute("data-pc153c", "1"); else h.removeAttribute("data-pc153c");
   for (k in V) { if (V[k].indexOf(a[k]) >= 0) h.setAttribute("data-" + k + "104f", a[k]); else h.removeAttribute("data-" + k + "104f"); }
   if (a.co === true) h.setAttribute("data-co104f", "1"); else h.removeAttribute("data-co104f");
   m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", clair ? "#f9f9fb" : "#000000");
@@ -4985,6 +4988,200 @@ html.paysage108y .mk106p:not(.md106p) .cd106p.ml106p { display:grid; grid-templa
 /* Jour : l'heure est dans l'en-tête ; le héros, puis les chiffres clés sur une rangée de quatre (toute la largeur), le reste en deux colonnes */
 html.paysage108y .jr106l > section:has(> .tg106l) { column-span:all; -webkit-column-span:all; }
 html.paysage108y .jr106l .tg106l { grid-template-columns:repeat(4, minmax(0, 1fr)); }
+/* round 153 css c */
+/* ================= round 153 · piste C : STYLE PC · la version web / téléphone prend le style de l'appli Atlas du PC (thème Bloomberg) =================
+   Demande de l'utilisateur (23/11) : « que l'app soit dans le style Bloomberg, regarde à quoi elle ressemble sur l'app [PC] et copie ». Valeurs relevées
+   dans Controls.cs (Th, mode Bloomberg), Theme47.cs, Bbg40.cs et sur les captures du PC (T:\r153\c\STYLE_PC.md). Thème « pc » de l'Apparence, par
+   défaut (html[data-pc153c], posé par appliquerApparence104f avant le premier dessin) ; Sombre, Clair et Auto inchangés.
+   Rôles : fond noir, panneaux #0A0A0A filetés #2C343E, texte #E6E6E6, secondaire #B8B8B8 ; ambre #F0A21E pour les titres de section, en-têtes
+   de colonnes, libellés des chiffres clés, liens et l'onglet choisi (comme le PC) ; barre de titre rouge #8C141A à titre blanc ; onglets et segments
+   ardoise #383B42, choisi bleu #1565A8 ; action principale bleue #1F5FBF ; listes de choix ambre à texte noir (champs du PC) ; chiffres en chasse
+   fixe ; angles droits. Cibles tactiles : 44 px sur téléphone et tablette ; densité du PC sur ordinateur (≥ 1 100 px, menu à gauche). */
+html:root[data-pc153c][data-th104f] {
+  --bg:#000; --card:#0A0A0A; --card2:#121212; --soft:#161616; --cell:#0A0A0A; --nav:#000; --head:#000; --shadow:transparent; --back:rgba(0,0,0,.78);
+  --text:#fff; --ink:#E6E6E6; --muted:#B8B8B8; --label:#B8B8B8; --dim:#8A8A8A; --white:#fff;
+  --line:#2C343E; --line2:#3A4350; --sep104f:#2C343E; --cel104f:#161616; --sep:#3A4350;
+  --primary:#F0A21E; --on-primary:#fff; --key:#F0A21E; --tab-on:#F0A21E; --tab:#383B42; --tab-ink:#F2F2F2; --action:#F0A21E;
+  --ring104f:rgba(240,162,30,.35); --sel104f:rgba(18,66,140,.6);
+  --in:#36C24A; --in-t:rgba(54,194,74,.16); --out:#FF3B4A; --out-t:rgba(255,59,74,.16); --amber:#FFC940; --amber-t:rgba(255,201,64,.14);
+  --teal:#7FD8EA; --teal-t:rgba(127,216,234,.14); --gl:rgba(54,194,74,.16); --gc:rgba(255,59,74,.16);
+  --btn:#2E2E2E; --btn-line:#6E6E6E; --field:#000; --field-ink:#fff; --bar-hot:#2A2A2A; --bar-line:#3A4350;
+  --fix:#1A7CDA; --fix-t:#0D2340; --v-swap:#1A7CDA; --v-swap-rgb:26,124,218; --v-long:#36C24A; --v-short:#FF3B4A;
+  --fill106q:#1565A8; --press106q:#1C1C1C; --press2-106q:#2A2A2A; --wkend106q:#0E0E0E; --track106q:#6E6E6E; --toast106q:rgba(0,0,0,.96);
+  --radius:2px; --r-s:2px; --r-xs106q:1px; --r-ctl106q:2px; --r-card106q:2px; --r-sheet106q:3px; --r-pill106q:2px;
+  --t-title106q:20px; --t-hero106q:30px; --t-tile106q:20px;
+  --mono153c:ui-monospace,"SF Mono",Menlo,"Cascadia Mono",Consolas,"Liberation Mono",monospace;
+  --pc-amber153c:#F0A21E; --pc-amberdim153c:#966412; --pc-red153c:#8C141A; --pc-redhot153c:#A81C23; --pc-tab153c:#383B42; --pc-tabon153c:#1565A8;
+  --pc-key153c:#1F5FBF; --pc-btn153c:#2E2E2E; --pc-btnline153c:#6E6E6E; --pc-panel153c:#080A0E; --pc-alt153c:#121212; --pc-cyan153c:#9FE0F2;
+  --blur:none; color-scheme:dark;
+}
+html[data-pc153c], html[data-pc153c] body { font-family:-apple-system,"Segoe UI","SF Pro Text","Helvetica Neue",Arial,sans-serif; letter-spacing:0; background:#000; }
+html[data-pc153c] ::selection { background:#12428C; color:#fff; }
+/* angles droits partout (le PC : 0 à 4 px) ; les interrupteurs gardent leur forme */
+html[data-pc153c] :is(#main, header, nav, .sheet, .toast, .sheet-bg) :is(div, section, article, aside, details, summary, button, a, span, em, b, u, strong, small, label, input, select, textarea, li, ul, p, table, h2, h3):not([role="switch"]):not(.nb103a) { border-radius:2px !important; }
+html[data-pc153c] .sheet { border-radius:3px 3px 0 0 !important; }
+html[data-pc153c] .sheet::before { border-radius:0 !important; background:#3A4350 !important; }
+/* en-tête : bandeau noir du PC, marque ATLAS ambre, boutons rectangles gris (comme « TOOLS ») */
+html[data-pc153c] header { background:#000 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; border-bottom:1px solid var(--line) !important; }
+html[data-pc153c] header h1, html[data-pc153c] header h1.brand { color:#fff; font-weight:600; letter-spacing:.01em; }
+html[data-pc153c] header h1#title:not(.c105g) { color:var(--pc-amber153c); }
+html[data-pc153c] header .sub { color:var(--muted); }
+html[data-pc153c] header button { background:var(--pc-btn153c) !important; border:1px solid var(--pc-btnline153c) !important; color:#F2F2F2 !important; min-height:44px; min-width:44px; font-weight:500; }
+html[data-pc153c] header button:active { background:#424242 !important; }
+/* barre de titre de page : barre rouge des fonctions du PC, titre blanc, d'un bord à l'autre (marges de la page et zones sûres comprises) */
+html[data-pc153c] main { --gx153c:12px; padding-top:12px !important; padding-left:calc(var(--gx153c) + var(--sa-l, 0px)) !important; padding-right:calc(var(--gx153c) + var(--sa-r, 0px)) !important; }
+@media (min-width:361px) and (max-width:699px) { html[data-pc153c] main { --gx153c:16px; } }
+@media (min-width:700px) { html[data-pc153c] main { --gx153c:24px; } }
+html[data-pc153c] #main :is(.fbar, .reading-head, .lt106m, .pt106p):has(> h2), html[data-pc153c] #main .jr106l > h2.page-title, html[data-pc153c] #main :not(.fbar, .reading-head, .lt106m, .pt106p, .jr106l) > h2.page-title {
+  background:var(--pc-red153c) !important; margin:-12px calc(-1 * (var(--gx153c) + var(--sa-r, 0px))) 12px calc(-1 * (var(--gx153c) + var(--sa-l, 0px))) !important;
+  padding:6px calc(var(--gx153c) + var(--sa-r, 0px)) 6px calc(var(--gx153c) + var(--sa-l, 0px) + 4px) !important; min-height:48px; align-items:center !important; }
+html[data-pc153c] #main .jr106l > h2.page-title, html[data-pc153c] #main :not(.fbar, .reading-head, .lt106m, .pt106p, .jr106l) > h2.page-title { display:flex; padding-top:10px !important; padding-bottom:10px !important; }
+html[data-pc153c] #main h2.page-title, html[data-pc153c] #main .fbar h2 { font-size:19px !important; font-weight:600 !important; letter-spacing:0 !important; color:#fff !important; line-height:1.25; }
+html[data-pc153c] #main :is(.fbar, .reading-head, .lt106m, .pt106p) > h2 { margin:0 !important; background:transparent !important; }
+html[data-pc153c] #main :is(.fbar, .lt106m, .pt106p) .fb-r { color:#F2D9DA; }
+/* titres de section : ambre, petites capitales (« CALENDAR », « UPCOMING DELIVERIES » du PC) */
+html[data-pc153c] #main h2:not(.page-title):not(.fbar h2), html[data-pc153c] .sheet h2, html[data-pc153c] #main .section-heading :is(h2, h3) {
+  color:var(--pc-amber153c) !important; text-transform:uppercase; letter-spacing:.04em; font-size:12px !important; font-weight:600; }
+html[data-pc153c] :is(.hm-tile small, .hm-h, .hm-sub103a, .c88head, .c88sum small, .list103d-t, .ou103f-l, th, .detail-table th, .mk-head .mk-name) { color:var(--pc-amber153c) !important; }
+html[data-pc153c] :is(.hm-tile small, .hm-h, .hm-sub103a, .c88head, .list103d-t, th) { text-transform:uppercase; letter-spacing:.03em; }
+html[data-pc153c] #main h3 { color:#fff; font-weight:600; }
+html[data-pc153c] label, html[data-pc153c] .ap104f-l { color:var(--muted) !important; }
+/* panneaux : #0A0A0A filetés, aucune ombre (les panneaux du PC) */
+html[data-pc153c] #main :is(.card, .cal, .vtile, .vplage, .cd106l, .cd106p, .cd108x, .gl106m, .hr108v, .tt108v, .hr109a, .dj105j, .hm-blk, .hm-list, .hm-tiles) {
+  background-color:var(--card) !important; box-shadow:none !important; outline:1px solid var(--line); outline-offset:-1px; }
+/* tableaux : en-têtes ambre, filets, lignes paires #121212, chiffres à droite en chasse fixe */
+html[data-pc153c] #main table { border-collapse:collapse; }
+html[data-pc153c] #main th { border-bottom:1px solid var(--line); font-weight:500; font-size:11px; }
+html[data-pc153c] #main tbody tr:nth-child(even) > td { background-color:var(--pc-alt153c); }
+html[data-pc153c] #main td { border-bottom-color:#1A1F26; }
+/* onglets, segments et puces : ardoise à texte clair, choisi bleu à texte blanc (onglets du PC) */
+html[data-pc153c] :is(.seg, .reading-switch, .workspace-tabs) { background:transparent !important; gap:2px !important; padding:0 !important; }
+html[data-pc153c] :is(.seg, .reading-switch) > button, html[data-pc153c] .workspace-tabs button, html[data-pc153c] .chips button {
+  background:var(--pc-tab153c) !important; color:#F2F2F2 !important; border:0 !important; font-weight:500; }
+html[data-pc153c] :is(.seg, .reading-switch) > button:is(.on, [aria-pressed="true"]), html[data-pc153c] .chips button.on, html[data-pc153c] .workspace-tabs button.on {
+  background:var(--pc-tabon153c) !important; color:#fff !important; font-weight:600; }
+html[data-pc153c] .chip { background:var(--pc-tab153c); color:#F2F2F2; }
+html[data-pc153c] .chip.in { background:rgba(54,194,74,.18); color:#36C24A; } html[data-pc153c] .chip.out { background:rgba(255,59,74,.18); color:#FF8C8C; }
+html[data-pc153c] .chip.late { background:rgba(255,201,64,.16); color:#FFC940; }
+/* boutons : action principale bleue (Key), secondaire rectangle gris bordé (Btn) */
+html[data-pc153c] .btn { font-weight:600; letter-spacing:0; min-height:46px; }
+html[data-pc153c] :is(.btn.light, .text-action, .calhead button, .calu) { background:var(--pc-btn153c) !important; color:#F2F2F2 !important; border:1px solid var(--pc-btnline153c) !important; }
+html[data-pc153c] :is(.btn.light, .text-action, .calhead button, .calu):active { background:#424242 !important; }
+/* champs : saisie noire au cadre ambre (ligne de commande du PC) ; listes de choix ambre à texte noir (champs du PC) */
+html[data-pc153c] input:not([type=checkbox]):not([type=radio]):not([readonly]), html[data-pc153c] textarea:not([readonly]) {
+  background:#000 !important; color:#fff !important; border:1px solid var(--pc-amber153c) !important; }
+html[data-pc153c] input::placeholder, html[data-pc153c] textarea::placeholder { color:#C08A2E !important; }
+html[data-pc153c] select, html[data-pc153c] :is(.fold select, select#uiLanguage, .unit-select, .product-select select, .vpsel select) {
+  background-color:#FFA018 !important; color:#000 !important; border:1px solid #FFA018 !important; font-weight:500; }
+html[data-pc153c] :is(input, select, textarea):focus { outline:1px solid #fff !important; outline-offset:0; box-shadow:none !important; }
+html[data-pc153c] :is(button, [tabindex], summary):focus-visible { outline:2px solid var(--pc-amber153c) !important; outline-offset:1px; }
+/* barre des onglets (téléphone, tablette) : noire, onglet choisi en ambre avec un trait ambre (l'entrée choisie du menu du PC) */
+html[data-pc153c] nav { background:#000 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; border-top:1px solid var(--line) !important; }
+html[data-pc153c] nav button { color:#B8B8B8 !important; font-weight:500; }
+html[data-pc153c] nav button.on { color:var(--pc-amber153c) !important; box-shadow:inset 0 2px 0 var(--pc-amber153c); font-weight:600; }
+html[data-pc153c] nav .g153c, html[data-pc153c] nav .br153c, html[data-pc153c] nav button.x153c { display:none; }
+/* feuilles, messages : panneau sombre fileté, message en bas : barre d'état noire à texte ambre (comme le PC) */
+html[data-pc153c] .sheet { background:#0A0A0A !important; border-top:1px solid var(--line2) !important; }
+html[data-pc153c] .toast { background:#000 !important; color:var(--pc-amber153c) !important; border:1px solid var(--pc-amber153c) !important; -webkit-backdrop-filter:none; backdrop-filter:none; }
+/* calendrier : cases sombres filetées, aujourd'hui ambre */
+html[data-pc153c] .day { background:#0A0A0A !important; box-shadow:inset 0 0 0 1px #1A1F26; }
+html[data-pc153c] .day.sel { outline:2px solid var(--pc-amber153c) !important; }
+html[data-pc153c] .wband { background:#121212 !important; }
+/* liens et actions en texte : ambre (accent du PC) */
+html[data-pc153c] :is(.hm-more, .fold > summary, .lk106l) { color:var(--pc-amber153c) !important; }
+/* courbes : montagne bleue du PC sous un trait clair (BbgChart) */
+html[data-pc153c] .mk-chart svg [stroke="#0a84ff"], html[data-pc153c] .curve path, html[data-pc153c] :is(.kc108v path.ln, .kc109a .ln, .cv108w .curve path.ln105i, .sp105i.b path.l) { stroke:#E6F2FF !important; }
+html[data-pc153c] .mk-chart svg [fill="#0a84ff"] { fill:#E6F2FF !important; }
+html[data-pc153c] :is(#ga108w, #gc108w, #ga109b) .s0 { stop-color:#1A7CDA !important; stop-opacity:.75 !important; }
+html[data-pc153c] :is(#ga108w, #gc108w, #ga109b) .s1 { stop-color:#102779 !important; stop-opacity:.35 !important; }
+html[data-pc153c] #mkg104d stop:first-child { stop-color:#1A7CDA !important; stop-opacity:.9 !important; }
+html[data-pc153c] #mkg104d stop:last-child { stop-color:#102779 !important; stop-opacity:.6 !important; }
+html[data-pc153c] .mk-chart svg rect[fill="#0a84ff"] + text { fill:#000 !important; }
+/* texte atténué lisible : « · » et notes au gris du PC (#8A8A8A, 6,1:1) */
+html[data-pc153c] .sp107s { color:#8A8A8A !important; }
+/* cibles tactiles (téléphone, tablette) : segments et puces à 44 px de haut (avant : 24 à 28 px) */
+@media (max-width:1099px) {
+  html[data-pc153c] :is(.seg, .reading-switch) > button, html[data-pc153c] .chips button, html[data-pc153c] .workspace-tabs button { min-height:44px !important; }
+}
+/* tablette et iPhone en paysage : toute la largeur (avant : colonne de 760 px au milieu) */
+@media (min-width:700px) and (max-width:1099px) {
+  html[data-pc153c] main, html[data-pc153c] main:is(:has(> .jr105j), :has(> .sp105j), :has(> .tz104c > .panes104c)) { max-width:none !important; }
+}
+/* ordinateur (≥ 1 100 px) : menu à gauche comme le PC (groupes ambre en capitales, entrée choisie : fond #1C1C1C et barre ambre), page pleine largeur,
+   densité du PC (segments de 32 px, souris) */
+@media (min-width:1100px) {
+  html[data-pc153c] nav { top:0; bottom:0; left:0; right:auto; width:208px; flex-direction:column; justify-content:flex-start; align-items:stretch; gap:0;
+    padding:0 0 calc(var(--sa-b, 0px) + 12px); border-top:0 !important; border-right:1px solid var(--line); overflow-y:auto; z-index:7; }
+  html[data-pc153c] nav .br153c { display:flex; align-items:center; height:56px; padding:0 20px; color:var(--pc-amber153c); font-weight:600; font-size:15px; letter-spacing:.06em; border-bottom:1px solid var(--line); margin-bottom:6px; }
+  html[data-pc153c] nav .g153c { display:block; padding:12px 20px 4px; color:var(--pc-amber153c); font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; }
+  html[data-pc153c] nav button, html[data-pc153c] nav button.x153c { display:flex; flex:none !important; flex-direction:row !important; justify-content:flex-start !important; align-items:center; gap:10px;
+    min-height:34px !important; padding:0 12px 0 20px !important; font-size:14px !important; color:#E6E6E6 !important; box-shadow:none; text-align:left; }
+  html[data-pc153c] nav button svg { width:16px !important; height:16px !important; flex:none; }
+  html[data-pc153c] nav button:hover { background:#1C1C1C; }
+  html[data-pc153c] nav button.on { background:#1C1C1C !important; color:#fff !important; box-shadow:inset 3px 0 0 var(--pc-amber153c) !important; }
+  html[data-pc153c] nav button .nb103a { position:static !important; margin-left:auto !important; }
+  html[data-pc153c] header { padding-left:calc(208px + 20px) !important; }
+  html[data-pc153c] main, html[data-pc153c] main:is(:has(> .jr105j), :has(> .sp105j), :has(> .tz104c > .panes104c)) { margin-left:208px !important; margin-right:0 !important; max-width:1500px !important; padding-bottom:40px !important; }
+  html[data-pc153c] main { --gx153c:28px; }
+  html[data-pc153c] :is(.seg, .reading-switch) > button, html[data-pc153c] .chips button { min-height:32px; }
+  html[data-pc153c] .toast { bottom:24px !important; }
+}
+/* round 153 · piste C : classes de nombres en chasse fixe, états choisis bleus du PC, aujourd'hui ambre (sélecteurs relevés dans cette feuille) */
+html[data-pc153c] #main :is(.kv span:last-child, .who .v, .vpl b, .vstl, .vo h3 em, .vc b, .vval b, .vg .vgp, .vg small, .vsbig, .vsrow, .vcpb > span, .vbig, .vtab th, .vtab td, .vtmini b, .vcvh em, .vcvl, .vkc, .vksvg .vkq, .vksvg .vkn .nf, .vksvg .vkp .pt, .route-head strong, .route-destination strong, .position-number, .trend-row strong, .attention-row>b, .detail-table td, .expo-hero>strong, .expo-metric strong, .big, .q, .quantity, .v, .metrics b, td, .cash-row strong, .stock-now strong, .mono, .num, .ou103f-big, .ap104f-pv .pb, .hm-tile b, .hm-big, .pl104a, .tg104a-c b, .hm-op .hm-d, .hm-op.in .hm-d, .hm-op.out .hm-d, .hm-op.late .hm-d, .hm-op .hm-q, .tt104w .tt104a > b, .hm-kv b, .n104b, .t104b > b, .op104b .quantity, .jn103b button, .pr104b .row span, .ct103b > span:first-child, .ct103b > b, .hero104c .big, .kv104c > span:last-child, .row104c > .v, .tile104c > b, .f104c b, .ax104c, .cx104c, .sub104c small b, .sheet input.qbig104e, .lq104e .q, .sjr104e b, .tm104e, .chip, .pl104c, .sn104b, .vbadge, .ssx105i, .cx105i, .ax105i, .hsx105i, .sbb105i, .rch105j h2 span:last-child, .v105j, .sc105j button b, .ac105j-t > i, .sig105j b em, .vr106l, .tl106l > b, .ts106l b, .pv106l, .var106l, .qv106l, .ps106p .num, .mk106p .num, .v106p, .cl106p b, .c3106p b, .gs106p b, .mr106p .r b, .pm106p .g b, .pm106p .c, .sh106p .c88t small, .vp106p, .vr106p, .sh106q > span, .pas104e, .age106q, .qv106q > b, .sjf106q b, .al106q > b, .val106q, .ex107r, .pm107r .c, .pp107r .tt107r, .vsw103d button strong, .tp107s > .tv107s, .lv106m .cam106m.ok107s b, .hh108v, .rc108v > b, .lg108v > span, .fn108v > b, .fb108v > i, .tn108v, .cr108w > .cv, .kp108w b, .vl108w, .bv108w em > b, .wv108w, .fb108w > .fv, .rc108x b, .ra108x > b, .ps108x .gy108x > i > b, .ps108x .sr108x b, .ps108x .sp108x > b.yt, .ps108x .sp108x > b.yb, .ps108x .sx108x > span, .ps108x .rf108x > b, .ps108x .sl108x .pa108x > small, .ps108x .cl109c > b, .tj108y b, .hn109a > b, .lg109a, .kc109a > small, .kx109a, .fn109a, .fb109a > i, .bb109b, .bz106n, .wz108w, .j7109b small.n, .ak109b) { font-family:var(--mono153c) !important; letter-spacing:0 !important; }
+html[data-pc153c] :is(.chips button.on, .bars .b, .vq.on, .vi.on, .vmap .vh.on span, .trend-bar, .spark-space i, .workspace-tabs button.on, .ptr104f.pret104f, .ap104f-pv .pa b, .f103b button.on, .agenda-controls .chips button.on, .lp104c, .cl104c i.p, .mt104c i, .sp105i.b > i.e, .sp105i > i.d, .sbd105i, #btnReg106l.on .av106l, .cc106m .pm106m.on, .pa106n, .pk106p button.on, .kc108v > i.e, .kt108v > i.b, .kv108v > i, .zg108w > i, .cr108w.kb > .ct > i, .kp108w .ka108w small > i, .wl108w-l i.b, .ps108x .lg108x i.cl, .ps108x .pb106p > button[aria-pressed=true] > em, .ps108x .kb108x.t, .ps108x .cl109c > i, .kc109a > i.kb, .kb109a i.c0, .vc109b > i, .cvk109b .pu108w, .lg109b i.ls, .lg109b i.kb) { background-color:var(--pc-tabon153c) !important; color:#fff !important; }
+html[data-pc153c] :is(.btn, .majapp, .maj104a .go104a) { background-color:var(--pc-key153c) !important; color:#fff !important; }
+html[data-pc153c] :is(.day.today .n, .g104b .day.today .n, .cal106m .g106m .day.today .n, .fc108v.t .fn108v, .fc109a.t .fn109a) { background-color:var(--pc-amber153c) !important; color:#000 !important; }
+/* ================= round 153 · piste C : page Modèles 3D (galerie et modèle en grand) : panneaux du PC (Q3d108ui : vignettes fond #080A0E,
+   filet #2C3440, barre ambre de 3 px à gauche, #966412 si « à compléter », nom blanc, « pourquoi » gris ; bulle sombre au bord ambre) ================= */
+.mv153c { margin:0 0 12px; }
+.mv153c button { min-height:44px; }
+.gh153c { margin:2px 0 10px; color:#F0A21E; font-size:13px; font-weight:600; }
+.gal153c { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap:10px; }
+.tu153c { position:relative; display:flex; flex-direction:column; align-items:stretch; text-align:left; gap:2px; padding:8px 8px 6px 13px; min-height:44px; border:0;
+  background:#080A0E; color:#E6E6E6; font:inherit; box-shadow:inset 0 0 0 1px #2C3440; border-radius:2px; cursor:pointer; }
+.tu153c::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:#F0A21E; }
+.tu153c.nr153c::before { background:#966412; }
+.tu153c:active, .tu153c:hover { box-shadow:inset 0 0 0 2px #F0A21E; }
+.tu153c > b { font-size:15px; font-weight:600; color:#fff; }
+.tu153c > small { color:#B8B8B8; font-size:13px; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.6em; }
+.th153c { display:block; width:100%; height:170px; margin-top:6px; background:#000; }
+.mq153c { display:flex; align-items:center; justify-content:center; text-align:center; min-height:120px; margin-top:6px; padding:10px; background:#000; color:#FFC940; font-style:normal; font-size:13px; }
+.bk153c { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0 0 10px; }
+.rt153c { min-height:44px; padding:0 14px; border:0; background:#1F5FBF; color:#fff; font:inherit; font-weight:600; border-radius:2px; }
+.ch153c { display:flex; gap:2px; overflow-x:auto; -webkit-overflow-scrolling:touch; flex:1 1 240px; min-width:0; scrollbar-width:none; }
+.ch153c::-webkit-scrollbar { display:none; }
+.ch153c button { flex:none; min-height:44px; padding:0 12px; border:0; background:#383B42; color:#F2F2F2; font:inherit; font-size:14px; white-space:nowrap; border-radius:2px; }
+.ch153c button.on { background:#1565A8; color:#fff; font-weight:600; }
+.ch153c button.nr153c { color:#C9A25A; }
+.mh153c h3 { margin:0; font-size:16px; font-weight:600; color:var(--ink); }
+.mh153c p { margin:2px 0 0; font-size:13px; line-height:1.35; }
+.wy153c { color:#F0A21E; } .dt153c { color:var(--muted); } .fl153c { color:#F0A21E; }
+.kp153c { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1px; margin:10px 0; background:#2C343E; box-shadow:0 0 0 1px #2C343E; }
+@media (min-width:700px) { .kp153c { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
+.kp153c > div { background:#0A0A0A; padding:7px 10px; min-width:0; }
+.kp153c small { display:block; color:#F0A21E; font-size:11px; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kp153c b { display:block; font:600 17px/1.25 ui-monospace,"SF Mono",Menlo,"Cascadia Mono",Consolas,monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kp153c span { display:block; color:#B8B8B8; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kp153c .km153c b { color:#FFC940 !important; }
+.vw153c { position:relative; margin:0 calc(-1 * var(--gx153c, 12px) + 2px); }
+.cv153c { display:block; width:100%; height:420px; background:#000; touch-action:none; -webkit-user-select:none; user-select:none; cursor:grab; box-shadow:inset 0 0 0 1px #2C3440; }
+.cv153c:active { cursor:grabbing; }
+.bul153c { position:absolute; z-index:3; max-width:min(280px, 80%); padding:6px 9px; background:rgba(14,18,24,.94); border:1px solid #F0A21E; color:#CDD2DA; font-size:12px; line-height:1.4;
+  white-space:pre-line; pointer-events:none; border-radius:2px; }
+.bul153c[hidden] { display:none; }
+.ac153c { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin:8px 0 4px; color:var(--muted); font-size:12px; }
+.ac153c button { min-height:44px; padding:0 14px; background:#2E2E2E; color:#F2F2F2; border:1px solid #6E6E6E; font:inherit; font-size:14px; border-radius:2px; }
+.em153c { margin:16px 0; padding:16px; background:#0A0A0A; box-shadow:inset 0 0 0 1px #2C343E; color:var(--muted); font-size:15px; }
+.em153c.nr153c { color:#FFC940; }
+.nt153c { margin-top:8px; } .nt153c p { font-size:13px; margin:6px 0; }
+html[data-theme="light"] .tu153c { background:#fff; color:#1c1c1e; box-shadow:inset 0 0 0 1px #d1d1d6; }
+html[data-theme="light"] .tu153c > b, html[data-theme="light"] .mh153c h3 { color:#1c1c1e; }
+html[data-theme="light"] .tu153c > small { color:#6c6c70; }
+html[data-theme="light"] .th153c, html[data-theme="light"] .cv153c, html[data-theme="light"] .mq153c { background:#FAFBFD; }
+html[data-theme="light"] .kp153c > div, html[data-theme="light"] .em153c { background:#fff; }
+html[data-theme="light"] .gh153c, html[data-theme="light"] .wy153c, html[data-theme="light"] .fl153c, html[data-theme="light"] .kp153c small { color:#A66200; }
+html[data-theme="light"] .bul153c { background:rgba(255,255,255,.97); color:#1C222C; border-color:#A66200; }
+@media (orientation:landscape) and (max-height:520px) { .mh153c p.dt153c, .ac153c > span { display:none; } .kp153c { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
 </style>
 </head>
 <body>
@@ -5163,8 +5360,8 @@ const tf = (k, ...a) => a.reduce((s, v, i) => s.split("{" + i + "}").join(v), t(
 /* round 104 : piste f · thème au choix : sombre (défaut, base 104), clair, ou auto (réglage clair / sombre de l'appareil, suivi en direct) ;
    choix gardé sur le téléphone (ls « apparence104f », feuille Apparence) ; appliquerTheme(th) applique sans garder (essais), appliquerTheme()
    reprend le choix gardé ; taille du texte, densité, couleur d'action, contraste et animations suivent (appliquerApparence104f, en-tête) */
-const THEMES = ["dark", "light", "auto"];
-let theme = (() => { try { const a = typeof apparence104f === "function" ? apparence104f() : {}; return THEMES.includes(a.th) ? a.th : "dark"; } catch (e) { return "dark"; } })();
+const THEMES = ["pc", "dark", "light", "auto"];   /* round 153 : « pc » ajouté, défaut */
+let theme = (() => { try { const a = typeof apparence104f === "function" ? apparence104f() : {}; return THEMES.includes(a.th) ? a.th : "pc"; } catch (e) { return "pc"; } })();
 function appliquerTheme(th) {
   theme = THEMES.includes(th) ? th : theme;
   if (typeof appliquerApparence104f === "function") appliquerApparence104f(theme);
@@ -5188,7 +5385,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "136";
+const VERSION_APP = "137";   /* round 153 : style PC et modèles 3D (piste C) */
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -9738,7 +9935,7 @@ function stockJour103e() {
    thème sombre / clair / auto, taille du texte, densité, couleur d'action, contraste renforcé, animations. Posés sur <html> par
    appliquerApparence104f (script de l'en-tête, avant le premier dessin). Aucune donnée de la fiche lue ni écrite, rien n'est envoyé.
    Seules les valeurs différentes du défaut sont gardées ; Réinitialiser efface le réglage. */
-const APD104F = { th: "dark", tx: "m", de: "conf", ac: "bleu", an: "auto", co: false };
+const APD104F = { th: "pc", tx: "m", de: "conf", ac: "bleu", an: "auto", co: false };
 function apLire104f() { const a = ls.get("apparence104f", null); return Object.assign({}, APD104F, a && typeof a === "object" && !Array.isArray(a) ? a : {}); }
 function apPoser104f(k, v) {
   const a0 = ls.get("apparence104f", null), a = a0 && typeof a0 === "object" && !Array.isArray(a0) ? a0 : {};
@@ -9748,7 +9945,7 @@ function apPoser104f(k, v) {
   if (!garde) toast(ui("Réglage non gardé : mémoire du téléphone pleine", "Setting not kept: phone storage full"));
   return garde;
 }
-function apReinit104f() { ls.del("apparence104f"); appliquerTheme("dark"); }
+function apReinit104f() { ls.del("apparence104f"); appliquerTheme("pc"); }
 const apClair104f = () => document.documentElement.getAttribute("data-theme") === "light";
 /* round 104 : entrée Apparence en tête de la feuille Outils (sans data-t : ce n'est pas un outil de calcul) */
 const ouAp104f = () => '<button type="button" class="ou104f-ap" id="ap104f"><span>' + esc(t("appearance")) + '<small>' +
@@ -9757,7 +9954,7 @@ const ouAp104f = () => '<button type="button" class="ou104f-ap" id="ap104f"><spa
    fermée, l'écran est redessiné (courbes et carte de chaleur à la nouvelle taille). Appelée par Outils et par Réglages (piste e). */
 function ouvrirApparence104f() {
   const O = {
-    th: [["dark", ui("Sombre", "Dark")], ["light", ui("Clair", "Light")], ["auto", "Auto"]],
+    th: [["pc", ui("Style PC", "PC style")], ["dark", ui("Sombre", "Dark")], ["light", ui("Clair", "Light")], ["auto", "Auto"]],   /* round 153 : style PC en tête */
     tx: [["s", ui("Petite", "Small")], ["m", ui("Normale", "Default")], ["l", ui("Grande", "Large")], ["xl", ui("Très grande", "Extra large")]],
     de: [["conf", ui("Confortable", "Comfortable")], ["compact", ui("Compacte", "Compact")]],
     an: [["auto", ui("Selon l'appareil", "As the device")], ["off", ui("Réduites", "Reduced")]] };
@@ -9787,8 +9984,8 @@ function ouvrirApparence104f() {
       P.querySelectorAll("[data-k]").forEach(g => { const k = g.dataset.k; if (k === "raz") return;
         if (k === "co") { g.setAttribute("aria-checked", String(a.co === true)); return; }
         g.querySelectorAll("[data-v]").forEach(b => { const on = String(a[k]) === b.dataset.v; b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); }); });
-      note("th", (theme === "auto" ? ui("Auto : suit le réglage clair / sombre de l'appareil, en ce moment ", "Auto: follows the device's light / dark setting, now ") + (apClair104f() ? ui("clair. ", "light. ") : ui("sombre. ", "dark. ")) : "") +
-        (navigator.standalone === true && theme !== "dark" ? ui("Heure et batterie de l'iPhone : suivent le thème au prochain lancement d'Atlas.", "iPhone time and battery: follow the theme the next time Atlas is opened.") : ""));
+      note("th", (theme === "pc" ? ui("Style PC : celui de l'appli Atlas du PC (fond noir, titres ambre, chiffres en chasse fixe). ", "PC style: the one of the Atlas PC app (black background, amber headings, fixed-width figures). ") : "") + (theme === "auto" ? ui("Auto : suit le réglage clair / sombre de l'appareil, en ce moment ", "Auto: follows the device's light / dark setting, now ") + (apClair104f() ? ui("clair. ", "light. ") : ui("sombre. ", "dark. ")) : "") +
+        (navigator.standalone === true && theme !== "dark" && theme !== "pc" ? ui("Heure et batterie de l'iPhone : suivent le thème au prochain lancement d'Atlas.", "iPhone time and battery: follow the theme the next time Atlas is opened.") : ""));
       const acv106o = P.querySelector(".acv106o"); if (acv106o && typeof resumeAcc106o === "function") acv106o.textContent = resumeAcc106o(a);   /* round 106 : ligne « Accessibilité » à jour */
       note("de", a.de === "compact" ? ui("Moins de blanc entre les blocs ; les cibles de toucher gardent 44 px.", "Less space between blocks; touch targets keep 44 px.") : "");
       note("ac", ui("Boutons, liens et onglet choisi. Vert (entrée), rouge (sortie) et orange (alerte) gardent leur sens : ils ne sont pas proposés.",
@@ -13608,7 +13805,7 @@ window.ligneLivraison106q = ligne106q;
 /* q106 · Réglages › Écran : Apparence ›, Écran Jour › (direction), Mode réunion (interrupteur), Unité des quantités (lb | MT), Langue, Plein écran
    (valeur grise simple) ; mêmes réglages du téléphone qu'avant (apparence104f, jour105j, masque103f, unite, lang), aucun nouveau */
 function ecran106q(head) {
-  const ap = typeof apLire104f === "function" ? apLire104f() : null, th = ap ? ({ dark: t("dark"), light: t("light"), auto: t("auto") })[ap.th] || "" : "";
+  const ap = typeof apLire104f === "function" ? apLire104f() : null, th = ap ? ({ pc: ui("Style PC", "PC style"), dark: t("dark"), light: t("light"), auto: t("auto") })[ap.th] || "" : "";
   const mq = ls.get("masque103f", false) === true, n = navigator, app = n.standalone === true || !!(window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
   const c = head && typeof cfgJour105j === "function" ? cfgJour105j() : null, nm = c && c.m ? c.m.size : 0;
   const li = (id, lab, val) => '<button type="button" class="li104e" id="' + id + '"><span class="grow">' + esc(lab) + '</span>' + (val ? '<span class="val104e">' + esc(val) + '</span>' : "") + '<span class="chev104e" aria-hidden="true">›</span></button>';
@@ -16184,6 +16381,436 @@ if (typeof FIN105G !== "undefined") FIN105G.push(maj109d);
 const plan109d = () => { if (!plan109d.r) plan109d.r = requestAnimationFrame(() => { plan109d.r = 0; maj109d(); }); };
 window.addEventListener("resize", plan109d, { passive: true });
 if (typeof MQ108Y !== "undefined" && MQ108Y) { if (MQ108Y.addEventListener) MQ108Y.addEventListener("change", plan109d); else if (MQ108Y.addListener) MQ108Y.addListener(plan109d); }
+/* round 153 js c */
+/* ================= round 153 · piste C : MODÈLES 3D sur la version web / téléphone =================
+   Demande de l'utilisateur (23/11) : « sur la version web rajoute les modélisations 3D ». Atlas (PC) dépose dans la fiche Head la clé « modeles3d »
+   (Mobile3d153c.cs) : pour chaque modèle de sa galerie, la scène déjà calculée par le PC (axes, graduations et textes de survol mis en forme par le
+   PC, palette du thème Bloomberg, réglages de vue). Ici : le MÊME moteur que le PC (Q3d58.cs, rendu du round 107/108) porté tel quel en canvas 2D :
+   caméra, boîte et murs, surface affinée en sous-cases bilinéaires ou rubans avec voile, éclairage lié à la caméra (ambiant, diffus, reflet),
+   points à tige, courbes, contour, point actuel, étiquettes posées vers l'extérieur sans chevauchement, échelle de couleur ou groupes. Aucun calcul
+   de donnée ici : aucun chiffre ne change. Page « Modèles 3D » rangée comme sur le PC : dans Marchés (bascule Cours · Modèles 3D), et sur
+   ordinateur une entrée du menu sous MARCHÉS ; galerie (prêts d'abord, vignette par modèle), toucher → le modèle en grand, « ‹ Galerie » y revient
+   (position gardée). Gestes : glisser = tourner, deux doigts ou molette = zoom, toucher = bulle de la valeur, double toucher = vue initiale. */
+const M3D153C = (() => {
+  const bloc = () => data && data.modeles3d && typeof data.modeles3d === "object" ? data.modeles3d : null;
+  const clair = () => document.documentElement.getAttribute("data-theme") === "light";
+  const palOf = M => { const p = M && M.palette ? (clair() ? M.palette.clair : M.palette.sombre) || M.palette.sombre : null; return p || PAL0; };
+  // palette de secours (celle du PC, sombre) si la fiche n'en donne pas
+  const PAL0 = { bg: "rgba(0,0,0,1)", wall: "rgba(14,18,24,1)", grid: "rgba(210,214,220,0.275)", edge: "rgba(210,214,220,0.588)", axis: "rgba(222,226,232,1)", name: "rgba(240,162,30,1)",
+    text: "rgba(205,210,218,1)", muted: "rgba(150,156,166,1)", outline: "rgba(0,0,0,0.275)", stem: "rgba(210,214,220,0.353)", line: "rgba(255,255,255,1)", bubble: "rgba(14,18,24,0.941)",
+    bubbleEdge: "rgba(240,162,30,1)", amb: 0.5, seq: [[0, "#1238B4"], [0.45, "#1A7CDA"], [0.82, "#F0A21E"], [1, "#FFD600"]], divg: [[0, "#FF3B4A"], [0.5, "#606876"], [1, "#36C24A"]] };
+  const V0 = { az: -0.55, el: 0.56, elMin: 0.06, elMax: 1.45, zoomMin: 0.6, zoomMax: 3, zoomStep: 1.15, dist: 6, zr: 0.62, veil: 150 };
+  const vueOf = M => Object.assign({}, V0, M && M.vue || {});
+  const fin = v => typeof v === "number" && isFinite(v);
+  // ---------- couleurs (Q3d.Mix, Ramp, Lit : troncature comme le PC) ----------
+  const rgb = s => { if (Array.isArray(s)) return s; let m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i.exec(s || ""); if (m) return [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16), 1];
+    m = /rgba?\(([^)]+)\)/.exec(s || ""); if (m) { const p = m[1].split(",").map(Number); return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1]; } return [128, 128, 128, 1]; };
+  const cl = v => Math.max(0, Math.min(255, v));
+  const mix = (a, b, u, sh) => [0, 1, 2].map(i => cl(Math.trunc((a[i] + (b[i] - a[i]) * u) * sh)));
+  const css = (c, a) => "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + (a == null ? 1 : a) + ")";
+  function ramp(stops, t) {
+    t = Math.max(0, Math.min(1, isNaN(t) ? 0.5 : t));
+    for (let k = 1; k < stops.length; k++) if (t <= stops[k][0] || k === stops.length - 1) { const a = stops[k - 1], b = stops[k]; return mix(rgb(a[1]), rgb(b[1]), b[0] > a[0] ? Math.min(1, (t - a[0]) / (b[0] - a[0])) : 0, 1); }
+    return rgb(stops[stops.length - 1][1]);
+  }
+  const lit = (c, sh, sp) => [cl(Math.trunc(c[0] * sh + 255 * sp)), cl(Math.trunc(c[1] * sh + 255 * sp)), cl(Math.trunc(c[2] * sh + 255 * sp))];
+  // ---------- scène : normalisation (Scene.Nx, Ny, Nz, T) ----------
+  function prep(sc, Vv) {
+    if (sc._n) return sc._n; const b = sc.b || [], zr = Vv.zr;
+    const n = { X0: b[0], X1: b[1], Y0: b[2], Y1: b[3], Z0: b[4], Z1: b[5], ZMin: b[6], ZMax: b[7], zr };
+    n.nx = v => n.X1 > n.X0 ? -1 + 2 * (v - n.X0) / (n.X1 - n.X0) : 0;
+    n.ny = v => n.Y1 > n.Y0 ? -1 + 2 * (v - n.Y0) / (n.Y1 - n.Y0) : 0;
+    n.nz = v => n.Z1 > n.Z0 ? Math.max(-zr, Math.min(zr, -zr + 2 * zr * (v - n.Z0) / (n.Z1 - n.Z0))) : 0;
+    n.t = v => { if (sc.div) { const c = sc.contour == null ? 0 : sc.contour, m = Math.max(Math.abs(n.ZMax - c), Math.abs(n.ZMin - c)); if (m < 1e-12) return 0.5; const t = 0.5 + 0.5 * (v - c) / m; return sc.inv ? 1 - t : t; }
+      return n.ZMax > n.ZMin ? (v - n.ZMin) / (n.ZMax - n.ZMin) : 0.5; };
+    n.grid = Array.isArray(sc.x) && Array.isArray(sc.y) && Array.isArray(sc.z) && sc.x.length >= 2 && sc.y.length >= 1;
+    sc._n = n; return n;
+  }
+  // ---------- maillage (Q3d.MeshOf, Surface108, Ribbons108, Seg108) ----------
+  function mesh(sc, n, pal) {
+    const key = clair() ? "c" : "s"; if (sc._m && sc._m.k === key) return sc._m;
+    const m = { k: key, X: [], Y: [], Z: [], Vv: [], C: [], K: [], E: [] }; const bg = rgb(pal.bg), st = sc.div ? pal.divg : pal.seq;
+    const add = (xs, ys, vs, col, kind, edge) => { for (let q = 0; q < 4; q++) { m.X.push(xs[q]); m.Y.push(ys[q]); m.Vv.push(vs[q]); m.Z.push(n.nz(vs[q])); } m.C.push(col); m.K.push(kind); m.E.push(edge); };
+    if (n.grid) {
+      const Nx = sc.x.length, Ny = sc.y.length, Xn = sc.x.map(n.nx), Yn = sc.y.map(n.ny), has = (i, j) => sc.z[i] && fin(sc.z[i][j]);
+      m.Nx = Nx; m.Ny = Ny; m.Xn = Xn; m.Yn = Yn;
+      if (sc.rows) {
+        const rows = sc.ylab ? Math.max(1, sc.ylab.length) : Math.max(1, Ny), h = Math.min(0.35, 0.30 * 2.0 / rows);
+        const b = sc.contour != null && sc.contour >= n.Z0 && sc.contour <= n.Z1 ? sc.contour : n.Z0;
+        const seg = (xa, va, xb, vb, yc) => {
+          if ((va - b) * (vb - b) < 0) { const t = (b - va) / (vb - va), xm = xa + t * (xb - xa); seg(xa, va, xm, b, yc); seg(xm, b, xb, vb, yc); return; }
+          const col = (va + vb) / 2;
+          add([xa, xb, xb, xa], [yc - h, yc - h, yc + h, yc + h], [va, vb, vb, va], col, 0, 1 | 4);
+          add([xa, xb, xb, xa], [yc, yc, yc, yc], [b, b, vb, va], col, 1, 1);
+        };
+        for (let i = 0; i < Ny; i++) for (let j = 0; j < Nx; j++) {
+          if (!has(i, j)) continue; const nx = j + 1 < Nx && has(i, j + 1), pv = j > 0 && has(i, j - 1), x0 = Xn[j], v0 = sc.z[i][j];
+          if (nx) { seg(x0, v0, Xn[j + 1], sc.z[i][j + 1], Yn[i]); continue; }
+          if (pv) continue;
+          const dl = j > 0 ? x0 - Xn[j - 1] : (j + 1 < Nx ? Xn[j + 1] - x0 : 0.1), dr = j + 1 < Nx ? Xn[j + 1] - x0 : dl; let w = 0.3 * Math.min(dl, dr); if (w <= 1e-6) w = 0.03;
+          seg(x0 - w, v0, x0 + w, v0, Yn[i]);
+        }
+      } else {
+        const sx = Nx - 1 < 12 ? Math.max(1, Math.min(6, Math.ceil(24 / Math.max(1, Nx - 1)))) : 1, sy = Ny - 1 < 12 ? Math.max(1, Math.min(6, Math.ceil(24 / Math.max(1, Ny - 1)))) : 1;
+        for (let i = 0; i < Ny - 1; i++) for (let j = 0; j < Nx - 1; j++) {
+          if (!(has(i, j) && has(i, j + 1) && has(i + 1, j + 1) && has(i + 1, j))) continue;
+          const a = sc.z[i][j], bb = sc.z[i][j + 1], c = sc.z[i + 1][j + 1], d = sc.z[i + 1][j], xa = Xn[j], xb = Xn[j + 1], ya = Yn[i], yb = Yn[i + 1];
+          const bi = (u, w) => a * (1 - u) * (1 - w) + bb * u * (1 - w) + c * u * w + d * (1 - u) * w;
+          for (let u = 0; u < sx; u++) for (let w = 0; w < sy; w++) {
+            const u0 = u / sx, u1 = (u + 1) / sx, w0 = w / sy, w1 = (w + 1) / sy, x0 = xa + (xb - xa) * u0, x1 = xa + (xb - xa) * u1, y0 = ya + (yb - ya) * w0, y1 = ya + (yb - ya) * w1;
+            const vs = [bi(u0, w0), bi(u1, w0), bi(u1, w1), bi(u0, w1)], e = (w === 0 ? 1 : 0) | (u === sx - 1 ? 2 : 0) | (w === sy - 1 ? 4 : 0) | (u === 0 ? 8 : 0);
+            add([x0, x1, x1, x0], [y0, y0, y1, y1], vs, (vs[0] + vs[1] + vs[2] + vs[3]) / 4, 0, e);
+          }
+        }
+      }
+    }
+    const q = m.K.length; m.Q = q; m.cx = new Float64Array(q); m.cy = new Float64Array(q); m.cz = new Float64Array(q); m.nx = new Float64Array(q); m.ny = new Float64Array(q); m.nz = new Float64Array(q); m.base = new Array(q);
+    for (let k = 0; k < q; k++) {
+      const o = 4 * k, X = m.X, Y = m.Y, Z = m.Z;
+      m.cx[k] = (X[o] + X[o + 1] + X[o + 2] + X[o + 3]) / 4; m.cy[k] = (Y[o] + Y[o + 1] + Y[o + 2] + Y[o + 3]) / 4; m.cz[k] = (Z[o] + Z[o + 1] + Z[o + 2] + Z[o + 3]) / 4;
+      const ax = X[o + 2] - X[o], ay = Y[o + 2] - Y[o], az = Z[o + 2] - Z[o], bx = X[o + 3] - X[o + 1], by = Y[o + 3] - Y[o + 1], bz = Z[o + 3] - Z[o + 1];
+      let nx = ay * bz - az * by, ny = az * bx - ax * bz, nz = ax * by - ay * bx, nl = Math.sqrt(nx * nx + ny * ny + nz * nz); if (nl < 1e-12) { nx = 0; ny = 0; nz = 1; nl = 1; }
+      m.nx[k] = nx / nl; m.ny[k] = ny / nl; m.nz[k] = nz / nl;
+      const c = ramp(st, n.t(m.C[k])); m.base[k] = m.K[k] === 1 ? mix(c, bg, 0.38, 1) : c;
+    }
+    sc._m = m; return m;
+  }
+  // ---------- caméra (Q3d.Cam) ----------
+  function camera(v, area, Vv) {
+    const Ca = Math.cos(v.az), Sa = Math.sin(v.az), Ce = Math.cos(v.el), Se = Math.sin(v.el), D = Vv.dist, zr = Vv.zr;
+    const depth = (x, y, z) => (x * Sa + y * Ca) * Ce - z * Se;
+    const unit = (x, y, z) => { const f = D / (D + depth(x, y, z)); return [(x * Ca - y * Sa) * f, (z * Ce + (x * Sa + y * Ca) * Se) * f]; };
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    [-1, 1].forEach(a => [-1, 1].forEach(b => [-zr, zr].forEach(c => { const u = unit(a, b, c); x0 = Math.min(x0, u[0]); x1 = Math.max(x1, u[0]); y0 = Math.min(y0, u[1]); y1 = Math.max(y1, u[1]); })));
+    const sc = Math.max(0, Math.min(area.w / Math.max(1e-9, x1 - x0), area.h / Math.max(1e-9, y1 - y0))) * v.zoom;
+    const cx = area.x + area.w / 2 - sc * (x0 + x1) / 2, cy = area.y + area.h / 2 + sc * (y0 + y1) / 2;
+    return { Ca, Sa, Ce, Se, depth, P: (x, y, z) => { const u = unit(x, y, z); return [cx + sc * u[0], cy - sc * u[1]]; } };
+  }
+  const poly = (g, pts) => { g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.closePath(); };
+  const line = (g, a, b) => { g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); };
+  // ---------- dessin (Q3d.Geometry) : renvoie les points de survol ----------
+  function geometry(g, view, area, sc, v, k, fast, M) {
+    const pal = palOf(M), Vv = vueOf(M), n = prep(sc, Vv), m = mesh(sc, n, pal), cam = camera(v, area, Vv), zr = Vv.zr, P = cam.P, light = clair();
+    g.save(); g.beginPath(); g.rect(view.x, view.y, view.w, view.h); g.clip();
+    g.fillStyle = pal.bg; g.fillRect(view.x, view.y, view.w, view.h);
+    const bx = cam.Sa >= 0 ? 1 : -1, by = cam.Ca >= 0 ? 1 : -1, tk = sc.ticks || {};
+    g.fillStyle = pal.wall;
+    poly(g, [P(-1, -1, -zr), P(1, -1, -zr), P(1, 1, -zr), P(-1, 1, -zr)]); g.fill();
+    poly(g, [P(bx, -1, -zr), P(bx, 1, -zr), P(bx, 1, zr), P(bx, -1, zr)]); g.fill();
+    poly(g, [P(-1, by, -zr), P(1, by, -zr), P(1, by, zr), P(-1, by, zr)]); g.fill();
+    g.lineWidth = 1; g.strokeStyle = pal.grid;
+    (tk.z || []).forEach(t => { const zz = n.nz(t[0]); line(g, P(bx, -1, zz), P(bx, 1, zz)); line(g, P(-1, by, zz), P(1, by, zz)); });
+    (tk.x || []).forEach(t => { const xx = n.nx(t[0]); line(g, P(xx, by, -zr), P(xx, by, zr)); line(g, P(xx, -1, -zr), P(xx, 1, -zr)); });
+    (tk.y || []).forEach(t => { const yy = n.ny(t[0]); line(g, P(bx, yy, -zr), P(bx, yy, zr)); line(g, P(-1, yy, -zr), P(1, yy, -zr)); });
+    g.strokeStyle = pal.edge;
+    [-1, 1].forEach(a => [-1, 1].forEach(b => line(g, P(a, b, -zr), P(a, b, zr))));
+    [-zr, zr].forEach(z => { line(g, P(-1, -1, z), P(1, -1, z)); line(g, P(-1, 1, z), P(1, 1, z)); line(g, P(-1, -1, z), P(-1, 1, z)); line(g, P(1, -1, z), P(1, 1, z)); });
+    const lineC = rgb(pal.line);
+    if (sc.contour != null && sc.contour > n.Z0 && sc.contour < n.Z1) { const zc = n.nz(sc.contour); g.save(); g.strokeStyle = css(lineC, 150 / 255); g.lineWidth = Math.max(1, 1.3 * k); g.setLineDash([5 * k, 4 * k]); line(g, P(bx, -1, zc), P(bx, 1, zc)); line(g, P(-1, by, zc), P(1, by, zc)); g.restore(); }
+    // facettes, points, segments triés du plus loin au plus proche
+    const pts = sc.pts || [], lines = sc.lines || [], np = pts.length; let nseg = 0; lines.forEach(l => { nseg += Math.max(0, (l.x || []).length - 1); });
+    const nAll = m.Q + np + nseg, keys = new Float64Array(nAll), ids = new Array(nAll);
+    const PV = new Array(4 * m.Q); for (let q = 0; q < PV.length; q++) PV[q] = P(m.X[q], m.Y[q], m.Z[q]);
+    for (let q = 0; q < m.Q; q++) { keys[q] = -cam.depth(m.cx[q], m.cy[q], m.cz[q]); ids[q] = q; }
+    const stemZ = sc.stem0 && sc.contour != null ? n.nz(sc.contour) : -zr;
+    if (sc.stem0 && sc.contour != null) { g.fillStyle = css(lineC, (light ? 46 : 34) / 255); poly(g, [P(-1, -1, stemZ), P(1, -1, stemZ), P(1, 1, stemZ), P(-1, 1, stemZ)]); g.fill(); }
+    const pp = new Array(np), foot = new Array(np);
+    for (let p = 0; p < np; p++) { const q = pts[p], x = n.nx(q[0]), y = n.ny(q[1]), z = n.nz(q[2]); pp[p] = P(x, y, z); foot[p] = P(x, y, stemZ); keys[m.Q + p] = -cam.depth(x, y, z); ids[m.Q + p] = m.Q + p; }
+    const sa = [], sb = [], scol = [], lp = []; let si = 0;
+    lines.forEach(l => { const pr = []; lp.push(pr); for (let q = 0; q < (l.x || []).length; q++) { const x = n.nx(l.x[q]), y = n.ny(l.y[q]), z = n.nz(l.z[q]); pr.push(P(x, y, z));
+      if (q === 0) continue; const x0 = n.nx(l.x[q - 1]), y0 = n.ny(l.y[q - 1]), z0 = n.nz(l.z[q - 1]);
+      sa[si] = pr[q - 1]; sb[si] = pr[q]; scol[si] = l.c || "#E6F2FF"; keys[m.Q + np + si] = -cam.depth((x + x0) / 2, (y + y0) / 2, (z + z0) / 2); ids[m.Q + np + si] = m.Q + np + si; si++; } });
+    ids.sort((a, b) => keys[a] - keys[b]);
+    const dx = cam.Sa * cam.Ce, dy = cam.Ca * cam.Ce, dz = -cam.Se;
+    let lx = -dx - 0.45 * cam.Ca, ly = -dy + 0.45 * cam.Sa, lz = -dz + 0.65; const ll = Math.sqrt(lx * lx + ly * ly + lz * lz); lx /= ll; ly /= ll; lz /= ll;
+    let hx = lx - dx, hy = ly - dy, hz = lz - dz; const hl = Math.sqrt(hx * hx + hy * hy + hz * hz); hx /= hl; hy /= hl; hz /= hl;
+    const amb = pal.amb != null ? pal.amb : (light ? 0.72 : 0.5), r = Math.max(2.5, 3.5 * k), veilA = (Vv.veil || 150) / 255;
+    const outline = pal.outline, zeroW = Math.max(1.5, 2 * k), stemC = pal.stem;
+    g.lineJoin = "round";
+    for (let a = 0; a < nAll; a++) {
+      const id = ids[a];
+      if (id < m.Q) {
+        const o = 4 * id, q4 = [PV[o], PV[o + 1], PV[o + 2], PV[o + 3]];
+        const nd = Math.abs(m.nx[id] * lx + m.ny[id] * ly + m.nz[id] * lz), nh = Math.abs(m.nx[id] * hx + m.ny[id] * hy + m.nz[id] * hz);
+        const lc = lit(m.base[id], amb + (1 - amb) * nd, fast ? 0 : 0.22 * Math.pow(nh, 28)), veil = m.K[id] === 1;
+        poly(g, q4);
+        if (veil) { g.fillStyle = css(lc, veilA); g.fill(); }
+        else { const f = css(lc); g.fillStyle = f; g.fill(); g.strokeStyle = f; g.lineWidth = 0.75; g.stroke(); }   // bord de la couleur de la facette : aucune couture claire
+        const e = m.E[id]; if (!fast && e) { g.strokeStyle = outline; g.lineWidth = 1; for (let q = 0; q < 4; q++) if (e & (1 << q)) line(g, q4[q], q4[(q + 1) % 4]); }
+        if (sc.contour != null && m.K[id] === 0) {
+          const c = sc.contour, cr = [];
+          for (let q = 0; q < 4; q++) { const q2 = (q + 1) % 4, va = m.Vv[o + q], vb = m.Vv[o + q2];
+            if ((va < c) !== (vb < c) && cr.length < 4) { const t = (c - va) / (vb - va); cr.push(P(m.X[o + q] + (m.X[o + q2] - m.X[o + q]) * t, m.Y[o + q] + (m.Y[o + q2] - m.Y[o + q]) * t, n.nz(c))); } }
+          if (cr.length >= 2) { g.strokeStyle = pal.line; g.lineWidth = zeroW; for (let q = 0; q + 1 < cr.length; q += 2) line(g, cr[q], cr[q + 1]); }
+        }
+      } else if (id < m.Q + np) {
+        const p = id - m.Q, A = pp[p], gc = sc.gcol || [];
+        g.strokeStyle = stemC; g.lineWidth = 1; line(g, foot[p], A);
+        g.beginPath(); g.arc(A[0], A[1], r, 0, 2 * Math.PI); g.fillStyle = gc.length ? gc[((pts[p][3] % gc.length) + gc.length) % gc.length] : "#F0A21E"; g.fill();
+        if (!fast) { g.strokeStyle = "rgba(0,0,0,.47)"; g.lineWidth = 1; g.stroke(); }
+      } else { const q = id - m.Q - np; g.strokeStyle = scol[q]; g.lineWidth = Math.max(1.5, 2.2 * k); line(g, sa[q], sb[q]); }
+    }
+    // survol : sommets de la grille, points, sommets des courbes, point actuel
+    const hov = [];
+    if (n.grid) for (let i = 0; i < sc.y.length; i++) for (let j = 0; j < sc.x.length; j++) if (sc.z[i] && fin(sc.z[i][j])) hov.push([P(m.Xn[j], m.Yn[i], n.nz(sc.z[i][j])), 0, i, j]);
+    for (let p = 0; p < np; p++) hov.push([pp[p], 1, p]);
+    lp.forEach((pr, li) => pr.forEach((pt, q) => hov.push([pt, 2, li, q])));
+    if (Array.isArray(sc.cur) && sc.cur.length === 3 && fin(sc.cur[2])) {
+      const x = n.nx(sc.cur[0]), y = n.ny(sc.cur[1]), z = n.nz(sc.cur[2]), pc = P(x, y, z), d = Math.max(4, 6 * k);
+      g.save(); g.strokeStyle = pal.line; g.lineWidth = Math.max(1, 1.2 * k); g.setLineDash([4 * k, 3 * k]); line(g, P(x, y, -zr), pc); g.restore();
+      poly(g, [[pc[0], pc[1] - d], [pc[0] + d, pc[1]], [pc[0], pc[1] + d], [pc[0] - d, pc[1]]]); g.fillStyle = "#fff"; g.fill(); g.strokeStyle = "#000"; g.lineWidth = 1; g.stroke();
+      hov.push([pc, 3]);
+    }
+    g.restore();
+    return { cam, hov, n };
+  }
+  // texte de survol d'un sommet : celui du PC (Q3d.HoverText, Readout), reconstruit des textes mis en forme par le PC
+  function texte(sc, h) {
+    if (h[1] === 0) { const i = h[2], j = h[3], zs = sc.zs || {}, row = (zs.v || [])[i] || [], tip = (sc.tips || []).find(t => t[0] === i && t[1] === j);
+      return (tip ? tip[2] + "\n" : "") + sc.xn + " : " + (sc.xt || [])[j] + "\n" + sc.yn + " : " + (sc.yt || [])[i] + "\n" + sc.zn + " : " + (zs.p || "") + (row[j] == null ? "" : row[j]) + (zs.s || ""); }
+    if (h[1] === 1) return (sc.ph || [])[h[2]] || "";
+    if (h[1] === 2) { const l = sc.lines[h[2]]; return (l.n ? l.n + "\n" : "") + ((l.h || [])[h[3]] || ""); }
+    return sc.curh || "";
+  }
+  // ---------- étiquettes (Q3d.Labels) et échelle (Q3d.Legend) ----------
+  function labels(g, sc, fr, ink, la, M) {
+    const cam = fr.cam, n = fr.n, pal = palOf(M), zr = vueOf(M).zr, h = ink.H, gap = Math.max(2, Math.round(4 * ink.K)), placed = [], tk = sc.ticks || {};
+    const inter = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    const free = q => { const qi = { x: q.x - gap / 2, y: q.y, w: q.w + gap, h: q.h }; return !placed.some(p => inter(p, qi)); };
+    const inA = q => ({ x: Math.max(la.x, Math.min(la.x + la.w - q.w, q.x)), y: Math.max(la.y, Math.min(la.y + la.h - q.h, q.y)), w: q.w, h: q.h });
+    const dir = (a, b) => { const ddx = b[0] - a[0], ddy = b[1] - a[1], l = Math.sqrt(ddx * ddx + ddy * ddy); return l < 1e-6 ? [0, 1] : [ddx / l, ddy / l]; };
+    const outAt = (p, d, w, hh, extra) => { const ext = Math.abs(d[0]) * w / 2 + Math.abs(d[1]) * hh / 2 + gap + extra; return inA({ x: Math.round(p[0] + d[0] * ext - w / 2), y: Math.round(p[1] + d[1] * ext - hh / 2), w, h: hh }); };
+    const bx = cam.Sa >= 0 ? 1 : -1, by = cam.Ca >= 0 ? 1 : -1, fy = -by, fx = -bx, c0 = cam.P(0, 0, -zr), dX = dir(c0, cam.P(0, fy, -zr)), dY = dir(c0, cam.P(fx, 0, -zr));
+    let maxX = 0, maxY = 0;
+    (tk.y || []).forEach(t => { const tx = t[1]; if (!tx) return; const w = ink.W(tx, !sc.ylab) + gap, rr = outAt(cam.P(fx, n.ny(t[0]), -zr), dY, w, h, 0);
+      if (!sc.ylab && !free(rr)) return; placed.push(rr); maxY = Math.max(maxY, w); ink.T(tx, !sc.ylab, pal.axis, rr, "c"); });
+    (tk.x || []).forEach(t => { const tx = t[1]; if (!tx) return; const w = ink.W(tx, true) + gap, rr = outAt(cam.P(n.nx(t[0]), fy, -zr), dX, w, h, 0);
+      if (!free(rr)) return; placed.push(rr); maxX = Math.max(maxX, w); ink.T(tx, true, pal.axis, rr, "c"); });
+    const lc = [[-1, -1], [-1, 1], [1, -1], [1, 1]].sort((a, b) => cam.P(a[0], a[1], 0)[0] - cam.P(b[0], b[1], 0)[0])[0];
+    if (sc.contour != null && sc.contourNom && sc.contour >= n.Z0 && sc.contour <= n.Z1) {
+      const p = cam.P(lc[0], lc[1], n.nz(sc.contour)), tx = sc.contourNom + " " + (sc.contourTxt || ""), w = ink.W(tx, false) + gap, rr = inA({ x: p[0] - w - 2 * gap, y: p[1] - h / 2, w, h });
+      placed.push(rr); ink.T(tx, false, pal.name, rr, "r");
+    }
+    (tk.z || []).forEach(t => { const p = cam.P(lc[0], lc[1], n.nz(t[0])), w = ink.W(t[1], true) + gap, rr = inA({ x: p[0] - w - 2 * gap, y: p[1] - h / 2, w, h }); if (!free(rr)) return; placed.push(rr); ink.T(t[1], true, pal.axis, rr, "r"); });
+    const name = (tx, p, d, extra) => { if (!tx) return; const w = ink.W(tx, false) + gap; let rr = outAt(p, d, w, h, extra); for (let s = 1; s < 40 && !free(rr); s++) rr = outAt(p, d, w, h, extra + s * gap); placed.push(rr); ink.T(tx, false, pal.name, rr, "c"); };
+    name(sc.xn, cam.P(0, fy, -zr), dX, Math.abs(dX[0]) * maxX + Math.abs(dX[1]) * h);
+    name(sc.yn, cam.P(fx, 0, -zr), dY, Math.abs(dY[0]) * maxY + Math.abs(dY[1]) * h);
+    const pz = cam.P(lc[0], lc[1], zr), wz = ink.W(sc.zn, false) + gap; let rz = inA({ x: pz[0] - wz / 2, y: pz[1] - h - gap, w: wz, h });
+    for (let s = 0; s < 20 && !free(rz); s++) rz = inA({ x: rz.x, y: rz.y - gap, w: wz, h }); placed.push(rz); ink.T(sc.zn, false, pal.name, rz, "c");
+  }
+  // échelle : verticale à droite (grand écran, comme le PC) ou horizontale sous la vue (téléphone)
+  function legend(g, sc, ink, r, horiz, M) {
+    const pal = palOf(M), n = fr0n(sc, M), h = ink.H, gap = Math.round(4 * ink.K), bw = Math.max(6, Math.round(10 * ink.K)), tk = sc.ticks || {};
+    if ((sc.pts || []).length && (sc.groups || []).length) {
+      let x = r.x, y = r.y;
+      sc.groups.forEach((nm, i) => { const w = bw + gap + ink.W(nm, false) + 3 * gap;
+        if (horiz) { if (x + w > r.x + r.w && x > r.x) { x = r.x; y += h; } } else if (y + h > r.y + r.h) return;
+        g.beginPath(); g.arc(x + bw / 2, y + h / 2, bw / 2, 0, 2 * Math.PI); g.fillStyle = (sc.gcol || [])[i] || "#F0A21E"; g.fill();
+        ink.T(nm, false, pal.text, { x: x + bw + gap, y, w: horiz ? w : r.w - bw - gap, h }, "l"); if (horiz) x += w; else y += h; });
+      return;
+    }
+    if (!(n.ZMax > n.ZMin) && !sc.div) return;
+    const lo = tk.legLo != null ? tk.legLo : n.ZMin, hi = tk.legHi != null ? tk.legHi : n.ZMax, st = sc.div ? pal.divg : pal.seq, span = Math.max(1e-12, hi - lo);
+    if (horiz) {
+      const bar = { x: r.x + (tk.clipLo ? ink.W(tk.clipLo, true) + gap : 0), y: r.y, w: r.w - (tk.clipLo ? ink.W(tk.clipLo, true) + gap : 0) - (tk.clipHi ? ink.W(tk.clipHi, true) + gap : 0), h: bw };
+      const gr = g.createLinearGradient(bar.x, 0, bar.x + bar.w, 0); for (let q = 0; q <= 32; q++) { const v = lo + span * q / 32; gr.addColorStop(q / 32, css(ramp(st, n.t(v)))); }
+      g.fillStyle = gr; g.fillRect(bar.x, bar.y, bar.w, bar.h);
+      (tk.leg || []).forEach(t => { const x = bar.x + (t[0] - lo) / span * (bar.w - 1), w = ink.W(t[1], true) + gap; ink.T(t[1], true, pal.axis, { x: Math.max(r.x, Math.min(r.x + r.w - w, x - w / 2)), y: bar.y + bar.h + 2, w, h }, "c"); });
+      if (tk.clipLo) ink.T(tk.clipLo, true, pal.muted, { x: r.x, y: bar.y - 3, w: ink.W(tk.clipLo, true), h }, "l");
+      if (tk.clipHi) ink.T(tk.clipHi, true, pal.muted, { x: bar.x + bar.w + gap, y: bar.y - 3, w: ink.W(tk.clipHi, true), h }, "l");
+      if (sc.contour != null && sc.contour >= lo && sc.contour <= hi) { const x = bar.x + (sc.contour - lo) / span * (bar.w - 1); g.strokeStyle = pal.line; g.lineWidth = Math.max(1.5, 2 * ink.K); line(g, [x, bar.y - gap], [x, bar.y + bar.h + 1]); }
+      return;
+    }
+    const clip = !!tk.clipHi, bar = clip ? { x: r.x, y: r.y + h + h / 2, w: bw, h: Math.max(10, r.h - 3 * h) } : { x: r.x, y: r.y + h / 2, w: bw, h: Math.max(10, r.h - h) };
+    const gr = g.createLinearGradient(0, bar.y, 0, bar.y + bar.h); for (let q = 0; q <= 32; q++) { const v = hi - span * q / 32; gr.addColorStop(q / 32, css(ramp(st, n.t(v)))); }
+    g.fillStyle = gr; g.fillRect(bar.x, bar.y, bar.w, bar.h);
+    (tk.leg || []).forEach(t => { const y = bar.y + Math.round((hi - t[0]) / span * (bar.h - 1)), w = ink.W(t[1], true) + gap; ink.T(t[1], true, pal.axis, { x: bar.x + bar.w + gap, y: y - h / 2, w, h }, "l"); });
+    if (clip) { ink.T(tk.clipHi, true, pal.muted, { x: r.x, y: r.y, w: Math.max(r.w, ink.W(tk.clipHi, true) + gap), h }, "l"); ink.T(tk.clipLo, true, pal.muted, { x: r.x, y: bar.y + bar.h + h / 4, w: Math.max(r.w, ink.W(tk.clipLo, true) + gap), h }, "l"); }
+    if (sc.contour != null && sc.contour >= lo && sc.contour <= hi) { const y = bar.y + Math.round((hi - sc.contour) / span * (bar.h - 1)); g.strokeStyle = pal.line; g.lineWidth = Math.max(1.5, 2 * ink.K); line(g, [bar.x - gap, y], [bar.x + bar.w + 1, y]); }
+  }
+  const fr0n = (sc, M) => prep(sc, vueOf(M));
+  // ---------- rendu d'un modèle dans un canvas (grand format ou vignette) ----------
+  const FONT = "-apple-system,\"Segoe UI\",\"SF Pro Text\",Arial,sans-serif";
+  function rendre(cv, mo, v, opt, M) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1), cw = Math.max(1, cv.clientWidth), ch = Math.max(1, cv.clientHeight);
+    if (cv.width !== Math.round(cw * dpr) || cv.height !== Math.round(ch * dpr)) { cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr); }
+    const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); const pal = palOf(M);
+    g.fillStyle = pal.bg; g.fillRect(0, 0, cw, ch);
+    const sc = mo.scene; if (!sc) return null;
+    const k = 1, thumb = !!opt.thumb, fNum = "11px " + FONT, fTxt = "12px " + FONT;
+    const ink = { K: k, H: 16, W: (t, num) => { g.font = num ? fNum : fTxt; return Math.ceil(g.measureText(t || "").width); },
+      T: (t, num, col, rr, al) => { g.font = num ? fNum : fTxt; g.fillStyle = col; g.textBaseline = "middle"; g.textAlign = al === "r" ? "right" : al === "l" ? "left" : "center";
+        g.fillText(t || "", al === "r" ? rr.x + rr.w : al === "l" ? rr.x : rr.x + rr.w / 2, rr.y + rr.h / 2); } };
+    if (thumb) { const fr = geometry(g, { x: 0, y: 0, w: cw, h: ch }, { x: 6, y: 4, w: Math.max(10, cw - 12), h: Math.max(10, ch - 8) }, sc, v, k, false, M); return fr; }
+    const groups = (sc.pts || []).length && (sc.groups || []).length, horiz = cw < 560;
+    let lw = 0, la, area, lg;
+    if (horiz) {
+      const lgH = groups ? Math.min(3, Math.ceil(sc.groups.reduce((s, nm) => s + ink.W(nm, false) + 34, 0) / Math.max(1, cw - 16))) * ink.H + 6 : 40;
+      la = { x: 0, y: 0, w: cw, h: ch - lgH }; lg = { x: 8, y: ch - lgH + 4, w: cw - 16, h: lgH - 6 };
+      area = { x: la.x + 46, y: la.y + 22, w: Math.max(10, la.w - 46 - 14), h: Math.max(10, la.h - 22 - 40) };
+    } else {
+      lw = groups ? Math.min(cw / 4, Math.max(...sc.groups.map(nm => ink.W(nm, false))) + 30) : 26 + Math.max(40, ...((sc.ticks || {}).leg || []).map(t => ink.W(t[1], true)));
+      lg = { x: cw - lw - 8, y: 24, w: lw, h: Math.max(40, ch - 64) }; la = { x: 0, y: 0, w: cw - lw - 12, h: ch };
+      area = { x: la.x + 80, y: la.y + 28, w: Math.max(10, la.w - 100), h: Math.max(10, la.h - 28 - 56) };
+    }
+    const fr = geometry(g, { x: 0, y: 0, w: cw, h: ch }, area, sc, v, k, !!opt.fast, M);
+    labels(g, sc, fr, ink, la, M); legend(g, sc, ink, lg, horiz, M);
+    return fr;
+  }
+  return { bloc, rendre, texte, vueOf, palOf, prep };
+})();
+
+/* ---------- page Modèles 3D : état, galerie, modèle en grand, gestes ---------- */
+/* image suivante : à la prochaine image du navigateur, sinon après 120 ms (navigateur sans affichage, onglet en veille) ; une seule fois */
+const prochain153c = f => { let fait = false; const go = () => { if (fait) return; fait = true; f(); }; requestAnimationFrame(go); setTimeout(go, 120); };
+let vue3d153c = ls.get("vue153c", "cours") === "3d", mod153c = null, galY153c = 0;
+const vues153c = {};
+const nomsM153c = () => { const M = M3D153C.bloc(); return M && Array.isArray(M.modeles) ? M.modeles : []; };
+function vue153c(id) { const V = M3D153C.vueOf(M3D153C.bloc()); return vues153c[id] || (vues153c[id] = { az: V.az, el: V.el, zoom: 1 }); }
+function bascule153c(on) { vue3d153c = !!on; ls.set("vue153c", on ? "3d" : "cours"); if (!on) mod153c = null; render(); window.scrollTo(0, 0); }
+/* bascule « Cours · Modèles 3D » sous le titre de Marchés (fiche Head) */
+function segMk153c() {
+  if (tab !== "mkts" || !data || data.profil !== "head") return; const M = document.getElementById("main"); if (!M || M.querySelector(".mv153c")) return;
+  if (!vue3d153c && typeof mkDet106p !== "undefined" && mkDet106p) return;
+  const s = document.createElement("div"); s.className = "seg mv153c"; s.setAttribute("role", "group"); s.setAttribute("aria-label", ui("Vue des marchés", "Markets view"));
+  s.innerHTML = '<button type="button" data-v="cours" class="' + (vue3d153c ? "" : "on") + '" aria-pressed="' + !vue3d153c + '">' + esc(ui("Cours", "Prices")) + '</button><button type="button" data-v="3d" class="' + (vue3d153c ? "on" : "") + '" aria-pressed="' + vue3d153c + '">' + esc(ui("Modèles 3D", "3D models")) + '</button>';
+  s.querySelectorAll("button").forEach(b => b.onclick = () => bascule153c(b.dataset.v === "3d"));
+  const ti = M.querySelector("h2.page-title, .fbar"), row = ti ? (ti.classList.contains("fbar") ? ti : ti.parentElement !== M ? ti.parentElement : ti) : null;
+  if (row && row.parentElement) row.parentElement.insertBefore(s, row.nextSibling); else M.insertBefore(s, M.firstChild);
+}
+if (typeof FIN105G !== "undefined") FIN105G.push(segMk153c);
+const tMod153c = (mo, cls) => '<span class="' + cls + '">' + esc(mo.nom || mo.id) + '</span>';
+function page3d153c() {
+  const M = M3D153C.bloc(), main = $("#main"), list = nomsM153c();
+  let h = '<div class="m3d153c"><div class="pt106p"><h2 class="page-title">' + esc(ui("Modèles 3D", "3D models")) + '</h2></div>';
+  if (!M) { main.innerHTML = h + '<p class="em153c">' + esc(ui("Fiche d'Atlas sans modèles 3D (Atlas à mettre à jour sur le PC).", "Atlas sheet without 3D models (update Atlas on the PC).")) + '</p></div>'; return; }
+  if (M.erreur) { main.innerHTML = h + '<p class="em153c">' + esc(ui("Modèles 3D indisponibles : ", "3D models unavailable: ") + M.erreur) + '</p></div>'; return; }
+  if (!list.length) { main.innerHTML = h + '<p class="em153c">' + esc(ui("Aucun modèle 3D dans la fiche.", "No 3D model in the sheet.")) + '</p></div>'; return; }
+  const mo = mod153c ? list.find(x => x.id === mod153c) : null;
+  if (!mo) { galerie153c(h, list); return; }
+  modele153c(h, mo, list);
+}
+function galerie153c(h, list) {
+  const pr = list.filter(x => x.pret).length;
+  h += '<p class="gh153c">' + esc(ui("Modèles 3D", "3D models") + " · " + (pr > 1 ? tf0153c("{0} modèles sur nos données · toucher une vignette : le modèle en grand", "{0} models on our data · tap a thumbnail: the model in full", pr) : ui("toucher une vignette : le modèle en grand", "tap a thumbnail: the model in full"))) + '</p><div class="gal153c">';
+  list.forEach(mo => { h += '<button type="button" class="tu153c' + (mo.pret ? "" : " nr153c") + '" data-m="' + esc(mo.id) + '"><b>' + esc(mo.nom || mo.id) + '</b><small>' + esc(mo.pourquoi || "") + '</small>' +
+    (mo.pret && mo.scene ? '<canvas class="th153c" aria-hidden="true"></canvas>' : '<i class="mq153c">' + esc((mo.manque || [])[0] || ui("à compléter", "to complete")) + '</i>') + '</button>'; });
+  $("#main").innerHTML = h + '</div></div>';
+  const tiles = Array.from(document.querySelectorAll("#main .tu153c"));
+  tiles.forEach(b => b.onclick = () => { galY153c = window.scrollY || 0; mod153c = b.dataset.m; render(); window.scrollTo(0, 0); });
+  // vignettes dessinées une à une (l'écran répond tout de suite) ; la boîte un peu agrandie, comme les vignettes du PC
+  let i = 0; const M = M3D153C.bloc();
+  const pas = () => { for (; i < tiles.length; i++) { const cv = tiles[i].querySelector("canvas"); if (!cv) continue; const mo = list.find(x => x.id === tiles[i].dataset.m); const V = M3D153C.vueOf(M);
+    try { M3D153C.rendre(cv, mo, { az: V.az, el: V.el, zoom: Math.pow(V.zoomStep, 2) }, { thumb: true }, M); } catch (e) { console.warn(e); } i++; prochain153c(pas); return; } };
+  prochain153c(pas);
+  if (galY153c) { const y = galY153c; galY153c = 0; prochain153c(() => window.scrollTo(0, y)); }
+}
+const tf0153c = (fr, en, n) => ui(fr, en).replace("{0}", n);
+function modele153c(h, mo, list) {
+  const sc = mo.scene, k4 = (mo.kpis || []).slice(0, 4), tactile = window.matchMedia && window.matchMedia("(pointer:coarse)").matches;
+  h += '<div class="bk153c"><button type="button" class="rt153c" id="ret153c">‹ ' + esc(ui("Galerie", "Gallery")) + '</button><div class="ch153c" role="group" aria-label="' + esc(ui("Modèles", "Models")) + '">' +
+    list.map(x => '<button type="button" data-m="' + esc(x.id) + '" class="' + (x.id === mo.id ? "on" : "") + (x.pret ? "" : " nr153c") + '" aria-pressed="' + (x.id === mo.id) + '">' + esc(x.nom || x.id) + '</button>').join("") + '</div></div>';
+  h += '<div class="mh153c"><h3>' + esc(mo.titre || mo.nom || mo.id) + '</h3><p class="wy153c">' + esc(mo.pourquoi || "") + '</p><p class="dt153c">' + esc(mo.dateTxt || "") + '</p>' +
+    (mo.drapeaux || []).map(f => '<p class="fl153c">' + esc(f) + '</p>').join("") + '</div>';
+  if (k4.length) h += '<div class="kp153c">' + k4.map(x => '<div' + (x.m ? ' class="km153c"' : "") + '><small>' + esc(x.l || "") + '</small><b style="color:' + esc(/^#[0-9A-F]{6}$/i.test(x.c || "") ? x.c : "#E6E6E6") + '">' + esc(x.v || "") + '</b><span>' + esc(x.s || "") + '</span></div>').join("") + '</div>';
+  if (!mo.pret || !sc) h += '<p class="em153c nr153c">' + esc((mo.manque || [])[0] || ui("à compléter", "to complete")) + '</p>';
+  else h += '<div class="vw153c"><canvas class="cv153c" role="img" aria-label="' + esc(mo.titre || mo.nom || "") + '"></canvas><div class="bul153c" hidden></div></div>' +
+    '<div class="ac153c"><span>' + esc(tactile ? ui("Glisser : tourner · deux doigts : zoom · toucher : valeur · double toucher : vue initiale", "Drag: rotate · two fingers: zoom · tap: value · double tap: reset view")
+      : ui("Glisser : tourner · molette : zoom · survol : valeur · double-clic : vue initiale", "Drag: rotate · wheel: zoom · hover: value · double-click: reset view")) + '</span><button type="button" id="vi153c">' + esc(ui("Vue initiale", "Reset view")) + '</button></div>';
+  const notes = (mo.notes || []).filter(x => !/^⚑/.test(x));
+  if (notes.length || mo.methode) h += '<details class="fold nt153c"><summary>' + esc(ui("Méthode et notes", "Method and notes")) + '</summary>' + (mo.methode ? '<p>' + esc(mo.methode) + '</p>' : "") + notes.map(x => '<p class="muted">' + esc(x) + '</p>').join("") + '</details>';
+  $("#main").innerHTML = h + '</div>';
+  $("#ret153c").onclick = () => { mod153c = null; render(); };
+  document.querySelectorAll("#main .ch153c button").forEach(b => b.onclick = () => { mod153c = b.dataset.m; render(); });
+  if (mo.pret && sc) gestes153c(mo);
+}
+function taille153c(cv) {
+  const w = cv.parentElement.clientWidth, H = window.innerHeight || 700, pays = (window.innerWidth || 0) > H && H < 520;
+  const hh = pays ? Math.max(220, H - 96) : w >= 1000 ? Math.min(680, Math.max(360, H - 260)) : Math.max(280, Math.min(Math.round(w * 1.05), H - 230));
+  cv.style.height = hh + "px";
+}
+function gestes153c(mo) {
+  const cv = document.querySelector("#main canvas.cv153c"), bu = document.querySelector("#main .bul153c"), M = M3D153C.bloc(); if (!cv) return;
+  const v = vue153c(mo.id), V = M3D153C.vueOf(M); let fr = null, raf = 0, fast = false, lent = 0;
+  const dessine = () => { raf = 0; try { fr = M3D153C.rendre(cv, mo, v, { fast }, M); } catch (e) { console.warn(e); } };
+  const plan = f => { fast = !!f; if (!raf) { raf = 1; prochain153c(dessine); } if (f) { clearTimeout(lent); lent = setTimeout(() => plan(false), 180); } };
+  taille153c(cv); dessine();
+  const ro = window.ResizeObserver ? new ResizeObserver(() => { if (!document.body.contains(cv)) { ro.disconnect(); return; } taille153c(cv); plan(false); }) : null; if (ro) ro.observe(cv.parentElement);
+  const ptrs = new Map(); let d0 = null, z0 = 1, t0 = 0, x0 = 0, y0 = 0, a0 = 0, e0 = 0, bouge = false, dernierTap = 0;
+  const cache = () => { bu.hidden = true; };
+  const bulle = (x, y) => {
+    if (!fr) return false; let best = null, bd = 22 * 22;
+    fr.hov.forEach(hv => { const dx = hv[0][0] - x, dy = hv[0][1] - y, d = dx * dx + dy * dy; if (d <= bd) { bd = d; best = hv; } });
+    if (!best) { cache(); return false; }
+    bu.textContent = M3D153C.texte(mo.scene, best); bu.hidden = false;
+    const W = cv.clientWidth, bw = bu.offsetWidth, bh = bu.offsetHeight; let bx = best[0][0] + 12, by = best[0][1] - bh - 10;
+    if (bx + bw > W - 4) bx = best[0][0] - bw - 12; if (bx < 4) bx = 4; if (by < 4) by = best[0][1] + 14;
+    bu.style.left = Math.round(bx) + "px"; bu.style.top = Math.round(by) + "px"; return true;
+  };
+  window.essai153c = Object.assign(window.essai153c || {}, { unPoint: () => { if (!fr || !fr.hov.length) return null; const c = fr.hov[Math.floor(fr.hov.length / 2)][0]; return [c[0], c[1]]; } });
+  cv.addEventListener("pointerdown", e => {
+    try { cv.setPointerCapture(e.pointerId); } catch (x) { /* pointeur simulé (essais) : sans capture */ } ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (ptrs.size === 1) { t0 = Date.now(); x0 = e.clientX; y0 = e.clientY; a0 = v.az; e0 = v.el; bouge = false; }
+    if (ptrs.size === 2) { const p = Array.from(ptrs.values()); d0 = Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]); z0 = v.zoom; bouge = true; }
+  });
+  cv.addEventListener("pointermove", e => {
+    if (!ptrs.has(e.pointerId)) { if (e.pointerType === "mouse" && !e.buttons) { const r = cv.getBoundingClientRect(); bulle(e.clientX - r.left, e.clientY - r.top); } return; }
+    ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (ptrs.size >= 2 && d0) { const p = Array.from(ptrs.values()), d = Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]); v.zoom = Math.max(V.zoomMin, Math.min(V.zoomMax, z0 * d / Math.max(1, d0))); cache(); plan(true); return; }
+    const dx = e.clientX - x0, dy = e.clientY - y0; if (!bouge && Math.hypot(dx, dy) < 6) return; bouge = true; cache();
+    let az = a0 + dx * 0.012; const p2 = 2 * Math.PI; az %= p2; if (az > Math.PI) az -= p2; if (az < -Math.PI) az += p2;
+    v.az = az; v.el = Math.max(V.elMin, Math.min(V.elMax, e0 + dy * 0.008)); plan(true);
+  });
+  const fin = e => {
+    if (!ptrs.has(e.pointerId)) return; ptrs.delete(e.pointerId); if (ptrs.size < 2) d0 = null;
+    if (ptrs.size === 0 && !bouge && Date.now() - t0 < 400) {
+      const now = Date.now(); if (now - dernierTap < 320) { v.az = V.az; v.el = V.el; v.zoom = 1; cache(); plan(false); dernierTap = 0; return; }
+      dernierTap = now; const r = cv.getBoundingClientRect(); bulle(e.clientX - r.left, e.clientY - r.top);
+    }
+    if (ptrs.size === 0 && bouge) plan(false);
+  };
+  cv.addEventListener("pointerup", fin); cv.addEventListener("pointercancel", fin);
+  cv.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && !ptrs.size) cache(); });
+  cv.addEventListener("wheel", e => { e.preventDefault(); const n = e.deltaY < 0 ? 1 : -1; v.zoom = Math.max(V.zoomMin, Math.min(V.zoomMax, v.zoom * Math.pow(V.zoomStep, n))); cache(); plan(true); }, { passive: false });
+  cv.addEventListener("dblclick", () => { v.az = V.az; v.el = V.el; v.zoom = 1; cache(); plan(false); });
+  const vi = document.getElementById("vi153c"); if (vi) vi.onclick = () => { v.az = V.az; v.el = V.el; v.zoom = 1; cache(); plan(false); };
+}
+/* Marchés : la page Cours ou la page Modèles 3D (fiche Head) */
+const renderMarkets0153c = renderMarkets;
+renderMarkets = function () {
+  if (data && data.profil === "head" && vue3d153c) { page3d153c(); return; }
+  renderMarkets0153c();
+};
+/* menu à gauche (ordinateur, ≥ 1 100 px, style PC) : marque ATLAS, groupes en capitales ambre, entrée « Modèles 3D » sous MARCHÉS ; masqués sur
+   téléphone et tablette (barre des onglets inchangée) */
+const tabs0153c = tabs;
+tabs = function () {
+  tabs0153c();
+  const nav = document.getElementById("nav"); if (!nav || !data) return;
+  const G = { home: ui("Pilotage", "Overview"), today: ui("Logistique", "Logistics"), cal: data.profil === "head" ? ui("Logistique", "Logistics") : null, treso: ui("Finance", "Finance"), expo: ui("Trading", "Trading"), mkts: ui("Marchés", "Markets"), stock: null, photos: null, settings: ui("Réglages", "Settings") };
+  if (data.profil !== "head") G.cal = nav.querySelector('button[data-tab="today"]') ? null : ui("Logistique", "Logistics");
+  if (!nav.querySelector(".br153c")) { const b = document.createElement("div"); b.className = "br153c"; b.textContent = "ATLAS"; nav.insertBefore(b, nav.firstChild); }
+  nav.querySelectorAll(".g153c").forEach(x => x.remove());
+  nav.querySelectorAll("button[data-tab]").forEach(b => { const g = G[b.dataset.tab]; if (g) { const d = document.createElement("div"); d.className = "g153c"; d.textContent = g; nav.insertBefore(d, b); } });
+  let x = nav.querySelector("button.x153c");
+  if (data.profil === "head" && !x) { x = document.createElement("button"); x.type = "button"; x.className = "x153c";
+    x.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>' + esc(ui("Modèles 3D", "3D models"));
+    x.onclick = () => { vue3d153c = true; ls.set("vue153c", "3d"); mod153c = null; if (tab === "mkts") render(); else navTab103a("mkts"); };
+    const mk = nav.querySelector('button[data-tab="mkts"]'); if (mk) mk.after(x); else nav.appendChild(x); }
+  if (x) { const on3 = tab === "mkts" && vue3d153c, mk = nav.querySelector('button[data-tab="mkts"]'); x.classList.toggle("on", on3); if (mk && tab === "mkts") mk.classList.toggle("on", !on3); }
+  const mk = nav.querySelector('button[data-tab="mkts"]'); if (mk && !mk.ok153c) { mk.ok153c = 1; mk.addEventListener("click", () => { if (window.innerWidth >= 1100 && vue3d153c) { vue3d153c = false; ls.set("vue153c", "cours"); mod153c = null; } }, true); }
+};
+/* essais (banc web) : ouvrir la galerie ou un modèle, état de la page */
+window.essai153c = Object.assign(window.essai153c || {}, {
+  galerie: () => { vue3d153c = true; mod153c = null; if (tab !== "mkts") navTab103a("mkts"); else render(); },
+  ouvrir: id => { vue3d153c = true; mod153c = id; if (tab !== "mkts") navTab103a("mkts"); else render(); },
+  vue: () => mod153c && vues153c[mod153c] ? Object.assign({}, vues153c[mod153c]) : null,
+  etat: () => { const tiles = Array.from(document.querySelectorAll("#main .tu153c")), cvs = Array.from(document.querySelectorAll("#main canvas.th153c"));
+    const lit = cv => { try { const d = cv.getContext("2d").getImageData(0, 0, cv.width, cv.height).data; let n = 0; for (let i = 0; i < d.length; i += 16) if (d[i] + d[i + 1] + d[i + 2] > 40) n++; return n; } catch (e) { return -1; } };
+    return { vue3d: vue3d153c, modele: mod153c, tuiles: tiles.length, pretes: tiles.filter(t => !t.classList.contains("nr153c")).length, vignettes: cvs.map(lit), vide: (document.querySelector("#main .em153c") || {}).textContent || null,
+      grand: !!document.querySelector("#main canvas.cv153c"), titre: (document.querySelector("#main .mh153c h3") || {}).textContent || null }; }
+});
+
 if (!window.ATLAS_ESSAI) boot();
 </script>
 </body>
