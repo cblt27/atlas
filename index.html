@@ -5328,6 +5328,107 @@ nav .lc153c { display:none; }
   html[data-pc153c] nav button[data-c153c] .nb103a { position:absolute !important; top:3px; right:3px; margin:0 !important; font-size:11px !important; }
 }
 @media (max-width:340px) { html[data-pc153c] nav button[data-c153c] .lc153c { font-size:11px; letter-spacing:0; } }
+/* ================= round 153 (suite 3) · v140 : PLUS DÉZOOMÉ, MOINS DE DÉFILEMENT (densité du terminal), style PC =================
+   Retour de l'utilisateur (23/11) : « l'app devrait être plus dézoomée, tout plus petit pour qu'on ait moins de scroll à faire ». Repère : le PC en
+   thème terminal (lignes de 22 px, en-têtes de 30 px). Texte 13 px (titres 14-16, chiffres héros 22), interligne 1,25, lignes de liste de 32 px,
+   cartes et sections resserrées ; 44 px gardés pour la barre du bas, l'en-tête et les boutons principaux. */
+html:root[data-pc153c][data-th104f] { --t-cap106q:11px; --t-sub106q:12px; --t-body106q:13px; --t-head106q:14px; --t-tile106q:16px; --t-title106q:15px; --t-hero106q:22px;
+  --fs-body105k:13px; --fs-cap105k:11px; --fs-cap2105k:11px; --fs-head105k:14px; --fs-hero105k:22px; --fs-large105k:18px; --fs-note105k:12px; --fs-sub105k:12px; --fs-tile105k:16px; --fs-title105k:15px;
+  --sec105k:8px; --sec-b105k:4px; --inset105k:8px; }
+html[data-pc153c] body { line-height:1.25; }
+html[data-pc153c] #main :is(p, li, small, span, b, em, h2, h3, h4) { line-height:1.25; }
+html[data-pc153c] header { min-height:44px !important; padding-top:calc(env(safe-area-inset-top) + 0px) !important; padding-bottom:0 !important; }
+/* lignes de liste touchables : 32 px, marges intérieures de 4 px */
+html[data-pc153c] #main :is(.tr106l, .r106p, .tr106p, .op104b, .lv106m, .li104e, .li106q, .mr106p, .wk106m, .tl106o, .lk106l, .dc108v, .vd109b, .rg108w button, .tv106l, .pf105j button, .ac105j-t) { min-height:32px !important; padding-top:3px !important; padding-bottom:3px !important; }
+html[data-pc153c] .sheet :is(.li104e, .tl106o, .li106q, .r106p) { min-height:32px !important; padding-top:3px !important; padding-bottom:3px !important; }
+@media (max-width:1099px) {
+  html[data-pc153c] #main :is(.seg, .reading-switch) > button, html[data-pc153c] #main .chips button, html[data-pc153c] #main .workspace-tabs button,
+  html[data-pc153c] #main :is(.pk106p button, #expoMonth, .r106p, .dc108v, select, input:not([type=checkbox]):not([type=radio]), .mk-per button), html[data-pc153c] .sheet .seg > button { min-height:32px !important; }
+  html[data-pc153c] .tb153c .rw153c { min-height:32px !important; }
+  html[data-pc153c] .ch153c button, html[data-pc153c] .rt153c, html[data-pc153c] .ac153c button, html[data-pc153c] .mv153c button { min-height:32px !important; }
+}
+/* cartes, sections, titres de section, héros */
+html[data-pc153c] #main :is(.card, .cd106l, .cd106p, .cd108x, .gl106m, .hr108v, .tt108v, .hr109a, .cal) { padding:6px 8px !important; margin-bottom:6px !important; }
+html[data-pc153c] #main :is(.sc106l, .bl108w) { margin-top:6px !important; }
+html[data-pc153c] #main :is(h2, h3):not(.page-title) { margin-top:6px !important; margin-bottom:3px !important; }
+html[data-pc153c] #main :is(.big, .hm-big, .vbig, .vsbig, .position-number, .ou103f-big, .hb106n, .hn109a > b, .hv106p .num) { font-size:22px !important; line-height:1.1 !important; }
+html[data-pc153c] #main :is(.tt108v, .hr108v) { min-height:0 !important; }
+html[data-pc153c] #main .day { min-height:38px !important; }
+html[data-pc153c] #main .pb106p { height:110px !important; } html[data-pc153c] #main .pb106p span { height:72px !important; }
+html[data-pc153c] .bbm153c { height:118px; } html[data-pc153c] .bbm153c.bbt153c { height:170px; } html[data-pc153c] .th153c { height:120px; }
+@media (orientation:portrait) { html[data-pc153c] main { padding-top:6px !important; } }   /* paysage : l'en-tête des vues posé au-dessus garde sa place */
+/* Livraisons : rangée de livraison compacte (deux lignes de 16 et 14 px) */
+html[data-pc153c] #main .lv106m { gap:8px !important; margin:0 !important; }
+html[data-pc153c] #main .lv106m :is(.op-heading > b, .quantity) { font-size:13px !important; line-height:16px !important; }
+html[data-pc153c] #main .lv106m .op-sub104b { margin-top:0 !important; } html[data-pc153c] #main .lv106m .op-sub104b > .op-context { font-size:12px !important; line-height:14px !important; }
+html[data-pc153c] #main .lv106m > .dir104b { height:16px !important; }
+html[data-pc153c] #main .agenda-day > h2 { margin:4px 0 2px !important; } html[data-pc153c] #main .gl106m { margin-bottom:4px !important; }
+/* débordements relevés (Jour : liens et tuile ; 3D : vue) */
+html[data-pc153c] #main :is(.lk106l, .tl106l) { max-width:100%; min-width:0 !important; box-sizing:border-box; }
+html[data-pc153c] .vw153c { margin-left:0 !important; margin-right:0 !important; }
+/* Livraisons : sections des jours sans marge, intitulé du jour de 22 px (en-têtes du PC) */
+html[data-pc153c] #main .agenda-day { margin:0 !important; padding:0 !important; }
+html[data-pc153c] #agl103b > section.agenda-day { contain-intrinsic-size:auto 124px; }   /* hauteur réservée d'un jour hors écran : celle d'un jour compact (avant 230 px) */
+html[data-pc153c] #main .agenda-day > h2 { min-height:0 !important; height:auto !important; padding:3px 0 !important; margin:2px 0 1px !important; line-height:16px !important; }
+/* Jour : tuiles resserrées, légende de la barre des sujets retirée (la couleur suffit) ; Positions : tableau des mois retiré (l'exposition visuelle le montre) */
+html[data-pc153c] #main .tg106l :is(.kw109a, .tl106l) { padding:5px 8px !important; min-height:0 !important; }
+html[data-pc153c] #main .ha109a .lg109a, html[data-pc153c] #main .fd108x { display:none !important; }
+html[data-pc153c] .bbm153c { height:100px; }
+/* Positions : intitulés de section au-dessus de listes évidentes retirés ; anneaux par produit retirés (répètent l'exposition visuelle) ;
+   « Plus » en cases de fonction ambre du PC, sur deux rangées au plus */
+html[data-pc153c] #main .gd108x > .sc108x > h3.h106p, html[data-pc153c] #main .sc108x:has(.ri108x) { display:none !important; }
+html[data-pc153c] #main :has(> [data-expo-tool]) { display:flex !important; flex-wrap:wrap; gap:4px; padding:0 !important; background:none !important; outline:0 !important; }
+html[data-pc153c] #main [data-expo-tool] { flex:0 0 auto !important; width:auto !important; min-height:32px !important; padding:0 10px !important; margin:0 !important; background:#F0A21E !important; color:#000 !important; border:0 !important; }
+html[data-pc153c] #main [data-expo-tool] :is(svg, i, small, .ch106p) { display:none !important; } html[data-pc153c] #main [data-expo-tool] :is(b, span) { color:#000 !important; font:600 12px Tahoma,"Segoe UI",-apple-system,Arial,sans-serif !important; }
+html[data-pc153c] #main [data-expo-tool]::before, html[data-pc153c] #main [data-expo-tool]::after { display:none !important; }
+/* Jour : la section des cours répète Marchés (même tableau, mêmes chiffres) : retirée du Jour, l'onglet Marchés la garde */
+html[data-pc153c] #main [data-sec106l="px"] { display:none !important; }
+/* v140 : corrections du banc (débordements, paysage, texte agrandi) */
+html[data-pc153c] #main .st106l .lk106l { margin-right:0 !important; padding-right:0 !important; }
+html[data-pc153c] #agl103b .wk106m { margin-top:2px !important; }
+html[data-pc153c] #agl103b > section.agenda-day { content-visibility:visible !important; }   /* jours compacts : tous rendus (pas de hauteur réservée qui recouvre) */
+@media (orientation:landscape) and (max-height:520px) { html[data-pc153c] #main .segw104c .seg > button { min-height:44px !important; min-width:max-content !important; padding:0 10px !important; } html[data-pc153c] #main .tz104c .hx108w { padding-top:38px !important; } }
+.tb153c, .bbh153c { margin-left:0 !important; margin-right:0 !important; }
+@media (orientation:landscape) and (max-height:520px) { html[data-pc153c] #main .ps106p > .xp153c { margin-top:40px; } }
+html[data-pc153c][data-tx104f="xl"] #main :is(small, b, span, .n) { white-space:normal !important; overflow:visible !important; text-overflow:clip !important; }
+html[data-pc153c][data-tx104f="xl"] #main .seg > button { min-width:40px !important; padding-left:4px !important; padding-right:4px !important; }
+@media (max-width:380px) { .tb153c .hr153c, .tb153c .rw153c { grid-template-columns:minmax(0, 1fr) 82px 64px 44px; column-gap:4px; } }
+/* ================= v140 : chasse au texte inutile (encore) ================= */
+/* titre de page qui répète l'onglet choisi (téléphone, tablette) : retiré ; la rangée garde ses commandes (lb / MT, vues) */
+@media (max-width:1099px) {
+  html[data-pc153c] #main h2.page-title { display:none !important; }
+  html[data-pc153c] #main :is(.fbar, .reading-head, .lt106m, .pt106p):has(> h2) { background:none !important; min-height:0 !important; padding-top:0 !important; padding-bottom:0 !important; margin-top:0 !important; margin-bottom:4px !important; justify-content:flex-end !important; }
+  html[data-pc153c] #main .pt106p:not(:has(> :not(h2))) { display:none !important; }
+}
+/* intitulés de section du Jour (« Chiffres clés », « À traiter », « Cours ») : la liste parle d'elle-même ; le lien de droite reste */
+html[data-pc153c] #main .st106l > h2 { display:none !important; }
+html[data-pc153c] #main .st106l { justify-content:flex-end !important; min-height:0 !important; margin:2px 0 !important; }
+/* unités répétées sur chaque ligne de livraison (l'unité est celle choisie en haut, lb ou MT) */
+html[data-pc153c] #main :is(.agenda-day, .lv106m, .op104b, .li106q, .gl106m) .u104e { display:none !important; }
+/* Positions : le héros et le graphique par mois sont remplacés par l'exposition visuelle (xp153c) */
+html[data-pc153c] #main :is(.hd108x, .cd108x.pw108x) { display:none !important; }
+/* exposition visuelle */
+.xp153c { margin:0 0 8px; }
+.xh153c { display:flex; align-items:baseline; gap:6px; padding:2px 0 4px; }
+.xh153c span { color:#F0A21E; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+.xh153c b { font:700 20px/1 "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; } .xh153c b.up { color:#36C24A; } .xh153c b.dn { color:#FF3B4A; }
+.xh153c i { font-style:normal; color:#B8B8B8; font-size:12px; }
+.xg153c { overflow-x:auto; scrollbar-width:none; }
+.xg153c::-webkit-scrollbar { display:none; }
+.xr153c { display:grid; grid-template-columns:66px repeat(var(--n), 40px); width:max-content; }
+.xl153c { position:sticky; left:0; z-index:1; background:#000;
+  display:flex; align-items:center; font-size:12px; color:#E6E6E6; white-space:nowrap; overflow:hidden; border-right:1px solid #2C3440; }
+.xm153c > span:not(.xl153c) { text-align:center; font:11px/22px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#CDD2DA; border-bottom:1px solid #2C3440; white-space:nowrap; }
+.xm153c > span.cu { color:#000; background:#F0A21E; font-weight:700; }
+.xc153c { position:relative; height:66px; border-left:1px solid #12151B; }
+.xc153c::before { content:""; position:absolute; left:0; right:0; top:50%; border-top:1px solid #2C3440; }
+.xc153c.cu { background:rgba(240,162,30,.10); }
+.xc153c .b { position:absolute; left:9px; right:9px; display:block; } .xc153c.lo .b { bottom:50%; background:#36C24A; } .xc153c.sh .b { top:50%; background:#FF3B4A; }
+.xc153c .b .h { position:absolute; left:0; right:0; display:block; background:repeating-linear-gradient(135deg, rgba(0,0,0,.6) 0 2px, transparent 2px 5px); }
+.xc153c.lo .b .h { bottom:0; } .xc153c.sh .b .h { top:0; }
+.xc153c .b em { background:#000; padding:0 1px; position:absolute; left:50%; transform:translateX(-50%); font:11px/12px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; white-space:nowrap; font-style:normal; }
+.xc153c.lo .b em { bottom:100%; margin-bottom:1px; } .xc153c.sh .b em { top:100%; margin-top:1px; }
+.xr153c:not(.xm153c) + .xr153c { border-top:1px solid #12151B; }
 </style>
 </head>
 <body>
@@ -5531,7 +5632,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "139";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) ; toutes les courbes du PC, audit terminal (v139) */
+const VERSION_APP = "140";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) ; toutes les courbes du PC, audit terminal (v139) ; densité du terminal, exposition visuelle (v140) */
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -17350,6 +17451,44 @@ function terminal153c() {
 }
 if (typeof FIN105G !== "undefined") FIN105G.push(terminal153c);
 try { new MutationObserver(rs => { if (rs.some(r => Array.from(r.addedNodes).some(n => n.nodeType === 1 && n.classList && n.classList.contains("sheet-bg")))) setTimeout(terminal153c, 0); }).observe(document.body, { childList: true }); } catch (e) {}
+/* round 153 js c (suite 3, v140) */
+/* ---------- round 153 (suite 3) · v140 : EXPOSITION visuelle (Positions, style PC) ----------
+   Retour de l'utilisateur (23/11) : « l'exposure est illogique, on ne comprend pas pour quelle période, quel truc, ça devrait être visuel ». Lecture d'un
+   coup d'œil, sans phrase : net en tête avec l'unité ; axe des mois écrit en clair (« nov. 26 … juin 27 ») ; un produit par ligne ; barre au-dessus du
+   zéro = long (acheté non vendu, vert), en dessous = court (vendu non acheté, rouge) ; part couverte (swaps) hachurée ; quantité au bout de la barre ;
+   mois courant marqué en ambre. Chiffres : ceux de l'exposition du PC (data.couv88 = Cx88Json.Expo(Cx88.Build()), mêmes cellules que la page
+   Exposition du PC, vérifiées par --r153c) : seulement le non alloué (achats non vendus, ventes non achetées), jamais ce qui est déjà adossé. */
+const kq153c = v => { const a = Math.abs(v); return (v < 0 ? "−" : "") + (a >= 1e6 ? BBG153.num(a / 1e6, 1) + "M" : a >= 1e3 ? BBG153.num(a / 1e3, a >= 1e4 ? 0 : 1) + "k" : BBG153.num(a, 0)); };
+function expoPC153c() {
+  if (!pcMode153c() || tab !== "expo" || !data) return; const M = document.getElementById("main"); if (!M || M.querySelector(".xp153c")) return;
+  const C = data.couv88, P = C && Array.isArray(C.produits) ? C.produits.filter(p => p && Array.isArray(p.mois)) : [];
+  const lbMT = C && +C.lbParMT > 0 ? +C.lbParMT : 2204.62, mt = typeof U === "function" && /MT|t$/.test(String(U())), cv = v => mt ? v / lbMT : v, unit = mt ? "MT" : "lb";
+  const ks = Array.from(new Set([].concat(...P.map(p => p.mois.map(m => m.k))))).filter(k => /^\d{4}-\d{2}$/.test(k)).sort();
+  let h = '<div class="xp153c">';
+  if (!P.length || !ks.length) { h += '<p class="em153c">' + esc(ui("Exposition absente de la fiche", "No exposure in the sheet")) + '</p></div>'; }
+  else {
+    const tot = P.reduce((s, p) => s + p.mois.filter(m => /^\d{4}-\d{2}$/.test(m.k)).reduce((a, m) => a + (+m.expo || 0), 0), 0), cur = today.slice(0, 7);
+    let mx = 1; P.forEach(p => p.mois.forEach(m => { if (/^\d{4}-\d{2}$/.test(m.k)) mx = Math.max(mx, Math.abs(+m.expo || 0)); }));
+    const mois = k => { const d = parseD(k + "-01"), s = d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { month: "short" }).replace(".", ""); return s + (d.getMonth() === 0 || k === ks[0] ? " " + String(d.getFullYear()).slice(2) : ""); };
+    h += '<div class="xh153c"><span>' + esc(ui("Net", "Net")) + '</span><b class="n153c ' + (tot > 0.5 ? "up" : tot < -0.5 ? "dn" : "") + '">' + esc((tot > 0 ? "+" : "") + BBG153.num(cv(tot), 0)) + '</b><i>' + unit + '</i></div>';
+    h += '<div class="xg153c" style="--n:' + ks.length + '"><div class="xr153c xm153c"><span class="xl153c"></span>' + ks.map(k => '<span class="' + (k === cur ? "cu" : "") + '">' + esc(mois(k)) + '</span>').join("") + '</div>';
+    P.forEach(p => {
+      const by = {}; p.mois.forEach(m => { by[m.k] = m; });
+      h += '<div class="xr153c"><span class="xl153c">' + esc(prod(p.produit)) + '</span>' + ks.map(k => {
+        const m = by[k], v = m ? +m.expo || 0 : 0, c = m ? Math.min(Math.abs(v), Math.max(0, +m.couvert || 0)) : 0, hp = Math.max(2, Math.abs(v) / mx * 30), hc = Math.abs(v) > 0 ? c / Math.abs(v) * 100 : 0;
+        if (Math.abs(v) < 0.5) return '<span class="xc153c' + (k === cur ? " cu" : "") + '"><i class="z"></i></span>';
+        return '<span class="xc153c ' + (v > 0 ? "lo" : "sh") + (k === cur ? " cu" : "") + '" title="' + esc(mois(k) + " · " + BBG153.num(cv(v), 0) + " " + unit + (c ? " · " + ui("couvert ", "hedged ") + BBG153.num(cv(c), 0) : "")) + '">' +
+          '<i class="b" style="height:' + hp.toFixed(1) + '%"><i class="h" style="height:' + hc.toFixed(1) + '%"></i><em class="n153c">' + esc(kq153c(cv(v))) + '</em></i></span>';
+      }).join("") + '</div>';
+    });
+    h += '</div></div>';
+  }
+  const ti = M.querySelector(".pt106p, h2.page-title"); const row = ti ? (ti.classList.contains("pt106p") ? ti : ti.parentElement) : null;
+  const x = document.createElement("div"); x.innerHTML = h; const el = x.firstChild;
+  if (row && row.parentElement && row !== M) row.parentElement.insertBefore(el, row.nextSibling); else M.insertBefore(el, M.firstChild);
+  const g = el.querySelector(".xg153c"), cu = el.querySelector(".xm153c .cu"); if (g && cu) g.scrollLeft = Math.max(0, cu.offsetLeft - 120);
+}
+if (typeof FIN105G !== "undefined") FIN105G.push(expoPC153c);
 if (!window.ATLAS_ESSAI) boot();
 </script>
 </body>
