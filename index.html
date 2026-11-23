@@ -5325,7 +5325,8 @@ nav .lc153c { display:none; }
   html[data-pc153c] nav button[data-c153c]:first-of-type { border-left:0 !important; }
   html[data-pc153c] nav button[data-c153c] .ln153c { display:none; }
   html[data-pc153c] nav button[data-c153c] .lc153c { display:inline; font:600 12px/1 -apple-system,"Segoe UI",Arial,sans-serif; letter-spacing:.02em; white-space:nowrap; }
-  html[data-pc153c] nav button[data-c153c] .nb103a { position:absolute !important; top:3px; right:3px; margin:0 !important; font-size:11px !important; }
+  html[data-pc153c] nav button[data-c153c] { padding-top:15px !important; justify-content:center !important; }
+  html[data-pc153c] nav button[data-c153c] .nb103a { position:absolute !important; top:1px !important; right:1px !important; left:auto !important; margin:0 !important; font-size:11px !important; line-height:13px !important; min-width:13px; height:13px; padding:0 2px !important; }
 }
 @media (max-width:340px) { html[data-pc153c] nav button[data-c153c] .lc153c { font-size:11px; letter-spacing:0; } }
 /* ================= round 153 (suite 3) · v140 : PLUS DÉZOOMÉ, MOINS DE DÉFILEMENT (densité du terminal), style PC =================
@@ -5393,6 +5394,8 @@ html[data-pc153c] #agl103b > section.agenda-day { content-visibility:visible !im
 html[data-pc153c][data-tx104f="xl"] #main :is(small, b, span, .n) { white-space:normal !important; overflow:visible !important; text-overflow:clip !important; }
 html[data-pc153c][data-tx104f="xl"] #main .seg > button { min-width:40px !important; padding-left:4px !important; padding-right:4px !important; }
 @media (max-width:380px) { .tb153c .hr153c, .tb153c .rw153c { grid-template-columns:minmax(0, 1fr) 82px 64px 44px; column-gap:4px; } }
+@media (max-width:360px) { .tb153c .hr153c, .tb153c .rw153c { grid-template-columns:minmax(0, 1fr) 76px 60px 42px; } .tb153c .rw153c .n { white-space:normal; line-height:14px; } }
+@media (max-width:360px) { html[data-pc153c] #main small { white-space:normal !important; overflow:visible !important; text-overflow:clip !important; } }   /* 320 px : sous-lignes à la ligne, jamais coupées */
 /* ================= v140 : chasse au texte inutile (encore) ================= */
 /* titre de page qui répète l'onglet choisi (téléphone, tablette) : retiré ; la rangée garde ses commandes (lb / MT, vues) */
 @media (max-width:1099px) {
@@ -5413,12 +5416,13 @@ html[data-pc153c] #main :is(.hd108x, .cd108x.pw108x) { display:none !important; 
 .xh153c span { color:#F0A21E; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
 .xh153c b { font:700 20px/1 "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#E6E6E6; } .xh153c b.up { color:#36C24A; } .xh153c b.dn { color:#FF3B4A; }
 .xh153c i { font-style:normal; color:#B8B8B8; font-size:12px; }
-.xg153c { overflow-x:auto; scrollbar-width:none; }
+.xg153c { overflow-x:auto; scrollbar-width:none; scroll-snap-type:x mandatory; scroll-padding-left:66px; }
 .xg153c::-webkit-scrollbar { display:none; }
-.xr153c { display:grid; grid-template-columns:66px repeat(var(--n), 40px); width:max-content; }
+.xr153c { display:grid; grid-template-columns:66px repeat(var(--n), var(--cw, 42px)); width:max-content; }
 .xl153c { position:sticky; left:0; z-index:1; background:#000;
   display:flex; align-items:center; font-size:12px; color:#E6E6E6; white-space:nowrap; overflow:hidden; border-right:1px solid #2C3440; }
-.xm153c > span:not(.xl153c) { text-align:center; font:11px/22px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#CDD2DA; border-bottom:1px solid #2C3440; white-space:nowrap; }
+.xm153c > span:not(.xl153c) { display:flex; flex-direction:column; align-items:center; justify-content:center; height:30px; scroll-snap-align:start; font:11px/13px "Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; color:#CDD2DA; border-bottom:1px solid #2C3440; white-space:nowrap; }
+.xm153c > span > b { font-weight:600; } .xm153c > span > i { font-style:normal; color:#969CA6; min-height:13px; } .xm153c > span.cu > i { color:#000; }
 .xm153c > span.cu { color:#000; background:#F0A21E; font-weight:700; }
 .xc153c { position:relative; height:66px; border-left:1px solid #12151B; }
 .xc153c::before { content:""; position:absolute; left:0; right:0; top:50%; border-top:1px solid #2C3440; }
@@ -17469,9 +17473,11 @@ function expoPC153c() {
   else {
     const tot = P.reduce((s, p) => s + p.mois.filter(m => /^\d{4}-\d{2}$/.test(m.k)).reduce((a, m) => a + (+m.expo || 0), 0), 0), cur = today.slice(0, 7);
     let mx = 1; P.forEach(p => p.mois.forEach(m => { if (/^\d{4}-\d{2}$/.test(m.k)) mx = Math.max(mx, Math.abs(+m.expo || 0)); }));
-    const mois = k => { const d = parseD(k + "-01"), s = d.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { month: "short" }).replace(".", ""); return s + (d.getMonth() === 0 || k === ks[0] ? " " + String(d.getFullYear()).slice(2) : ""); };
+    const MC = lang === "fr" ? ["jan", "fév", "mar", "avr", "mai", "jun", "jul", "aoû", "sep", "oct", "nov", "déc"] : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const mois = k => { const d = parseD(k + "-01"); return MC[d.getMonth()] + " " + String(d.getFullYear()).slice(2); };
+    const tete = k => { const d = parseD(k + "-01"); return '<b>' + MC[d.getMonth()] + '</b><i>' + (d.getMonth() === 0 || k === ks[0] ? String(d.getFullYear()).slice(2) : "") + '</i>'; };
     h += '<div class="xh153c"><span>' + esc(ui("Net", "Net")) + '</span><b class="n153c ' + (tot > 0.5 ? "up" : tot < -0.5 ? "dn" : "") + '">' + esc((tot > 0 ? "+" : "") + BBG153.num(cv(tot), 0)) + '</b><i>' + unit + '</i></div>';
-    h += '<div class="xg153c" style="--n:' + ks.length + '"><div class="xr153c xm153c"><span class="xl153c"></span>' + ks.map(k => '<span class="' + (k === cur ? "cu" : "") + '">' + esc(mois(k)) + '</span>').join("") + '</div>';
+    h += '<div class="xg153c" style="--n:' + ks.length + '"><div class="xr153c xm153c"><span class="xl153c"></span>' + ks.map(k => '<span class="' + (k === cur ? "cu" : "") + '">' + tete(k) + '</span>').join("") + '</div>';
     P.forEach(p => {
       const by = {}; p.mois.forEach(m => { by[m.k] = m; });
       h += '<div class="xr153c"><span class="xl153c">' + esc(prod(p.produit)) + '</span>' + ks.map(k => {
@@ -17486,9 +17492,15 @@ function expoPC153c() {
   const ti = M.querySelector(".pt106p, h2.page-title"); const row = ti ? (ti.classList.contains("pt106p") ? ti : ti.parentElement) : null;
   const x = document.createElement("div"); x.innerHTML = h; const el = x.firstChild;
   if (row && row.parentElement && row !== M) row.parentElement.insertBefore(el, row.nextSibling); else M.insertBefore(el, M.firstChild);
-  const g = el.querySelector(".xg153c"), cu = el.querySelector(".xm153c .cu"); if (g && cu) g.scrollLeft = Math.max(0, cu.offsetLeft - 120);
+  colonnesXp153c(el);
+}
+/* colonnes des mois : un nombre entier de mois tient dans la largeur (aucun mois coupé au bord), défilement mois par mois, mois courant en premier à l'ouverture */
+function colonnesXp153c(el) {
+  const g = el && el.querySelector(".xg153c"); if (!g) return; const W = g.clientWidth, nv = Math.max(3, Math.floor((W - 66) / 42)), cw = (W - 66) / nv;
+  g.style.setProperty("--cw", cw.toFixed(2) + "px"); const cu = g.querySelector(".xm153c .cu"); if (cu) g.scrollLeft = Math.max(0, cu.offsetLeft - 66);
 }
 if (typeof FIN105G !== "undefined") FIN105G.push(expoPC153c);
+window.addEventListener("resize", () => { try { colonnesXp153c(document.querySelector("#main .xp153c")); } catch (e) {} }, { passive: true });
 if (!window.ATLAS_ESSAI) boot();
 </script>
 </body>
