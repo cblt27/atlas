@@ -5192,6 +5192,68 @@ html[data-theme="light"] .bul153c { background:rgba(255,255,255,.97); color:#1C2
 /* iPhone en paysage : la vue 3D d'abord (bascule, chiffres clés, « pourquoi » et date repliés ; le titre sur une ligne) */
 @media (orientation:landscape) and (max-height:520px) { .m3d153c:has(.cv153c) .mv153c, .mh153c p, .kp153c, .ac153c > span { display:none; }
   .mh153c h3 { font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .bk153c { margin-bottom:6px; } }
+/* round 153 (suite) : Marchés au style PC : tableau des cours (MktTable du PC) et courbe du PC (BbgChart, canvas) */
+.tb153c { margin:0 calc(-1 * var(--gx153c, 12px)); background:#000; font-family:"Segoe UI",-apple-system,Arial,sans-serif; }
+.tb153c .hr153c, .tb153c .rw153c { display:grid; grid-template-columns:minmax(0, 1fr) 92px 74px 50px; align-items:center; column-gap:6px; padding:0 8px 0 10px; }
+.tb153c.lg .hr153c, .tb153c.lg .rw153c { grid-template-columns:minmax(0, 1fr) 96px 78px 72px 54px 70px; }
+.tb153c .hr153c { height:22px; border-bottom:1px solid #F0A21E; color:#F0A21E; font:12px "Arial Narrow","Segoe UI",-apple-system,Arial,sans-serif; }
+.tb153c .hr153c span:not(.n), .tb153c .rw153c span:not(.n) { text-align:right; }
+.tb153c .gr153c { display:flex; justify-content:space-between; align-items:center; height:22px; padding:0 8px 0 10px; background:#080A0E; }
+.tb153c .gr153c b { color:#FFD600; font-size:12px; font-weight:600; } .tb153c .gr153c span { color:#969CA6; font-size:11px; }
+.tb153c .rw153c { width:100%; min-height:44px; border:0; background:#000; color:#E6E6E6; font:inherit; font-size:13px; text-align:left; position:relative; border-radius:0 !important; }
+.tb153c .rw153c.alt { background:#12151B; } .tb153c .rw153c.sel { background:#1E2A35; }
+.tb153c .rw153c.sel::before { content:""; position:absolute; left:0; top:3px; bottom:3px; width:4px; background:#E6F2FF; }
+.tb153c .rw153c:active { background:#18202A; }
+.tb153c .rw153c .n { white-space:nowrap; overflow:hidden; text-overflow:clip; }
+.tb153c .rw153c :is(.l, .c, .p, .d) { font-family:"Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; font-size:12px; white-space:nowrap; }
+.tb153c .rw153c .l { font-weight:700; color:#E6E6E6; } .tb153c .rw153c .up { color:#36C24A; } .tb153c .rw153c .dn { color:#FF3B4A; }
+.tb153c .rw153c .d { color:#CDD2DA; } .tb153c .rw153c .d.vx { color:#F0A21E; } .tb153c .rw153c .s { display:flex; justify-content:flex-end; }
+@media (min-width:1100px) { .tb153c .rw153c { min-height:22px; } .tb153c { margin:0; } }
+.pc153c .bk153c { margin:0 0 6px; }
+.bbh153c { margin:0 calc(-1 * var(--gx153c, 12px)); height:clamp(360px, calc(100vh - 230px), 560px); background:#000; }
+.bbh153c canvas { display:block; width:100%; height:100%; touch-action:pan-y; -webkit-user-select:none; user-select:none; cursor:crosshair; }
+@media (orientation:landscape) and (max-height:520px) { .bbh153c { height:calc(100vh - 110px); min-height:240px; } }
+@media (min-width:1100px) { .bbh153c { margin:0; height:clamp(420px, calc(100vh - 200px), 640px); } }
+/* ordinateur : tableau des cours à gauche (560 px comme le PC), courbe à droite ; onglets Cours · Modèles 3D comme les onglets ambre du PC (MktTabs) */
+.sp153c { display:grid; grid-template-columns:minmax(420px, 560px) minmax(0, 1fr); gap:6px; align-items:start; }
+.sp153c .tb153c { margin:0; } .sp153c .cr153c .bbh153c { margin:0; height:clamp(420px, calc(100vh - 170px), 720px); }
+@media (min-width:1100px) { .tb153c .rw153c { min-height:30px !important; } }
+html[data-pc153c] .mv153c { gap:4px !important; } html[data-pc153c] .mv153c > button { background:#080A0E !important; color:#F0A21E !important; font-weight:600; text-transform:uppercase; font-size:13px; }
+html[data-pc153c] .mv153c > button.on { background:#F0A21E !important; color:#000 !important; }
+.nb103a.neg { background:#C81E2C !important; }   /* pastille rouge : texte blanc à 5,3:1 (avant 3,5:1) */
+/* ================= round 153 (suite) · piste C : TEXTE AU MINIMUM, toute l'appli, tous les thèmes et formats =================
+   Demande de l'utilisateur (23/11) : « trop d'écriture, trop d'explications, enlever le maximum » ; « dans toute l'app les explications etc. soient
+   retirées … il doit être plus simple ». Retirés de l'écran : phrases d'explication, sous-titres descriptifs, aides, légendes, lignes de contexte,
+   aperçus, rangées vides. Gardés : chiffres, libellés courts, dates, états courts. Décompte avant / après : T:\r153\c\TEXTE.md. */
+/* Jour : ligne heure · fuseau · semaine, « Calculs d'Atlas du … », sous-titres des sujets, « Prochaine : … » */
+#main :is(.hz108v, .dc108v, .tr106l .tx106l > small, .vd106l > small, .hm-sub103a) { display:none !important; }
+/* Livraisons : semaines sans mouvement */
+#main .wv107s { display:none !important; }
+/* Positions : sous-titre du chiffre, sous-titres des rangées, légende du graphique */
+#main :is(.hx106p > small, .r106p .l106p > small, .lg108x) { display:none !important; }
+/* Trésorerie : légende, « Pourquoi ce point bas », contrôles de la fiche, pied explicatif */
+#main :is(.lg109b, .cf109b, .ctw106n, .foot104c) { display:none !important; }
+/* Marchés (autres thèmes) : ligne d'état, sous-titres des cours, produits sans cours */
+#main :is(.st106p, .mr106p .n > small, .mr106p.na) { display:none !important; }
+/* Modèles 3D : en-tête de la galerie, « pourquoi » des vignettes et du modèle, ligne de date, drapeaux, aide des gestes, méthode */
+#main :is(.gh153c, .tu153c > small, .wy153c, .dt153c, .fl153c, .ac153c > span, .nt153c) { display:none !important; }
+.ac153c { justify-content:flex-end !important; }
+/* Réglages, feuilles : notes de bas de groupe, explications sous les réglages, aperçu de l'Apparence, descriptions des outils */
+:is(#main, .sheet) :is(.gf104e, .ap104f-x, .ap104f-sw small, .pv106o, .tl106o small) { display:none !important; }
+/* Stock : adresses des lieux sous chaque lot */
+#main .inventory-row .muted { display:none !important; }
+/* bandeau « plein écran » (Safari) : dit une fois dans Réglages › Écran, plus en tête de page */
+#pe103 { display:none !important; }
+/* round 153 (suite) : fiche d'une livraison : ligne de contexte retirée */
+.sheet .ctf103b h2 small { display:none !important; }
+/* round 153 (suite) : toutes les autres courbes et barres au rendu du PC (BbgChart) : fond #0A0A0A, quadrillage blanc 44/255, graduations en chasse fixe
+   #DEE2E8, trait clair #E6F2FF, montagne bleue ; barres vertes / rouges du PC */
+html[data-pc153c] #main svg text { font-family:"Cascadia Mono",Consolas,ui-monospace,"SF Mono",Menlo,monospace; }
+html[data-pc153c] #main svg :is([fill="#8e8e93"], [fill="#8E8E93"]) { fill:#DEE2E8 !important; }
+html[data-pc153c] #main svg :is(line, path)[stroke="rgba(255,255,255,.07)"] { stroke:rgba(255,255,255,.1725) !important; }
+html[data-pc153c] #main svg [stroke="rgba(255,255,255,.18)"] { stroke:#2C3440 !important; }
+html[data-pc153c] #main :is(.mk-chart, .cv108w .curve, .curve) { background:#0A0A0A; }
+html[data-pc153c] #main svg [fill="#3a3a3c"] { fill:#2C3440 !important; }
 </style>
 </head>
 <body>
@@ -5216,28 +5278,28 @@ const FIXTURE = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]fix
 const G = FIXTURE ? location.origin + "/graph/v1.0" : "https://graph.microsoft.com/v1.0";
 const T = {
   fr: { cal:"Calendrier", deliv:"Livraisons", stock:"Stock", pnl:"P&L", expo:"Exposition", settings:"Réglages", login:"Se connecter avec Microsoft",
-        loginTxt:"Utilisez le compte Microsoft ayant accès au dossier Atlas.", data:"Données du", none:"Rien ce jour-là",
+        loginTxt:"Compte Microsoft du dossier Atlas.", data:"Données du", none:"Rien ce jour-là",
         planned:"Prévu", delivered:"Livré", cancelled:"Annulé", late:"en retard", receipt:"Réception", delivery:"Livraison", qty:"Quantité (lb)",
         date:"Date", carrier:"Transporteur", comment:"Commentaire", save:"Enregistrer", cancel:"Fermer", sent:"Envoyé · traitement PC en attente",
         pending:"traitement PC en attente", upcoming:"À venir", lateF:"En retard", done:"Livrées", all:"Tout", count:"Compter", counted:"Quantité comptée (lb)",
         countDate:"Date du comptage", realised:"Réalisé", forecast:"Prévu", swaps:"Swaps", total:"Total", byProduct:"Par produit", byMonth:"Par mois",
         floating:"hors totaux : {0} à prix flottant", searching:"Recherche du dossier Atlas…",
-        notFound:"Aucune fiche Atlas trouvée. Collez le lien du dossier reçu par e-mail, puis Enregistrer.", folderLink:"Lien du dossier Atlas",
+        notFound:"Aucune fiche. Coller le lien du dossier.", folderLink:"Lien du dossier Atlas",
         badLink:"Lien non reconnu", clientId:"Identifiant de l'application (client ID)", logout:"Se déconnecter", folder:"Dossier", reset:"Changer de dossier",
         noData:"Aucune donnée", lot:"Lot", location:"Lieu", refused:"refusé par Atlas", noMargin:"{0} sans marge", toConfirm:"{0} à confirmer",
-        kept:"Envoi en attente · conservé sur ce téléphone", offline:"Pas de réseau", authErr:"Connexion Microsoft refusée : {0}", retry:"↻ pour réessayer",
-        noLib:"Bibliothèque Microsoft non chargée", locked:"Livraison confirmée ou facturée : statut, date et quantité se modifient dans Atlas", prebilled:"Facturée d'avance : la date (prévue ou de livraison) et « Livré » se saisissent ici ; la quantité se modifie dans Atlas", part:"partie", status:"Statut",
-        partsOpen:"Livraison en parties, encore ouverte : la date et « Livré » du reste se saisissent ici ; quantité et annulation se modifient sur le poste", partsClosed:"Livraison en parties, colisée en entier ou réalisée : statut, date et quantité se modifient sur le poste",
+        kept:"Pas envoyé : gardé, envoi automatique", offline:"Pas de réseau", authErr:"Connexion Microsoft refusée : {0}", retry:"↻ pour réessayer",
+        noLib:"Bibliothèque Microsoft non chargée", locked:"Confirmée ou facturée : à modifier dans Atlas", prebilled:"Facturée d'avance : date et « Livré » ici", part:"partie", status:"Statut",
+        partsOpen:"En parties : date et « Livré » du reste ici", partsClosed:"En parties, close : à modifier dans Atlas",
         partsTitle:"Parties", partsInv:"Facturé", partsPack:"Colisé", partsShip:"Transporté", partsLeft:"reste {0}", partsWhole:"en entier", partsFinal:"finale", partsOver:"Parties au-delà de la livraison : à corriger sur le poste",
-        futureDone:"Une livraison réalisée ne peut pas être datée dans le futur",
-        choose:"Plusieurs comptes Microsoft sont connectés sur ce téléphone : choisissez le vôtre.", denied:"Accès refusé à ce dossier pour {0}",
-        noFile:"fiche absente du dossier pour l'instant (Atlas la réécrit) : {0}", lastKept:"dernière fiche gardée", blocked:"Bloquée : OneDrive refuse l'envoi (voir Réglages)",
+        futureDone:"Date future impossible",
+        choose:"Choisir votre compte", denied:"Accès refusé à ce dossier pour {0}",
+        noFile:"Fiche absente : {0}", lastKept:"dernière fiche gardée", blocked:"Bloquée : OneDrive refuse l'envoi (voir Réglages)",
         blockedList:"Modifications bloquées", retryBtn:"Réessayer", copy:"Copier", copied:"Copié", drop:"Abandonner", dropConfirm:"Confirmer l'abandon",
         dropBusy:"Envoi en cours : abandon impossible",
         dropDeps:"{0} modification(s) saisie(s) ensuite sur la même livraison partent de l'état que celle-ci donne : abandonnée seule, Atlas refusera leur reprise",
         dropAll:"Abandonner aussi ces {0}", dropOne:"Abandonner celle-ci seule", dropOneDone:"Abandonnée seule : Atlas refusera la reprise des {0} modification(s) suivante(s)",
         boxKept:"{0} modification(s) pas encore envoyée(s) (photos comprises) : gardée(s) sur ce téléphone pour {1}, envoi automatique au retour du réseau ; après « Se déconnecter », à sa prochaine connexion",
-        boxBlocked:"{0} bloquée(s) à réessayer", boxBlockedIci:"{0} bloquée(s) : Réessayer ci-dessus", lineBlocked:"Modification bloquée sur cette ligne : Réglages › Réessayer ou Abandonner d'abord",
+        boxBlocked:"{0} bloquée(s) à réessayer", boxBlockedIci:"{0} bloquée(s) : Réessayer ci-dessus", lineBlocked:"Ligne bloquée : Réglages",
         other:"Utiliser un autre compte", sheetClosed:"saisie en cours fermée, rien n'a été envoyé", noSheet:"fiche, dossier ou compte absent : rien n'est gardé",
         orphans:"{0} modification(s) d'une ancienne version de l'app mise(s) de côté : jamais envoyée(s)", demoSent:"Démo : rien n'est envoyé",
         treso:"Trésorerie", photos:"Photos", days:"Jours", cpties:"Contreparties", allProd:"Tous", today:"Aujourd'hui", deliveries:"Livraisons",
@@ -5246,55 +5308,55 @@ const T = {
         deficit:"déficit en cours de semaine", order:"ordre de la journée non prouvé le {0}", startEnd:"début → fin de journée", movesDay:"Mouvements du jour",
         movesWeek:"Mouvements de la semaine", byCpty:"Par contrepartie", noMove:"Aucun mouvement ce jour", noMoveW:"Aucun mouvement cette semaine",
         direct:"livraison directe", adjust:"ajustement", transfer:"transfert", slip:"colisage",
-        estD:"date estimée (le 15)", stockMonth:"Stock du mois", noStock:"Fiche d'Atlas sans stock du calendrier (Atlas à mettre à jour sur le PC) : livraisons datées seulement",
+        estD:"date estimée (le 15)", stockMonth:"Stock du mois", noStock:"Stock absent de la fiche",
         outWin:"Mois hors de la fiche (du {0} au {1})", tapWeek:"Touchez une semaine pour son détail", legIn:"réceptions", legOut:"expéditions", legDir:"directes", legUnit:"quantités en {0}",
         cash:"Solde", lastStmt:"Dernier relevé", atDate:"au {0}", lowPt:"Point bas", funding:"Financement", lowest:"Point bas des 26 semaines", todayBal:"Solde ce soir (prévisions comprises)",
         recv:"À recevoir", pay:"À payer", recvd:"Reçu", paid:"Payé", unkDir:"Sens inconnu", bankOnly:"banque seule : prévisions non incluses",
         gaps:"{0} écart(s) de relevé à vérifier dans Atlas", warns:"{0} mouvement(s) à vérifier dans Atlas", minimal:"financement minimal : {0} paiement(s) sans montant jusqu'à cette semaine",
-        overdue:"{0} échu(s)", noAmt:"{0} sans montant", dayByDay:"Jour par jour", noTreso:"Fiche d'Atlas sans trésorerie (Atlas à mettre à jour sur le PC)", weeks:"Semaines",
+        overdue:"{0} échu(s)", noAmt:"{0} sans montant", dayByDay:"Jour par jour", noTreso:"Trésorerie absente de la fiche", weeks:"Semaines",
         src:{ Invoices:"Facture", Costs:"Coût", Swaps:"Swap", Schedule:"Livraison", bank:"Banque" }, cushion:"avec coussin {0}", estAmt:"date estimée",
         addPhoto:"Ajouter une photo", takePhoto:"Prendre une photo", camShort:"Photo", library:"Galerie", photoN:"{0} photo(s)", photoWait:"{0} photo(s) en attente",
         notImage:"Ce fichier n'est pas une image", tooBig:"Photo trop grosse ({0} Mo ; 40 Mo au plus)", photoErr:"Photo illisible", photoNotKept:"Photo non gardée : mémoire du téléphone pleine",
         photoKept:"Photo conservée · envoi au retour du réseau", photoSent:"Photo envoyée · rangement sur le PC en attente",
-        photoLost:"Photo introuvable sur ce téléphone", noDeliv:"Livraison introuvable", photosHelp:"Photo d'une livraison : réduite sur le téléphone, envoyée dans votre dossier, rangée par Atlas dans les pièces de la livraison.",
-        noPhotoAtlas:"Photos : Atlas doit d'abord être mis à jour sur le PC (sa fiche ne les reprend pas encore)",
+        photoLost:"Photo introuvable sur ce téléphone", noDeliv:"Livraison introuvable", photosHelp:"Photo envoyée dans le dossier",
+        noPhotoAtlas:"Photos : Atlas à mettre à jour",
         photoNotFiled:"photo non rangée : Atlas sur le PC n'a pas encore la mise à jour (photo restée dans le dossier « photos ») ; renvoyez-la après la mise à jour",
         search:"Contrepartie, contrat, réf.", recent:"Livraisons proches", appearance:"Apparence", light:"Clair", dark:"Sombre", auto:"Selon l’appareil",
-        week:["L","M","M","J","V","S","D"], months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"], demo:"Démo (données d'exemple)",
+        week:["L","M","M","J","V","S","D"], months:["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"], demo:"Démo",
         // correctifs mobqa (08/10)
         noLots:"Aucun lot en stock à compter", invOf:"inventaire du {0}", noDate:"sans date",
-        memFull:"Pas gardé : mémoire du téléphone pleine. Laissez partir les photos en attente (réseau) ou abandonnez une modification bloquée (Réglages), puis réessayez",
-        badQty:"Quantité à saisir en lb, plus grande que 0 (livraison qui n'a pas lieu : « Annulé »)", needDate:"Date à choisir : une livraison datée garde une date",
-        badCount:"Quantité comptée : 0 ou plus, en lb", readErr:"Lecture impossible · ↻ pour réessayer", badSheet:"Fiche Atlas illisible (en cours d'écriture ?) · ↻ pour réessayer",
-        noDemo:"Mode démo indisponible à cette adresse : aucune fiche d'exemple publiée. Ouvrez l'adresse sans ?demo", newVersion:"Nouvelle version d'Atlas · toucher pour mettre à jour",
+        memFull:"Mémoire pleine",
+        badQty:"Quantité > 0 (lb)", needDate:"Date à choisir : une livraison datée garde une date",
+        badCount:"Quantité comptée : 0 ou plus, en lb", readErr:"Lecture impossible · ↻ pour réessayer", badSheet:"Fiche illisible · ↻",
+        noDemo:"Démo indisponible", newVersion:"Nouvelle version d'Atlas · toucher pour mettre à jour",
         version:"Version {0}", floatingSw:"hors totaux : {0} à prix flottant, dont {1} swaps", lateOf:"dont échu {0}", lateOfN:"dont {0} échu(s)", photoNotKeptW:"Photo non gardée : mémoire du téléphone pleine ({0} photo(s) en attente partiront au retour du réseau) ; reprenez-la ensuite",
         // round 41 (piste F) : fiche Head : alertes ouvertes et derniers cours
         mkts:"Marchés", mkAll:"Tous les cours ({0})", mkLast:"Derniers cours", mkFx:"Changes", alOpen:"{0} alerte(s) ouverte(s)", alNone:"Aucune alerte ouverte",
         alBlock:"{0} bloquante(s)", alTodo:"À traiter : {0}", alTitle:"Alertes d'Atlas", alBlk:"Bloquantes", alAtt:"Attention", alInfo:"Information", alCheck:"À vérifier",
         alMarg:"Marges", alDocs:"Pièces", alPc:"Le détail est dans Atlas, sur le PC (À traiter)" },
   en: { cal:"Calendar", deliv:"Deliveries", stock:"Inventory", pnl:"P&L", expo:"Exposure", settings:"Settings", login:"Sign in with Microsoft",
-        loginTxt:"Sign in with the Microsoft account the Atlas folder was shared with.", data:"Data of", none:"Nothing that day",
+        loginTxt:"Microsoft account of the Atlas folder.", data:"Data of", none:"Nothing that day",
         planned:"Planned", delivered:"Delivered", cancelled:"Cancelled", late:"late", receipt:"Receipt", delivery:"Delivery", qty:"Quantity (lb)",
         date:"Date", carrier:"Carrier", comment:"Comment", save:"Save", cancel:"Close", sent:"Sent: Atlas will apply it on the PC",
         pending:"waiting for Atlas", upcoming:"Upcoming", lateF:"Late", done:"Delivered", all:"All", count:"Count", counted:"Counted quantity (lb)",
         countDate:"Count date", realised:"Realised", forecast:"Forecast", swaps:"Swaps", total:"Total", byProduct:"By product", byMonth:"By month",
         floating:"not in totals: {0} floating-price", searching:"Looking for the Atlas folder…",
-        notFound:"No Atlas sheet found. Paste the folder link you received by e-mail, then Save.", folderLink:"Folder sharing link (from the e-mail)",
+        notFound:"No sheet. Paste the folder link.", folderLink:"Folder sharing link (from the e-mail)",
         badLink:"Link not recognised", clientId:"Application (client) ID", logout:"Sign out", folder:"Folder", reset:"Change folder",
         noData:"No data", lot:"Lot", location:"Location", refused:"rejected by Atlas", noMargin:"{0} without margin", toConfirm:"{0} to confirm",
-        kept:"Not sent (network or sign-in): kept on the phone, will be sent automatically", offline:"No network", authErr:"Microsoft sign-in failed: {0}", retry:"tap ↻ to retry",
-        noLib:"Microsoft library not loaded", locked:"Delivery confirmed or invoiced: status, date and quantity are changed in Atlas", prebilled:"Invoiced in advance: the date (planned or delivered) and “Delivered” are entered here; the quantity is changed in Atlas", part:"part", status:"Status",
-        partsOpen:"Delivery in parts, still open: the date and “Delivered” for the rest are entered here; quantity and cancellation are changed on the desktop", partsClosed:"Delivery in parts, fully packed or delivered: status, date and quantity are changed on the desktop",
+        kept:"Not sent: kept, sent automatically", offline:"No network", authErr:"Microsoft sign-in failed: {0}", retry:"tap ↻ to retry",
+        noLib:"Microsoft library not loaded", locked:"Confirmed or invoiced: edit in Atlas", prebilled:"Prebilled: date and “Delivered” here", part:"part", status:"Status",
+        partsOpen:"In parts: date and “Delivered” of the rest here", partsClosed:"In parts, closed: edit in Atlas",
         partsTitle:"Parts", partsInv:"Invoiced", partsPack:"Packed", partsShip:"Shipped", partsLeft:"{0} left", partsWhole:"in full", partsFinal:"final", partsOver:"Parts beyond the delivery: to correct on the desktop",
-        futureDone:"A delivered line cannot be dated in the future",
-        choose:"Several Microsoft accounts are signed in on this phone: choose yours.", denied:"Access to this folder denied for {0}",
-        noFile:"sheet missing from the folder for now (Atlas rewrites it): {0}", lastKept:"last sheet kept", blocked:"Blocked: OneDrive refuses the upload (see Settings)",
+        futureDone:"Future date not allowed",
+        choose:"Choose your account", denied:"Access to this folder denied for {0}",
+        noFile:"Sheet missing: {0}", lastKept:"last sheet kept", blocked:"Blocked: OneDrive refuses the upload (see Settings)",
         blockedList:"Blocked changes (never removed automatically)", retryBtn:"Retry", copy:"Copy", copied:"Copied", drop:"Abandon", dropConfirm:"Confirm abandon",
         dropBusy:"Upload in progress: cannot abandon",
         dropDeps:"{0} later change(s) on the same delivery start from the state this one gives: if it is abandoned alone, Atlas will reject them",
         dropAll:"Also abandon these {0}", dropOne:"Abandon this one only", dropOneDone:"Abandoned alone: Atlas will reject the {0} later change(s)",
         boxKept:"{0} change(s) not sent yet (photos included): kept on this phone for {1}, sent automatically when the network is back; after Sign out, at their next sign-in",
-        boxBlocked:"{0} blocked: Settings › Retry", boxBlockedIci:"{0} blocked: Retry above", lineBlocked:"A blocked change is waiting on this line: Settings › Retry or Abandon first",
+        boxBlocked:"{0} blocked: Settings › Retry", boxBlockedIci:"{0} blocked: Retry above", lineBlocked:"Line blocked: Settings",
         other:"Use another account", sheetClosed:"open entry closed, nothing was sent", noSheet:"no sheet, folder or account: nothing kept",
         orphans:"{0} change(s) from an earlier version of the app set aside: never sent", demoSent:"Demo: nothing is sent",
         treso:"Cash", photos:"Photos", days:"Days", cpties:"Counterparties", allProd:"All", today:"Today", deliveries:"Deliveries",
@@ -5303,26 +5365,26 @@ const T = {
         deficit:"deficit during the week", order:"order within the day not proven on {0}", startEnd:"start → end of day", movesDay:"Movements of the day",
         movesWeek:"Movements of the week", byCpty:"By counterparty", noMove:"No movement this day", noMoveW:"No movement this week",
         direct:"direct delivery", adjust:"adjustment", transfer:"transfer", slip:"packing list",
-        estD:"estimated date (15th)", stockMonth:"Stock of the month", noStock:"Atlas sheet without calendar stock (update Atlas on the PC): dated deliveries only",
+        estD:"estimated date (15th)", stockMonth:"Stock of the month", noStock:"No stock in the sheet",
         outWin:"Month outside the sheet (from {0} to {1})", tapWeek:"Tap a week for its details", legIn:"receipts", legOut:"shipments", legDir:"direct", legUnit:"quantities in {0}",
         cash:"Balance", lastStmt:"Last statement", atDate:"at {0}", lowPt:"Low point", funding:"Funding", lowest:"Low point over 26 weeks", todayBal:"Balance tonight (forecasts included)",
         recv:"Receivable", pay:"Payable", recvd:"Received", paid:"Paid", unkDir:"Unknown direction", bankOnly:"bank only: forecasts not included",
         gaps:"{0} statement gap(s) to check in Atlas", warns:"{0} movement(s) to check in Atlas", minimal:"minimum funding: {0} payment(s) without amount up to this week",
-        overdue:"{0} overdue", noAmt:"{0} without amount", dayByDay:"Day by day", noTreso:"Atlas sheet without cash (update Atlas on the PC)", weeks:"Weeks",
+        overdue:"{0} overdue", noAmt:"{0} without amount", dayByDay:"Day by day", noTreso:"No cash in the sheet", weeks:"Weeks",
         src:{ Invoices:"Invoice", Costs:"Cost", Swaps:"Swap", Schedule:"Delivery", bank:"Bank" }, cushion:"with cushion {0}", estAmt:"estimated date",
         addPhoto:"Add a photo", takePhoto:"Take a photo", camShort:"Camera", library:"Library", photoN:"{0} photo(s)", photoWait:"{0} photo(s) waiting",
         notImage:"This file is not an image", tooBig:"Photo too large ({0} MB; 40 MB at most)", photoErr:"Unreadable photo", photoNotKept:"Photo not kept: phone storage full",
         photoKept:"Photo kept on the phone: sent automatically when the network is back", photoSent:"Photo sent: Atlas files it with the delivery's documents",
-        photoLost:"Photo not found on this phone", noDeliv:"Delivery not found", photosHelp:"Delivery photo: reduced on the phone, sent to your folder, filed by Atlas with the delivery's documents.",
-        noPhotoAtlas:"Photos: Atlas must first be updated on the PC (its sheet does not take them yet)",
+        photoLost:"Photo not found on this phone", noDeliv:"Delivery not found", photosHelp:"Photo sent to the folder",
+        noPhotoAtlas:"Photos: update Atlas",
         photoNotFiled:"photo not filed: Atlas on the PC is not updated yet (photo left in the « photos » folder); send it again after the update",
         search:"Counterparty, contract, ref.", recent:"Nearby deliveries", appearance:"Appearance", light:"Light", dark:"Dark", auto:"Auto (system)",
-        week:["M","T","W","T","F","S","S"], months:["January","February","March","April","May","June","July","August","September","October","November","December"], demo:"Demo (sample data)",
+        week:["M","T","W","T","F","S","S"], months:["January","February","March","April","May","June","July","August","September","October","November","December"], demo:"Demo",
         noLots:"No lot in stock to count", invOf:"inventory of {0}", noDate:"undated",
-        memFull:"Not kept: phone storage full. Let the waiting photos go (network) or abandon a blocked change (Settings), then try again",
-        badQty:"Enter a quantity in lb, greater than 0 (delivery not happening: “Cancelled”)", needDate:"Choose a date: a dated delivery keeps a date",
-        badCount:"Counted quantity: 0 or more, in lb", readErr:"Cannot read · tap ↻ to retry", badSheet:"Atlas sheet unreadable (being written?) · tap ↻ to retry",
-        noDemo:"Demo mode not available at this address: no sample sheet published. Open the address without ?demo", newVersion:"New version of Atlas · tap to update",
+        memFull:"Storage full",
+        badQty:"Quantity > 0 (lb)", needDate:"Choose a date: a dated delivery keeps a date",
+        badCount:"Counted quantity: 0 or more, in lb", readErr:"Cannot read · tap ↻ to retry", badSheet:"Unreadable sheet · ↻",
+        noDemo:"Demo unavailable", newVersion:"New version of Atlas · tap to update",
         version:"Version {0}", floatingSw:"not in totals: {0} floating-price, of which {1} swaps", lateOf:"of which overdue {0}", lateOfN:"of which {0} overdue", photoNotKeptW:"Photo not kept: phone storage full ({0} photo(s) waiting will go when the network is back); take it again then",
         mkts:"Markets", mkAll:"All prices ({0})", mkLast:"Latest prices", mkFx:"FX", alOpen:"{0} open alert(s)", alNone:"No open alert",
         alBlock:"{0} blocking", alTodo:"To do: {0}", alTitle:"Atlas alerts", alBlk:"Blocking", alAtt:"Warning", alInfo:"Information", alCheck:"To check",
@@ -5395,7 +5457,7 @@ const estDemo = q => { try { return new URLSearchParams(q || "").has("demo"); } 
 const DEMO = estDemo(location.search);
 // version de l'app (à changer à chaque publication, avec le nom du cache de sw.js « atlas-<version> ») : dite dans Réglages ; une version plus récente
 // publiée est signalée par un bandeau (verifierVersion), jamais rechargée sous les doigts
-const VERSION_APP = "137";   /* round 153 : style PC et modèles 3D (piste C) */
+const VERSION_APP = "138";   /* round 153 : style PC et modèles 3D (v137) ; courbe et Marchés du PC, texte au minimum (v138) */
 // libellés traduits par l'app (la fiche d'Atlas donne des codes) : produits et lignes de l'exposition
 const PROD = { fr: { "Molybdène": "Molybdène" }, en: { "Molybdène": "Molybdenum" } };
 const prod = c => (PROD[lang][c] || c);
@@ -7992,25 +8054,25 @@ Object.assign(T.fr, {
   home: "Jour", mkTab: "Marchés",
   hmAlerts: "Alertes", hmTodo: "À traiter", hmBlk: "Bloquantes", hmDocs: "Pièces", hmMarg: "Marges",
   hmTreso: "Trésorerie", hmBal: "Solde ce soir", hmLow: "Point bas 26 sem.", hmFund: "Financement",
-  hmWeek: "Livraisons · 7 jours", hmLate: "en retard", hmNone: "Aucune livraison prévue d'ici 7 jours", hmCal: "Calendrier ›",
+  hmWeek: "Livraisons · 7 jours", hmLate: "en retard", hmNone: "Rien sous 7 jours", hmCal: "Calendrier ›",
   hmPrices: "Cours du jour", hmAllPrices: "Courbes ›", hmData: "Fiche du {0}",
   mkRead: "Relevé du {0}", mkLoading: "Lecture des cours…", mkNoDir: "Dossier des cours introuvable dans ce OneDrive : coller le lien du dossier data\\marches dans Réglages.",
   mkNoFile: "Fichier absent du dossier des cours : {0}", mkNone: "Aucun point sur cette période", mkErr: "Lecture des cours impossible",
   mkMonitor: "Moniteur", mkLastShort: "Dernier", mkChg: "Var.",
   mkLinkAtlas: "Lien du dossier des cours d'Atlas (data\\marches)",
-  foldersFound: "Dossier des cours", retry2: "Réessayer", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1A"
+  foldersFound: "Dossier des cours", retry2: "Réessayer", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1A", perYTD: "YTD"
 });
 Object.assign(T.en, {
   home: "Today", mkTab: "Markets",
   hmAlerts: "Alerts", hmTodo: "To do", hmBlk: "Blocking", hmDocs: "Documents", hmMarg: "Margins",
   hmTreso: "Cash", hmBal: "Balance tonight", hmLow: "Low point 26 wk", hmFund: "Funding",
-  hmWeek: "Deliveries · 7 days", hmLate: "late", hmNone: "No delivery planned within 7 days", hmCal: "Calendar ›",
+  hmWeek: "Deliveries · 7 days", hmLate: "late", hmNone: "Nothing within 7 days", hmCal: "Calendar ›",
   hmPrices: "Prices of the day", hmAllPrices: "Charts ›", hmData: "Sheet of {0}",
   mkRead: "Fetched {0}", mkLoading: "Reading prices…", mkNoDir: "Price folder not found in this OneDrive: paste the link of the data\\marches folder in Settings.",
   mkNoFile: "File missing from the price folder: {0}", mkNone: "No point over this period", mkErr: "Prices cannot be read",
   mkMonitor: "Monitor", mkLastShort: "Last", mkChg: "Chg",
   mkLinkAtlas: "Link of Atlas' price folder (data\\marches)",
-  foldersFound: "Price folder", retry2: "Retry", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1Y"
+  foldersFound: "Price folder", retry2: "Retry", per1M: "1M", per3M: "3M", per6M: "6M", per1A: "1Y", perYTD: "YTD"
 });
 
 // barre rouge d'une page (titre, à droite : date des données)
@@ -8122,8 +8184,8 @@ async function inBatches(xs, n, fn) { for (let i = 0; i < xs.length; i += n) awa
 // ---------- catalogue des séries (métadonnées seulement : aucun cours ici) ----------
 // g : groupe ; u : unité ; d : décimales ; band : fourchette basse / haute
 const MKS = {
-  "CO-STD": { g: "Cobalt", fr: "Cobalt standard · milieu (Fastmarkets)", en: "Cobalt standard grade · mid (Fastmarkets)", u: "USD/lb", d: 2, band: ["CO-STD-LOW", "CO-STD-HIGH"] },
-  "CO-ALLOY": { g: "Cobalt", fr: "Cobalt alliage · milieu (Fastmarkets)", en: "Cobalt alloy grade · mid (Fastmarkets)", u: "USD/lb", d: 2, band: ["CO-ALLOY-LOW", "CO-ALLOY-HIGH"] },
+  "CO-STD": { g: "Cobalt", fr: "Cobalt standard · milieu (Fastmarkets)", en: "Cobalt standard grade · mid (Fastmarkets)", u: "USD/lb", d: 2, dp: 3, band: ["CO-STD-LOW", "CO-STD-HIGH"] },
+  "CO-ALLOY": { g: "Cobalt", fr: "Cobalt alliage · milieu (Fastmarkets)", en: "Cobalt alloy grade · mid (Fastmarkets)", u: "USD/lb", d: 2, dp: 3, band: ["CO-ALLOY-LOW", "CO-ALLOY-HIGH"] },
   "CO-LME": { g: "Cobalt", fr: "Cobalt LME (officiel)", en: "Cobalt LME (official)", u: "USD/lb", d: 2 },
   "LME-NI": { g: "LME", fr: "Nickel LME · comptant", en: "LME nickel · cash", u: "USD/t", d: 0, alt: "LME-NI-3M" },
   "LME-CU": { g: "LME", fr: "Cuivre LME · comptant", en: "LME copper · cash", u: "USD/t", d: 0, alt: "LME-CU-3M" },
@@ -8154,11 +8216,12 @@ async function mkRefresh(force) {
   finally { mkBusy = false; if ((changed || mkErr) && (tab === "mkts" || tab === "home") && !document.querySelector(".sheet-bg")) render(); }
 }
 const mkRet = {};
-const serOf = (id, ed) => { const c = us.get("mks." + (ed || "atlas") + "." + id, null), r = mkRet[ed || "atlas"]; if (!c) return null;
+/* round 153 (suite) : démo AVEC cours (clé « cours153 » de la fiche de démonstration, jamais publiée) : les séries viennent de la fiche, rien n'est lu ni gardé */
+const serOf = (id, ed) => { if (DEMO && data && data.cours153 && data.cours153[id]) return data.cours153[id]; const c = us.get("mks." + (ed || "atlas") + "." + id, null), r = mkRet[ed || "atlas"]; if (!c) return null;
   return r && r.size ? Object.assign({}, c, { pts: c.pts.filter(p => !r.has(id + "|" + p[0])) }) : c; };
 const mkSel = () => { const s = us.get("mkSel.atlas", "CO-STD"); return MET_IDS.includes(s) ? s : MET_IDS[0]; };
-const mkPer = () => { const p = us.get("mkPer", "3M"); return ["1M", "3M", "6M", "1A"].includes(p) ? p : "3M"; };
-const perFrom = p => { const d = parseD(todayIso()); return iso(p === "1M" ? addJ(d, -31) : p === "3M" ? new Date(d.getFullYear(), d.getMonth() - 3, d.getDate()) : p === "6M" ? new Date(d.getFullYear(), d.getMonth() - 6, d.getDate()) : new Date(d.getFullYear() - 1, d.getMonth(), d.getDate())); };
+const mkPer = () => { const p = us.get("mkPer", "3M"); return ["1M", "3M", "6M", "YTD", "1A"].includes(p) ? p : "3M"; };   /* round 153 : YTD (courbe du PC) */
+const perFrom = p => { const d = parseD(todayIso()); return iso(p === "YTD" ? new Date(d.getFullYear(), 0, 1) : p === "1M" ? addJ(d, -31) : p === "3M" ? new Date(d.getFullYear(), d.getMonth() - 3, d.getDate()) : p === "6M" ? new Date(d.getFullYear(), d.getMonth() - 6, d.getDate()) : new Date(d.getFullYear() - 1, d.getMonth(), d.getDate())); };
 const chgHtml = (v, p) => { if (v == null || p == null || !(p !== 0)) return '<span class="muted">—</span>'; const r = (v - p) / Math.abs(p) * 100, a = Math.abs(r) < 0.05;
   return '<span class="' + (a ? "muted" : r > 0 ? "pos" : "neg") + '">' + (a ? "=" : (r > 0 ? "▲" : "▼") + nfx(Math.abs(r), 1) + "%") + '</span>'; };
 
@@ -8225,7 +8288,7 @@ function drawChart(el, spec) {
 // ---------- écran Marchés ----------
 function renderMarkets() {
   const per = mkPer(), ed = "atlas";
-  if (DEMO) { $("#main").innerHTML = fbar(t("mkTab"), "") + '<div class="mk-msg">' + esc(t("demo")) + ' : ' + esc(t("noData")) + '</div>'; return; }   // démo : aucun cours (rien n'est lu)
+  if (DEMO && !(data && data.cours153)) { $("#main").innerHTML = fbar(t("mkTab"), "") + '<div class="mk-msg">' + esc(t("demo")) + ' : ' + esc(t("noData")) + '</div>'; return; }   // démo : aucun cours (rien n'est lu)
   /* round 106 : Marchés façon Bourse (§5.5) : la liste (bandeau des bourses, cours par famille) ; un toucher pousse la page du cours (mkDet106p) */
   if (mkDet106p) coursPage106p(mkDet106p, per); else listeRendu106p();
   if (!mkBusy && (!mkStamp[ed] || Date.now() - mkStamp[ed] > 90000) && !mkErr) { mkRefresh(false).then(() => {}); const st = $("#mkSt106p"); if (st && mkBusy) st.textContent = t("mkLoading"); }
@@ -12254,7 +12317,7 @@ function photosHtml106m(l) {
   return '<section class="ph106m"><h2 class="h106m"><span>' + esc(t("photos")) + '</span>' + (n || w ? '<small>' + esc(phLigne(l)) + '</small>' : "") + '</h2><div class="pst106m">' +
     (n ? '<span class="pat106m" role="img" aria-label="' + esc(tf("photoN", n) + " · Atlas") + '">' + IC106M.cam + '<b>' + n + '</b><small>Atlas</small></span>' : "") +
     (ok ? '<button type="button" class="pad106m" data-pad106m aria-haspopup="menu" aria-expanded="false">' + IC106M.ajout + '<span>' + esc(ui("Ajouter", "Add")) + '</span></button>' : "") + '</div>' + et +
-    (!n && !w && ok ? '<p class="pv106m">' + esc(ui("Aucune photo pour l'instant.", "No photo yet.")) + '</p>' : "") + (ok ? "" : '<p class="lk104b">' + t("noPhotoAtlas") + '</p>') + '</section>';
+    (!n && !w && ok ? '<p class="pv106m">' + esc(ui("Aucune photo", "No photo")) + '</p>' : "") + (ok ? "" : '<p class="lk104b">' + t("noPhotoAtlas") + '</p>') + '</section>';
 }
 async function vignettes106m(box, ref, urls) {
   const es = (DEMO ? [] : us.get("outbox", [])).filter(e => e && e.photo && e.photo.cle && e.body && (e.body.changements || []).some(c => c.ref === ref));
@@ -16725,7 +16788,7 @@ function modele153c(h, mo, list) {
     list.map(x => '<button type="button" data-m="' + esc(x.id) + '" class="' + (x.id === mo.id ? "on" : "") + (x.pret ? "" : " nr153c") + '" aria-pressed="' + (x.id === mo.id) + '">' + esc(x.nom || x.id) + '</button>').join("") + '</div></div>';
   h += '<div class="mh153c"><h3>' + esc(mo.titre || mo.nom || mo.id) + '</h3><p class="wy153c">' + esc(mo.pourquoi || "") + '</p><p class="dt153c">' + esc(mo.dateTxt || "") + '</p>' +
     (mo.drapeaux || []).map(f => '<p class="fl153c">' + esc(f) + '</p>').join("") + '</div>';
-  if (k4.length) h += '<div class="kp153c">' + k4.map(x => '<div' + (x.m ? ' class="km153c"' : "") + '><small>' + esc(x.l || "") + '</small><b style="color:' + esc(coulK153c(x.c)) + '">' + esc(x.v || "") + '</b><span>' + esc(x.s || "") + '</span></div>').join("") + '</div>';
+  if (k4.length) h += '<div class="kp153c">' + k4.map(x => '<div' + (x.m ? ' class="km153c"' : "") + '><small>' + esc(String(x.l || "").replace(/\s*\([^)]*\)\s*$/, "")) + '</small><b style="color:' + esc(coulK153c(x.c)) + '">' + esc(x.v || "") + '</b>' + (String(x.s || "").length <= 12 ? '<span>' + esc(x.s || "") + '</span>' : "") + '</div>').join("") + '</div>';
   if (!mo.pret || !sc) h += '<p class="em153c nr153c">' + esc((mo.manque || [])[0] || ui("à compléter", "to complete")) + '</p>';
   else h += '<div class="vw153c"><canvas class="cv153c" role="img" aria-label="' + esc(mo.titre || mo.nom || "") + '"></canvas><div class="bul153c" hidden></div></div>' +
     '<div class="ac153c"><span>' + esc(tactile ? ui("Glisser : tourner · deux doigts : zoom · toucher : valeur · double toucher : vue initiale", "Drag: rotate · two fingers: zoom · tap: value · double tap: reset view")
@@ -16823,6 +16886,339 @@ window.essai153c = Object.assign(window.essai153c || {}, {
     return { vue3d: vue3d153c, modele: mod153c, tuiles: tiles.length, pretes: tiles.filter(t => !t.classList.contains("nr153c")).length, vignettes: cvs.map(lit), vide: (document.querySelector("#main .em153c") || {}).textContent || null,
       grand: !!document.querySelector("#main canvas.cv153c"), titre: (document.querySelector("#main .mh153c h3") || {}).textContent || null }; }
 });
+
+/* round 153 js c (suite) */
+/* ================= round 153 (suite) · piste C : LA COURBE DU PC (BbgChart, Bbg40.cs) portée en canvas, pour la page Marchés et le style PC =================
+   Demande de l'utilisateur (23/11) : « les courbes etc. … faut que ça soit comme dans le Marchés dans mon Atlas ». Port fidèle de BbgChart.Render et
+   Overlay (mêmes constantes) : ① code cyan, flèche et dernier cours, variation, petite courbe, source et date à droite ; ② au · début · haut · bas · moy.
+   (libellés cyan, chiffres blancs) ; ③ case ambre du titre et de l'unité, cases de fonction numérotées, note ; ④ périodes (choisie en case brique),
+   dates de la fenêtre en cases brique ; fond #0A0A0A ; montagne bleue #1A7CDA → #1460BE → #1238B4 → #102779 ; quadrillage blanc 44/255 PAR-DESSUS ;
+   trait 1,6 px ; axe des prix à droite en chasse fixe, étiquette du dernier cours à encoche ; ligne de référence ambre pointillée (début de période) ;
+   légende en haut à gauche (dernier, plus haut, moyenne, plus bas) ; axe du temps en séances ; réticule pointillé, valeur et date en cases ambre,
+   bulle noire au bord ambre. Les chiffres sont écrits comme sur le PC (1,234.56). */
+const BBG153 = (() => {
+  const C = { bg: "#000000", plot: "#0A0A0A", amber: "#F0A21E", cyan: "#9FE0F2", last: "#F2F2F2", white: "#E6E6E6", muted: "#969CA6", up: "#36C24A", down: "#FF3B4A",
+    line: "#2C3440", grid: "rgba(255,255,255,0.1725)", axis: "#DEE2E8", tab: "#CDD2DA", brick: "#A8321F", ref: "#D9A02A", price: "#E6F2FF",
+    aTop: "#1A7CDA", aBody: "#1460BE", aLow: "#1238B4", aBot: "#102779" };
+  const MONO = "\"Cascadia Mono\",Consolas,ui-monospace,\"SF Mono\",Menlo,monospace", SANS = "\"Segoe UI\",-apple-system,Arial,sans-serif",
+    NARROW = "\"Arial Narrow\",\"Segoe UI\",-apple-system,Arial,sans-serif", PROP = "Tahoma,\"Segoe UI\",-apple-system,Arial,sans-serif";
+  const pt = v => (v * 4 / 3).toFixed(2) + "px ";   // points Windows (96 ppp) → pixels CSS
+  const F = { T: "bold " + pt(10.5) + MONO, L: "bold " + pt(12) + MONO, C: pt(9.5) + MONO, S: pt(8.5) + SANS, N: pt(9) + NARROW, M: pt(8.5) + MONO, MB: "bold " + pt(8.5) + MONO, P: pt(8.5) + PROP };
+  const H = { T: 17, L: 19, C: 15, S: 14, N: 14, M: 14, MB: 14, P: 14 };
+  const num = (v, d) => (v < 0 ? "-" : "") + Math.abs(v).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const signed = (v, d) => (v > 0 ? "+" : v < 0 ? "−" : "") + num(Math.abs(v), d);
+  const sign = v => v > 0 ? C.up : v < 0 ? C.down : C.white;
+  const dec = v => Math.abs(v) < 10 ? 4 : 2;
+  const D = s => { const p = s.split("-").map(Number); return new Date(p[0], p[1] - 1, p[2] || 1); };
+  const dd = (d, y4) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (y4 ? d.getFullYear() : String(d.getFullYear()).slice(2));
+  const addM = (d, m) => { const r = new Date(d.getFullYear(), d.getMonth() + m, d.getDate()); if (r.getDate() !== d.getDate()) r.setDate(0); return r; };
+  // axe du temps : jours depuis un lundi de référence, ou séances (cinq par semaine) ; inverse exact (BbgChart.U, FromU)
+  const EPOCH = new Date(2000, 0, 3).getTime();
+  const U = (t, tr) => { const d = (t - EPOCH) / 864e5; if (!tr) return d; const w = Math.floor(d / 7), r = d - w * 7; return w * 5 + Math.min(5, r); };
+  const FU = (u, tr) => { if (!tr) return EPOCH + u * 864e5; let w = Math.floor(u / 5), r = u - w * 5; if (r > 5 - 1e-6) { w += 1; r = 0; } return EPOCH + (w * 7 + r) * 864e5; };
+  function isTrading(xs, a) { const n = xs.length - a; if (n < 5) return false; let wd = 0; const gaps = [];
+    for (let i = a; i < xs.length; i++) { const dw = new Date(xs[i]).getDay(); if (dw !== 0 && dw !== 6) wd++; if (i > a) gaps.push((xs[i] - xs[i - 1]) / 864e5); }
+    if (wd < n * 0.97) return false; gaps.sort((p, q) => p - q); return gaps.length > 0 && gaps[gaps.length >> 1] <= 4; }
+  function gapDays(xs, a) { const g = []; for (let i = Math.max(1, a + 1); i < xs.length; i++) g.push((xs[i] - xs[i - 1]) / 864e5); if (g.length < 3) return Infinity; g.sort((p, q) => p - q); return Math.max(7, 1.8 * g[g.length >> 1]); }
+  const nice = raw => { if (!(raw > 0) || !isFinite(raw)) return 1; const m = Math.pow(10, Math.floor(Math.log10(raw))), r = raw / m; return (r < 1.5 ? 1 : r < 2.25 ? 2 : r < 3.5 ? 2.5 : r < 7 ? 5 : 10) * m; };
+  function startOf(range, last) { const d = new Date(last);
+    switch (range) { case "1M": return addM(d, -1).getTime(); case "3M": return addM(d, -3).getTime(); case "6M": return addM(d, -6).getTime(); case "YTD": return new Date(d.getFullYear(), 0, 1).getTime(); case "1Y": return addM(d, -12).getTime(); case "5Y": return addM(d, -60).getTime(); }
+    return null; }
+  function envelope(p) { const res = []; let i = 0; const n = p.length;
+    while (i < n) { const col = Math.floor(p[i][0]); let j = i, iMin = i, iMax = i;
+      while (j + 1 < n && Math.floor(p[j + 1][0]) === col) { j++; if (p[j][1] < p[iMin][1]) iMin = j; if (p[j][1] > p[iMax][1]) iMax = j; }
+      if (j === i) res.push(p[i]); else { const a = Math.min(iMin, iMax), b = Math.max(iMin, iMax); res.push(p[i]); if (a !== i) res.push(p[a]); if (b !== a && b !== i) res.push(p[b]); if (j !== b && j !== a) res.push(p[j]); }
+      i = j + 1; }
+    return res; }
+  function spread(want, h, min, max) { const n = want.length, res = want.slice(); if (!n) return res; const ord = want.map((v, i) => i).sort((a, b) => want[a] - want[b]);
+    for (let k = 0; k < n; k++) { const i = ord[k]; let v = Math.max(min, Math.min(max, want[i])); if (k > 0) v = Math.max(v, res[ord[k - 1]] + h); res[i] = v; }
+    for (let k = n - 1; k >= 0; k--) { const i = ord[k], lim = k === n - 1 ? max : res[ord[k + 1]] - h; if (res[i] > lim) res[i] = lim; }
+    return res; }
+  const MON = { fr: ["Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"], en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] };
+  const JOURS = { fr: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"], en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] };
+  const L2 = () => (typeof lang !== "undefined" && lang === "en") ? "en" : "fr";
+  const tr2 = (fr, en) => L2() === "en" ? en : fr;
+  // étiquette d'axe à encoche (Bbg.Tag) : pointe à gauche à mi-hauteur
+  function tag(g, r, text, fill, ink, outline) {
+    const n = Math.max(3, r.h / 2 - 1), P = [[r.x, r.y + r.h / 2], [r.x + n, r.y], [r.x + r.w, r.y], [r.x + r.w, r.y + r.h], [r.x + n, r.y + r.h]];
+    g.beginPath(); P.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath();
+    if (outline) { g.fillStyle = C.bg; g.fill(); g.strokeStyle = fill; g.lineWidth = 1; g.stroke(); } else { g.fillStyle = fill; g.fill(); }
+    g.font = F.MB; g.fillStyle = outline ? fill : ink; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText(text, r.x + n + 1, r.y + r.h / 2 + 0.5);
+  }
+  function spark(g, r, ys, col) {
+    if (!ys || ys.length < 2 || r.w < 4 || r.h < 4) return; let lo = Math.min(...ys), hi = Math.max(...ys); if (hi - lo < 1e-12) { hi += 1; lo -= 1; }
+    const n = ys.length, raw = ys.map((y, i) => [r.x + i / (n - 1) * r.w, r.y + r.h - (y - lo) / (hi - lo) * r.h]), p = envelope(raw);
+    g.strokeStyle = col; g.lineWidth = 1; g.beginPath(); p.forEach((q, i) => i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1])); g.stroke();
+    const l = raw[n - 1]; g.fillStyle = col; g.beginPath(); g.arc(l[0], l[1], 1.25, 0, 2 * Math.PI); g.fill();
+  }
+  // ---------- rendu (BbgChart.Render) ----------
+  function render(cv, spec) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1), W = Math.max(160, cv.clientWidth), Hh = Math.max(90, cv.clientHeight);
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(Hh * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(Hh * dpr); }
+    const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.fillStyle = C.bg; g.fillRect(0, 0, W, Hh);
+    const M = (s, f) => { g.font = F[f]; return { w: Math.ceil(g.measureText(s || "").width), h: H[f] }; };
+    const put = (s, f, x, y, col) => { g.font = F[f]; g.fillStyle = col; g.textAlign = "left"; g.textBaseline = "top"; g.fillText(s, x, y + 1); const m = M(s, f); return { x, y, w: m.w, h: m.h, r: x + m.w }; };
+    const st = { spec, ranges: [], fns: [], vis: [] };
+    const FY = spec.fmt || (v => num(v, Math.abs(v) < 10 ? 4 : Math.abs(v) < 1000 ? 2 : 0));
+    // séries visibles : dates triées, fenêtre de la période
+    const withData = (spec.series || []).filter(s => s.pts && s.pts.length).map(s => { const a = s.pts.filter(p => p[1] != null && isFinite(p[1])).map(p => [D(p[0]).getTime(), +p[1]]).sort((p, q) => p[0] - q[0]); return Object.assign({}, s, { X: a.map(p => p[0]), Y: a.map(p => p[1]) }); }).filter(s => s.X.length);
+    const tLast = withData.length ? Math.max(...withData.map(s => s.X[s.X.length - 1])) : Date.now();
+    let t0 = startOf(spec.range, tLast); if (t0 == null) t0 = withData.length ? Math.min(...withData.map(s => s.X[0])) : tLast - 365 * 864e5;
+    if (withData.length) { const tf = Math.min(...withData.map(s => s.X[0])); if (t0 < tf) t0 = tf; }
+    withData.forEach(s => { const i0 = s.X.findIndex(x => x >= t0); if (i0 >= 0) st.vis.push({ S: s, X: s.X, V: s.Y, I0: i0 }); });
+    const main = st.vis[0], trd = main ? isTrading(main.X, main.I0) : false, Uu = t => U(t, trd);
+    const span = Math.max(1, Uu(tLast) - Uu(t0)), pad = 0.10, t1 = FU(Uu(tLast) + span * pad / (1 - pad), trd);
+    st.from = t0; st.to = t1; st.trd = trd;
+    // rangées d'en-tête (au plus 36 % de la hauteur)
+    const r1 = 26, r2 = 19, r3 = 21, rr = 23;
+    let s1 = true, s2 = !!main, s3 = !!(spec.title || (spec.functions || []).length), sR = true;
+    const hdr = () => (s1 ? r1 : 0) + (s2 ? r2 : 0) + (s3 ? r3 : 0) + (sR ? rr : 0);
+    if (hdr() > Hh * 0.36) s2 = false; if (hdr() > Hh * 0.36) s3 = false; if (hdr() > Hh * 0.36) sR = false; if (hdr() > Hh * 0.36) s1 = false;
+    let y = 0, last = 0, first = 0, chg = 0, dcm = 2;
+    if (main) { last = main.V[main.V.length - 1]; first = main.V[main.I0]; chg = last - first; dcm = dec(last); }
+    if (s1) {
+      let x = 8; const cy = y + r1 / 2, tk = spec.ticker || (main ? main.S.name : "");
+      const a = put(tk, "T", x, cy - H.T / 2, C.cyan); x = a.r + 12;
+      if (main) {
+        const arrow = chg > 0 ? "▲" : chg < 0 ? "▼" : "■", ac = sign(chg);
+        const b = put(arrow, "C", x, cy - H.C / 2, ac); x = b.r + 3;
+        const c = put(FY(last), "L", x, cy - H.L / 2, C.last); x = c.r + 10;
+        let ct = signed(chg, dcm) + (Math.abs(first) > 1e-12 ? "  " + signed(chg / Math.abs(first) * 100, 2) + "%" : "");
+        if (x + M(ct, "C").w > W - 8) ct = signed(chg, dcm);
+        if (x + M(ct, "C").w <= W - 8) { const d = put(ct, "C", x, cy - H.C / 2, ac); x = d.r + 12; }
+        const sp = { x, y: y + 6, w: 64, h: r1 - 12 };
+        if (sp.x + sp.w < W - 140) { spark(g, sp, main.V.slice(main.I0), C.white); x = sp.x + sp.w + 12; }
+      }
+      const stamp = spec.stamp || "";
+      if (stamp) { const uw = M(stamp, "S").w, ux = Math.max(x, W - 8 - uw);
+        if (W - 8 - ux > 60) { g.save(); g.beginPath(); g.rect(ux, y, W - 8 - ux, r1); g.clip(); g.font = F.S; g.fillStyle = C.muted; g.textAlign = "right"; g.textBaseline = "middle"; g.fillText(stamp, W - 8, y + r1 / 2 + 1); g.restore(); } }
+      y += r1;
+    }
+    if (s2) {
+      let x = 8; const cy = y + r2 / 2, w0 = main.V.slice(main.I0); let ih = 0, il = 0; w0.forEach((v, i) => { if (v > w0[ih]) ih = i; if (v < w0[il]) il = i; });
+      const avg = w0.reduce((s, v) => s + v, 0) / w0.length;
+      [[tr2("au", "at"), dd(new Date(main.X[main.X.length - 1]))], [tr2("début", "open"), FY(first)], [tr2("haut", "high"), FY(w0[ih])], [tr2("bas", "low"), FY(w0[il])], [tr2("moy.", "avg"), FY(avg)]].some(it => {
+        const need = M(it[0], "N").w + 5 + M(it[1], "M").w + 16; if (x + need > W - 6) return true;
+        const a = put(it[0], "N", x, cy - H.N / 2, C.cyan), b = put(it[1], "M", a.r + 5, cy - H.M / 2, C.white); x = b.r + 16; return false; });
+      y += r2;
+    }
+    if (s3) {
+      const ttl = (spec.title || "").toUpperCase() + (spec.unit ? "  " + spec.unit : ""), tw = Math.min(Math.max(120, Math.floor(W * 0.46)), M(ttl, "P").w + 18);
+      const tr = { x: 0, y: y + 2, w: ttl.trim() ? tw : 0, h: r3 - 4 };
+      if (tr.w > 0) { g.fillStyle = C.amber; g.fillRect(tr.x, tr.y, tr.w, tr.h); g.save(); g.beginPath(); g.rect(tr.x + 8, tr.y, tr.w - 10, tr.h); g.clip(); g.font = F.P; g.fillStyle = "#000"; g.textAlign = "left"; g.textBaseline = "middle";
+        let s = ttl; if (M(s, "P").w > tr.w - 10) { while (s.length > 1 && M(s + "…", "P").w > tr.w - 10) s = s.slice(0, -1); s += "…"; } g.fillText(s, tr.x + 8, tr.y + tr.h / 2 + 1); g.restore(); }
+      let x = tr.x + tr.w + 6; const note = spec.note || "", nr = note ? M(note, "P").w : 0;
+      (spec.functions || []).some((fn, i) => { const t = (i + 1) + ") " + fn, w = M(t, "P").w + 16; if (x + w > W - (nr > 0 ? nr + 18 : 6)) return true;
+        g.fillStyle = C.amber; g.fillRect(x, tr.y, w, tr.h); g.font = F.P; g.fillStyle = "#000"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(t, x + w / 2, tr.y + tr.h / 2 + 1);
+        st.fns.push([{ x, y: tr.y, w, h: tr.h }, fn]); x += w + 4; return false; });
+      if (nr > 0 && W - nr - 10 > x) { g.font = F.P; g.fillStyle = "#fff"; g.textAlign = "right"; g.textBaseline = "middle"; g.fillText(note, W - 6, y + r3 / 2 + 1); }
+      y += r3;
+    }
+    if (sR) {
+      let x = 6; const bh = rr - 6, by = y + 3;
+      (spec.ranges || ["1M", "3M", "6M", "YTD", "1Y", "5Y", "Max"]).forEach(r => { const w = Math.max(30, M(r, "P").w + 14), on = r === spec.range;
+        if (on) { g.fillStyle = C.brick; g.fillRect(x, by, w, bh); }
+        g.font = F.P; g.fillStyle = on ? "#fff" : C.tab; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(r, x + w / 2, by + bh / 2 + 1); st.ranges.push([{ x, y: by, w, h: bh }, r]); x += w + 2; });
+      if (main) { const d0 = dd(new Date(t0), true), d1 = dd(new Date(tLast), true), dw = M(d0, "P").w + 14, dash = 14, dx = W - 8 - 2 * dw - dash;
+        if (dx > x + 16) { [[dx, d0], [dx + dw + dash, d1]].forEach(q => { g.fillStyle = C.brick; g.fillRect(q[0], by, dw, bh); g.font = F.P; g.fillStyle = "#fff"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(q[1], q[0] + dw / 2, by + bh / 2 + 1); });
+          g.font = F.P; g.fillStyle = C.tab; g.textAlign = "center"; g.fillText("–", dx + dw + dash / 2, by + bh / 2 + 1); } }
+      y += rr;
+    }
+    // échelle des prix
+    const forY = []; st.vis.forEach(v => { for (let i = Math.max(0, v.I0 - 1); i < v.V.length; i++) forY.push(v.V[i]); }); if (spec.reference != null) forY.push(spec.reference);
+    let lo = forY.length ? Math.min(...forY) : 0, hi = forY.length ? Math.max(...forY) : 1; if (hi - lo < 1e-9) { const e = Math.max(Math.abs(hi) * 0.01, 1e-4); hi += e; lo -= e; }
+    const padY = (hi - lo) * 0.08; lo -= padY; hi += padY;
+    const axisH = 19, top = y + 3, plotH = Math.max(30, Hh - top - axisH - 2), nT = Math.max(3, Math.min(8, Math.floor(plotH / 44))), step = nice((hi - lo) / nT), yT = [];
+    for (let v = Math.ceil(lo / step - 1e-9) * step; v <= hi + step * 1e-9; v += step) yT.push(Math.round(v * 1e10) / 1e10);
+    const widest = yT.map(FY).concat(st.vis.map(v => FY(v.V[v.V.length - 1]))); if (spec.reference != null) widest.push(FY(spec.reference));
+    const axisW = Math.max(58, widest.length ? Math.max(...widest.map(s => M(s, "MB").w)) + 22 : 0);
+    const plot = { x: 2, y: top, w: Math.max(40, W - axisW - 2), h: plotH }; plot.r = plot.x + plot.w; plot.b = plot.y + plot.h;
+    st.plot = plot; st.lo = lo; st.hi = hi;
+    const X = t => { const u0 = Uu(t0), sp2 = Math.max(1e-6, Uu(t1) - u0); return plot.x + (Uu(t) - u0) / sp2 * plot.w; };
+    const Y = v => plot.b - (v - lo) / ((hi - lo) || 1) * plot.h;
+    st.X = X; st.Y = Y; st.dateAt = x => FU(Uu(t0) + (x - plot.x) / Math.max(1, plot.w) * (Uu(t1) - Uu(t0)), trd); st.valueAt = yy => lo + (plot.b - yy) / Math.max(1, plot.h) * (hi - lo);
+    g.fillStyle = C.plot; g.fillRect(plot.x, plot.y, plot.w, plot.h);
+    if (!main) { g.font = pt(10) + SANS; g.fillStyle = C.muted; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(spec.empty || tr2("Aucune donnée", "No data"), plot.x + plot.w / 2, plot.y + plot.h / 2);
+      g.strokeStyle = C.line; g.lineWidth = 1; g.beginPath(); g.moveTo(plot.r + 0.5, plot.y); g.lineTo(plot.r + 0.5, plot.b); g.stroke(); return st; }
+    // axe du temps
+    const days = (t1 - t0) / 864e5, lblW = M("Sept 26", "N").w + 16, maxLbl = Math.max(2, Math.floor(plot.w / Math.max(1, lblW))), xT = [];
+    let stepM = 0, stepD = 0;
+    if (days / 7 <= maxLbl && days <= 70) stepD = 7; else for (const mm of [1, 2, 3, 6, 12, 24, 60]) { stepM = mm; if (days / (30.44 * mm) <= maxLbl) break; }
+    if (stepD) { let d = new Date(t0); d = new Date(d.getFullYear(), d.getMonth(), d.getDate()); while (d.getDay() !== 1) d.setDate(d.getDate() + 1); for (; d.getTime() < t1; d.setDate(d.getDate() + 7)) xT.push(d.getTime()); }
+    else { const s0 = new Date(t0); let d = new Date(s0.getFullYear(), s0.getMonth(), 1); if (d.getTime() < t0) d = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+      if (stepM >= 12) { while (d.getMonth() !== 0) d = new Date(d.getFullYear(), d.getMonth() + 1, 1); while (d.getFullYear() % (stepM / 12) !== 0) d = new Date(d.getFullYear() + 1, 0, 1); }
+      else while (d.getMonth() % stepM !== 0) d = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+      for (; d.getTime() < t1; d = new Date(d.getFullYear(), d.getMonth() + stepM, 1)) xT.push(d.getTime()); }
+    let lastLbl = -1e9, prevYear = -1; const mon = MON[L2()];
+    xT.forEach(t => { const xx = Math.round(X(t)); if (xx < plot.x || xx > plot.r) return; const d = new Date(t);
+      const lb = stepD ? dd(d).slice(0, 5) : stepM >= 12 ? String(d.getFullYear()) : mon[d.getMonth()] + (d.getMonth() === 0 || prevYear < 0 ? " " + String(d.getFullYear()).slice(2) : "");
+      const lw = M(lb, "N").w, lx = Math.max(plot.x, Math.min(plot.r - lw, xx - lw / 2));
+      if (lx > lastLbl + 6) { put(lb, "N", lx, plot.b + 4, C.tab); lastLbl = lx + lw; prevYear = d.getFullYear(); }
+      g.strokeStyle = C.line; g.lineWidth = 1; g.beginPath(); g.moveTo(xx + 0.5, plot.b); g.lineTo(xx + 0.5, plot.b + 3); g.stroke(); });
+    // séries : morceaux entre les trous, enveloppe par colonne de pixels
+    const lines = [];
+    st.vis.forEach(v => { const a = Math.max(0, v.I0 - 1), n = v.X.length, gd = gapDays(v.X, a), runs = []; let cur = [];
+      for (let i = a; i < n; i++) { if (i > a && (v.X[i] - v.X[i - 1]) / 864e5 > gd) { if (cur.length) runs.push(cur); cur = []; } cur.push([X(v.X[i]), Y(v.V[i])]); }
+      if (cur.length) runs.push(cur); const rs = runs.filter(r => !r.every(p => p[0] < plot.x)).map(envelope); if (rs.length) lines.push([v, rs]); });
+    g.save(); g.beginPath(); g.rect(plot.x, plot.y, plot.w, plot.h); g.clip();
+    lines.filter(l => l[0].S.area).forEach(l => {
+      const topY = Math.max(plot.y, Math.min(...l[1].flat().map(p => p[1]))), gr = g.createLinearGradient(0, topY - 1, 0, plot.b + 2);
+      gr.addColorStop(0, C.aTop); gr.addColorStop(0.35, C.aBody); gr.addColorStop(0.78, C.aLow); gr.addColorStop(1, C.aBot); g.fillStyle = gr;
+      l[1].filter(r => r.length > 1).forEach(r => { g.beginPath(); r.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.lineTo(r[r.length - 1][0], plot.b + 1); g.lineTo(r[0][0], plot.b + 1); g.closePath(); g.fill(); });
+    });
+    g.strokeStyle = C.grid; g.lineWidth = 1;
+    yT.forEach(v => { const yy = Math.round(Y(v)); if (yy > plot.y && yy < plot.b) { g.beginPath(); g.moveTo(plot.x, yy + 0.5); g.lineTo(plot.r - 1, yy + 0.5); g.stroke(); } });
+    xT.forEach(t => { const xx = Math.round(X(t)); if (xx > plot.x && xx < plot.r) { g.beginPath(); g.moveTo(xx + 0.5, plot.y); g.lineTo(xx + 0.5, plot.b - 1); g.stroke(); } });
+    lines.forEach(l => { const col = l[0].S.color || C.price; g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 1.6; g.lineJoin = "round";
+      l[1].forEach(r => { if (r.length > 1) { g.beginPath(); r.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke(); } else { g.beginPath(); g.arc(r[0][0], r[0][1], 1.6, 0, 2 * Math.PI); g.fill(); } }); });
+    let yRef = NaN;
+    if (spec.reference != null) { yRef = Math.round(Y(spec.reference)); g.strokeStyle = C.ref; g.lineWidth = 1; g.setLineDash([3, 1]); g.beginPath(); g.moveTo(plot.x, yRef + 0.5); g.lineTo(plot.r, yRef + 0.5); g.stroke(); g.setLineDash([]);
+      if (spec.referenceLabel) { const rw = M(spec.referenceLabel, "N").w, ry = yRef - H.N - 2 < plot.y + 2 ? yRef + 3 : yRef - H.N - 2; put(spec.referenceLabel, "N", plot.r - rw - 8, ry, C.ref); } }
+    g.restore();
+    st.vis.forEach(v => { const lx = X(v.X[v.X.length - 1]), ly = Y(v.V[v.V.length - 1]); g.fillStyle = v.S.color || C.price; g.beginPath(); g.arc(lx, ly, 2.5, 0, 2 * Math.PI); g.fill(); });
+    // axe des prix à droite
+    g.strokeStyle = C.line; g.lineWidth = 1; g.beginPath(); g.moveTo(plot.r + 0.5, plot.y); g.lineTo(plot.r + 0.5, plot.b); g.moveTo(plot.x, plot.b + 0.5); g.lineTo(plot.r, plot.b + 0.5); g.stroke();
+    const th = H.MB + 5, tags = st.vis.map(v => [Y(v.V[v.V.length - 1]), FY(v.V[v.V.length - 1]), v.S.color || C.price, false]);
+    if (!isNaN(yRef)) tags.push([yRef, FY(spec.reference), C.ref, true]);
+    const placed = spread(tags.map(t => t[0]), th + 1, plot.y + th / 2, plot.b - th / 2), boxes = placed.map(p => ({ x: plot.r + 1, y: Math.round(p - th / 2), w: W - plot.r - 3, h: th }));
+    yT.forEach(v => { const yy = Math.round(Y(v)); if (yy < plot.y || yy > plot.b) return; g.strokeStyle = C.line; g.beginPath(); g.moveTo(plot.r, yy + 0.5); g.lineTo(plot.r + 4, yy + 0.5); g.stroke();
+      const s = FY(v), m = M(s, "M"), lr = { x: plot.r + 10, y: yy - m.h / 2, w: m.w, h: m.h };
+      if (boxes.some(b => b.x < lr.x + lr.w && lr.x < b.x + b.w && b.y - 1 < lr.y + lr.h && lr.y < b.y + b.h + 1)) return; put(s, "M", lr.x, lr.y, C.axis); });
+    for (let i = tags.length - 1; i >= 0; i--) tag(g, boxes[i], tags[i][1], tags[i][2], "#000", tags[i][3]);
+    // légende en haut à gauche
+    if (spec.legend !== false && plot.h >= 170 && plot.w > 260) {
+      const rows = [];
+      if (st.vis.length === 1) { const w0 = main.V.slice(main.I0); let ih = 0, il = 0; w0.forEach((v, i) => { if (v > w0[ih]) ih = i; if (v < w0[il]) il = i; }); const avg = w0.reduce((s, v) => s + v, 0) / w0.length;
+        rows.push([tr2("Dernier cours", "Last price"), FY(last), main.S.color || C.price, 0], [tr2("Plus haut le ", "High on ") + dd(new Date(main.X[main.I0 + ih])), FY(w0[ih]), C.up, 1],
+          [tr2("Moyenne", "Average"), FY(avg), C.tab, 2], [tr2("Plus bas le ", "Low on ") + dd(new Date(main.X[main.I0 + il])), FY(w0[il]), C.down, 3]); }
+      else st.vis.forEach(v => rows.push([v.S.name, FY(v.V[v.V.length - 1]), v.S.color, 4]));
+      if (spec.reference != null && spec.referenceLabel) rows.push([spec.referenceLabel, FY(spec.reference), C.ref, 4]);
+      const lh = H.N + 3, sw = 14, gp = 14; let nameW = Math.max(...rows.map(r => M(r[0], "N").w)) + 2; const valW = Math.max(...rows.map(r => M(r[1], "M").w)) + 3;
+      let lw = 8 + sw + 6 + nameW + gp + valW + 8; const lhT = rows.length * lh + 8;
+      if (lw > plot.w * 0.62) { nameW = Math.max(40, Math.floor(plot.w * 0.62) - (8 + sw + 6 + gp + valW + 8)); lw = 8 + sw + 6 + nameW + gp + valW + 8; }
+      const lr = { x: plot.x + 6, y: plot.y + 6, w: lw, h: lhT };
+      if (lr.y + lr.h < plot.b - 20 && lhT <= plot.h * 0.5) {
+        g.fillStyle = "rgba(4,8,18,0.784)"; g.fillRect(lr.x, lr.y, lr.w, lr.h); g.strokeStyle = "rgb(90,120,160)"; g.lineWidth = 1; g.strokeRect(lr.x + 0.5, lr.y + 0.5, lr.w - 1, lr.h - 1);
+        rows.forEach((r, i) => { const ry = lr.y + 4 + i * lh, mx = lr.x + 8, my = ry + lh / 2 - 1, s = 4, cx = mx + sw / 2; g.fillStyle = r[2]; g.strokeStyle = r[2]; g.lineWidth = 2; g.beginPath();
+          if (r[3] === 0) { g.moveTo(mx, my); g.lineTo(mx + sw, my); g.stroke(); }
+          else { if (r[3] === 1) { g.moveTo(cx, my - s); g.lineTo(cx + s, my + s); g.lineTo(cx - s, my + s); } else if (r[3] === 2) { g.moveTo(cx, my - s); g.lineTo(cx + s, my); g.lineTo(cx, my + s); g.lineTo(cx - s, my); } else if (r[3] === 3) { g.moveTo(cx - s, my - s); g.lineTo(cx + s, my - s); g.lineTo(cx, my + s); } else g.rect(cx - s, my - s, 2 * s, 2 * s); g.closePath(); g.fill(); }
+          g.save(); g.beginPath(); g.rect(mx + sw + 6, ry, nameW, lh); g.clip(); g.font = F.N; g.fillStyle = C.tab; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText(r[0], mx + sw + 6, ry + lh / 2 + 1); g.restore();
+          g.font = F.M; g.fillStyle = C.white; g.textAlign = "right"; g.fillText(r[1], lr.x + lr.w - 8, ry + lh / 2 + 1); });
+      }
+    }
+    st.main = main; st.W = W; st.H = Hh; st.FY = FY; st.img = g.getImageData(0, 0, cv.width, cv.height); return st;
+  }
+  // ---------- réticule (BbgChart.Overlay) ----------
+  function overlay(cv, st, hx, hy) {
+    const g = cv.getContext("2d"), dpr = cv.width / st.W; g.setTransform(1, 0, 0, 1, 0, 0); g.putImageData(st.img, 0, 0); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const p = st.plot, main = st.main; if (hx == null || !main || hx < p.x || hx > p.r || hy < p.y || hy > p.b) return null;
+    const t = st.dateAt(hx); let k = main.X.findIndex(x => x >= t); if (k < 0) k = main.X.length - 1; else if (k > 0 && Math.abs(st.X(main.X[k - 1]) - hx) < Math.abs(st.X(main.X[k]) - hx)) k--;
+    k = Math.max(main.I0, k); const sd = main.X[k], sx = Math.round(st.X(sd));
+    g.strokeStyle = "rgba(235,235,235,0.667)"; g.lineWidth = 1; g.setLineDash([1, 1]); g.beginPath(); g.moveTo(sx + 0.5, p.y); g.lineTo(sx + 0.5, p.b); g.moveTo(p.x, Math.round(hy) + 0.5); g.lineTo(p.r, Math.round(hy) + 0.5); g.stroke(); g.setLineDash([]);
+    const th = H.MB + 5; tag(g, { x: p.r + 1, y: Math.round(hy - th / 2), w: st.W - p.r - 3, h: th }, st.FY(st.valueAt(hy)), C.amber, "#000", false);
+    g.font = F.MB; const dl = dd(new Date(sd), true), dw = Math.ceil(g.measureText(dl).width), dx = Math.max(p.x, Math.min(p.r - dw - 8, sx - dw / 2 - 4));
+    g.fillStyle = C.amber; g.fillRect(dx, p.b + 1, dw + 8, th); g.fillStyle = "#000"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(dl, dx + (dw + 8) / 2, p.b + 1 + th / 2 + 1);
+    const d = new Date(sd), L = [[JOURS[(typeof lang !== "undefined" && lang === "en") ? "en" : "fr"][d.getDay()] + " " + dd(d, true), C.amber]];
+    st.vis.forEach(v => { let j = -1; for (let i = v.X.length - 1; i >= 0; i--) if (v.X[i] <= sd) { j = i; break; }
+      const val = j < 0 ? "—" : st.FY(v.V[j]) + (v.S.unit ? " " + v.S.unit : "") + (j >= 0 && v.X[j] !== sd ? "  " + ((typeof lang !== "undefined" && lang === "en") ? "on " : "au ") + dd(new Date(v.X[j])).slice(0, 5) : "");
+      L.push([v.S.name + "  " + val, v.S.color === C.price || !v.S.color ? C.white : v.S.color]);
+      if (j >= 0) { g.strokeStyle = v.S.color || C.price; g.lineWidth = 1.5; g.beginPath(); g.arc(st.X(v.X[j]), st.Y(v.V[j]), 3.5, 0, 2 * Math.PI); g.stroke(); } });
+    if (st.spec.reference != null && st.spec.referenceLabel) L.push([st.spec.referenceLabel + "  " + st.FY(st.spec.reference), C.amber]);
+    g.font = F.M; const lh = H.M + 2, bw = Math.max(...L.map(l => Math.ceil(g.measureText(l[0]).width))) + 14, bh = L.length * lh + 8;
+    let bx = hx + 14; if (bx + bw > p.r) bx = hx - 14 - bw; bx = Math.max(p.x, bx); let by = hy + 14; if (by + bh > p.b) by = hy - 14 - bh; by = Math.max(p.y, by);
+    g.fillStyle = "rgba(0,0,0,0.92)"; g.fillRect(bx, by, bw, bh); g.strokeStyle = C.amber; g.strokeRect(bx + 0.5, by + 0.5, bw - 1, bh - 1);
+    g.textAlign = "left"; g.textBaseline = "top"; L.forEach((l, i) => { g.fillStyle = l[1]; g.fillText(l[0], bx + 7, by + 4 + i * lh + 1); });
+    return L.map(l => l[0]).join("\n");
+  }
+  // une courbe dans un élément : canvas, réticule au doigt et à la souris, périodes et cases de fonction au toucher
+  function monter(host, spec, onRange, onFn) {
+    host.innerHTML = '<canvas class="bb153c" role="img" aria-label="' + esc(spec.title || spec.ticker || "") + '"></canvas>';
+    const cv = host.firstChild; let st = null, on = false;
+    const draw = () => { try { st = render(cv, spec); } catch (e) { console.warn(e); } };
+    draw();
+    const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    const hit = (L, p) => L.find(t => p[0] >= t[0].x && p[0] <= t[0].x + t[0].w && p[1] >= t[0].y && p[1] <= t[0].y + t[0].h);
+    cv.addEventListener("pointerdown", e => { const p = pos(e); if (st && st.plot && p[1] >= st.plot.y) { on = true; st.tip = overlay(cv, st, p[0], p[1]); } });
+    cv.addEventListener("pointermove", e => { if (!st) return; const p = pos(e); if (on || e.pointerType === "mouse") st.tip = overlay(cv, st, p[0], p[1]); });
+    cv.addEventListener("pointerup", e => { on = false; if (!st) return; const p = pos(e), r = hit(st.ranges, p), f = hit(st.fns, p);
+      if (r && onRange) { onRange(r[1]); return; } if (f && onFn) onFn(f[1]); });
+    cv.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && st) overlay(cv, st, null, null); });
+    const ro = window.ResizeObserver ? new ResizeObserver(() => { if (!document.body.contains(cv)) { ro.disconnect(); return; } draw(); }) : null; if (ro) ro.observe(host);
+    return { st: () => st, cv, survol: (x, y) => st ? (st.tip = overlay(cv, st, x, y)) : null };
+  }
+  return { render, overlay, monter, num, signed, spark, C, F };
+})();
+
+/* ---------- round 153 (suite) : Marchés au style PC : tableau des cours (MarchesPage40, MktTable) et page d'un cours (courbe du PC) ----------
+   Tableau : en-tête ambre filet ambre (Série · Dernier · Var. % · Date ; + Var., source et courbe d'un an en grand), rangée de groupe sur fond
+   #080A0E au nom jaune #FFD600, lignes noires et #12151B alternées, dernier en chasse fixe gras, variations vertes / rouges signées, date grise
+   (ambre si le cours est ancien), courbe d'un an verte ou rouge, ligne choisie ardoise #1E2A35 marquée à gauche. Aucune phrase. */
+const pcMode153c = () => document.documentElement.hasAttribute("data-pc153c");
+const COURT153 = { "CO-STD": ["Standard · milieu", "Standard · mid"], "CO-ALLOY": ["Alliage · milieu", "Alloy · mid"], "CO-LME": ["Cobalt LME", "LME cobalt"],
+  "LME-NI": ["Nickel (cash)", "Nickel (cash)"], "LME-CU": ["Cuivre (cash)", "Copper (cash)"], "LME-AL": ["Aluminium (cash)", "Aluminium (cash)"], "LME-ZN": ["Zinc (cash)", "Zinc (cash)"],
+  "COMEX-CU": ["Cuivre COMEX", "COMEX copper"], "EUR-USD": ["EUR/USD", "EUR/USD"] };
+/* décimales du PC (Mkt.Def.Dec) : cobalt Fastmarkets à 3, comme la page Marchés du PC */
+const dpc153c = id => { const m = MKS[id] || MKS[String(id).replace(/-(LOW|HIGH|MOY)$/, "")] || {}; return m.dp != null ? m.dp : mkMeta106p(id).d; };
+const court153c = id => { const c = COURT153[id]; return c ? ui(c[0], c[1]) : mkName(id); };
+const dm153c = s => s ? s.slice(8, 10) + "/" + s.slice(5, 7) : "";
+const vieux153c = (pts, d) => { if (!d) return false; const a = (parseD(todayIso()) - parseD(d)) / 864e5, n = pts ? pts.length : 0, g = n > 3 ? (parseD(pts[n - 1][0]) - parseD(pts[n - 4][0])) / 864e5 / 3 : 1; return a > (g > 20 ? 45 : 5); };
+function sparkSvg153c(pts, w, h) {
+  const y0 = iso(new Date(parseD(todayIso()).getFullYear() - 1, parseD(todayIso()).getMonth(), parseD(todayIso()).getDate())), ys = (pts || []).filter(p => p[0] >= y0).map(p => p[1]).filter(v => v != null && isFinite(v));
+  if (ys.length < 2) return ""; let lo = Math.min(...ys), hi = Math.max(...ys); if (hi - lo < 1e-12) { hi += 1; lo -= 1; }
+  const n = ys.length, col = ys[n - 1] >= ys[0] ? "#36C24A" : "#FF3B4A", P = ys.map((v, i) => (i / (n - 1) * w).toFixed(1) + "," + (h - (v - lo) / (hi - lo) * h).toFixed(1));
+  return '<svg class="sp153c" viewBox="-1 -2 ' + (w + 2) + ' ' + (h + 4) + '" width="' + (w + 2) + '" height="' + (h + 4) + '" aria-hidden="true"><polyline points="' + P.join(" ") + '" fill="none" stroke="' + col + '" stroke-width="1"/><circle cx="' + P[n - 1].split(",")[0] + '" cy="' + P[n - 1].split(",")[1] + '" r="1.3" fill="' + col + '"/></svg>';
+}
+function listePC153c() {
+  const large = (window.innerWidth || 390) >= 600, sel = mkSel(), G = [["Cobalt", "COBALT"], ["LME", "LME"], ["COMEX", "COMEX"], ["FX", ui("DEVISES", "FX")]];
+  const cols = large ? ["n", "l", "c", "p", "d", "s"] : ["n", "l", "p", "d"];
+  const head = { n: ui("Série", "Series"), l: ui("Dernier", "Last"), c: ui("Var.", "Chg"), p: ui("Var. %", "% Chg"), d: "Date", s: ui("1 an", "1 yr") };
+  let h = '<div class="mk106p mt153c"><div class="pt106p"><h2 class="page-title">' + esc(t("mkTab")) + '</h2></div><div class="tb153c' + (large ? " lg" : "") + '" role="table"><div class="hr153c" role="row">' +
+    cols.map(k => '<span class="' + k + '">' + esc(head[k]) + '</span>').join("") + '</div>';
+  let n = 0, any = false;
+  G.forEach(g => {
+    const ids = MET_IDS.filter(id => (MKS[id] || {}).g === g[0]).map(id => [id, coursDe106p(id)]).filter(x => x[1]); if (!ids.length) return;
+    const src = Array.from(new Set(ids.map(x => x[1].courbe ? mkSrc(x[1].src) : "").filter(Boolean))).join(" · ");
+    h += '<div class="gr153c" role="row"><b>' + esc(g[1]) + '</b>' + (large && src ? '<span>' + esc(src) + '</span>' : "") + '</div>';
+    ids.forEach(x => { const id = x[0], c = x[1], m = mkMeta106p(id), dv = c.pv == null ? null : c.v - c.pv, r = dv == null || !c.pv ? null : dv / Math.abs(c.pv) * 100, cl = dv == null ? "" : dv > 0 ? " up" : dv < 0 ? " dn" : "";
+      const cell = { n: esc(court153c(id)), l: esc(BBG153.num(c.v, dpc153c(id))), c: dv == null ? "" : esc(BBG153.signed(dv, dpc153c(id))), p: r == null ? "" : esc(BBG153.signed(r, 2) + "%"), d: esc(dm153c(c.d)), s: c.courbe ? sparkSvg153c(c.pts, 62, 12) : "" };
+      h += '<button type="button" role="row" class="rw153c' + (n++ % 2 ? " alt" : "") + (id === sel ? " sel" : "") + '" data-mk106p="' + esc(id) + '">' +
+        cols.map(k => '<span class="' + k + (k === "c" || k === "p" ? cl : "") + (k === "d" && vieux153c(c.pts, c.d) ? " vx" : "") + '">' + cell[k] + '</span>').join("") + '</button>'; any = true; });
+  });
+  if (!any) h += '<p class="em153c">' + esc(mkBusy ? t("mkLoading") : ui("Aucun cours", "No price")) + '</p>';
+  $("#main").innerHTML = h + '</div></div>';
+  $("#main").querySelectorAll("[data-mk106p]").forEach(b => b.onclick = () => ouvrirCours106p(b.dataset.mk106p));
+}
+function marchesPC153c() {
+  if ((window.innerWidth || 0) < 1100) { if (mkDet106p) coursPC153c(mkDet106p); else listePC153c(); return; }
+  const id = mkDet106p && MET_IDS.includes(mkDet106p) ? mkDet106p : mkSel(); listePC153c(); const L = $("#main .tb153c"); if (!L) return;
+  const sp = document.createElement("div"); sp.className = "sp153c"; L.parentElement.insertBefore(sp, L); sp.appendChild(L); const R = document.createElement("div"); R.className = "cr153c"; sp.appendChild(R);
+  coursPC153c(id, R);
+  $("#main").querySelectorAll("[data-mk106p]").forEach(b => b.onclick = () => { us.set("mkSel.atlas", b.dataset.mk106p); mkDet106p = null; render(); });
+}
+function coursPC153c(id, dans) {
+  const m = mkMeta106p(id), s = serOf(id), pts = s && Array.isArray(s.pts) ? s.pts.filter(p => p && p[1] != null && isFinite(p[1])) : [], c = coursDe106p(id), per = mkPer(), range = per === "1A" ? "1Y" : per;
+  if (dans) dans.innerHTML = '<div class="bbh153c" id="bbh153c"></div>';
+  else { $("#main").innerHTML = '<div class="mk106p pc153c"><div class="bk153c"><button type="button" class="rt153c" id="mkBack106p">‹ ' + esc(t("mkTab")) + '</button></div><div class="bbh153c" id="bbh153c"></div></div>';
+    $("#mkBack106p").onclick = () => { mkDet106p = null; render(); window.scrollTo(0, mkY106p || 0); }; }
+  const lastD = pts.length ? pts[pts.length - 1][0] : c ? c.d : null;
+  let ref = null; if (pts.length) { const l = parseD(lastD), t0 = range === "1M" ? new Date(l.getFullYear(), l.getMonth() - 1, l.getDate()) : range === "3M" ? new Date(l.getFullYear(), l.getMonth() - 3, l.getDate()) : range === "6M" ? new Date(l.getFullYear(), l.getMonth() - 6, l.getDate()) : range === "YTD" ? new Date(l.getFullYear(), 0, 1) : new Date(l.getFullYear() - 1, l.getMonth(), l.getDate());
+    const p0 = pts.find(p => p[0] >= iso(t0)); ref = p0 ? p0[1] : null; }
+  const outils = typeof ouvrirOutil106o === "function" && typeof coursDe103f === "function" && coursDe103f(id), F = outils ? [[ui("Valeur", "Value"), "valeur"], [ui("Indexé", "Indexed"), "indexe"], [ui("Convertir", "Convert"), "prix"]] : [];
+  const gap = pts.length > 3 ? (parseD(pts[pts.length - 1][0]) - parseD(pts[pts.length - 4][0])) / 864e5 / 3 : 1;
+  const spec = { ticker: id, title: mkName(id), unit: m.u, range, ranges: ["1M", "3M", "6M", "YTD", "1Y"], reference: ref, referenceLabel: ui("Début de période", "Start of range"),
+    series: [{ name: court153c(id), unit: m.u, color: "#E6F2FF", area: true, pts: pts.length ? pts : c && !c.courbe ? [[c.d, c.v]] : [] }],
+    fmt: v => BBG153.num(v, dpc153c(id)), stamp: lastD ? [s && s.src ? mkSrc(s.src) : c && c.src ? c.src : ""].filter(Boolean).concat([ui("cours du ", "price of ") + lastD.slice(8, 10) + "/" + lastD.slice(5, 7) + "/" + lastD.slice(0, 4)]).join(" · ") : "",
+    note: pts.length ? (gap > 20 ? ui("Mensuel", "Monthly") : ui("Quotidien", "Daily")) + (vieux153c(pts, lastD) ? ui(" · en retard", " · stale") : "") : "",
+    functions: F.map(f => f[0]), empty: court153c(id) + " : " + ui("aucun cours", "no price") };
+  BBG153.monter($("#bbh153c"), spec, r => { us.set("mkPer", r === "1Y" ? "1A" : r); render(); }, fn => { const f = F.find(x => x[0] === fn); if (f) ouvrirOutil106o(f[1], { cours: id }); });
+  window.essai153c = Object.assign(window.essai153c || {}, { courbe: () => { const cv = document.querySelector("#bbh153c canvas"); return cv ? { w: cv.clientWidth, h: cv.clientHeight } : null; } });
+}
+{ const rm = renderMarkets; renderMarkets = function () {
+  if (pcMode153c() && data && data.profil === "head" && !vue3d153c) {
+    marchesPC153c();
+    const ed = "atlas"; if (!DEMO && !mkBusy && (!mkStamp[ed] || Date.now() - mkStamp[ed] > 90000) && !mkErr) mkRefresh(false).then(() => {});
+    return; }
+  rm(); }; }
 
 if (!window.ATLAS_ESSAI) boot();
 </script>
